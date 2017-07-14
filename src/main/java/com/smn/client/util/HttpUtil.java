@@ -112,7 +112,7 @@ public class HttpUtil {
 			httpPost.setConfig(
 					RequestConfig.custom().setConnectTimeout(connectTimeOut).setSocketTimeout(socketTimeOut).build());
 			// set content-type
-			httpPost.addHeader("Content-Type", "application-json");
+			httpPost.addHeader("Content-Type", "application/json");
 			// set body
 			httpPost.setEntity(new StringEntity(bodyMessage, ContentType.APPLICATION_JSON));
 			// execute HTTPS post
