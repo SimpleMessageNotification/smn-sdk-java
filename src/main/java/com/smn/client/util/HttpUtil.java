@@ -112,7 +112,7 @@ public class HttpUtil {
 			httpPost.setConfig(
 					RequestConfig.custom().setConnectTimeout(connectTimeOut).setSocketTimeout(socketTimeOut).build());
 			// set content-type
-			httpPost.addHeader("Content-Type", "application-json");
+			httpPost.addHeader("Content-Type", ContentType.APPLICATION_JSON.getMimeType());
 			// set body
 			httpPost.setEntity(new StringEntity(bodyMessage, ContentType.APPLICATION_JSON));
 			// execute HTTPS post
@@ -178,7 +178,7 @@ public class HttpUtil {
 			httpPost.setConfig(
 					RequestConfig.custom().setConnectTimeout(connectTimeOut).setSocketTimeout(socketTimeOut).build());
 			// set content-type
-			httpPost.addHeader("Content-Type", "application-json");
+			httpPost.addHeader("Content-Type", ContentType.APPLICATION_JSON.getMimeType());
 			httpPost.addHeader("X-Auth-Token", token);
 			httpPost.addHeader("X-Project-Id", projectId);
 
