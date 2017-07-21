@@ -2,7 +2,7 @@
 Welcome to Simple Message Notification(SMN)    
 The java sdk client for Simple Message Notification
 
-update smn.properties for user info
+update configuration.properties for user info
 
 ```
 #socket connector timeout(ms)
