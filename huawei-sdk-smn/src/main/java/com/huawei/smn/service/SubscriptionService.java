@@ -11,25 +11,23 @@ import com.huawei.smn.model.SmnRequest;
  *
  */
 public interface SubscriptionService {
-	/**
-	 * set request
-	 * 
-	 * @param smnRequest
-	 */
-	void setSmnRequest(SmnRequest smnRequest);
 
-	public void init();
+    // set request
+    void setSmnRequest(SmnRequest smnRequest);
 
-	// subscribe
-	Map<String, Object> subscribe(SmnRequest smnRequest) throws RuntimeException;
+    // init
+    public void init();
 
-	// cancel subscribe
-	Map<String, Object> unsubscribe(SmnRequest smnRequest) throws RuntimeException;
+    // subscribe
+    Map<String, Object> subscribe() throws RuntimeException;
 
-	// query list of subscribers
-	Map<String, Object> listSubscriptions(SmnRequest smnRequest) throws RuntimeException;
+    // cancel subscribe
+    Map<String, Object> unsubscribe() throws RuntimeException;
 
-	// query list of subscribers for designated topic
-	Map<String, Object> listSubscriptionsByTopic(SmnRequest smnRequest) throws RuntimeException;
+    // query list of subscribers
+    Map<String, Object> listSubscriptions() throws RuntimeException;
+
+    // query list of subscribers for designated topic
+    Map<String, Object> listSubscriptionsByTopic() throws RuntimeException;
 
 }

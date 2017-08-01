@@ -12,16 +12,12 @@ import com.huawei.smn.model.SmnRequest;
  */
 public interface PublishService {
 
-	/**
-	 * set request
-	 * 
-	 * @param smnRequest
-	 */
-	void setSmnRequest(SmnRequest smnRequest);
+    // set request
+    void setSmnRequest(SmnRequest smnRequest);
 
-	public void init();
+    public void init();
 
-	// publish message
-	Map<String, Object> publish(SmnRequest smnRequest) throws RuntimeException;
+    // publish message
+    Map<String, Object> publish() throws RuntimeException;
 
 }

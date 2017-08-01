@@ -28,6 +28,10 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
 	 * max returned items for a request,default 100
 	 */
 	private int limit = 100;
+	/**
+	 * message access point
+	 */
+	private String endpoint;
 
 	@Override
 	public String getRequestUrl() throws RuntimeException {
@@ -50,6 +54,9 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
 			sb.append("&limit=" + getLimit());
 		} else {
 			sb.append("&limit=").append("100");
+		}
+		if (StringUtils.isNoneBlank(getEndpoint())) {
+			sb.append("&endpoint=").append(getEndpoint());
 		}
 		logger.info("Request url is: " + sb.toString());
 		return sb.toString();
@@ -79,6 +86,14 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
 		if (100 > limit && limit > 0) {
 			this.limit = limit;
 		}
+	}
+
+	public String getEndpoint() {
+		return endpoint;
+	}
+
+	public void setEndpoint(String endpoint) {
+		this.endpoint = endpoint;
 	}
 
 	@Override

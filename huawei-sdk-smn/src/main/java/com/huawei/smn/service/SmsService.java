@@ -11,16 +11,14 @@ import com.huawei.smn.model.SmnRequest;
  *
  */
 public interface SmsService {
-	/**
-	 * set request
-	 * 
-	 * @param smnRequest
-	 */
-	void setSmnRequest(SmnRequest smnRequest);
 
-	public void init();
+    // set request
+    void setSmnRequest(SmnRequest smnRequest);
 
-	// send sms directly
-	Map<String, Object> smsPublish(SmnRequest smnRequest) throws RuntimeException;
+    // init
+    public void init();
+
+    // send sms directly
+    Map<String, Object> smsPublish() throws RuntimeException;
 
 }

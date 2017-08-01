@@ -95,6 +95,7 @@ public class HttpUtil {
 			HttpPost httpPost = new HttpPost(iamUrl);
 			httpPost.setConfig(getRequestConfig());
 			httpPost.addHeader("Content-Type", "application/json");
+			logger.info("bodyMessage=" + bodyMessage);
 			httpPost.setEntity(new StringEntity(bodyMessage, ContentType.APPLICATION_JSON));
 			// execute HTTPS post
 			CloseableHttpResponse response = httpclient.execute(httpPost);

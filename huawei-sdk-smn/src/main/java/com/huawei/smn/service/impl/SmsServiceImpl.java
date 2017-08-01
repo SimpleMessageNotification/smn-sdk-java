@@ -17,59 +17,58 @@ import com.huawei.smn.service.SmsService;
  *
  */
 public class SmsServiceImpl implements SmsService {
-	/**
-	 * LOGGER
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
-	/**
-	 * encapsulated request
-	 */
-	private SmnRequest smnRequest = null;
+    /**
+     * LOGGER
+     */
+    private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
+    /**
+     * encapsulated request
+     */
+    private SmnRequest smnRequest = null;
 
-	/**
-	 * init
-	 */
-	public void init() {
-		if (StringUtils.isBlank(smnRequest.getRequestUrl())) {
-			logger.error("Request url is null.");
-			throw new RuntimeException("Request url is null.");
-		}
-	}
+    /**
+     * init
+     */
+    public void init() {
+        if (StringUtils.isBlank(smnRequest.getRequestUrl())) {
+            logger.error("Request url is null.");
+            throw new RuntimeException("Request url is null.");
+        }
+    }
 
-	/**
-	 * send sms directly
-	 * 
-	 * @param smnRequest
-	 * @return
-	 * @throws RuntimeException
-	 */
-	@Override
-	public Map<String, Object> smsPublish(SmnRequest smnRequest) throws RuntimeException {
-		long startTime = System.currentTimeMillis();
-		try {
-			init();
-			Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-			Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-			Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, smnRequest.getRequestUrl());
-			logger.info("End to send sms. RequestId is {}. responseMap is {}. Cost is {}ms",
-					responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
-			return responseMap;
-		} catch (RuntimeException e) {
-			throw e;
-		} catch (Exception e) {
-			logger.error("Failed to send sms.", e);
-			throw new RuntimeException("Failed to send sms.", e);
-		}
-	}
+    /**
+     * send sms directly
+     * 
+     * @param smnRequest
+     * @return
+     * @throws RuntimeException
+     */
+    @Override
+    public Map<String, Object> smsPublish() throws RuntimeException {
+        long startTime = System.currentTimeMillis();
+        try {
+            init();
+            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, smnRequest.getRequestUrl());
+            logger.info("End to send sms. RequestId is {}. responseMap is {}. Cost is {}ms",
+                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
+            return responseMap;
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error("Failed to send sms.", e);
+            throw new RuntimeException("Failed to send sms.", e);
+        }
+    }
 
-	@Override
-	public void setSmnRequest(SmnRequest smnRequest) {
-		this.smnRequest = smnRequest;
+    @Override
+    public void setSmnRequest(SmnRequest smnRequest) {
+        this.smnRequest = smnRequest;
+    }
 
-	}
-
-	public SmnRequest getSmnRequest() {
-		return smnRequest;
-	}
+    public SmnRequest getSmnRequest() {
+        return smnRequest;
+    }
 
 }
