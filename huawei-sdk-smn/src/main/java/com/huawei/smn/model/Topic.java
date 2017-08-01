@@ -10,54 +10,82 @@ import java.io.Serializable;
  */
 public class Topic implements Serializable {
 
-	private static final long serialVersionUID = 5804872621152448143L;
-	/**
-	 * topic's unique resource identifier
-	 */
-	private String topicUrn;
-	/**
-	 * topic name
-	 */
-	private String name;
-	/**
-	 * topic's descriptions
-	 */
-	private String displayName;
-	/**
-	 * push policy
-	 */
-	private int pushPolicy;
+    private static final long serialVersionUID = 5804872621152448143L;
+    /**
+     * topic's unique resource identifier
+     */
+    private String topicUrn;
+    /**
+     * topic name
+     */
+    private String name;
+    /**
+     * topic's descriptions
+     */
+    private String displayName;
+    /**
+     * push policy
+     */
+    private int pushPolicy;
 
-	public String getTopicUrn() {
-		return topicUrn;
-	}
+    /**
+     * @return the topicUrn
+     */
+    public String getTopicUrn() {
+        return topicUrn;
+    }
 
-	public void setTopicUrn(String topicUrn) {
-		this.topicUrn = topicUrn;
-	}
+    /**
+     * @param topicUrn
+     *            the topicUrn to set
+     */
+    public void setTopicUrn(String topicUrn) {
+        this.topicUrn = topicUrn;
+    }
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDisplayName() {
-		return displayName;
-	}
+    /**
+     * @return the displayName
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+    /**
+     * @param displayName
+     *            the displayName to set
+     */
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
-	public int getPushPolicy() {
-		return pushPolicy;
-	}
+    /**
+     * @return the pushPolicy
+     */
+    public int getPushPolicy() {
+        return pushPolicy;
+    }
 
-	public void setPushPolicy(int pushPolicy) {
-		this.pushPolicy = pushPolicy;
-	}
+    /**
+     * @param pushPolicy
+     *            the pushPolicy to set
+     */
+    public void setPushPolicy(int pushPolicy) {
+        this.pushPolicy = pushPolicy;
+    }
 
 }

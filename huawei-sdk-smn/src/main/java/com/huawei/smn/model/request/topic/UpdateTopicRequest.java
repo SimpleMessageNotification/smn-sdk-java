@@ -74,20 +74,34 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
+    /**
+     * @return the topicUrn
+     */
     public String getTopicUrn() {
         return topicUrn;
     }
 
+    /**
+     * @param topicUrn
+     *            the topicUrn to set
+     */
     public void setTopicUrn(String topicUrn) {
         this.topicUrn = topicUrn;
+    }
+
+    /**
+     * @return the displayName
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    /**
+     * @param displayName
+     *            the displayName to set
+     */
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     @Override

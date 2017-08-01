@@ -19,60 +19,74 @@ import com.huawei.smn.model.AbstractSmnRequest;
  *
  */
 public class ListTopicAttributesRequest extends AbstractSmnRequest {
-	private static Logger logger = LoggerFactory.getLogger(ListTopicAttributesRequest.class);
-	/**
-	 * topic's unique resource identifier
-	 */
-	private String topicUrn;
-	/**
-	 * attribute name
-	 */
-	private String attributesName;
+    private static Logger logger = LoggerFactory.getLogger(ListTopicAttributesRequest.class);
+    /**
+     * topic's unique resource identifier
+     */
+    private String topicUrn;
+    /**
+     * attribute name
+     */
+    private String attributesName;
 
-	public String getRequestUrl() throws RuntimeException {
-		if (Objects.isNull(getAuthenticationBean()) || StringUtils.isBlank(getAuthenticationBean().getProjectId())) {
-			logger.error("project id is null");
-			throw new RuntimeException();
-		}
-		if (StringUtils.isBlank(getTopicUrn())) {
-			logger.error("topicUrn is null");
-			throw new RuntimeException();
-		}
-		StringBuilder sb = new StringBuilder();
-		sb.append(SmnConstants.SMN_HOST_NAME).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
-				.append(SmnConstants.URL_DELIMITER).append(getAuthenticationBean().getProjectId())
-				.append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER).append(getTopicUrn())
-				.append("/attributes?name=access_policy");
+    public String getRequestUrl() throws RuntimeException {
+        if (Objects.isNull(getAuthenticationBean()) || StringUtils.isBlank(getAuthenticationBean().getProjectId())) {
+            logger.error("project id is null");
+            throw new RuntimeException();
+        }
+        if (StringUtils.isBlank(getTopicUrn())) {
+            logger.error("topicUrn is null");
+            throw new RuntimeException();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(SmnConstants.SMN_HOST_NAME).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
+                .append(SmnConstants.URL_DELIMITER).append(getAuthenticationBean().getProjectId())
+                .append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER).append(getTopicUrn())
+                .append("/attributes?name=access_policy");
 
-		logger.info("Request url is: " + sb.toString());
-		return sb.toString();
-	}
+        logger.info("Request url is: " + sb.toString());
+        return sb.toString();
+    }
 
-	@Override
-	public Map<String, Object> getRequestParameterMap() throws RuntimeException {
-		Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-		return requestParameterMap;
-	}
+    @Override
+    public Map<String, Object> getRequestParameterMap() throws RuntimeException {
+        Map<String, Object> requestParameterMap = new HashMap<String, Object>();
+        return requestParameterMap;
+    }
 
-	public String getTopicUrn() {
-		return topicUrn;
-	}
+    /**
+     * @return the topicUrn
+     */
+    public String getTopicUrn() {
+        return topicUrn;
+    }
 
-	public void setTopicUrn(String topicUrn) {
-		this.topicUrn = topicUrn;
-	}
+    /**
+     * @param topicUrn
+     *            the topicUrn to set
+     */
+    public void setTopicUrn(String topicUrn) {
+        this.topicUrn = topicUrn;
+    }
 
-	public String getAttributesName() {
-		return attributesName;
-	}
+    /**
+     * @return the attributesName
+     */
+    public String getAttributesName() {
+        return attributesName;
+    }
 
-	public void setAttributesName(String attributesName) {
-		this.attributesName = attributesName;
-	}
+    /**
+     * @param attributesName
+     *            the attributesName to set
+     */
+    public void setAttributesName(String attributesName) {
+        this.attributesName = attributesName;
+    }
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 
 }

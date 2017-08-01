@@ -70,18 +70,32 @@ public class SmsPublishRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
+    /**
+     * @return the endpoint
+     */
     public String getEndpoint() {
         return endpoint;
     }
 
+    /**
+     * @param endpoint
+     *            the endpoint to set
+     */
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
     }
 
+    /**
+     * @return the message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * @param message
+     *            the message to set
+     */
     public void setMessage(String message) {
         this.message = message;
     }

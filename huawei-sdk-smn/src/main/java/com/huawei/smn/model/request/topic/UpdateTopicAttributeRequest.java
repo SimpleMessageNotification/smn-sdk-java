@@ -92,26 +92,47 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
         return false;
     }
 
+    /**
+     * @return the attributesName
+     */
     public String getAttributesName() {
         return attributesName;
     }
 
+    /**
+     * @param attributesName
+     *            the attributesName to set
+     */
     public void setAttributesName(String attributesName) {
         this.attributesName = attributesName;
     }
 
+    /**
+     * @return the topicUrn
+     */
     public String getTopicUrn() {
         return topicUrn;
     }
 
+    /**
+     * @param topicUrn
+     *            the topicUrn to set
+     */
     public void setTopicUrn(String topicUrn) {
         this.topicUrn = topicUrn;
     }
 
+    /**
+     * @return the acessPolicy
+     */
     public LinkedHashMap<String, Object> getAcessPolicy() {
         return acessPolicy;
     }
 
+    /**
+     * @param acessPolicy
+     *            the acessPolicy to set
+     */
     public void setAcessPolicy(LinkedHashMap<String, Object> acessPolicy) {
         this.acessPolicy = acessPolicy;
     }

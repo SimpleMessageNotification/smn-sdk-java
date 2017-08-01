@@ -69,20 +69,34 @@ public class QueryTopicDetailRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }
-
+    /**
+     * @return the topicUrn
+     */
     public String getTopicUrn() {
         return topicUrn;
     }
 
+    /**
+     * @param topicUrn
+     *            the topicUrn to set
+     */
     public void setTopicUrn(String topicUrn) {
         this.topicUrn = topicUrn;
+    }
+
+    /**
+     * @return the endpoint
+     */
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    /**
+     * @param endpoint
+     *            the endpoint to set
+     */
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
     }
 
     @Override

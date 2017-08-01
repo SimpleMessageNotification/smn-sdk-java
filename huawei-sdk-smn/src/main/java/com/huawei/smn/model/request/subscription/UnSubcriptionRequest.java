@@ -18,49 +18,56 @@ import com.huawei.smn.model.AbstractSmnRequest;
  *
  */
 public class UnSubcriptionRequest extends AbstractSmnRequest {
-	private static Logger logger = LoggerFactory.getLogger(UnSubcriptionRequest.class);
-	/**
-	 * subscripter's unique resource identifier
-	 */
-	private String subscriptionUrn;
+    private static Logger logger = LoggerFactory.getLogger(UnSubcriptionRequest.class);
+    /**
+     * subscripter's unique resource identifier
+     */
+    private String subscriptionUrn;
 
-	@Override
-	public String getRequestUrl() throws RuntimeException {
-		if (StringUtils.isBlank(getAuthenticationBean().getProjectId())) {
-			logger.error("project id is null");
-			throw new RuntimeException();
-		}
-		if (StringUtils.isBlank(getSubscriptionUrn())) {
-			logger.error("getSubscriptionUrn() is null");
-			throw new RuntimeException();
-		}
-		StringBuilder sb = new StringBuilder();
-		sb.append(SmnConstants.SMN_HOST_NAME).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
-				.append(SmnConstants.URL_DELIMITER).append(getAuthenticationBean().getProjectId())
-				.append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
-				.append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUBSCRIPTIONS)
-				.append(SmnConstants.URL_DELIMITER).append(getSubscriptionUrn());
-		logger.info("Request url is: " + sb.toString());
-		return sb.toString();
-	}
+    @Override
+    public String getRequestUrl() throws RuntimeException {
+        if (StringUtils.isBlank(getAuthenticationBean().getProjectId())) {
+            logger.error("project id is null");
+            throw new RuntimeException();
+        }
+        if (StringUtils.isBlank(getSubscriptionUrn())) {
+            logger.error("getSubscriptionUrn() is null");
+            throw new RuntimeException();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(SmnConstants.SMN_HOST_NAME).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
+                .append(SmnConstants.URL_DELIMITER).append(getAuthenticationBean().getProjectId())
+                .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
+                .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUBSCRIPTIONS)
+                .append(SmnConstants.URL_DELIMITER).append(getSubscriptionUrn());
+        logger.info("Request url is: " + sb.toString());
+        return sb.toString();
+    }
 
-	@Override
-	public Map<String, Object> getRequestParameterMap() {
-		Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-		return requestParameterMap;
-	}
+    @Override
+    public Map<String, Object> getRequestParameterMap() {
+        Map<String, Object> requestParameterMap = new HashMap<String, Object>();
+        return requestParameterMap;
+    }
 
-	public String getSubscriptionUrn() {
-		return subscriptionUrn;
-	}
+    /**
+     * @return the subscriptionUrn
+     */
+    public String getSubscriptionUrn() {
+        return subscriptionUrn;
+    }
 
-	public void setSubscriptionUrn(String subscriptionUrn) {
-		this.subscriptionUrn = subscriptionUrn;
-	}
+    /**
+     * @param subscriptionUrn
+     *            the subscriptionUrn to set
+     */
+    public void setSubscriptionUrn(String subscriptionUrn) {
+        this.subscriptionUrn = subscriptionUrn;
+    }
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 
 }
