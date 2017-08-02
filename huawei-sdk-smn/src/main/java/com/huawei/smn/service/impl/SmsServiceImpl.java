@@ -1,8 +1,24 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.service.impl;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,26 +31,15 @@ import com.huawei.smn.service.SmsService;
  * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
 public class SmsServiceImpl implements SmsService {
     /**
      * LOGGER
      */
-    private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
-    /**
-     * encapsulated request
-     */
-    private SmnRequest smnRequest = null;
-
-    /**
-     * init
-     */
-    public void init() {
-        if (StringUtils.isBlank(smnRequest.getRequestUrl())) {
-            logger.error("Request url is null.");
-            throw new RuntimeException("Request url is null.");
-        }
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
 
     /**
      * send sms directly
@@ -44,31 +49,19 @@ public class SmsServiceImpl implements SmsService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> smsPublish() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> smsPublish(SmnRequest smnRequest) throws RuntimeException {
         try {
-            init();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
             Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, smnRequest.getRequestUrl());
-            logger.info("End to send sms. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
         } catch (RuntimeException e) {
+            LOGGER.error("Failed to send sms.", e);
             throw e;
         } catch (Exception e) {
-            logger.error("Failed to send sms.", e);
+            LOGGER.error("Failed to send sms.", e);
             throw new RuntimeException("Failed to send sms.", e);
         }
-    }
-
-    @Override
-    public void setSmnRequest(SmnRequest smnRequest) {
-        this.smnRequest = smnRequest;
-    }
-
-    public SmnRequest getSmnRequest() {
-        return smnRequest;
     }
 
 }

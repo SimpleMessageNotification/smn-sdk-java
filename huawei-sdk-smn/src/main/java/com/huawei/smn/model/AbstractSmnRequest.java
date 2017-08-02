@@ -1,3 +1,20 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.model;
 
 import java.util.HashMap;
@@ -6,92 +23,21 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.huawei.smn.common.SmnConfiguration;
 import com.huawei.smn.common.SmnConstants;
-import com.huawei.smn.common.utils.SmnConfiguration;
-import com.huawei.smn.service.impl.IAMServiceImpl;
 
 /**
- * Abstract class for smn request,encapsulate request's common methods:request
- * header,IAM ,IAM url address
- * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
 public abstract class AbstractSmnRequest implements SmnRequest {
 
-    private static Logger logger = LoggerFactory.getLogger(AbstractSmnRequest.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(AbstractSmnRequest.class);
 
-    private static AuthenticationBean authenticationBean = null;
-
-    private static IAMServiceImpl iamService = null;
-
-    public void init() throws RuntimeException {
-        getAuthenticationBean();
-    }
-
-    /**
-     * get IAM service
-     */
-    @Override
-    public IAMServiceImpl getIamService() {
-        if (iamService == null) {
-            SmnConfiguration smnConfiguration = new SmnConfiguration();
-            iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
-                    smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), smnConfiguration.getIamUrl());
-        }
-        return iamService;
-    }
-
-    /**
-     * when property's configuration changed, refresh and get IAM service
-     */
-    @Override
-    public IAMServiceImpl refreshIamService() {
-        SmnConfiguration smnConfiguration = new SmnConfiguration();
-        iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
-                smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), smnConfiguration.getIamUrl());
-        return iamService;
-    }
-
-    /**
-     * get authentication POJO
-     */
-    @Override
-    public AuthenticationBean getAuthenticationBean() throws RuntimeException {
-        authenticationBean = checkAuthenticationBean();
-        return authenticationBean;
-    }
-
-    /**
-     * check user's authentication
-     * 
-     * @return
-     * @throws RuntimeException
-     */
-    protected AuthenticationBean checkAuthenticationBean() throws RuntimeException {
-        if (authenticationBean == null) {
-            // may in concurrent
-            synchronized (AbstractSmnRequest.class) {
-                if (authenticationBean == null) {
-                    logger.debug("AuthInfo is null. Try to get it.");
-                    // get correct bean ,or throw exception
-                    authenticationBean = getIamService().getAuthentication();
-                }
-            }
-        } else {
-            // if expired
-            if (authenticationBean.isExpired()) {
-                synchronized (AbstractSmnRequest.class) {
-                    if (authenticationBean.isExpired()) {
-                        logger.info("AuthInfo is expired. Try to get it. Old authInfo is {}.", authenticationBean);
-                        // get correct bean ,or throw exception
-                        authenticationBean = getIamService().getAuthentication();
-                    }
-                }
-            }
-        }
-        return authenticationBean;
-    }
+    SmnConfiguration smnConfiguration;
 
     /**
      * Build common http's request header
@@ -99,10 +45,11 @@ public abstract class AbstractSmnRequest implements SmnRequest {
     @Override
     public Map<String, String> getRequestHeaderMap() throws RuntimeException {
         Map<String, String> requestHeaderMap = new HashMap<String, String>();
-        requestHeaderMap.put(SmnConstants.REGION_TAG, SmnConstants.DEFAULT_REGION);
-        requestHeaderMap.put(SmnConstants.X_PROJECT_ID, getAuthenticationBean().getProjectId());
-        requestHeaderMap.put(SmnConstants.X_AUTH_TOKEN, getAuthenticationBean().getAuthToken());
+        requestHeaderMap.put(SmnConstants.REGION_TAG, smnConfiguration.getRegionId());
+        requestHeaderMap.put(SmnConstants.X_PROJECT_ID, smnConfiguration.getAuthenticationBean().getProjectId());
+        requestHeaderMap.put(SmnConstants.X_AUTH_TOKEN, smnConfiguration.getAuthenticationBean().getAuthToken());
         requestHeaderMap.put(SmnConstants.CONTENT_TYPE_TAG, "application/json");
+        LOGGER.debug(requestHeaderMap.toString());
         return requestHeaderMap;
     }
 
@@ -115,5 +62,21 @@ public abstract class AbstractSmnRequest implements SmnRequest {
      * Get request body parameters from different API
      */
     public abstract Map<String, Object> getRequestParameterMap();
+
+    /**
+     * inject system configuration
+     */
+    public void setSmnConfiguration(SmnConfiguration smnConfiguration) {
+        this.smnConfiguration = smnConfiguration;
+    }
+
+    /**
+     * get system configuration
+     * 
+     * @return
+     */
+    protected SmnConfiguration getSmnConfiguration() {
+        return this.smnConfiguration;
+    }
 
 }
