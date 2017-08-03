@@ -1,13 +1,38 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.service.impl;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.utils.HttpUtil;
-import com.huawei.smn.model.SmnRequest;
+import com.huawei.smn.model.request.topic.CreateTopicRequest;
+import com.huawei.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
+import com.huawei.smn.model.request.topic.DeleteTopicAttributesRequest;
+import com.huawei.smn.model.request.topic.DeleteTopicRequest;
+import com.huawei.smn.model.request.topic.ListTopicAttributesRequest;
+import com.huawei.smn.model.request.topic.ListTopicsRequest;
+import com.huawei.smn.model.request.topic.QueryTopicDetailRequest;
+import com.huawei.smn.model.request.topic.UpdateTopicAttributeRequest;
+import com.huawei.smn.model.request.topic.UpdateTopicRequest;
+import com.huawei.smn.service.AbstractCommonService;
 import com.huawei.smn.service.TopicService;
 
 /**
@@ -15,27 +40,25 @@ import com.huawei.smn.service.TopicService;
  * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
-public class TopicServiceImpl implements TopicService {
+public class TopicServiceImpl extends AbstractCommonService implements TopicService {
     /**
      * LOGGER
      */
-    private static final Logger logger = LoggerFactory.getLogger(TopicServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
 
     /**
-     * encapsulated request
+     * smn host url
      */
-    private SmnRequest smnRequest = null;
+    private String smnEndpoint;
 
     /**
-     * init
+     * project id
      */
-    public void init() {
-        if (StringUtils.isBlank(smnRequest.getRequestUrl())) {
-            logger.error("Request url is null.");
-            throw new RuntimeException("Request url is null.");
-        }
-    }
+    private String projectId;
 
     /**
      * create topic
@@ -45,21 +68,21 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> createTopic() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> createTopic(CreateTopicRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
-            Map<String, Object> responseMap = HttpUtil.post(smnRequest.getRequestHeaderMap(),
-                    smnRequest.getRequestParameterMap(), url);
-            logger.info("End to create topic. RequestId is {}. TopicUrn is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap.get("topic_urn"),
-                    System.currentTimeMillis() - startTime);
+
+            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
+            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to create topic.", e);
+            LOGGER.error("Fail to create topic.", e);
             throw new RuntimeException("Fail to create topic.", e);
         }
     }
@@ -72,21 +95,19 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> deleteTopic() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            logger.info("End to delete topic. RequestId is {}. TopicUrn is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap.get("topic_urn"),
-                    System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to delete topic.", e);
+            LOGGER.error("Fail to delete topic.", e);
             throw new RuntimeException("Fail to delete topic.", e);
         }
     }
@@ -99,20 +120,19 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> listTopics() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> listTopics(ListTopicsRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            logger.info("End to list topic. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to list topic.", e);
+            LOGGER.error("Fail to list topic.", e);
             throw new RuntimeException("Fail to list topic.", e);
         }
     }
@@ -125,20 +145,19 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> queryTopicDetail() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            logger.info("End to query topic. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to query topic.", e);
+            LOGGER.error("Fail to query topic.", e);
             throw new RuntimeException("Fail to query topic.", e);
         }
     }
@@ -151,21 +170,20 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> updateTopic() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException {
         try {
-            init();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-            Map<String, Object> responseMap = HttpUtil.put(requestHeader, requestParam, smnRequest.getRequestUrl());
-            logger.info("End to update topic. RequestId is {}. TopicUrn is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap.get("topic_urn"),
-                    System.currentTimeMillis() - startTime);
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
+            Map<String, Object> responseMap = HttpUtil.put(requestHeader, requestParam, url);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to update topic.", e);
+            LOGGER.error("Fail to update topic.", e);
             throw new RuntimeException("Fail to update topic.", e);
         }
     }
@@ -178,20 +196,19 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> listTopicAttributes() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            logger.info("End to list topic attributes. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to list topic attributes.", e);
+            LOGGER.error("Fail to list topic attributes.", e);
             throw new RuntimeException("Fail to list topic attributes.", e);
         }
     }
@@ -204,21 +221,20 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> updateTopicAttribute() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.put(requestHeader, requestParam, url);
-            logger.info("End to update topic attributes. responseMap is {}.Cost is {}ms", responseMap,
-                    System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to update topic attributes.", e);
+            LOGGER.error("Fail to update topic attributes.", e);
             throw new RuntimeException("Fail to update topic attributes.", e);
         }
     }
@@ -231,19 +247,20 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> deleteTopicAttributeByName() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
+            throws RuntimeException {
         try {
-            init();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-            Map<String, Object> responseMap = HttpUtil.delete(requestHeader, smnRequest.getRequestUrl());
-            logger.info("End to send delete topic attributes by name. RequestId is {}. MessageId is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
+            Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to delete topic attributes by name.", e);
+            LOGGER.error("Fail to delete topic attributes by name.", e);
             throw new RuntimeException("Fail to delete topic attributes by name.", e);
         }
     }
@@ -256,30 +273,22 @@ public class TopicServiceImpl implements TopicService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> deleteTopicAttributes() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException {
+
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            logger.info("End to delete topic attributes. RequestId is {}. MessageId is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Fail to delete topic attributes.", e);
+            LOGGER.error("Fail to delete topic attributes.", e);
             throw new RuntimeException("Fail to delete topic attributes.", e);
         }
     }
 
-    @Override
-    public void setSmnRequest(SmnRequest smnRequest) {
-        this.smnRequest = smnRequest;
-    }
-
-    public SmnRequest getSmnRequest() {
-        return smnRequest;
-    }
 }

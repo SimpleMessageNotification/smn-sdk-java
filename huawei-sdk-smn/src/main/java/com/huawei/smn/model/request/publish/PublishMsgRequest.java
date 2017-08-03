@@ -1,3 +1,20 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.model.request.publish;
 
 import java.util.HashMap;
@@ -5,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,70 +29,79 @@ import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
- * publish message with three ways: --with json structure, --with message
- * template,--with common string message
- * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
 public class PublishMsgRequest extends AbstractSmnRequest {
-    private static Logger logger = LoggerFactory.getLogger(PublishMsgRequest.class);
+
+    private static Logger LOGGER = LoggerFactory.getLogger(PublishMsgRequest.class);
 
     /**
      * topic's unique resource identifier
      */
     private String topicUrn;
+
     /**
      * message's title, will be the subject when sent to mail subscribers
      */
     private String subject;
+
     /**
      * label tag in message template,custom label by user
      */
     private Map<String, Object> tags;
+
     /**
      * message template name
      */
     private String messageTemplateName;
+
     /**
      * message structure string with Json
      */
     private String messageStructure;
+
     /**
      * message to send
      */
     private String message;
 
-    public PublishMsgRequest() {
-    }
+    /**
+     * smn endpoint
+     */
+    private String smnEndpoint;
 
-    public PublishMsgRequest(String topicUrn, String subject, Map<String, Object> tags, String messageTemplateName,
-            String messageStructure, String message, Map<String, Object> requestParameterMap) {
-        super();
-        this.topicUrn = topicUrn;
-        this.subject = subject;
-        this.tags = tags;
-        this.messageTemplateName = messageTemplateName;
-        this.messageStructure = messageStructure;
-        this.message = message;
-    }
+    /**
+     * project id
+     */
+    private String projectId;
 
+    /**
+     * xAuthToken
+     */
+    private String xAuthToken;
+
+    /**
+     * build and get request url
+     */
     @Override
-    public String getRequestUrl() throws RuntimeException {
-        if (Objects.isNull(getAuthenticationBean()) || StringUtils.isBlank(getAuthenticationBean().getProjectId())) {
-            logger.error("project id is null");
+    public String getRequestUri() throws RuntimeException {
+        if (StringUtils.isBlank(getProjectId()) || StringUtils.isBlank(getSmnEndpoint())) {
+            LOGGER.error("Building request url parameters error");
             throw new RuntimeException();
         }
         if (StringUtils.isBlank(getTopicUrn())) {
-            logger.error("getTopicUrn() is null");
+            LOGGER.error("getTopicUrn() is null");
             throw new RuntimeException();
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(SmnConstants.SMN_HOST_NAME).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
-                .append(SmnConstants.URL_DELIMITER).append(getAuthenticationBean().getProjectId())
-                .append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER).append(getTopicUrn())
-                .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_PUBLISH);
-        logger.info("Request url is: " + sb.toString());
+        sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(getTopicUrn()).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_PUBLISH);
+        LOGGER.info("Request url is: " + sb.toString());
         return sb.toString();
     }
 
@@ -102,18 +127,18 @@ public class PublishMsgRequest extends AbstractSmnRequest {
         // message structure has highest priority
         if (StringUtils.isNoneBlank(getMessageStructure())) {
             requestParameterMap.put("message_structure", getMessageStructure());
-            logger.info(requestParameterMap.toString());
+            LOGGER.info(requestParameterMap.toString());
             return requestParameterMap;
         }
         // message template has secondary priority
         if (StringUtils.isNoneBlank(getMessageTemplateName())) {
             if (Objects.isNull(getTags())) {
-                logger.error("Tags is null");
+                LOGGER.error("Tags is null");
                 throw new RuntimeException();
             }
             requestParameterMap.put("message_template_name", getMessageTemplateName());
             requestParameterMap.put("tags", getTags());
-            logger.info(requestParameterMap.toString());
+            LOGGER.info(requestParameterMap.toString());
             return requestParameterMap;
         }
         // common message ,least priority
@@ -121,7 +146,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
             throw new RuntimeException("Message is null");
         }
         requestParameterMap.put("message", getMessage());
-        logger.info("message: " + getMessage());
+        LOGGER.info("message: " + getMessage());
         return requestParameterMap;
     }
 
@@ -215,8 +240,61 @@ public class PublishMsgRequest extends AbstractSmnRequest {
         this.message = message;
     }
 
+    /**
+     * @return the smnEndpoint
+     */
+    public String getSmnEndpoint() {
+        return smnEndpoint;
+    }
+
+    /**
+     * @param smnEndpoint
+     *            the smnEndpoint to set
+     */
+    public void setSmnEndpoint(String smnEndpoint) {
+        this.smnEndpoint = smnEndpoint;
+    }
+
+    /**
+     * @return the projectId
+     */
+    public String getProjectId() {
+        return projectId;
+    }
+
+    /**
+     * @param projectId
+     *            the projectId to set
+     */
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    /**
+     * @return the xAuthToken
+     */
+    public String getxAuthToken() {
+        return xAuthToken;
+    }
+
+    @Override
+    public void setxAuthToken(String xAuthToken) {
+        this.xAuthToken = xAuthToken;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this);
+        StringBuilder builder = new StringBuilder();
+        builder.append("PublishMsgRequest [topicUrn=").append(topicUrn).append(", subject=").append(subject)
+                .append(", tags=").append(tags).append(", messageTemplateName=").append(messageTemplateName)
+                .append(", messageStructure=").append(messageStructure).append(", message=").append(message)
+                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
+                .append(", xAuthToken=").append(xAuthToken).append("]");
+        return builder.toString();
     }
+
 }

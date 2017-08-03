@@ -18,7 +18,6 @@
 package com.huawei.smn.service;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +70,7 @@ public abstract class AbstractCommonService implements CommonService {
     /**
      * get iamService
      * 
-     * @return
+     * @return iamService
      */
     protected IAMService getIAMService() {
 
@@ -90,14 +89,21 @@ public abstract class AbstractCommonService implements CommonService {
     /**
      * request for authenticationBean
      * 
-     * @return
+     * @return AuthenticationBean
+     *         {@value} authToken
+     *         {@value} projectId
+     *         {@value} expiresAt
+     *         {@value} expiresTime
      */
     protected AuthenticationBean getAuthenticationBean() {
-
-        if (Objects.nonNull(iamService)) {
-            authenticationBean = iamService.getAuthentication();
+        // 获取authenticationBean线程安全
+        if (null == authenticationBean) {
+            synchronized (this) {
+                if (authenticationBean == null) {
+                    authenticationBean = iamService.getAuthentication();
+                }
+            }
         }
-
         return authenticationBean;
     }
 
@@ -105,10 +111,29 @@ public abstract class AbstractCommonService implements CommonService {
      * build request header
      * 
      * @param requestHeader
+     *            {@value}region
+     *            {@value}X-Project-Id
+     *            {@value}X-Auth-Token
+     *            {@value}content-type
      */
     protected void buildRequestHeader(Map<String, String> requestHeader) {
+        if (null == getAuthenticationBean()) {
+            throw new RuntimeException("The authenticationBean is null");
+        }
         requestHeader.put(SmnConstants.REGION_TAG, smnConfiguration.getRegionId());
         requestHeader.put(SmnConstants.X_PROJECT_ID, getAuthenticationBean().getProjectId());
         requestHeader.put(SmnConstants.X_AUTH_TOKEN, getAuthenticationBean().getAuthToken());
+    }
+
+    /**
+     * build request url
+     * 
+     * @param uri
+     * @return url
+     */
+    protected String buildRequestUrl(String uri) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(smnConfiguration.getSmnEndpoint()).append(uri);
+        return sb.toString();
     }
 }

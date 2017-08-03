@@ -1,13 +1,30 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.service.impl;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.utils.HttpUtil;
-import com.huawei.smn.model.SmnRequest;
+import com.huawei.smn.model.request.publish.PublishMsgRequest;
+import com.huawei.smn.service.AbstractCommonService;
 import com.huawei.smn.service.PublishService;
 
 /**
@@ -15,30 +32,25 @@ import com.huawei.smn.service.PublishService;
  * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
-public class PublishServiceImpl implements PublishService {
+public class PublishServiceImpl extends AbstractCommonService implements PublishService {
     /**
      * LOGGER
      */
-    private static final Logger logger = LoggerFactory.getLogger(PublishServiceImpl.class);
-    /**
-     * encapsulated request
-     */
-    private SmnRequest smnRequest = null;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PublishServiceImpl.class);
 
     /**
-     * init
+     * smn host url
      */
-    public void init() {
-        if (StringUtils.isBlank(smnRequest.getRequestUrl())) {
-            logger.error("Request url is null.");
-            throw new RuntimeException("Request url is null.");
-        }
-        if (smnRequest.getIamService() == null) {
-            logger.error("IamService is null.");
-            throw new RuntimeException("IamService is null.");
-        }
-    }
+    private String smnEndpoint;
+
+    /**
+     * project id
+     */
+    private String projectId;
 
     /**
      * message publish
@@ -48,32 +60,22 @@ public class PublishServiceImpl implements PublishService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> publish() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> publish(PublishMsgRequest smnRequest) throws RuntimeException {
         try {
-            init();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, smnRequest.getRequestUrl());
-            logger.info("End to publish message. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
+            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to publish message.", e);
+            LOGGER.error("Failed to publish message.", e);
             throw new RuntimeException("Failed to publish message.", e);
         }
-    }
-
-    @Override
-    public void setSmnRequest(SmnRequest smnRequest) {
-        this.smnRequest = smnRequest;
-
-    }
-
-    public SmnRequest getSmnRequest() {
-        return smnRequest;
     }
 
 }

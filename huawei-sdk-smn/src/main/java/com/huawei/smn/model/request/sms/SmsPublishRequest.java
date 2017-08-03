@@ -67,23 +67,33 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     private String projectId;
 
+    /**
+     * xAuthToken
+     */
+    private String xAuthToken;
+
     @Override
-    public String getRequestUrl() {
+    public String getRequestUri() {
         if (StringUtils.isBlank(getProjectId()) || StringUtils.isBlank(getSmnEndpoint())) {
-            LOGGER.error("Building request url parameters error");
+            LOGGER.error("Building publish sms request url parameters error");
             throw new RuntimeException();
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(getSmnEndpoint()).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
-                .append(SmnConstants.URL_DELIMITER).append(getProjectId()).append(SmnConstants.URL_DELIMITER)
-                .append(SmnConstants.SMN_NOTIFICATIONS).append(SmnConstants.URL_DELIMITER)
-                .append(SmnConstants.SMN_SUB_PROTOCOL_SMS);
+        sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
+                .append(getProjectId()).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
+                .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUB_PROTOCOL_SMS);
         LOGGER.info("Request url is: " + sb.toString());
         return sb.toString();
     }
 
     /**
-     * build and get request url
+     * build and get request parameters
+     * 
+     * @return Map
+     *         {@value}endpoint
+     *         {@value}message
+     *         {@value optional}sign_id
+     * 
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
@@ -208,6 +218,21 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    /**
+     * @return the xAuthToken
+     */
+    public String getxAuthToken() {
+        return xAuthToken;
+    }
+
+    /**
+     * @param xAuthToken
+     *            the xAuthToken to set
+     */
+    public void setxAuthToken(String xAuthToken) {
+        this.xAuthToken = xAuthToken;
     }
 
     /*

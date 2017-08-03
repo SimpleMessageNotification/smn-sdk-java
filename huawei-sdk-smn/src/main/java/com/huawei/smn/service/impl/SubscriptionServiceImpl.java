@@ -1,13 +1,33 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.service.impl;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.utils.HttpUtil;
-import com.huawei.smn.model.SmnRequest;
+import com.huawei.smn.model.request.subscription.ListSubscriptionsByTopicRequest;
+import com.huawei.smn.model.request.subscription.ListSubscriptionsRequest;
+import com.huawei.smn.model.request.subscription.SubcriptionRequest;
+import com.huawei.smn.model.request.subscription.UnSubcriptionRequest;
+import com.huawei.smn.service.AbstractCommonService;
 import com.huawei.smn.service.SubscriptionService;
 
 /**
@@ -15,27 +35,25 @@ import com.huawei.smn.service.SubscriptionService;
  * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
-public class SubscriptionServiceImpl implements SubscriptionService {
+public class SubscriptionServiceImpl extends AbstractCommonService implements SubscriptionService {
     /**
      * LOGGER
      */
-    private static final Logger logger = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
 
     /**
-     * init
+     * smn host url
      */
-    public void init() {
-        if (StringUtils.isBlank(smnRequest.getRequestUrl())) {
-            logger.error("Request url is null.");
-            throw new RuntimeException("Request url is null.");
-        }
-    }
+    private String smnEndpoint;
 
     /**
-     * encapsulated request
+     * project id
      */
-    private SmnRequest smnRequest = null;
+    private String projectId;
 
     /**
      * 订阅
@@ -45,21 +63,21 @@ public class SubscriptionServiceImpl implements SubscriptionService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> subscribe() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> subscribe(SubcriptionRequest smnRequest) throws RuntimeException {
+
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
-            logger.info("End to subscribe. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to subscribe.", e);
+            LOGGER.error("Failed to subscribe.", e);
             throw new RuntimeException("Failed to subscribe.", e);
         }
     }
@@ -72,20 +90,20 @@ public class SubscriptionServiceImpl implements SubscriptionService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> unsubscribe() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> unsubscribe(UnSubcriptionRequest smnRequest) throws RuntimeException {
+
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            logger.info("End to unsubscribe. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to unsubscribe.", e);
+            LOGGER.error("Failed to unsubscribe.", e);
             throw new RuntimeException("Failed to unsubscribe.", e);
         }
     }
@@ -98,20 +116,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> listSubscriptions() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> listSubscriptions(ListSubscriptionsRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            logger.info("End to list subscriptions. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to list subscriptions.", e);
+            LOGGER.error("Failed to list subscriptions.", e);
             throw new RuntimeException("Failed to list subscriptions.", e);
         }
     }
@@ -124,31 +141,22 @@ public class SubscriptionServiceImpl implements SubscriptionService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> listSubscriptionsByTopic() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> listSubscriptionsByTopic(ListSubscriptionsByTopicRequest smnRequest)
+            throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            logger.info("End to list subscriptions by topic. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to list subscriptions by topic.", e);
+            LOGGER.error("Failed to list subscriptions by topic.", e);
             throw new RuntimeException("Failed to list subscriptions by topic.", e);
         }
-    }
-
-    @Override
-    public void setSmnRequest(SmnRequest smnRequest) {
-        this.smnRequest = smnRequest;
-    }
-
-    public SmnRequest getSmnRequest() {
-        return smnRequest;
     }
 
 }

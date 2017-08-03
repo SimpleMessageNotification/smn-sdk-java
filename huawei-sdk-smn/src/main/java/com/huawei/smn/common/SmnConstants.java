@@ -108,13 +108,9 @@ public interface SmnConstants {
      */
     String SMN_TOPIC_URI = "/notifications/topics";
     /**
-     * v1 version
-     */
-    String V2_VERSION = "v2";
-    /**
      * v2 version
      */
-    String V1_VERSION = "v1";
+    String V2_VERSION = "v2";
     /**
      * user name
      */

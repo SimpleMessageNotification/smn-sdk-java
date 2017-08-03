@@ -32,22 +32,43 @@ public interface SmnRequest {
     /**
      * get smn request's url
      * 
-     * @return
+     * @return uri
+     *         example /v2/cffe4fc4c9a54219b6f7b586e132/notifications/sms
      */
-    String getRequestUrl();
+    String getRequestUri();
 
     /**
      * get the request parameters of smn
      * 
-     * @return
+     * @return Map
      */
     Map<String, Object> getRequestParameterMap();
 
     /**
      * get the request header's parameters of smn
      * 
-     * @return
+     * @return Map
+     *         {@value} Content-Type
+     *         {@value} X-Auth-Token
+     *         {@value} region
+     *         {@value} X-Project-Id
      */
     Map<String, String> getRequestHeaderMap();
+
+    /**
+     * set projectID
+     * RequestParameterMap and RequestUri depend
+     * 
+     * @param projectId
+     */
+    void setProjectId(String projectId);
+
+    /**
+     * set xAuthToken
+     * RequestUri depends
+     * 
+     * @param xAuthToken
+     */
+    void setxAuthToken(String xAuthToken);
 
 }

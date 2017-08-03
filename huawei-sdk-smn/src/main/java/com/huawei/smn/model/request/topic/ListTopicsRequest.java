@@ -19,10 +19,8 @@ package com.huawei.smn.model.request.topic;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,13 +28,16 @@ import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
- * Query topic
- * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
 public class ListTopicsRequest extends AbstractSmnRequest {
-    private static Logger logger = LoggerFactory.getLogger(ListTopicsRequest.class);
+
+    private static Logger LOGGER = LoggerFactory.getLogger(ListTopicsRequest.class);
+
     /**
      * paging list's starting page,default 0
      */
@@ -46,15 +47,32 @@ public class ListTopicsRequest extends AbstractSmnRequest {
      */
     private int limit;
 
-    public String getRequestUrl() throws RuntimeException {
-        if (Objects.isNull(getAuthenticationBean()) || StringUtils.isBlank(getAuthenticationBean().getProjectId())) {
-            logger.error("project id is null");
+    /**
+     * smn endpoint
+     */
+    private String smnEndpoint;
+
+    /**
+     * project id
+     */
+    private String projectId;
+
+    /**
+     * xAuthToken
+     */
+    private String xAuthToken;
+
+    /**
+     * build and get request url
+     */
+    public String getRequestUri() throws RuntimeException {
+        if (StringUtils.isBlank(getProjectId()) || StringUtils.isBlank(getSmnEndpoint())) {
+            LOGGER.error("Building request url parameters error");
             throw new RuntimeException();
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(SmnConstants.SMN_HOST_NAME).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
-                .append(SmnConstants.URL_DELIMITER).append(getAuthenticationBean().getProjectId())
-                .append(SmnConstants.SMN_TOPIC_URI);
+        sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI);
 
         if (getOffset() > 0) {
             sb.append("?offset=" + getOffset());
@@ -66,10 +84,13 @@ public class ListTopicsRequest extends AbstractSmnRequest {
         } else {
             sb.append("&limit=").append("100");
         }
-        logger.info("Request url is: " + sb.toString());
+        LOGGER.info("Request url is: " + sb.toString());
         return sb.toString();
     }
 
+    /**
+     * build and get request parameters
+     */
     @Override
     public Map<String, Object> getRequestParameterMap() throws RuntimeException {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
@@ -110,9 +131,59 @@ public class ListTopicsRequest extends AbstractSmnRequest {
         }
     }
 
+    /**
+     * @return the smnEndpoint
+     */
+    public String getSmnEndpoint() {
+        return smnEndpoint;
+    }
+
+    /**
+     * @param smnEndpoint
+     *            the smnEndpoint to set
+     */
+    public void setSmnEndpoint(String smnEndpoint) {
+        this.smnEndpoint = smnEndpoint;
+    }
+
+    /**
+     * @return the projectId
+     */
+    public String getProjectId() {
+        return projectId;
+    }
+
+    /**
+     * @param projectId
+     *            the projectId to set
+     */
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    /**
+     * @return the xAuthToken
+     */
+    public String getxAuthToken() {
+        return xAuthToken;
+    }
+
+    @Override
+    public void setxAuthToken(String xAuthToken) {
+        this.xAuthToken = xAuthToken;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this);
+        StringBuilder builder = new StringBuilder();
+        builder.append("ListTopicsRequest [offset=").append(offset).append(", limit=").append(limit)
+                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
+                .append(", xAuthToken=").append(xAuthToken).append("]");
+        return builder.toString();
     }
 
 }

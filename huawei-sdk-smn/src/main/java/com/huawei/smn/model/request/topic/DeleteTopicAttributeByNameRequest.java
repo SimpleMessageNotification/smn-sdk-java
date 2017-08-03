@@ -1,11 +1,26 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.model.request.topic;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,14 +28,16 @@ import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
- * Delete designated attribute's topic
- * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
 public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
 
-    private static Logger logger = LoggerFactory.getLogger(DeleteTopicAttributeByNameRequest.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(DeleteTopicAttributeByNameRequest.class);
+
     /**
      * topic's unique resource identifier
      */
@@ -30,29 +47,50 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
      */
     private String attributesName;
 
-    public String getRequestUrl() throws RuntimeException {
-        if (Objects.isNull(getAuthenticationBean()) || StringUtils.isBlank(getAuthenticationBean().getProjectId())) {
-            logger.error("project id is null");
+    /**
+     * smn endpoint
+     */
+    private String smnEndpoint;
+
+    /**
+     * project id
+     */
+    private String projectId;
+
+    /**
+     * xAuthToken
+     */
+    private String xAuthToken;
+
+    /**
+     * build and get request url
+     */
+    public String getRequestUri() throws RuntimeException {
+        if (StringUtils.isBlank(getProjectId()) || StringUtils.isBlank(getSmnEndpoint())) {
+            LOGGER.error("Building request url parameters error");
             throw new RuntimeException();
         }
         if (StringUtils.isBlank(getTopicUrn())) {
-            logger.error("getTopicUrn() is null");
+            LOGGER.error("getTopicUrn() is null");
             throw new RuntimeException();
         }
         if (StringUtils.isBlank(getAttributesName()) || !isValidAttributeName(getAttributesName())) {
-            logger.error("Attributte name is null or is not valid");
+            LOGGER.error("Attributte name is null or is not valid");
             throw new RuntimeException();
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(SmnConstants.SMN_HOST_NAME).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
-                .append(SmnConstants.URL_DELIMITER).append(getAuthenticationBean().getProjectId())
-                .append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER).append(getTopicUrn())
-                .append("/attributes").append(SmnConstants.URL_DELIMITER).append(getAttributesName());
+        sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(getTopicUrn()).append("/attributes").append(SmnConstants.URL_DELIMITER)
+                .append(getAttributesName());
 
-        logger.info("delete topic url is: " + sb.toString());
+        LOGGER.info("delete topic url is: " + sb.toString());
         return sb.toString();
     }
 
+    /**
+     * build and get request parameters
+     */
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
@@ -97,9 +135,59 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
         this.attributesName = attributesName;
     }
 
+    /**
+     * @return the smnEndpoint
+     */
+    public String getSmnEndpoint() {
+        return smnEndpoint;
+    }
+
+    /**
+     * @param smnEndpoint
+     *            the smnEndpoint to set
+     */
+    public void setSmnEndpoint(String smnEndpoint) {
+        this.smnEndpoint = smnEndpoint;
+    }
+
+    /**
+     * @return the projectId
+     */
+    public String getProjectId() {
+        return projectId;
+    }
+
+    /**
+     * @param projectId
+     *            the projectId to set
+     */
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    /**
+     * @return the xAuthToken
+     */
+    public String getxAuthToken() {
+        return xAuthToken;
+    }
+
+    @Override
+    public void setxAuthToken(String xAuthToken) {
+        this.xAuthToken = xAuthToken;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this);
+        StringBuilder builder = new StringBuilder();
+        builder.append("DeleteTopicAttributeByNameRequest [topicUrn=").append(topicUrn).append(", attributesName=")
+                .append(attributesName).append(", smnEndpoint=").append(smnEndpoint).append(", projectId=")
+                .append(projectId).append(", xAuthToken=").append(xAuthToken).append("]");
+        return builder.toString();
     }
 
 }

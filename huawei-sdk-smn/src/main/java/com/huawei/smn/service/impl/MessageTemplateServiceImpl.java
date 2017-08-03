@@ -1,13 +1,34 @@
+/*
+ * ====================================================================
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.huawei.smn.service.impl;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.utils.HttpUtil;
-import com.huawei.smn.model.SmnRequest;
+import com.huawei.smn.model.request.template.CreateMessageTemplateRequest;
+import com.huawei.smn.model.request.template.DeleteMessageTemplateRequest;
+import com.huawei.smn.model.request.template.ListMessageTemplatesRequest;
+import com.huawei.smn.model.request.template.QueryMessageTemplateDetailRequest;
+import com.huawei.smn.model.request.template.UpdateMessageTemplateRequest;
+import com.huawei.smn.service.AbstractCommonService;
 import com.huawei.smn.service.MessageTemplateService;
 
 /**
@@ -15,27 +36,25 @@ import com.huawei.smn.service.MessageTemplateService;
  * 
  * @author huangqiong
  *
+ * @date 2017年8月2日
+ *
+ * @version 0.1
  */
-public class MessageTemplateServiceImpl implements MessageTemplateService {
+public class MessageTemplateServiceImpl extends AbstractCommonService implements MessageTemplateService {
     /**
      * LOGGER
      */
-    private static final Logger logger = LoggerFactory.getLogger(MessageTemplateServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageTemplateServiceImpl.class);
 
     /**
-     * encapsulated request
+     * smn host url
      */
-    private SmnRequest smnRequest = null;
+    private String smnEndpoint;
 
     /**
-     * init
+     * project id
      */
-    public void init() {
-        if (StringUtils.isBlank(smnRequest.getRequestUrl())) {
-            logger.error("Request url is null.");
-            throw new RuntimeException("Request url is null.");
-        }
-    }
+    private String projectId;
 
     /**
      * create template
@@ -45,21 +64,21 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> createMessageTemplate() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException {
+
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
-            logger.debug("End to create message template. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to create message template.", e);
+            LOGGER.error("Failed to create message template.", e);
             throw new RuntimeException("Failed to create message template.", e);
         }
     }
@@ -72,21 +91,21 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> updateMessageTemplate() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException {
+
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.put(requestHeader, requestParam, url);
-            logger.info("End to update message template. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to update message template.", e);
+            LOGGER.error("Failed to update message template.", e);
             throw new RuntimeException("Failed to update message template.", e);
         }
     }
@@ -99,20 +118,19 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> deleteMessageTemplate() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            logger.info("End to delete message template. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to delete message template.", e);
+            LOGGER.error("Failed to delete message template.", e);
             throw new RuntimeException("Failed to delete message template.", e);
         }
     }
@@ -125,20 +143,19 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> listMessageTemplates() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            logger.info("End to list message templates. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to list message templates.", e);
+            LOGGER.error("Failed to list message templates.", e);
             throw new RuntimeException("Failed to list message templates.", e);
         }
     }
@@ -151,31 +168,22 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> queryMsgTemplateDetail() throws RuntimeException {
-        long startTime = System.currentTimeMillis();
+    public Map<String, Object> queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest)
+            throws RuntimeException {
         try {
-            init();
-            String url = smnRequest.getRequestUrl();
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = buildRequestUrl(smnRequest.getRequestUri());
+            buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            logger.info("End to query message templates. RequestId is {}. responseMap is {}. Cost is {}ms",
-                    responseMap.get("request_id"), responseMap, System.currentTimeMillis() - startTime);
             return responseMap;
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            logger.error("Failed to query message templates.", e);
+            LOGGER.error("Failed to query message templates.", e);
             throw new RuntimeException("Failed to query message templates.", e);
         }
-    }
-
-    @Override
-    public void setSmnRequest(SmnRequest smnRequest) {
-        this.smnRequest = smnRequest;
-    }
-
-    public SmnRequest getSmnRequest() {
-        return smnRequest;
     }
 
 }

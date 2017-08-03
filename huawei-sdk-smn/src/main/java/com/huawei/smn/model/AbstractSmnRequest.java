@@ -23,7 +23,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawei.smn.common.SmnConfiguration;
 import com.huawei.smn.common.SmnConstants;
 
 /**
@@ -37,17 +36,12 @@ public abstract class AbstractSmnRequest implements SmnRequest {
 
     private static Logger LOGGER = LoggerFactory.getLogger(AbstractSmnRequest.class);
 
-    SmnConfiguration smnConfiguration;
-
     /**
      * Build common http's request header
      */
     @Override
     public Map<String, String> getRequestHeaderMap() throws RuntimeException {
         Map<String, String> requestHeaderMap = new HashMap<String, String>();
-        requestHeaderMap.put(SmnConstants.REGION_TAG, smnConfiguration.getRegionId());
-        requestHeaderMap.put(SmnConstants.X_PROJECT_ID, smnConfiguration.getAuthenticationBean().getProjectId());
-        requestHeaderMap.put(SmnConstants.X_AUTH_TOKEN, smnConfiguration.getAuthenticationBean().getAuthToken());
         requestHeaderMap.put(SmnConstants.CONTENT_TYPE_TAG, "application/json");
         LOGGER.debug(requestHeaderMap.toString());
         return requestHeaderMap;
@@ -56,27 +50,11 @@ public abstract class AbstractSmnRequest implements SmnRequest {
     /**
      * Get request URL from different API
      */
-    public abstract String getRequestUrl();
+    public abstract String getRequestUri();
 
     /**
      * Get request body parameters from different API
      */
     public abstract Map<String, Object> getRequestParameterMap();
-
-    /**
-     * inject system configuration
-     */
-    public void setSmnConfiguration(SmnConfiguration smnConfiguration) {
-        this.smnConfiguration = smnConfiguration;
-    }
-
-    /**
-     * get system configuration
-     * 
-     * @return
-     */
-    protected SmnConfiguration getSmnConfiguration() {
-        return this.smnConfiguration;
-    }
 
 }

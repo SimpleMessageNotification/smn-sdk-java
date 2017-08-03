@@ -31,10 +31,10 @@ import com.huawei.smn.common.SmnConfiguration;
 public interface CommonService {
 
     /**
-     * 设置云服务运行环境
+     * configure runtime environment
      * 
      * @param smnConfiguration
-     *            运行参数配置
+     *            configure runtime parameters
      */
     void setSmnConfiguration(SmnConfiguration smnConfiguration);
 }

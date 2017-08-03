@@ -68,7 +68,7 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
             smnEndpoint = smnConfiguration.getSmnEndpoint();
             smnRequest.setSmnEndpoint(smnEndpoint);
             smnRequest.setProjectId(projectId);
-            String url = smnRequest.getRequestUrl();
+            String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
             return responseMap;

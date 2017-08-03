@@ -19,7 +19,7 @@ package com.huawei.smn.service;
 
 import java.util.Map;
 
-import com.huawei.smn.model.SmnRequest;
+import com.huawei.smn.model.request.sms.SmsPublishRequest;
 
 /**
  * Send SMS service
@@ -30,9 +30,21 @@ import com.huawei.smn.model.SmnRequest;
  *
  * @version 0.1
  */
-public interface SmsService {
+public interface SmsService extends CommonService {
 
-    // send sms directly
-    Map<String, Object> smsPublish(SmnRequest smnRequest) throws RuntimeException;
+    /**
+     * send sms
+     * <p>
+     * sucess,return<CODE>Map</CODE>including:request_id,message_id and status
+     * <p>
+     * 发送fail，return request_id and status
+     * 
+     * @param smnRequest
+     *            request
+     * @return {@link Map} return Map
+     * @throws RuntimeException
+     *             connect error,fail to get iam token will throw exception
+     */
+    Map<String, Object> smsPublish(SmsPublishRequest smnRequest) throws RuntimeException;
 
 }
