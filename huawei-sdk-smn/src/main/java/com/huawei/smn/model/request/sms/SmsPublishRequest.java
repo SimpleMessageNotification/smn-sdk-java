@@ -19,7 +19,6 @@ package com.huawei.smn.model.request.sms;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -58,28 +57,38 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     private String signId;
 
+    /**
+     * smn endpoint
+     */
+    private String smnEndpoint;
+
+    /**
+     * project id
+     */
+    private String projectId;
+
     @Override
     public String getRequestUrl() {
-        if (Objects.isNull(getSmnConfiguration().getAuthenticationBean())
-                || StringUtils.isBlank(getSmnConfiguration().getAuthenticationBean().getProjectId())
-                || StringUtils.isBlank(getSmnConfiguration().getSmnEndpoint())) {
-            LOGGER.error("Smn configuration error");
+        if (StringUtils.isBlank(getProjectId()) || StringUtils.isBlank(getSmnEndpoint())) {
+            LOGGER.error("Building request url parameters error");
             throw new RuntimeException();
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(getSmnConfiguration().getSmnEndpoint()).append(SmnConstants.URL_DELIMITER)
-                .append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getSmnConfiguration().getAuthenticationBean().getProjectId()).append(SmnConstants.URL_DELIMITER)
+        sb.append(getSmnEndpoint()).append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION)
+                .append(SmnConstants.URL_DELIMITER).append(getProjectId()).append(SmnConstants.URL_DELIMITER)
                 .append(SmnConstants.SMN_NOTIFICATIONS).append(SmnConstants.URL_DELIMITER)
                 .append(SmnConstants.SMN_SUB_PROTOCOL_SMS);
         LOGGER.info("Request url is: " + sb.toString());
         return sb.toString();
     }
 
+    /**
+     * build and get request url
+     */
     @Override
     public Map<String, Object> getRequestParameterMap() {
-        checkPhoneNumber(getEndpoint());
-        checkMessage(getMessage());
+        validatePhoneNumber(getEndpoint());
+        validateMessage(getMessage());
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
         requestParameterMap.put("endpoint", getEndpoint());
         requestParameterMap.put("message", getMessage());
@@ -89,7 +98,12 @@ public class SmsPublishRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
-    private void checkPhoneNumber(String endpoint) {
+    /**
+     * validate phonenumber
+     * 
+     * @param endpoint
+     */
+    private void validatePhoneNumber(String endpoint) {
         if (endpoint == null) {
             LOGGER.error("PhoneNumber is null.");
             throw new NullPointerException("endpoint is null.");
@@ -102,7 +116,12 @@ public class SmsPublishRequest extends AbstractSmnRequest {
         }
     }
 
-    private void checkMessage(String message) {
+    /**
+     * validate sms message
+     * 
+     * @param message
+     */
+    private void validateMessage(String message) {
 
         if (message == null) {
             LOGGER.error("Message is null.");
@@ -159,6 +178,36 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     public void setSignId(String signId) {
         this.signId = signId;
+    }
+
+    /**
+     * @return the smnEndpoint
+     */
+    public String getSmnEndpoint() {
+        return smnEndpoint;
+    }
+
+    /**
+     * @param smnEndpoint
+     *            the smnEndpoint to set
+     */
+    public void setSmnEndpoint(String smnEndpoint) {
+        this.smnEndpoint = smnEndpoint;
+    }
+
+    /**
+     * @return the projectId
+     */
+    public String getProjectId() {
+        return projectId;
+    }
+
+    /**
+     * @param projectId
+     *            the projectId to set
+     */
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     /*

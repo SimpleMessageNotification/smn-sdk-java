@@ -23,7 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.utils.HttpUtil;
-import com.huawei.smn.model.SmnRequest;
+import com.huawei.smn.model.request.sms.SmsPublishRequest;
+import com.huawei.smn.service.AbstractCommonService;
 import com.huawei.smn.service.SmsService;
 
 /**
@@ -35,11 +36,21 @@ import com.huawei.smn.service.SmsService;
  *
  * @version 0.1
  */
-public class SmsServiceImpl implements SmsService {
+public class SmsServiceImpl extends AbstractCommonService implements SmsService {
     /**
      * LOGGER
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
+
+    /**
+     * smn host url
+     */
+    private String smnEndpoint;
+
+    /**
+     * project id
+     */
+    private String projectId;
 
     /**
      * send sms directly
@@ -49,11 +60,17 @@ public class SmsServiceImpl implements SmsService {
      * @throws RuntimeException
      */
     @Override
-    public Map<String, Object> smsPublish(SmnRequest smnRequest) throws RuntimeException {
+    public Map<String, Object> smsPublish(SmsPublishRequest smnRequest) throws RuntimeException {
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, smnRequest.getRequestUrl());
+            projectId = getIAMService().getAuthentication().getProjectId();
+            smnEndpoint = smnConfiguration.getSmnEndpoint();
+            smnRequest.setSmnEndpoint(smnEndpoint);
+            smnRequest.setProjectId(projectId);
+            String url = smnRequest.getRequestUrl();
+            buildRequestHeader(requestHeader);
+            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
             return responseMap;
         } catch (RuntimeException e) {
             LOGGER.error("Failed to send sms.", e);

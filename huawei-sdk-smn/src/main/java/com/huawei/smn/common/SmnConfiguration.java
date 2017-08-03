@@ -26,9 +26,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawei.smn.model.AuthenticationBean;
-import com.huawei.smn.service.impl.IAMServiceImpl;
-
 /**
  * property loading configuration
  * 
@@ -72,15 +69,6 @@ public class SmnConfiguration {
      * region id
      */
     private String regionId;
-
-    /**
-     * authentication bean
-     */
-    private static AuthenticationBean authenticationBean;
-    /**
-     * iam service
-     */
-    private static IAMServiceImpl iamService;
 
     /**
      * iam url
@@ -153,25 +141,6 @@ public class SmnConfiguration {
         }
 
         return true;
-    }
-
-    /**
-     * get IAM service
-     */
-    public IAMServiceImpl getIamService() {
-        if (iamService == null) {
-            iamService = new IAMServiceImpl(getUserName(), getPassword(), getDomainName(), getRegionId(), getIamUrl());
-        }
-        return iamService;
-    }
-
-    /**
-     * when property's configuration changed, refresh and get IAM service
-     */
-    public IAMServiceImpl refreshIamService() {
-        reload();
-        iamService = new IAMServiceImpl(getUserName(), getPassword(), getDomainName(), getRegionId(), getIamUrl());
-        return iamService;
     }
 
     /**
@@ -280,34 +249,6 @@ public class SmnConfiguration {
     }
 
     /**
-     * @return the authenticationBean
-     */
-    public AuthenticationBean getAuthenticationBean() {
-        if (authenticationBean == null) {
-            // may in concurrent
-            synchronized (SmnConfiguration.class) {
-                if (authenticationBean == null) {
-                    LOGGER.debug("AuthInfo is null. Try to get it.");
-                    // get correct bean ,or throw exception
-                    authenticationBean = getIamService().getAuthentication();
-                }
-            }
-        } else {
-            // if expired
-            if (authenticationBean.isExpired()) {
-                synchronized (SmnConfiguration.class) {
-                    if (authenticationBean.isExpired()) {
-                        LOGGER.info("AuthInfo is expired. Try to get it. Old authInfo is {}.", authenticationBean);
-                        // get correct bean ,or throw exception
-                        authenticationBean = getIamService().getAuthentication();
-                    }
-                }
-            }
-        }
-        return authenticationBean;
-    }
-
-    /**
      * @return the smnEndpoint
      */
     public String getSmnEndpoint() {
@@ -330,8 +271,8 @@ public class SmnConfiguration {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("SmnConfiguration [filepath=").append(filepath).append(", domainName=").append(domainName)
-                .append(", regionId=").append(regionId).append(", authenticationBean=").append(authenticationBean)
-                .append(", iamUrl=").append(iamUrl).append(", smnEndpoint=").append(smnEndpoint).append("]");
+                .append(", regionId=").append(regionId).append(", iamUrl=").append(iamUrl).append(", smnEndpoint=")
+                .append(smnEndpoint).append("]");
         return builder.toString();
     }
 

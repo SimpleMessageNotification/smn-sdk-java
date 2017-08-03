@@ -15,11 +15,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.huawei.smn.model;
+package com.huawei.smn.service;
 
-import java.util.Map;
+import com.huawei.smn.common.SmnConfiguration;
 
 /**
+ * 通用的服务接口
  * 
  * @author huangqiong
  *
@@ -27,27 +28,13 @@ import java.util.Map;
  *
  * @version 0.1
  */
-public interface SmnRequest {
+public interface CommonService {
 
     /**
-     * get smn request's url
+     * 设置云服务运行环境
      * 
-     * @return
+     * @param smnConfiguration
+     *            运行参数配置
      */
-    String getRequestUrl();
-
-    /**
-     * get the request parameters of smn
-     * 
-     * @return
-     */
-    Map<String, Object> getRequestParameterMap();
-
-    /**
-     * get the request header's parameters of smn
-     * 
-     * @return
-     */
-    Map<String, String> getRequestHeaderMap();
-
+    void setSmnConfiguration(SmnConfiguration smnConfiguration);
 }
