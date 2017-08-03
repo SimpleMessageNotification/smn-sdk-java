@@ -11,9 +11,9 @@ socket.connector.timeout=10000
 socket.read.timeout=10000
 
 # user name from iam
-iam.user.name=liuqiangqiang
+iam.user.name=******
 # domain name from iam
-iam.domain.name=liuqiangqiang
+iam.domain.name=******
 # user passwd from iam
 iam.user.password=******
 # iam.url 
