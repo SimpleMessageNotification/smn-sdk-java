@@ -15,12 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 下午5:07:23
- * @version 0.1
- * 
- */
 package com.huawei.smn.common;
 
 import java.io.File;
@@ -84,6 +78,11 @@ public class SmnConfiguration {
      */
     private String smnEndpoint;
 
+    /**
+     * configure property file path
+     * 
+     * @param filepath
+     */
     public SmnConfiguration(String filepath) {
         this.filepath = filepath;
     }
@@ -97,6 +96,9 @@ public class SmnConfiguration {
 
     /**
      * Load configured file
+     * 
+     * @return {@code bool}
+     * @throws RuntimeException
      */
     public boolean reload() throws RuntimeException {
         LOGGER.debug("Smn configuration reloading ...");

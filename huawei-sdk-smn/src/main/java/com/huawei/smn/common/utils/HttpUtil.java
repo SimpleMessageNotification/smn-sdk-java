@@ -156,7 +156,7 @@ public class HttpUtil {
      *            http request including header , reqeusted url and body params
      * @param url
      *            restful post request
-     * @return
+     * @return {@code Map} request_id,status
      * @throws Exception
      */
     public static Map<String, Object> post(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
@@ -198,7 +198,7 @@ public class HttpUtil {
      *            http request including header , reqeusted url and body params
      * @param url
      *            restful put request
-     * @return
+     * @return {@code Map} request_id,status
      * @throws Exception
      */
     public static Map<String, Object> put(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
@@ -240,7 +240,7 @@ public class HttpUtil {
      *            http request including header and reqeusted url
      * @param url
      *            restful delete request
-     * @return
+     * @return {@code Map} request_id,status
      * @throws Exception
      */
     public static Map<String, Object> delete(Map<String, String> headerParams, String url) throws Exception {
@@ -278,7 +278,7 @@ public class HttpUtil {
      *            http request including header and reqeusted url
      * @param url
      *            restful get request
-     * @return
+     * @return {@code Map} request_id,status
      * @throws Exception
      */
     public static Map<String, Object> get(Map<String, String> headerParams, String url) throws Exception {
@@ -328,7 +328,7 @@ public class HttpUtil {
     /**
      * Construct httpclient with SSL protocol
      * 
-     * @return
+     * @return {@code CloseableHttpClient}
      * @throws Exception
      */
     public static CloseableHttpClient getHttpClient() throws Exception {
@@ -343,7 +343,7 @@ public class HttpUtil {
     /**
      * Config request timeout milliseconds ,socket timeout milliseconds
      * 
-     * @return
+     * @return {@code RequestConfig}
      */
     public static RequestConfig getRequestConfig() {
         requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeOut).setSocketTimeout(socketTimeOut)

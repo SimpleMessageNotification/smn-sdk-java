@@ -39,7 +39,6 @@ import com.huawei.smn.model.AbstractSmnRequest;
  * @date 2017年8月3日 下午5:30:35
  * @version 0.1
  */
-
 public class SmsPublishRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(SmsPublishRequest.class);
 
@@ -77,6 +76,12 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     private String xAuthToken;
 
+    /**
+     * get request uri
+     * 
+     * @return String uri
+     * 
+     */
     public String getRequestUri() {
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Building publish sms request url parameters error");

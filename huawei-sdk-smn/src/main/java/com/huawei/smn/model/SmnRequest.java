@@ -15,12 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:27:23
- * @version 0.1
- * 
- */
 package com.huawei.smn.model;
 
 import java.util.Map;

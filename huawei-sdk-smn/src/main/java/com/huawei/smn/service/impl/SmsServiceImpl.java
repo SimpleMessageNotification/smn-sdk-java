@@ -38,7 +38,6 @@ import com.huawei.smn.service.SmsService;
  * @date 2017年8月3日 下午5:41:10
  * @version 0.1
  */
-
 public class SmsServiceImpl extends AbstractCommonService implements SmsService {
     /**
      * LOGGER
@@ -59,7 +58,9 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
      * send sms directly
      * 
      * @param smnRequest
-     * @return
+     * @return {@link Map}
+     *         {@value}request_id
+     *         {@value}status
      * @throws RuntimeException
      */
     public Map<String, Object> smsPublish(SmsPublishRequest smnRequest) throws RuntimeException {

@@ -38,7 +38,6 @@ import com.huawei.smn.service.impl.IAMServiceImpl;
  * @date 2017年8月3日 下午5:33:12
  * @version 0.1
  */
-
 public abstract class AbstractCommonService implements CommonService {
 
     /**
@@ -137,7 +136,7 @@ public abstract class AbstractCommonService implements CommonService {
      * build request url
      * 
      * @param uri
-     * @return url
+     * @return String url
      */
     protected String buildRequestUrl(String uri) {
         StringBuilder sb = new StringBuilder();
