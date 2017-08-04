@@ -162,9 +162,9 @@ public class HttpUtil {
     public static Map<String, Object> post(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
             throws Exception {
         CloseableHttpClient httpclient = getHttpClient();
-        HttpPost httpPost = new HttpPost(url);
-        httpPost.setConfig(getRequestConfig());
         try {
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setConfig(getRequestConfig());
             Map<String, String> requestHeader = headerParams;
             buildHttpHeader(requestHeader, httpPost);
             String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
