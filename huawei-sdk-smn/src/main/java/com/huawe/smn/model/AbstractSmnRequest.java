@@ -44,8 +44,7 @@ public abstract class AbstractSmnRequest implements SmnRequest {
     /**
      * Build common http's request header
      */
-    @Override
-    public Map<String, String> getRequestHeaderMap() throws RuntimeException {
+    public Map<String, String> getRequestHeaderMap() {
         Map<String, String> requestHeaderMap = new HashMap<String, String>();
         requestHeaderMap.put(SmnConstants.CONTENT_TYPE_TAG, "application/json");
         LOGGER.debug(requestHeaderMap.toString());

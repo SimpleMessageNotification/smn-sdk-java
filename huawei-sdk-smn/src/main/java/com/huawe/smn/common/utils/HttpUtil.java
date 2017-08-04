@@ -29,7 +29,6 @@ import java.util.Map;
 import javax.net.ssl.SSLContext;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.StatusLine;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -183,7 +182,7 @@ public class HttpUtil {
                 LOGGER.error("Post request connected error.", e);
                 throw new Exception(e);
             } catch (Exception e) {
-                LOGGER.error("Post request connected error.", e);
+                LOGGER.error("Post request error.", e);
                 throw new Exception(e);
             } finally {
                 response.close();
@@ -225,7 +224,7 @@ public class HttpUtil {
                 LOGGER.error("Smn post request connected error.", e);
                 throw new Exception(e);
             } catch (Exception e) {
-                LOGGER.error("Smn post request connected error.", e);
+                LOGGER.error("Smn post request error.", e);
                 throw new Exception(e);
             } finally {
                 response.close();
@@ -263,7 +262,7 @@ public class HttpUtil {
                 LOGGER.error("Smn delete request connected error.", e);
                 throw new Exception(e);
             } catch (Exception e) {
-                LOGGER.error("Smn delete request connected error.", e);
+                LOGGER.error("Smn delete request error.", e);
                 throw new Exception(e);
             } finally {
                 response.close();
@@ -293,8 +292,6 @@ public class HttpUtil {
                 int status = response.getStatusLine().getStatusCode();
                 HttpEntity entity = response.getEntity();
                 String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
-                StatusLine responsecode = response.getStatusLine();
-                LOGGER.debug(responsecode.toString() + ". ||----> Message is {}.", responseMessage);
                 Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
                 messageMap.put("status", status);
                 return messageMap;
@@ -302,7 +299,7 @@ public class HttpUtil {
                 LOGGER.error("Smn get request connected error.", e);
                 throw new Exception(e);
             } catch (Exception e) {
-                LOGGER.error("Smn get request connected error.", e);
+                LOGGER.error("Smn get request error.", e);
                 throw new Exception(e);
             } finally {
                 response.close();
@@ -320,8 +317,8 @@ public class HttpUtil {
      */
     public static void buildHttpHeader(Map<String, String> requestHeaderMap, HttpRequestBase httpMethod) {
         if (requestHeaderMap == null || requestHeaderMap.isEmpty()) {
-            LOGGER.error("Request header map is empty!");
-            throw new RuntimeException();
+            LOGGER.error("Request header map is empty.");
+            throw new RuntimeException("Request header map is empty.");
         }
         for (String headerKey : requestHeaderMap.keySet()) {
             httpMethod.addHeader(headerKey, requestHeaderMap.get(headerKey));

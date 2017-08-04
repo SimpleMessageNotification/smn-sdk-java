@@ -62,7 +62,6 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
      * @return
      * @throws RuntimeException
      */
-    @Override
     public Map<String, Object> smsPublish(SmsPublishRequest smnRequest) throws RuntimeException {
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -75,9 +74,6 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
             buildRequestHeader(requestHeader);
             Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
             return responseMap;
-        } catch (RuntimeException e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw e;
         } catch (Exception e) {
             LOGGER.error("Failed to send sms.", e);
             throw new RuntimeException("Failed to send sms.", e);

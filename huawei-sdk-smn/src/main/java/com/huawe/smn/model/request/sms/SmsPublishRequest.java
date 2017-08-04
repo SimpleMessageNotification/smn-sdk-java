@@ -77,9 +77,8 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     private String xAuthToken;
 
-    @Override
     public String getRequestUri() {
-        if (StringUtils.isBlank(getProjectId()) || StringUtils.isBlank(getSmnEndpoint())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Building publish sms request url parameters error");
             throw new RuntimeException();
         }
@@ -100,7 +99,6 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      *         {@value optional}sign_id
      * 
      */
-    @Override
     public Map<String, Object> getRequestParameterMap() {
         validatePhoneNumber(getEndpoint());
         validateMessage(getMessage());
@@ -121,7 +119,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     private void validatePhoneNumber(String endpoint) {
         if (endpoint == null) {
             LOGGER.error("PhoneNumber is null.");
-            throw new NullPointerException("endpoint is null.");
+            throw new NullPointerException("PhoneNumber is null.");
         }
 
         if (!PATTERN_TELTPHONE.matcher(endpoint).matches()) {
@@ -244,7 +242,6 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("SmsPublishRequest [endpoint=").append(endpoint).append(", message=").append(message)

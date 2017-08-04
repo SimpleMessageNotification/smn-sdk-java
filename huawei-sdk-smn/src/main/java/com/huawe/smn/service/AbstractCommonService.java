@@ -67,7 +67,6 @@ public abstract class AbstractCommonService implements CommonService {
      * com.huawei.smn.service.CommonService#setSmnConfiguration(com.huawei.smn.
      * common.SmnConfiguration)
      */
-    @Override
     public void setSmnConfiguration(SmnConfiguration smnConfiguration) {
         this.smnConfiguration = smnConfiguration;
     }
