@@ -4,7 +4,7 @@
 
 	<groupId>huawei-sdk-smn</groupId>
 	<artifactId>huawei-sdk-smn</artifactId>
-	<version>0.1-RELEASE</version>
+	<version>0.1-dev</version>
 	<packaging>jar</packaging>
 
 	<name>huawei-sdk-smn</name>

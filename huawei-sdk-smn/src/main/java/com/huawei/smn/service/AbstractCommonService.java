@@ -21,17 +21,17 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.service;
+package com.huawei.smn.service;
 
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawe.smn.common.SmnConfiguration;
-import com.huawe.smn.common.SmnConstants;
-import com.huawe.smn.model.AuthenticationBean;
-import com.huawe.smn.service.impl.IAMServiceImpl;
+import com.huawei.smn.common.SmnConfiguration;
+import com.huawei.smn.common.SmnConstants;
+import com.huawei.smn.model.AuthenticationBean;
+import com.huawei.smn.service.impl.IAMServiceImpl;
 
 /**
  * @author huangqiong

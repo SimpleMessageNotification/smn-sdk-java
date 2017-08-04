@@ -21,9 +21,9 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.service;
+package com.huawei.smn.service;
 
-import com.huawe.smn.model.AuthenticationBean;
+import com.huawei.smn.model.AuthenticationBean;
 
 /**
  * @author huangqiong

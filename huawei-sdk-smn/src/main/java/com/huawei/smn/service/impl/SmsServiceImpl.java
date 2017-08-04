@@ -21,17 +21,17 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.service.impl;
+package com.huawei.smn.service.impl;
 
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawe.smn.common.utils.HttpUtil;
-import com.huawe.smn.model.request.sms.SmsPublishRequest;
-import com.huawe.smn.service.AbstractCommonService;
-import com.huawe.smn.service.SmsService;
+import com.huawei.smn.common.utils.HttpUtil;
+import com.huawei.smn.model.request.sms.SmsPublishRequest;
+import com.huawei.smn.service.AbstractCommonService;
+import com.huawei.smn.service.SmsService;
 
 /**
  * @author huangqiong

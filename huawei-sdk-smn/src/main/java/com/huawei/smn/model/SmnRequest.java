@@ -21,7 +21,7 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.model;
+package com.huawei.smn.model;
 
 import java.util.Map;
 

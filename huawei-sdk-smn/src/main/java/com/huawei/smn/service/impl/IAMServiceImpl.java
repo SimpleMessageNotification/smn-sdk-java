@@ -21,17 +21,17 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.service.impl;
+package com.huawei.smn.service.impl;
 
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawe.smn.common.utils.DateUtil;
-import com.huawe.smn.common.utils.HttpUtil;
-import com.huawe.smn.model.AuthenticationBean;
-import com.huawe.smn.service.IAMService;
+import com.huawei.smn.common.utils.DateUtil;
+import com.huawei.smn.common.utils.HttpUtil;
+import com.huawei.smn.model.AuthenticationBean;
+import com.huawei.smn.service.IAMService;
 
 /**
  * @author huangqiong

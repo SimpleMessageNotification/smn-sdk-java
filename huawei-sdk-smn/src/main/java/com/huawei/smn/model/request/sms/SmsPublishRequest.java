@@ -21,7 +21,7 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.model.request.sms;
+package com.huawei.smn.model.request.sms;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +31,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawe.smn.common.SmnConstants;
-import com.huawe.smn.model.AbstractSmnRequest;
+import com.huawei.smn.common.SmnConstants;
+import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
  * @author huangqiong

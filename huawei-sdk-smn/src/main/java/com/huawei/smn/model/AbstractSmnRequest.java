@@ -21,7 +21,7 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.model;
+package com.huawei.smn.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawe.smn.common.SmnConstants;
+import com.huawei.smn.common.SmnConstants;
 
 /**
  * @author huangqiong

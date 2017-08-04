@@ -21,7 +21,7 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.common;
+package com.huawei.smn.common;
 
 import java.io.File;
 import java.io.FileInputStream;

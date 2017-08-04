@@ -21,9 +21,9 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.service;
+package com.huawei.smn.service;
 
-import com.huawe.smn.common.SmnConfiguration;
+import com.huawei.smn.common.SmnConfiguration;
 
 /**
  * common service interface

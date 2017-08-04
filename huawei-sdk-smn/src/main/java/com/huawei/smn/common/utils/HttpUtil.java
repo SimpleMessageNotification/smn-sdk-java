@@ -21,7 +21,7 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.common.utils;
+package com.huawei.smn.common.utils;
 
 import java.net.ConnectException;
 import java.util.Map;
@@ -48,7 +48,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawe.smn.model.AuthenticationBean;
+import com.huawei.smn.model.AuthenticationBean;
 
 /**
  * @author huangqiong

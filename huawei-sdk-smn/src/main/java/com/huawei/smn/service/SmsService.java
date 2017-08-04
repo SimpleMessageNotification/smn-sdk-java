@@ -21,11 +21,11 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.service;
+package com.huawei.smn.service;
 
 import java.util.Map;
 
-import com.huawe.smn.model.request.sms.SmsPublishRequest;
+import com.huawei.smn.model.request.sms.SmsPublishRequest;
 
 /**
  * @author huangqiong

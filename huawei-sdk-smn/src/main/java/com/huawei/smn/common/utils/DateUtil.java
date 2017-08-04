@@ -21,7 +21,7 @@
  * @version 0.1
  * 
  */
-package com.huawe.smn.common.utils;
+package com.huawei.smn.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
