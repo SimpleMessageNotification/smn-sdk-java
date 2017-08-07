@@ -92,6 +92,7 @@ public class SmnConfiguration {
      * 
      */
     public SmnConfiguration() {
+        LOGGER.info("New smnConfiguration.");
     }
 
     /**
@@ -101,16 +102,18 @@ public class SmnConfiguration {
      * @throws RuntimeException
      */
     public boolean reload() throws RuntimeException {
-        LOGGER.debug("Smn configuration reloading ...");
+        LOGGER.info("Smn configuration reloading.");
+
         if (StringUtils.isBlank(filepath)) {
             filepath = SMN_CONFIGURATION_PROPERTIES;
         }
-        LOGGER.info("Properties filepath is:" + filepath);
+        LOGGER.info("Properties filepath is:{}.", filepath);
+
         try {
             FileInputStream fis = new FileInputStream(new File(this.filepath));
             properties.load(fis);
         } catch (IOException e) {
-            LOGGER.error("Fail to reload config properties,filepath={}:" + filepath);
+            LOGGER.error("Fail to reload config properties,filepath is:{}.", filepath);
             throw new RuntimeException(e);
         }
 
@@ -122,29 +125,35 @@ public class SmnConfiguration {
         iamEndpoint = properties.getProperty(SmnConstants.IAM_ENDPOINT);
 
         if (StringUtils.isBlank(userName)) {
-            LOGGER.error("User name in configuration properties is empty!");
-            throw new RuntimeException("User name in configuration properties is empty!");
+            LOGGER.error("User name in configuration properties is empty.");
+            throw new RuntimeException("User name in configuration properties is empty.");
         }
+
         if (StringUtils.isBlank(password)) {
-            LOGGER.error("Password in configuration properties is empty!");
-            throw new RuntimeException("Password in configuration properties is empty!");
+            LOGGER.error("Password in configuration properties is empty.");
+            throw new RuntimeException("Password in configuration properties is empty.");
         }
+
         if (StringUtils.isBlank(domainName)) {
-            LOGGER.error("DomainName in configuration properties is empty!");
-            throw new RuntimeException("DomainName in configuration properties is empty!");
+            LOGGER.error("Domain name in configuration properties is empty.");
+            throw new RuntimeException("Domain name in configuration properties is empty.");
         }
+
         if (StringUtils.isBlank(regionId)) {
-            LOGGER.error("RegionId in configuration properties is empty!");
-            throw new RuntimeException("RegionId in configuration properties is empty!");
+            LOGGER.error("RegionId in configuration properties is empty.");
+            throw new RuntimeException("RegionId in configuration properties is empty.");
         }
+
         if (StringUtils.isBlank(iamEndpoint)) {
-            LOGGER.error("IamHostName in configuration properties is empty!");
-            throw new RuntimeException("IamHostName in configuration properties is empty!");
+            LOGGER.error("Iam endpoint in configuration properties is empty.");
+            throw new RuntimeException("Iam endpoint in configuration properties is empty.");
         }
+
         if (StringUtils.isBlank(smnEndpoint)) {
-            LOGGER.error("Smn endpoint in configuration properties is empty!");
-            throw new RuntimeException("Smn endpoint in configuration properties is empty!");
+            LOGGER.error("SmnEndpoint in configuration properties is empty.");
+            throw new RuntimeException("SmnEndpoint in configuration properties is empty.");
         }
+
         return true;
     }
 

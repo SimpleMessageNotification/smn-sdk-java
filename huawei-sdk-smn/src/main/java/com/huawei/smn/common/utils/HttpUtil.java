@@ -161,6 +161,8 @@ public class HttpUtil {
      */
     public static Map<String, Object> post(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
             throws Exception {
+        LOGGER.debug("Start to post request,requestUrl is {}.", url);
+
         CloseableHttpClient httpclient = getHttpClient();
         try {
             HttpPost httpPost = new HttpPost(url);
@@ -169,7 +171,6 @@ public class HttpUtil {
             buildHttpHeader(requestHeader, httpPost);
             String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
             httpPost.setEntity(new StringEntity(bodyString, ContentType.APPLICATION_JSON));
-            LOGGER.debug("Post request body string:" + bodyString);
             CloseableHttpResponse response = httpclient.execute(httpPost);
             try {
                 int status = response.getStatusLine().getStatusCode();
@@ -203,6 +204,8 @@ public class HttpUtil {
      */
     public static Map<String, Object> put(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
             throws Exception {
+        LOGGER.debug("Start to put request,requestUrl is {}.", url);
+
         CloseableHttpClient httpclient = getHttpClient();
         try {
             HttpPut httpPut = new HttpPut(url);
@@ -244,6 +247,8 @@ public class HttpUtil {
      * @throws Exception
      */
     public static Map<String, Object> delete(Map<String, String> headerParams, String url) throws Exception {
+        LOGGER.debug("Start to delete request,requestUrl is {}.", url);
+
         CloseableHttpClient httpclient = getHttpClient();
         try {
             HttpDelete httpDelete = new HttpDelete(url);

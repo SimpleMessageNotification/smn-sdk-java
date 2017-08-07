@@ -24,14 +24,13 @@ import java.util.Map;
  * @date 2017年8月3日 下午5:27:23
  * @version 0.1
  */
-
 public interface SmnRequest {
 
     /**
      * get smn request's url
      * 
      * @return uri
-     *         example /v2/cffe4fc4c9a54219b6f7b586e132/notifications/sms
+     *         example /v2/cffe4fc4c9a54219b****132/notifications/sms
      */
     String getRequestUri();
 

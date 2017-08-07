@@ -45,6 +45,9 @@ public interface SmsService extends CommonService {
      * @param smnRequest
      *            request
      * @return {@link Map} return Map
+     *         {@value request_id}
+     *         {@value message_id}
+     *         {@value status}
      * @throws RuntimeException
      *             connect error,fail to get iam token will throw exception
      */
