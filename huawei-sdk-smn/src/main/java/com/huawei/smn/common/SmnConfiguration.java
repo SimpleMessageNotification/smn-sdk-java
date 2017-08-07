@@ -26,6 +26,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.huawei.smn.common.utils.DesUtil;
+
 /**
  * property loading configuration
  * 
@@ -275,7 +277,8 @@ public class SmnConfiguration {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("SmnConfiguration [filepath=").append(filepath).append(", domainName=").append(domainName)
+        String tempDomainName = DesUtil.encrypt(domainName);
+        builder.append("SmnConfiguration [filepath=").append(filepath).append(", domainName=").append(tempDomainName)
                 .append(", regionId=").append(regionId).append(", iamEndpoint=").append(iamEndpoint)
                 .append(", smnEndpoint=").append(smnEndpoint).append("]");
         return builder.toString();
