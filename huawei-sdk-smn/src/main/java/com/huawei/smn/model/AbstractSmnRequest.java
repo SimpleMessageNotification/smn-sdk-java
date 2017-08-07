@@ -26,9 +26,6 @@ package com.huawei.smn.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.huawei.smn.common.SmnConstants;
 
 /**
@@ -39,15 +36,12 @@ import com.huawei.smn.common.SmnConstants;
 
 public abstract class AbstractSmnRequest implements SmnRequest {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(AbstractSmnRequest.class);
-
     /**
      * Build common http's request header
      */
     public Map<String, String> getRequestHeaderMap() {
         Map<String, String> requestHeaderMap = new HashMap<String, String>();
-        requestHeaderMap.put(SmnConstants.CONTENT_TYPE_TAG, "application/json");
-        LOGGER.debug(requestHeaderMap.toString());
+        requestHeaderMap.put(SmnConstants.CONTENT_TYPE_TAG, SmnConstants.DEFAULT_CONTENT_TYPE);
         return requestHeaderMap;
     }
 

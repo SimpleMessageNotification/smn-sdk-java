@@ -36,94 +36,117 @@ public interface SmnConstants {
      * default charset
      */
     String DEFAULT_CHARSET = "UTF-8";
+
     /**
      * default content type
      */
-    String DEFAULT_CONTENT_TYPE = "application/json;charset=UTF-8";
+    String DEFAULT_CONTENT_TYPE = "application/json; charset=UTF-8";
+
     /**
      * header segment X-Auth-Token
      */
     String X_AUTH_TOKEN = "X-Auth-Token";
+
     /**
      * header segment X-Project-Id
      */
     String X_PROJECT_ID = "X-Project-Id";
+
     /**
      * tenant id
      */
     String TENANT_ID = "tenant_id";
+
     /**
      * content type tag
      */
     String CONTENT_TYPE_TAG = "Content-Type";
+
     /**
      * topic tag
      */
     String TOPIC_TAG = "Topic";
+
     /**
      * queue tag
      */
     String QUEUE_NAME_TAG = "QueueName";
+
     /**
      * topic name tag
      */
     String TOPIC_NAME_TAG = "TopicName";
+
     /**
      * subscription tag
      */
     String SUBSCRIPTION_TAG = "Subscription";
+
     /**
      * last modify time tag
      */
     String LASTMODIFYTIME_TAG = "LastModifyTime";
+
     /**
      * create time tag
      */
     String CREATE_TIME_TAG = "CreateTime";
+
     /**
      * region tag
      */
     String REGION_TAG = "region";
+
     /**
      * url delimiter
      */
     String URL_DELIMITER = "/";
+
     /**
      * https preffix
      */
     String HTTPS_PREFFIX = "https://";
+
     /**
      * smn region
      */
     String REGION = "smn.region";
+
     /**
      * smn iam host name
      */
     String IAM_ENDPOINT = "iam.endpoint";
+
     /**
      * smn endpoint
      */
     String SMN_ENDPOINT = "smn.endpoint";
+
     /**
      * iam uri
      */
     String IAM_URI = "/v3/auth/tokens";
+
     /**
      * smn topic uri
      */
     String SMN_TOPIC_URI = "/notifications/topics";
+
     /**
      * v2 version
      */
     String V2_VERSION = "v2";
+
     /**
      * user name
      */
     String USER_NAME = "iam.user.name";
+
     /**
      * password
      */
     String PASSWORD = "iam.user.password";
+
     /**
      * domain name
      */
@@ -133,77 +156,115 @@ public interface SmnConstants {
      * region id
      */
     String REGION_ID = "region.id";
+
     /**
      * topic urn
      */
     String TOPIC_URN = "topic_urn";
+
     /**
      * project id
      */
     String PROJECT_ID = "project_id";
+
     /**
      * protocol
      */
     String SMN_PROTOCOL = "protocol";
+
     /**
      * endpoint
      */
-    String SMN_ENDPOINT_TAG = "endpoint";
+    String ENDPOINT = "endpoint";
+
     /**
      * remark
      */
     String SMN_SUBCRIBE_REMARK = "remark";
+
+    /**
+     * message
+     */
+    String MESSAGE = "message";
+
+    /**
+     * sign_id
+     */
+    String SIGN_ID = "sign_id";
+
     /**
      * subscriptions
      */
     String SMN_SUBSCRIPTIONS = "subscriptions";
+
     /**
      * notifications
      */
     String SMN_NOTIFICATIONS = "notifications";
+
     /**
      * publish
      */
     String SMN_PUBLISH = "publish";
+
     /**
      * message template
      */
     String SMN_MESSAGE_TEMPLATE = "message_template";
+
     /**
      * sms signature
      */
     String SMS_SIGNATURE = "sms_sign";
+
     /**
      * email protocol
      */
     String SMN_SUB_PROTOCOL_EMAIL = "email";
+
     /**
      * sms protocol
      */
     String SMN_SUB_PROTOCOL_SMS = "sms";
+
     /**
      * http protocol
      */
     String SMN_SUB_PROTOCOL_HTTP = "http";
+
     /**
      * https protocol
      */
     String SMN_SUB_PROTOCOL_HTTPS = "https";
+
     /**
      * application protocol
      */
     String SMN_SUB_PROTOCOL_APPLICATION = "application";
+
     /**
      * lambda protocol
      */
     String SMN_SUB_PROTOCOL_LAMBDA = "lambda";
+
     /**
      * attribute
      */
     String SMN_TOPIC_ATTRIBTUES = "attributes";
+
     /**
      * attribute value
      */
     String SMN_TOPIC_ATTRIBUTE_VALUE = "value";
+
+    /**
+     * smn crypt key
+     */
+    String SMN_CRYPT_KEY = "20170807";
+
+    /**
+     * ciper method
+     */
+    String DES = "DES";
 
 }

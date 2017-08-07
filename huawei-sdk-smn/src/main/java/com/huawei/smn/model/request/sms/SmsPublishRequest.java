@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.SmnConstants;
+import com.huawei.smn.common.utils.DesUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
@@ -40,6 +41,7 @@ import com.huawei.smn.model.AbstractSmnRequest;
  * @version 0.1
  */
 public class SmsPublishRequest extends AbstractSmnRequest {
+
     private static Logger LOGGER = LoggerFactory.getLogger(SmsPublishRequest.class);
 
     /**
@@ -51,6 +53,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      * message access point
      */
     private String endpoint;
+
     /**
      * message to send
      */
@@ -83,10 +86,12 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      * 
      */
     public String getRequestUri() {
+
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Building publish sms request url parameters error");
-            throw new RuntimeException();
+            throw new NullPointerException("ProjectId is null.");
         }
+
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(getProjectId()).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
@@ -108,10 +113,10 @@ public class SmsPublishRequest extends AbstractSmnRequest {
         validatePhoneNumber(getEndpoint());
         validateMessage(getMessage());
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put("endpoint", getEndpoint());
-        requestParameterMap.put("message", getMessage());
+        requestParameterMap.put(SmnConstants.ENDPOINT, getEndpoint());
+        requestParameterMap.put(SmnConstants.MESSAGE, getMessage());
         if (StringUtils.isNoneBlank(getSignId())) {
-            requestParameterMap.put("sign_id", getSignId());
+            requestParameterMap.put(SmnConstants.SIGN_ID, getSignId());
         }
         return requestParameterMap;
     }
@@ -249,7 +254,9 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("SmsPublishRequest [endpoint=").append(endpoint).append(", message=").append(message)
+        // endpoint encrypt
+        String tmpEndpoint = DesUtil.encrypt(endpoint);
+        builder.append("SmsPublishRequest [endpoint=").append(tmpEndpoint).append(", message=").append(message)
                 .append(", signId=").append(signId).append("]");
         return builder.toString();
     }
