@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.SmnConstants;
-import com.huawei.smn.common.utils.DesUtil;
+import com.huawei.smn.common.utils.AesUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
@@ -255,7 +255,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         // endpoint encrypt
-        String tmpEndpoint = DesUtil.encrypt(endpoint);
+        String tmpEndpoint = AesUtil.encrypt(endpoint, SmnConstants.SMN_CRYPT_KEY);
         builder.append("SmsPublishRequest [endpoint=").append(tmpEndpoint).append(", message=").append(message)
                 .append(", signId=").append(signId).append("]");
         return builder.toString();

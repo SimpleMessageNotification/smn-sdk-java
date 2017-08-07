@@ -267,4 +267,8 @@ public interface SmnConstants {
      */
     String DES = "DES";
 
+    /**
+     * ciper aes method
+     */
+    String AES = "AES";
 }
