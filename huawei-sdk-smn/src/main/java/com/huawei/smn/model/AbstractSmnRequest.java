@@ -33,7 +33,6 @@ import com.huawei.smn.common.SmnConstants;
  * @date 2017年8月3日 下午5:28:21
  * @version 0.1
  */
-
 public abstract class AbstractSmnRequest implements SmnRequest {
 
     /**

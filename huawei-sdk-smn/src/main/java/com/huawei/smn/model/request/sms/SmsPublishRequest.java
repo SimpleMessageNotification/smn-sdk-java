@@ -15,12 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:30:35
- * @version 0.1
- * 
- */
+
 package com.huawei.smn.model.request.sms;
 
 import java.util.HashMap;
@@ -88,7 +83,8 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     public String getRequestUri() {
 
         if (StringUtils.isBlank(projectId)) {
-            LOGGER.error("Building publish sms request url parameters error");
+
+            LOGGER.error("Publish sms projectId is null.");
             throw new NullPointerException("ProjectId is null.");
         }
 
@@ -96,7 +92,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(getProjectId()).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUB_PROTOCOL_SMS);
-        LOGGER.info("Request url is: " + sb.toString());
+        LOGGER.info("Sms request url is: " + sb.toString());
         return sb.toString();
     }
 
@@ -255,7 +251,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         // endpoint encrypt
-        String tmpEndpoint = AesUtil.encrypt(endpoint, SmnConstants.SMN_CRYPT_KEY);
+        String tmpEndpoint = AesUtil.encrypt(endpoint, SmnConstants.DEFAULT_SMN_CRYPT_KEY);
         builder.append("SmsPublishRequest [endpoint=").append(tmpEndpoint).append(", message=").append(message)
                 .append(", signId=").append(signId).append("]");
         return builder.toString();

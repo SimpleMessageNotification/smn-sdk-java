@@ -51,7 +51,9 @@ public class AesUtil {
      *            content to be encrpted
      * @param password
      *            encrypt password
-     * @return encrypted content
+     * @return String
+     *         <p>
+     *         encrypted content
      */
     public static String encrypt(String content, String password) {
         try {
@@ -98,7 +100,9 @@ public class AesUtil {
      *            encrypted content
      * @param password
      * 
-     * @return decrypted content
+     * @return String
+     *         <p>
+     *         decrypted content
      */
     public static String decrypt(String content, String password) {
         try {
@@ -118,7 +122,7 @@ public class AesUtil {
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, SmnConstants.AES);
 
             // create cipher
-            Cipher cipher = Cipher.getInstance(SmnConstants.AES);
+            Cipher cipher = Cipher.getInstance("AES");
 
             // init decrypt mode cipher
             cipher.init(Cipher.DECRYPT_MODE, key);
@@ -129,7 +133,7 @@ public class AesUtil {
 
         } catch (Exception e) {
             LOGGER.error("Aes decrypt failed.", e);
-            throw new RuntimeException("Aes encrypt failed.", e);
+            throw new RuntimeException("Aes decrypt failed.", e);
         }
     }
 

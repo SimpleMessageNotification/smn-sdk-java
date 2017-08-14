@@ -245,7 +245,7 @@ public interface SmnConstants {
     /**
      * lambda protocol
      */
-    String SMN_SUB_PROTOCOL_LAMBDA = "lambda";
+    String SMN_SUB_PROTOCOL_LAMBDA = "functionStage";
 
     /**
      * attribute
@@ -260,7 +260,7 @@ public interface SmnConstants {
     /**
      * smn crypt key
      */
-    String SMN_CRYPT_KEY = "20170807";
+    String DEFAULT_SMN_CRYPT_KEY = "20170807";
 
     /**
      * ciper method
