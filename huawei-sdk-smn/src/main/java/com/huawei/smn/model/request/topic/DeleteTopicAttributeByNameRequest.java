@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.huawei.smn.common.AccessPolicyType;
 import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
@@ -39,9 +40,25 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(DeleteTopicAttributeByNameRequest.class);
 
     /**
+     * topic attribute access policy
+     */
+    public static final String ACCESS_POLICY = "access_policy";
+
+    /**
+     * topic attribute introduction
+     */
+    public static final String INTRODUCTION = "introduction";
+
+    /**
+     * topic attribute sms sign id
+     */
+    public static final String SMS_SIGN_ID = "sms_sign_id";
+
+    /**
      * topic's unique resource identifier
      */
     private String topicUrn;
+
     /**
      * attribute's name,may support specified string only
      */
@@ -67,12 +84,12 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("Delete topic request projectId is null.");
             throw new NullPointerException("Delete topic request projectId is null.");
         }
 
-        if (StringUtils.isBlank(topicUrn)) {
+        if (StringUtils.isBlank(getTopicUrn())) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
@@ -81,13 +98,14 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
             LOGGER.error("Attributte name is null or is not valid");
             throw new RuntimeException("Attributte name is null or is not valid");
         }
+
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
                 .append(getTopicUrn()).append("/attributes").append(SmnConstants.URL_DELIMITER)
                 .append(getAttributesName());
 
-        LOGGER.info("Request url is {}. ", sb.toString());
+        LOGGER.info("Request url is {}.", sb.toString());
         return sb.toString();
     }
 
@@ -97,14 +115,16 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        // requestParameterMap.put(SmnConstants.TOPIC_URN, getTopicUrn());
         return requestParameterMap;
     }
 
     private boolean isValidAttributeName(String attribute) {
-        if ("access_policy".equals(attribute) || "introduction".equals(attribute)) {
+
+        if (AccessPolicyType.ACCESS_POLICY.equals(attribute) || AccessPolicyType.INTRODUCTION.equals(attribute)
+                || AccessPolicyType.SMS_SIGN_ID.equals(attribute)) {
             return true;
         }
+
         return false;
     }
 

@@ -8,34 +8,24 @@ import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawei.smn.common.SmnConfiguration;
-import com.huawei.smn.model.AuthenticationBean;
-
 import junit.framework.TestCase;
 
 public class CreateTopicRequestTest extends TestCase {
-    private static Logger logger = LoggerFactory.getLogger(CreateTopicRequestTest.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(CreateTopicRequestTest.class);
     CreateTopicRequest createTopicRequest;
-    static AuthenticationBean authenticationBean;
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
-    final static String REGION_ID = "cn-north-1";
-    final static String SMN_ENDPOINT = "https://smn.cn-north-1.myhwclouds.com";
 
     @Before
     public void setUp() {
         createTopicRequest = mock(CreateTopicRequest.class);
-        SmnConfiguration smnConfiguration = mock(SmnConfiguration.class);
-        authenticationBean = mock(AuthenticationBean.class);
-        when(authenticationBean.getProjectId()).thenReturn(PROJECT_ID);
-        when(smnConfiguration.getRegionId()).thenReturn(REGION_ID);
-        when(smnConfiguration.getSmnEndpoint()).thenReturn(SMN_ENDPOINT);
+        when(createTopicRequest.getProjectId()).thenReturn(PROJECT_ID);
     }
 
-    public void testGetRequestUrl() throws Exception {
-        logger.info("starting test");
-        when(createTopicRequest.getRequestUrl()).thenCallRealMethod();
-        String requestURL = "https://smn.cn-north-1.myhwclouds.com/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics";
-        Assert.assertEquals(requestURL, createTopicRequest.getRequestUrl());
+    public void testGetRequestUri() throws Exception {
+        LOGGER.info("starting test");
+        when(createTopicRequest.getRequestUri()).thenCallRealMethod();
+        String requestURL = "/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics";
+        Assert.assertEquals(requestURL, createTopicRequest.getRequestUri());
     }
 
     public void testGetRequestParameterMap() throws Exception {

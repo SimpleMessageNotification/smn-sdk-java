@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huawei.smn.common.SmnConfiguration;
 import com.huawei.smn.model.AuthenticationBean;
 
 import junit.framework.TestCase;
@@ -18,27 +17,21 @@ public class ListTopicAttributesRequestTest extends TestCase {
     ListTopicAttributesRequest listTopicAttributesRequest;
     static AuthenticationBean authenticationBean;
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
-    final static String REGION_ID = "cn-north-1";
-    final static String SMN_ENDPOINT = "https://smn.cn-north-1.myhwclouds.com";
 
     @Before
     public void setUp() {
         listTopicAttributesRequest = mock(ListTopicAttributesRequest.class);
-        SmnConfiguration smnConfiguration = mock(SmnConfiguration.class);
-        authenticationBean = mock(AuthenticationBean.class);
-        when(authenticationBean.getProjectId()).thenReturn(PROJECT_ID);
-        when(smnConfiguration.getRegionId()).thenReturn(REGION_ID);
-        when(smnConfiguration.getSmnEndpoint()).thenReturn(SMN_ENDPOINT);
+        when(listTopicAttributesRequest.getProjectId()).thenReturn(PROJECT_ID);
     }
 
-    public void testGetRequestUrl() throws Exception {
+    public void testGetRequestUri() throws Exception {
         logger.info("starting test");
         String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
         when(listTopicAttributesRequest.getTopicUrn()).thenReturn(topicUrn);
         when(listTopicAttributesRequest.getAttributesName()).thenReturn("access_policy");
-        when(listTopicAttributesRequest.getRequestUrl()).thenCallRealMethod();
-        String requestURL = "https://smn.cn-north-1.myhwclouds.com/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics/urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate/attributes?name=access_policy";
-        Assert.assertEquals(requestURL, listTopicAttributesRequest.getRequestUrl());
+        when(listTopicAttributesRequest.getRequestUri()).thenCallRealMethod();
+        String requestURL = "/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics/urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate/attributes?name=access_policy";
+        Assert.assertEquals(requestURL, listTopicAttributesRequest.getRequestUri());
     }
 
     public void testGetRequestParameterMap() throws Exception {

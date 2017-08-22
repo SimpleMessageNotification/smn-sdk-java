@@ -42,6 +42,7 @@ public class ListTopicsRequest extends AbstractSmnRequest {
      * paging list's starting page,default 0
      */
     private int offset;
+
     /**
      * max returned items for a request,default 100
      */
@@ -67,14 +68,14 @@ public class ListTopicsRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("List topic request projectId is null.");
             throw new NullPointerException("List topic request projectId is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(projectId).append(SmnConstants.SMN_TOPIC_URI);
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI);
 
         if (getOffset() > 0) {
             sb.append("?offset=" + getOffset());

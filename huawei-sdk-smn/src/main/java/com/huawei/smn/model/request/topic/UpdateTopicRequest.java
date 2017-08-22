@@ -17,6 +17,7 @@
  */
 package com.huawei.smn.model.request.topic;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,20 +71,20 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("Update topic request projectId is null.");
             throw new NullPointerException("Update topic request projectId is null.");
         }
 
-        if (StringUtils.isBlank(topicUrn)) {
+        if (StringUtils.isBlank(getTopicUrn())) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(topicUrn);
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(getTopicUrn());
 
         LOGGER.info("Request url is {}.", sb.toString());
         return sb.toString();
@@ -126,6 +127,16 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
      *            the displayName to set
      */
     public void setDisplayName(String displayName) {
+
+        if (StringUtils.isNoneBlank(displayName)) {
+            byte[] b = displayName.getBytes(Charset.forName(SmnConstants.DEFAULT_CHARSET));
+            if (b.length > SmnConstants.MAX_TOPIC_DISPLAY_NAME) {
+                throw new RuntimeException("Display name is oversized.");
+            } else {
+                this.displayName = displayName;
+            }
+        }
+
         this.displayName = displayName;
     }
 

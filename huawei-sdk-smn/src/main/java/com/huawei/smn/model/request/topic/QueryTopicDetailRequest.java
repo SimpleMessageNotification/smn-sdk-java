@@ -47,6 +47,7 @@ public class QueryTopicDetailRequest extends AbstractSmnRequest {
      * end point
      */
     private String endpoint;
+
     /**
      * smn endpoint
      */
@@ -67,20 +68,20 @@ public class QueryTopicDetailRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("Query topic detail request projectId is null.");
             throw new NullPointerException("Query topic detail request projectId is null.");
         }
 
-        if (StringUtils.isBlank(topicUrn)) {
+        if (StringUtils.isBlank(getTopicUrn())) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(topicUrn);
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(getTopicUrn());
 
         LOGGER.info("Request url is {}.", sb.toString());
         return sb.toString();

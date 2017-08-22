@@ -25,8 +25,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.huawei.smn.common.AccessPolicyType;
 import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.common.utils.JsonUtil;
+import com.huawei.smn.common.utils.ValidationUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
@@ -49,6 +51,7 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
      * attribute name
      */
     private String attributesName;
+
     /**
      * topic's unique resource identifier
      */
@@ -74,30 +77,35 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     private String xAuthToken;
 
     /**
+     * attribute value
+     */
+    private String value;
+
+    /**
      * build and get request url
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("Update topic attribute request projectId is null.");
             throw new NullPointerException("Update topic attribute request projectId is null.");
         }
 
-        if (StringUtils.isBlank(topicUrn)) {
+        if (StringUtils.isBlank(getTopicUrn())) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
-        if (StringUtils.isBlank(attributesName) || !isValidAttributeName(attributesName)) {
+        if (StringUtils.isBlank(getAttributesName()) || !isValidAttributeName(getAttributesName())) {
             LOGGER.error("Attributte name is null or is not valid");
             throw new RuntimeException("Attributte name is null or is not valid");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(topicUrn).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
-                .append(SmnConstants.URL_DELIMITER).append(attributesName);
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(getTopicUrn()).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
+                .append(SmnConstants.URL_DELIMITER).append(getAttributesName());
 
         LOGGER.info("Request url is {}.", sb.toString());
         return sb.toString();
@@ -113,10 +121,13 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
-    private boolean isValidAttributeName(String attributeName) {
-        if ("access_policy".equals(attributeName) || "introduction".equals(attributeName)) {
+    private boolean isValidAttributeName(String attribute) {
+
+        if (AccessPolicyType.ACCESS_POLICY.equals(attribute) || AccessPolicyType.INTRODUCTION.equals(attribute)
+                || AccessPolicyType.SMS_SIGN_ID.equals(attribute)) {
             return true;
         }
+
         return false;
     }
 
@@ -206,6 +217,30 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
         this.xAuthToken = xAuthToken;
     }
 
+    /**
+     * @return the value
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * @param value
+     *            the value to set
+     */
+    public void setValue(String value) {
+
+        if (StringUtils.isNoneBlank(value)) {
+            if (!ValidationUtil.validateAttributValue(value)) {
+                throw new RuntimeException("Attribute value is illegal.");
+            } else {
+                this.value = value;
+            }
+        }
+
+        this.value = value;
+    }
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -216,7 +251,7 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
         builder.append("UpdateTopicAttributeRequest [attributesName=").append(attributesName).append(", topicUrn=")
                 .append(topicUrn).append(", acessPolicy=").append(acessPolicy).append(", smnEndpoint=")
                 .append(smnEndpoint).append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken)
-                .append("]");
+                .append(", value=").append(value).append("]");
         return builder.toString();
     }
 

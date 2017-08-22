@@ -42,6 +42,7 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
      * topic's unique resource identifier
      */
     private String topicUrn;
+
     /**
      * attribute name
      */
@@ -63,16 +64,16 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
     private String xAuthToken;
 
     /**
-     * build and get request url
+     * build and get request uri
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("List topic attribute request projectId is null.");
             throw new NullPointerException("List topic attribute request projectId is null.");
         }
 
-        if (StringUtils.isBlank(topicUrn)) {
+        if (StringUtils.isBlank(getTopicUrn())) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
@@ -82,7 +83,7 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
                 .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
                 .append(getTopicUrn()).append("/attributes?name=access_policy");
 
-        LOGGER.info("Request url is {}.", sb.toString());
+        LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
     }
 

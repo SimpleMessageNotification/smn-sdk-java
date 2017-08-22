@@ -68,20 +68,20 @@ public class DeleteTopicAttributesRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("Delete topic attribute request projectId is null.");
             throw new NullPointerException("Delete topic attribute request projectId is null.");
         }
 
-        if (StringUtils.isBlank(topicUrn)) {
+        if (StringUtils.isBlank(getTopicUrn())) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(topicUrn).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES);
+                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(getTopicUrn()).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES);
 
         LOGGER.info("Request url is {}.", sb.toString());
         return sb.toString();

@@ -18,7 +18,7 @@
 package com.huawei.smn.common;
 
 /**
- * 访问策略
+ * acess policy
  * 
  * @author huangqiong
  *
@@ -29,13 +29,18 @@ package com.huawei.smn.common;
 public interface AccessPolicyType {
 
     /**
-     * 设置topic资源的访问策略
+     * set access policy to access topic resource
      */
     String ACCESS_POLICY = "access_policy";
 
     /**
-     * 设置topic主题的简介，用于邮件和短信确认信息
+     * set profile of topic,to confirm for mail and sms
      */
     String INTRODUCTION = "introduction";
+
+    /**
+     * support sms sign id
+     */
+    String SMS_SIGN_ID = "sms_sign_id";
 
 }

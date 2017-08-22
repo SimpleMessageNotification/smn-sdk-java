@@ -17,6 +17,7 @@
  */
 package com.huawei.smn.model.request.topic;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.SmnConstants;
+import com.huawei.smn.common.utils.ValidationUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
@@ -42,6 +44,7 @@ public class CreateTopicRequest extends AbstractSmnRequest {
      * topic name
      */
     private String name;
+
     /**
      * topic's descriptions
      */
@@ -67,7 +70,7 @@ public class CreateTopicRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(projectId)) {
+        if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("Create topic request projectId is null.");
             throw new NullPointerException("Create topic request projectId is null.");
         }
@@ -103,6 +106,11 @@ public class CreateTopicRequest extends AbstractSmnRequest {
      *            the name to set
      */
     public void setName(String name) {
+
+        if (!ValidationUtil.validateTopicName(name)) {
+            throw new RuntimeException("Topic name is illegal");
+        }
+
         this.name = name;
     }
 
@@ -114,10 +122,24 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     }
 
     /**
+     * set displayName
+     * <p>
+     * validate display length before set the value
+     * 
      * @param displayName
      *            the displayName to set
      */
     public void setDisplayName(String displayName) {
+
+        if (StringUtils.isNoneBlank(displayName)) {
+            byte[] b = displayName.getBytes(Charset.forName(SmnConstants.DEFAULT_CHARSET));
+            if (b.length > SmnConstants.MAX_TOPIC_DISPLAY_NAME) {
+                throw new RuntimeException("Display name is oversized.");
+            } else {
+                this.displayName = displayName;
+            }
+        }
+
         this.displayName = displayName;
     }
 

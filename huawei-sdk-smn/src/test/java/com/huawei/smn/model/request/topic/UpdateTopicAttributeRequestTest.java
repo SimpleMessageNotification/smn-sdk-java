@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.AccessPolicyConstants;
-import com.huawei.smn.common.SmnConfiguration;
 import com.huawei.smn.model.AuthenticationBean;
 
 import junit.framework.TestCase;
@@ -26,28 +25,21 @@ public class UpdateTopicAttributeRequestTest extends TestCase {
     UpdateTopicAttributeRequest updateTopicAttributeRequest;
     static AuthenticationBean authenticationBean;
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
-    final static String REGION_ID = "cn-north-1";
-    final static String SMN_ENDPOINT = "https://smn.cn-north-1.myhwclouds.com";
 
     @Before
     public void setUp() {
         updateTopicAttributeRequest = mock(UpdateTopicAttributeRequest.class);
-        SmnConfiguration smnConfiguration = mock(SmnConfiguration.class);
-        authenticationBean = mock(AuthenticationBean.class);
-        when(authenticationBean.getProjectId()).thenReturn(PROJECT_ID);
-        when(smnConfiguration.getRegionId()).thenReturn(REGION_ID);
-        when(smnConfiguration.getSmnEndpoint()).thenReturn(SMN_ENDPOINT);
+        when(updateTopicAttributeRequest.getProjectId()).thenReturn(PROJECT_ID);
     }
 
-    public void testGetRequestUrl() throws Exception {
+    public void testGetRequestUri() throws Exception {
         logger.info("starting test");
         String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
         when(updateTopicAttributeRequest.getTopicUrn()).thenReturn(topicUrn);
         when(updateTopicAttributeRequest.getAttributesName()).thenReturn("access_policy");
-        // when(updateTopicAttributeRequest.getAuthenticationBean()).thenReturn(authenticationBean);
-        when(updateTopicAttributeRequest.getRequestUrl()).thenCallRealMethod();
-        String requestURL = "https://smn.cn-north-1.myhwclouds.com/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics/urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate/attributes/access_policy";
-        Assert.assertEquals(requestURL, updateTopicAttributeRequest.getRequestUrl());
+        when(updateTopicAttributeRequest.getRequestUri()).thenCallRealMethod();
+        String requestURL = "/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics/urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate/attributes/access_policy";
+        Assert.assertEquals(requestURL, updateTopicAttributeRequest.getRequestUri());
     }
 
     public void testGetRequestParameterMap() throws Exception {
