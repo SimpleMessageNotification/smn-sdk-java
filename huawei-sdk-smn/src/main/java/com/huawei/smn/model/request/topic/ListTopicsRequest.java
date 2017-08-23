@@ -64,7 +64,7 @@ public class ListTopicsRequest extends AbstractSmnRequest {
     private String xAuthToken;
 
     /**
-     * build and get request url
+     * build and get request uri
      */
     public String getRequestUri() throws RuntimeException {
 
@@ -89,7 +89,7 @@ public class ListTopicsRequest extends AbstractSmnRequest {
             sb.append("&limit=").append("100");
         }
 
-        LOGGER.info("Request url is {}.", sb.toString());
+        LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
     }
 

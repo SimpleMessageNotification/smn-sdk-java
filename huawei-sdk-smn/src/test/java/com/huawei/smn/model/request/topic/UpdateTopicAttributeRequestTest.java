@@ -1,8 +1,5 @@
 package com.huawei.smn.model.request.topic;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.AccessPolicyConstants;
-import com.huawei.smn.model.AuthenticationBean;
 
 import junit.framework.TestCase;
 
@@ -23,21 +19,19 @@ public class UpdateTopicAttributeRequestTest extends TestCase {
 
     private static Logger logger = LoggerFactory.getLogger(UpdateTopicAttributeRequestTest.class);
     UpdateTopicAttributeRequest updateTopicAttributeRequest;
-    static AuthenticationBean authenticationBean;
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
 
     @Before
     public void setUp() {
-        updateTopicAttributeRequest = mock(UpdateTopicAttributeRequest.class);
-        when(updateTopicAttributeRequest.getProjectId()).thenReturn(PROJECT_ID);
+        updateTopicAttributeRequest = new UpdateTopicAttributeRequest();
+        String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
+        updateTopicAttributeRequest.setProjectId(PROJECT_ID);
+        updateTopicAttributeRequest.setTopicUrn(topicUrn);
+        updateTopicAttributeRequest.setAttributesName("access_policy");
     }
 
     public void testGetRequestUri() throws Exception {
         logger.info("starting test");
-        String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
-        when(updateTopicAttributeRequest.getTopicUrn()).thenReturn(topicUrn);
-        when(updateTopicAttributeRequest.getAttributesName()).thenReturn("access_policy");
-        when(updateTopicAttributeRequest.getRequestUri()).thenCallRealMethod();
         String requestURL = "/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics/urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate/attributes/access_policy";
         Assert.assertEquals(requestURL, updateTopicAttributeRequest.getRequestUri());
     }
@@ -76,8 +70,6 @@ public class UpdateTopicAttributeRequestTest extends TestCase {
 
         updateTopicAttributeRequest.setAcessPolicy(acessPolicy);
 
-        when(updateTopicAttributeRequest.getAcessPolicy()).thenReturn(acessPolicy);
-        when(updateTopicAttributeRequest.getRequestParameterMap()).thenCallRealMethod();
         Assert.assertNotNull(updateTopicAttributeRequest.getRequestParameterMap().get("value"));
     }
 

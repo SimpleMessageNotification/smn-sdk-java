@@ -17,7 +17,6 @@
  */
 package com.huawei.smn.model.request.topic;
 
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.huawei.smn.common.SmnConstants;
+import com.huawei.smn.common.utils.ValidationUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
@@ -67,7 +67,7 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
     private String xAuthToken;
 
     /**
-     * build and get request url
+     * build and get request uri
      */
     public String getRequestUri() throws RuntimeException {
 
@@ -86,7 +86,7 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
                 .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
                 .append(getTopicUrn());
 
-        LOGGER.info("Request url is {}.", sb.toString());
+        LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
     }
 
@@ -128,16 +128,9 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
      */
     public void setDisplayName(String displayName) {
 
-        if (StringUtils.isNoneBlank(displayName)) {
-            byte[] b = displayName.getBytes(Charset.forName(SmnConstants.DEFAULT_CHARSET));
-            if (b.length > SmnConstants.MAX_TOPIC_DISPLAY_NAME) {
-                throw new RuntimeException("Display name is oversized.");
-            } else {
-                this.displayName = displayName;
-            }
+        if (ValidationUtil.validateDisplayName(displayName)) {
+            this.displayName = displayName;
         }
-
-        this.displayName = displayName;
     }
 
     /**

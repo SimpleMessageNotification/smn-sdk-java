@@ -80,7 +80,7 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     private String xAuthToken;
 
     /**
-     * build and get request url
+     * build and get request uri
      */
     public String getRequestUri() throws RuntimeException {
 
@@ -105,7 +105,7 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
                 .append(getTopicUrn()).append("/attributes").append(SmnConstants.URL_DELIMITER)
                 .append(getAttributesName());
 
-        LOGGER.info("Request url is {}.", sb.toString());
+        LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
     }
 

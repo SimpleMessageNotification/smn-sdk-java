@@ -73,7 +73,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.createTopic(createTopicRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("topic_urn"));
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
@@ -87,7 +86,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.deleteTopic(deleteTopicRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
     }
@@ -98,7 +96,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.listTopics(listTopicsRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
     }
@@ -111,7 +108,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.queryTopicDetail(queryTopicDetailRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("topic_urn"));
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
@@ -127,7 +123,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.listTopicAttributes(listTopicAttributesRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("attributes"));
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
@@ -202,7 +197,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.updateTopicAttribute(updateTopicAttributeRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
     }
@@ -218,7 +212,6 @@ public class TopicServiceTest extends TestCase {
         topicService.setSmnConfiguration(smnConfiguration);
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.deleteTopicAttributeByName(deleteTopicAttributeByNameRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
     }
@@ -232,7 +225,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.deleteTopicAttributes(deleteTopicAttributeRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
     }
@@ -246,7 +238,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.updateTopic(updateTopicRequest);
-        LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("request_id"));
         Assert.assertNotNull(res.get("status"));
     }

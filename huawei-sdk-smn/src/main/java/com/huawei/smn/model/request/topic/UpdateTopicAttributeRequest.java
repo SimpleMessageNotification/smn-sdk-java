@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import com.huawei.smn.common.AccessPolicyType;
 import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.common.utils.JsonUtil;
-import com.huawei.smn.common.utils.ValidationUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
@@ -82,7 +81,7 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     private String value;
 
     /**
-     * build and get request url
+     * build and get request uri
      */
     public String getRequestUri() throws RuntimeException {
 
@@ -107,7 +106,7 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
                 .append(getTopicUrn()).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
                 .append(SmnConstants.URL_DELIMITER).append(getAttributesName());
 
-        LOGGER.info("Request url is {}.", sb.toString());
+        LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
     }
 
@@ -229,15 +228,6 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
      *            the value to set
      */
     public void setValue(String value) {
-
-        if (StringUtils.isNoneBlank(value)) {
-            if (!ValidationUtil.validateAttributValue(value)) {
-                throw new RuntimeException("Attribute value is illegal.");
-            } else {
-                this.value = value;
-            }
-        }
-
         this.value = value;
     }
 
