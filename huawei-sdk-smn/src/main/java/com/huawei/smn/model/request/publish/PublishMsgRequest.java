@@ -43,6 +43,8 @@ import static com.huawei.smn.common.utils.ConstantsUtil.TAGS;
  * @date 2017年8月2日
  *
  * @version 0.1
+ * @author  yangyanping
+ * @version 0.2
  */
 public class PublishMsgRequest extends AbstractSmnRequest {
 
@@ -96,11 +98,15 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     /**
      * 参数校验
      */
-    private void validate() throws UnsupportedEncodingException {
+    private void validate() throws UnsupportedEncodingException,RuntimeException {
         //check topic urn
         
         if(!ValidationUtil.validateTopicUrn(topicUrn)){
             throw new RuntimeException("topic urn is illegal");
+        }
+        if (StringUtils.isBlank(projectId)) {
+            LOGGER.error("Publish message request projectId is null.");
+            throw new RuntimeException("Publish message request projectId is null.");
         }
         
         //check subject
@@ -130,22 +136,12 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      */
     @Override
     public String getRequestUri() throws RuntimeException{
-
-        if (StringUtils.isBlank(projectId)) {
-            LOGGER.error("Publish message request projectId is null.");
-            throw new RuntimeException("Publish message request projectId is null.");
-        }
-
-        if (StringUtils.isBlank(topicUrn)) {
-            LOGGER.error("TopicUrn is null.");
-            throw new RuntimeException("TopicUrn is null.");
-        }
+    
         try {
             validate();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-    
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
@@ -172,36 +168,37 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     public Map<String, Object> getRequestParameterMap() {
 
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-
+    
         if (StringUtils.isNotBlank(getSubject())) {
-            requestParameterMap.put("subject", getSubject());
+             requestParameterMap.put("subject", getSubject());
         }
-
+    
         // message structure has highest priority
-        if (StringUtils.isNoneBlank(getMessageStructure())) {
+        if (StringUtils.isNoneBlank(messageStructure)) {
             requestParameterMap.put("message_structure", getMessageStructure());
             return requestParameterMap;
         }
-
-        // message template has secondary priority
-        if (StringUtils.isNoneBlank(getMessageTemplateName())) {
-            if (Objects.isNull(getTags())) {
-                LOGGER.error("Tags is null");
-                throw new RuntimeException("Tags is null");
-            }
-            requestParameterMap.put("message_template_name", getMessageTemplateName());
-            requestParameterMap.put("tags", getTags());
-            LOGGER.info(requestParameterMap.toString());
-            if(!checkTags()){
-                throw new RuntimeException();
-            }
-            return requestParameterMap;
-        }
-
+   
+         // message template has secondary priority
+         if (StringUtils.isNoneBlank(getMessageTemplateName())) {
+             if (Objects.isNull(getTags())) {
+                 LOGGER.error("Tags is null");
+                 throw new RuntimeException("Tags is null");
+             }
+             requestParameterMap.put("message_template_name", getMessageTemplateName());
+             requestParameterMap.put("tags", getTags());
+             LOGGER.info(requestParameterMap.toString());
+             if(!checkTags()){
+                 throw new RuntimeException();
+             }
+             return requestParameterMap;
+         }
+        
         // common message ,least priority
         if (StringUtils.isBlank(getMessage())) {
             throw new RuntimeException("Message is null");
         }
+
         requestParameterMap.put("message", getMessage());
         LOGGER.info("message is {}." + message);
         return requestParameterMap;
@@ -211,11 +208,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return the topicUrn
      */
     public String getTopicUrn() {
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         return topicUrn;
     }
 
@@ -231,11 +223,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return the subject
      */
     public String getSubject() {
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         return subject;
     }
 
@@ -251,12 +238,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return the tags
      */
     public Map<String, Object> getTags() {
-    
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         return tags;
     }
 
@@ -273,11 +254,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      */
     public String getMessageTemplateName()
     {
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         return messageTemplateName;
     }
 
@@ -293,12 +269,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return the messageStructure
      */
     public String getMessageStructure() {
-    
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
         return messageStructure;
     }
 
@@ -314,12 +285,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return the message
      */
     public String getMessage() {
-    
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        
         return message;
     }
 
@@ -350,12 +316,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return the projectId
      */
     public String getProjectId() {
-    
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         return projectId;
     }
 
@@ -384,12 +344,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      */
     @Override
     public String toString() {
-    
-        try {
-            validate();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        
         StringBuilder builder = new StringBuilder();
         builder.append("PublishMsgRequest [topicUrn=").append(topicUrn).append(", subject=").append(subject)
                 .append(", tags=").append(tags).append(", messageTemplateName=").append(messageTemplateName)

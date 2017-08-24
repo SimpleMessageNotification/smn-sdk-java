@@ -66,11 +66,10 @@ public class PublishServiceTest extends TestCase {
         PublishService publishService = new PublishServiceImpl();
         publishService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = null;
-
         res = publishService.publish(publishMsgRequest);
 
         LOGGER.info(res.toString());
-
+        
         //check topic urn
         publishMsgRequest.setTopicUrn(null);
         try {
@@ -81,6 +80,7 @@ public class PublishServiceTest extends TestCase {
         }
         publishMsgRequest.setTopicUrn(topicUrn);
 
+        
         //check message
         String message = publishMsgRequest.getMessage();
         publishMsgRequest.setMessage(null);
@@ -91,6 +91,7 @@ public class PublishServiceTest extends TestCase {
 
         }
         publishMsgRequest.setMessage(message);
+        
     }
 
     // 使用消息模板方式的消息发布 pass
@@ -161,8 +162,10 @@ public class PublishServiceTest extends TestCase {
 
         LOGGER.info(res.toString());
         Assert.assertNotNull(res.get("request_id"));
+        System.out.println(res.get("request_id")+"+++++"+res.get("status"));
         Assert.assertNotNull(res.get("message_id"));
         Assert.assertNotNull(res.get("status"));
+        
     }
 
 }

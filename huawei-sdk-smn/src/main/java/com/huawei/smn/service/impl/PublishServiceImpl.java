@@ -41,7 +41,8 @@ import static com.huawei.smn.common.utils.ConstantsUtil.TAGS;
 
 /**
  * Publish service implemented
- * 
+ * @author huangqiong
+ * @version 0.1
  * @author yangyanping
  *
  * @date 2017年8月24日
@@ -74,34 +75,6 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
     public Map<String, Object> publish(PublishMsgRequest smnRequest) throws RuntimeException, UnsupportedEncodingException {
         LOGGER.info("Start to publish message.");
 
-        //check topic urn
-        if(!ValidationUtil.validateTopicUrn(smnRequest.getTopicUrn())){
-            throw new RuntimeException("topic urn is illegal");
-        }
-
-        //check subject
-        if(!checkSubject(smnRequest.getSubject())){
-            throw new RuntimeException("subject is illegal");
-        }
-
-        //check message
-        if(smnRequest.getMessageStructure()!=null){
-            if(!checkMessageStruct(smnRequest.getMessageStructure())){
-               // throw new RuntimeException("messageStructure is illegal");
-            }
-        }else if(smnRequest.getMessageTemplateName()!=null){
-            if(!checkMessageTemplate(smnRequest.getRequestParameterMap())){
-                System.out.println("++++++++++++");
-                throw new RuntimeException("messageTemplate is illegal");
-            }
-        }else  {
-            //check
-            if (!checkMessage(smnRequest.getMessage())) {
-                throw new RuntimeException("message is illegal");
-            }
-        }
-
-
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
@@ -119,122 +92,6 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
         }
     }
 
-    /**
-     * 检查subject是否符合规范，<code>true</> 表示符合规范，否则不符合规范
-     * @param subject
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
-     */
-    private boolean checkSubject(String subject){
-        if (subject == null){
-            LOGGER.debug("subject is null");
-            return  true;
-        }
-        if(!ValidationUtil.validateSubject(subject)){
-            LOGGER.error("Parameter: Subject is invalid. ");
-            return false;
-        }
-        try {
-            byte[] b = subject.getBytes("utf-8");
-            SmnConfiguration smnConfiguration = new SmnConfiguration();
-            //判断消息的主题长度小于512byte
-            if(b.length > smnConfiguration.getMaxSubjectLength()){
-                LOGGER.error("Parameter: Subject is invalid. . The Length of Subject is {}.",b.length);
-                return  false;
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return true;
-    }
-
-    /**
-     * 检查message是否符合规范 ，<code>true</> 表示符合规范，否则不符合规范
-     * @param message
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
-     */
-    private boolean checkMessage(String message){
-        if (message == null){
-            return  false;
-        }
-        try {
-            byte[] b = message.getBytes("utf-8");
-            //判断消息的长度小于512byte
-            SmnConfiguration smnConfiguration = new SmnConfiguration();
-            if(b.length>smnConfiguration.getMaxMessageLength()){
-                LOGGER.error("Parameter: message is invalid. . The Length of message is {}.",b.length);
-                return  false;
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return true;
-    }
-
-    private boolean checkMessageStruct(String messageStruct){
-        if (messageStruct==null){
-            LOGGER.error("Parameter:MessageStruct is invalid");
-            return false;
-        }
-        try {
-            SmnConfiguration smnConfiguration = new SmnConfiguration();
-            byte[] b = messageStruct.getBytes(ConstantsUtil.URL_ENCODING);
-            if(b.length > smnConfiguration.getMaxMessageLength()){
-                LOGGER.error("Parameter:MessageStruct is invalid,it is too long");
-                return  false;
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        Object messageObject = JsonUtil.parseJsonMessage(messageStruct);
-        if(!(messageObject instanceof Map<?,?>)){
-            LOGGER.error("Parameter:MessageStruct is invalid, it is null");
-            return false;
-        }
-
-        //解析JSON格式
-        Map<String,Object> messageMap = (Map<String,Object>) messageObject;
-        //消息不是json格式，返回异常
-        if(messageMap.size()==0){
-            LOGGER.error("Parameter:MessageStruct is invalid. Failed to parse MessageStructure.");
-            return false;
-        }
-        //校验default message string 类型
-        if(!(messageMap.get(DEFAULT_MESSAGE) instanceof  String)){
-            LOGGER.error("Parameter:MessageStruct is invalid. Default message isn't String.");
-            return  false;
-        }
-        return true;
-    }
-
-    private boolean checkMessageTemplate(Map<String,Object> parmMap) throws UnsupportedEncodingException {
-        if(parmMap.get(TAGS)!=null){
-            if(!(parmMap.get(TAGS) instanceof Map<?,?>)){
-                LOGGER.error("Tag is error.");
-                return  false;
-            }
-            //检查每一个tag不能超过1kb
-            Map<?,?> tagsmap = (Map<?,?>) parmMap.get(TAGS);
-            Iterator<Object> tagValues = (Iterator<Object>) tagsmap.values().iterator();
-            Object obj = null;
-            byte[] b = null;
-            while (tagValues.hasNext()){
-                obj = tagValues.next();
-                //测试json值为空
-                b = obj.toString().getBytes(ConstantsUtil.URL_ENCODING);
-                SmnConfiguration smnConfiguration = new SmnConfiguration();
-                if (b.length> smnConfiguration.getMaxTagLength()){
-                    LOGGER.error("Tag is erro . The tag length is {}.",b.length);
-                    return  false;
-                }
-            }
-        }else{
-            LOGGER.info("EmptyTag.");
-            return  false;
-        }
-        return true;
-    }
-
-
+   
 
 }
