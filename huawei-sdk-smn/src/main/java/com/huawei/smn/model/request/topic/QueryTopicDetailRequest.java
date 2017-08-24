@@ -70,7 +70,7 @@ public class QueryTopicDetailRequest extends AbstractSmnRequest {
 
         if (StringUtils.isBlank(getProjectId())) {
             LOGGER.error("Query topic detail request projectId is null.");
-            throw new NullPointerException("Query topic detail request projectId is null.");
+            throw new NullPointerException("Query topic detail request, projectId is null.");
         }
 
         if (StringUtils.isBlank(getTopicUrn())) {

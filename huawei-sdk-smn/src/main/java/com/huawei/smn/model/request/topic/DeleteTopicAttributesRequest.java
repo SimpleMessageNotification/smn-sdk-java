@@ -69,8 +69,8 @@ public class DeleteTopicAttributesRequest extends AbstractSmnRequest {
     public String getRequestUri() throws RuntimeException {
 
         if (StringUtils.isBlank(getProjectId())) {
-            LOGGER.error("Delete topic attribute request projectId is null.");
-            throw new NullPointerException("Delete topic attribute request projectId is null.");
+            LOGGER.error("Delete topic attribute request, projectId is null.");
+            throw new NullPointerException("Delete topic attribute request, projectId is null.");
         }
 
         if (StringUtils.isBlank(getTopicUrn())) {

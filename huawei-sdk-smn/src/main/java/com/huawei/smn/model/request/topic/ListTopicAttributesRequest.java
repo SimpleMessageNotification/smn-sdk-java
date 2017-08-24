@@ -74,8 +74,8 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
     public String getRequestUri() throws RuntimeException {
 
         if (StringUtils.isBlank(getProjectId())) {
-            LOGGER.error("List topic attribute request projectId is null.");
-            throw new NullPointerException("List topic attribute request projectId is null.");
+            LOGGER.error("List topic attribute request,projectId is null.");
+            throw new NullPointerException("List topic attribute request, projectId is null.");
         }
 
         if (StringUtils.isBlank(getTopicUrn())) {

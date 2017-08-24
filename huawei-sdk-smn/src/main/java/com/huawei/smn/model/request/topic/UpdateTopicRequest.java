@@ -72,8 +72,8 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
     public String getRequestUri() throws RuntimeException {
 
         if (StringUtils.isBlank(getProjectId())) {
-            LOGGER.error("Update topic request projectId is null.");
-            throw new NullPointerException("Update topic request projectId is null.");
+            LOGGER.error("Update topic request, projectId is null.");
+            throw new NullPointerException("Update topic request, projectId is null.");
         }
 
         if (StringUtils.isBlank(getTopicUrn())) {

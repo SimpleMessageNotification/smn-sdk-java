@@ -40,6 +40,11 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(DeleteTopicAttributeByNameRequest.class);
 
     /**
+     * attributes
+     */
+    private static final String ATTRIBUTES = "attributes";
+
+    /**
      * topic's unique resource identifier
      */
     private String topicUrn;
@@ -70,8 +75,8 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     public String getRequestUri() throws RuntimeException {
 
         if (StringUtils.isBlank(getProjectId())) {
-            LOGGER.error("Delete topic request projectId is null.");
-            throw new NullPointerException("Delete topic request projectId is null.");
+            LOGGER.error("Delete topic attribute by name request, projectId is null.");
+            throw new NullPointerException("Delete topic attribute by name request, projectId is null.");
         }
 
         if (StringUtils.isBlank(getTopicUrn())) {
@@ -80,14 +85,14 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
         }
 
         if (StringUtils.isBlank(getAttributesName()) || !isValidAttributeName(getAttributesName())) {
-            LOGGER.error("Attributte name is null or is not valid");
-            throw new RuntimeException("Attributte name is null or is not valid");
+            LOGGER.error("Attributte name is null or not valid");
+            throw new RuntimeException("Attributte name is null or not valid");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(getTopicUrn()).append("/attributes").append(SmnConstants.URL_DELIMITER)
+                .append(getTopicUrn()).append(ATTRIBUTES).append(SmnConstants.URL_DELIMITER)
                 .append(getAttributesName());
 
         LOGGER.info("Request uri is {}.", sb.toString());

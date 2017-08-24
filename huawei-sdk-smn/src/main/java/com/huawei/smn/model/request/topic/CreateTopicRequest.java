@@ -70,8 +70,8 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     public String getRequestUri() throws RuntimeException {
 
         if (StringUtils.isBlank(getProjectId())) {
-            LOGGER.error("Create topic request projectId is null.");
-            throw new NullPointerException("Create topic request projectId is null.");
+            LOGGER.error("Create topic request, projectId is null.");
+            throw new NullPointerException("Create topic request, projectId is null.");
         }
 
         StringBuilder sb = new StringBuilder();

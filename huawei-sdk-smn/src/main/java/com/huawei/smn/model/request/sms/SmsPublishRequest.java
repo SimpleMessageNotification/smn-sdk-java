@@ -84,7 +84,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
 
         if (StringUtils.isBlank(projectId)) {
 
-            LOGGER.error("Publish sms projectId is null.");
+            LOGGER.error("Publish sms,projectId is null.");
             throw new NullPointerException("ProjectId is null.");
         }
 

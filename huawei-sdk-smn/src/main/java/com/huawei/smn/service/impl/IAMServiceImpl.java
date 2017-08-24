@@ -38,7 +38,6 @@ import com.huawei.smn.service.IAMService;
  * @date 2017年8月3日 下午5:36:41
  * @version 0.1
  */
-
 public class IAMServiceImpl implements IAMService {
     private static Logger LOGGER = LoggerFactory.getLogger(IAMServiceImpl.class);
 

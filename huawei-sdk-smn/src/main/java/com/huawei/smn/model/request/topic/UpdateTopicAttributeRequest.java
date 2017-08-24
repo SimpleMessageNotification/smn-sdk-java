@@ -86,8 +86,8 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     public String getRequestUri() throws RuntimeException {
 
         if (StringUtils.isBlank(getProjectId())) {
-            LOGGER.error("Update topic attribute request projectId is null.");
-            throw new NullPointerException("Update topic attribute request projectId is null.");
+            LOGGER.error("Update topic attribute request, projectId is null.");
+            throw new NullPointerException("Update topic attribute request, projectId is null.");
         }
 
         if (StringUtils.isBlank(getTopicUrn())) {
@@ -96,8 +96,8 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
         }
 
         if (StringUtils.isBlank(getAttributesName()) || !isValidAttributeName(getAttributesName())) {
-            LOGGER.error("Attributte name is null or is not valid");
-            throw new RuntimeException("Attributte name is null or is not valid");
+            LOGGER.error("Attributte name is null or not valid");
+            throw new RuntimeException("Attributte name is null or not valid");
         }
 
         StringBuilder sb = new StringBuilder();
