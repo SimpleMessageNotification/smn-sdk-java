@@ -40,7 +40,7 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(DeleteTopicAttributeByNameRequest.class);
 
     /**
-     * attributes
+     * final string attributes
      */
     private static final String ATTRIBUTES = "attributes";
 
@@ -92,8 +92,8 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(getTopicUrn()).append(ATTRIBUTES).append(SmnConstants.URL_DELIMITER)
-                .append(getAttributesName());
+                .append(getTopicUrn()).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
+                .append(SmnConstants.URL_DELIMITER).append(getAttributesName());
 
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
@@ -198,7 +198,7 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
         StringBuilder builder = new StringBuilder();
         builder.append("DeleteTopicAttributeByNameRequest [topicUrn=").append(topicUrn).append(", attributesName=")
                 .append(attributesName).append(", smnEndpoint=").append(smnEndpoint).append(", projectId=")
-                .append(projectId).append(", xAuthToken=").append(xAuthToken).append("]");
+                .append(projectId).append("]");
         return builder.toString();
     }
 

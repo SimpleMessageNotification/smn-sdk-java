@@ -32,8 +32,22 @@ import junit.framework.TestCase;
  */
 public class CreateTopicRequestTest extends TestCase {
     private static Logger LOGGER = LoggerFactory.getLogger(CreateTopicRequestTest.class);
+
     CreateTopicRequest createTopicRequest;
+    /**
+     * projectid
+     */
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
+
+    /**
+     * final string "name"
+     */
+    final static String NAME = "name";
+
+    /**
+     * final string "displayName"
+     */
+    final static String DISPLAY_NAME = "displayName";
 
     @Before
     public void setUp() {
@@ -48,9 +62,8 @@ public class CreateTopicRequestTest extends TestCase {
     }
 
     public void testGetRequestParameterMap() throws Exception {
-
-        Assert.assertEquals(createTopicRequest.getName(), createTopicRequest.getRequestParameterMap().get("name"));
-        Assert.assertNull(createTopicRequest.getRequestParameterMap().get("displayName"));
+        Assert.assertEquals(createTopicRequest.getName(), createTopicRequest.getRequestParameterMap().get(NAME));
+        Assert.assertNull(createTopicRequest.getRequestParameterMap().get(DISPLAY_NAME));
     }
 
 }

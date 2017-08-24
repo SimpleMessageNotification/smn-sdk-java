@@ -174,9 +174,8 @@ public class QueryTopicDetailRequest extends AbstractSmnRequest {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("QueryTopicDetailRequest [topicUrn=").append(topicUrn).append(", endpoint=").append(endpoint)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+        builder.append("QueryTopicDetailRequest [topicUrn=").append(topicUrn).append(", smnEndpoint=")
+                .append(smnEndpoint).append(", projectId=").append(projectId).append("]");
         return builder.toString();
     }
 

@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.huawei.smn.common.AccessPolicyType;
 import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
@@ -41,7 +42,12 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
     /**
      * list topic attribute suffix
      */
-    final static String LIST_TOPIC_ATTRIBUTE_SUFFIX = "/attributes?name=access_policy";
+    final static String LIST_TOPIC_ATTRIBUTE_SUFFIX = "/attributes?";
+
+    /**
+     * final string "name="
+     */
+    final static String NAME_SUFFIX = "name=";
 
     /**
      * topic's unique resource identifier
@@ -88,8 +94,23 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
                 .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
                 .append(getTopicUrn()).append(LIST_TOPIC_ATTRIBUTE_SUFFIX);
 
+        if (StringUtils.isNoneBlank(getAttributesName()) && isValidAttributeName(attributesName)) {
+            sb.append(NAME_SUFFIX).append(getAttributesName());
+        }
+
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
+    }
+
+    private boolean isValidAttributeName(String attributesName) {
+
+        if (AccessPolicyType.ACCESS_POLICY.equals(attributesName)
+                || AccessPolicyType.INTRODUCTION.equals(attributesName)
+                || AccessPolicyType.SMS_SIGN_ID.equals(attributesName)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -181,7 +202,7 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
         StringBuilder builder = new StringBuilder();
         builder.append("ListTopicAttributesRequest [topicUrn=").append(topicUrn).append(", attributesName=")
                 .append(attributesName).append(", smnEndpoint=").append(smnEndpoint).append(", projectId=")
-                .append(projectId).append(", xAuthToken=").append(xAuthToken).append("]");
+                .append(projectId).append("]");
         return builder.toString();
     }
 

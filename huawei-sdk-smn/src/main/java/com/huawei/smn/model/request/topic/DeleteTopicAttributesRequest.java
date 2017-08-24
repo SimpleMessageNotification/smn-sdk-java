@@ -161,9 +161,7 @@ public class DeleteTopicAttributesRequest extends AbstractSmnRequest {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("DeleteTopicAttributesRequest [topicUrn=").append(topicUrn).append(", smnEndpoint=")
-                .append(smnEndpoint).append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken)
-                .append("]");
+                .append(smnEndpoint).append(", projectId=").append(projectId).append("]");
         return builder.toString();
     }
-
 }

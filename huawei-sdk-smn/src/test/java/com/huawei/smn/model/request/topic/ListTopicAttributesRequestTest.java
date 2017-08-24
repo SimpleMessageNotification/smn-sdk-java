@@ -33,14 +33,22 @@ import junit.framework.TestCase;
 public class ListTopicAttributesRequestTest extends TestCase {
     private static Logger logger = LoggerFactory.getLogger(ListTopicAttributesRequestTest.class);
     ListTopicAttributesRequest listTopicAttributesRequest;
+    /**
+     * project id
+     */
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
+
+    /**
+     * final string "access_policy"
+     */
+    final static String ACCESS_POLICY = "access_policy";
 
     @Before
     public void setUp() {
         String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
         listTopicAttributesRequest = new ListTopicAttributesRequest();
         listTopicAttributesRequest.setProjectId(PROJECT_ID);
-        listTopicAttributesRequest.setAttributesName("access_policy");
+        listTopicAttributesRequest.setAttributesName(ACCESS_POLICY);
         listTopicAttributesRequest.setTopicUrn(topicUrn);
     }
 
@@ -48,11 +56,6 @@ public class ListTopicAttributesRequestTest extends TestCase {
         logger.info("starting test");
         String requestURL = "/v2/cffe4fc4c9a54219b60dbaf7b586e132/notifications/topics/urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate/attributes?name=access_policy";
         Assert.assertEquals(requestURL, listTopicAttributesRequest.getRequestUri());
-    }
-
-    public void testGetRequestParameterMap() throws Exception {
-        Assert.assertNotNull(listTopicAttributesRequest.getRequestParameterMap());
-        Assert.assertNull(listTopicAttributesRequest.getRequestParameterMap().get("displayName"));
     }
 
 }

@@ -40,6 +40,16 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(CreateTopicRequest.class);
 
     /**
+     * final string "name"
+     */
+    final static String NAME = "name";
+
+    /**
+     * final string "displayName"
+     */
+    final static String DISPLAY_NAME = "displayName";
+
+    /**
      * topic name
      */
     private String name;
@@ -88,8 +98,8 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put("displayName", getDisplayName());
-        requestParameterMap.put("name", getName());
+        requestParameterMap.put(DISPLAY_NAME, getDisplayName());
+        requestParameterMap.put(NAME, getName());
         return requestParameterMap;
     }
 
@@ -107,7 +117,7 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     public void setName(String name) {
 
         if (!ValidationUtil.validateTopicName(name)) {
-            throw new RuntimeException("Topic name is illegal");
+            throw new RuntimeException("Topic name is illegal.");
         }
 
         this.name = name;
@@ -190,8 +200,7 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("CreateTopicRequest [name=").append(name).append(", displayName=").append(displayName)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId).append("]");
         return builder.toString();
     }
 

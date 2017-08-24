@@ -32,8 +32,18 @@ import junit.framework.TestCase;
  */
 public class DeleteTopicAttributeByNameRequestTest extends TestCase {
     private static Logger logger = LoggerFactory.getLogger(DeleteTopicAttributeByNameRequestTest.class);
+
     DeleteTopicAttributeByNameRequest deleteTopicAttributeByNameRequest;
+
+    /**
+     * project id
+     */
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
+
+    /**
+     * final string "access_policy"
+     */
+    final static String ACCESS_POLICY = "access_policy";
 
     @Before
     public void setUp() {
@@ -41,7 +51,7 @@ public class DeleteTopicAttributeByNameRequestTest extends TestCase {
         deleteTopicAttributeByNameRequest = new DeleteTopicAttributeByNameRequest();
         String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
         deleteTopicAttributeByNameRequest.setProjectId(PROJECT_ID);
-        deleteTopicAttributeByNameRequest.setAttributesName("access_policy");
+        deleteTopicAttributeByNameRequest.setAttributesName(ACCESS_POLICY);
         deleteTopicAttributeByNameRequest.setTopicUrn(topicUrn);
     }
 

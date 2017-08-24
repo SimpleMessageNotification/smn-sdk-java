@@ -42,7 +42,20 @@ public class UpdateTopicAttributeRequestTest extends TestCase {
 
     private static Logger logger = LoggerFactory.getLogger(UpdateTopicAttributeRequestTest.class);
     UpdateTopicAttributeRequest updateTopicAttributeRequest;
+    /**
+     * project id
+     */
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
+
+    /**
+     * final string "access_policy"
+     */
+    final static String ACCESS_POLICY = "access_policy";
+
+    /**
+     * final string "value"
+     */
+    final static String VALUE = "value";
 
     @Before
     public void setUp() {
@@ -50,7 +63,7 @@ public class UpdateTopicAttributeRequestTest extends TestCase {
         String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
         updateTopicAttributeRequest.setProjectId(PROJECT_ID);
         updateTopicAttributeRequest.setTopicUrn(topicUrn);
-        updateTopicAttributeRequest.setAttributesName("access_policy");
+        updateTopicAttributeRequest.setAttributesName(ACCESS_POLICY);
     }
 
     public void testGetRequestUri() throws Exception {
@@ -86,14 +99,14 @@ public class UpdateTopicAttributeRequestTest extends TestCase {
         // 策略里配置statement,可多个,这里以一个为例
         statements.add(singleStatement);
 
-        LinkedHashMap<String, Object> acessPolicy = new LinkedHashMap<String, Object>();
-        acessPolicy.put(AccessPolicyConstants.POLICY_ID, AccessPolicyConstants.DEFAULT_POLICY_ID);
-        acessPolicy.put(AccessPolicyConstants.POLICY_VERSION, AccessPolicyConstants.DEFAULT_VERSION);
-        acessPolicy.put(AccessPolicyConstants.POLICY_STATEMENT, statements);
+        LinkedHashMap<String, Object> attributeValue = new LinkedHashMap<String, Object>();
+        attributeValue.put(AccessPolicyConstants.POLICY_ID, AccessPolicyConstants.DEFAULT_POLICY_ID);
+        attributeValue.put(AccessPolicyConstants.POLICY_VERSION, AccessPolicyConstants.DEFAULT_VERSION);
+        attributeValue.put(AccessPolicyConstants.POLICY_STATEMENT, statements);
 
-        updateTopicAttributeRequest.setAcessPolicy(acessPolicy);
+        updateTopicAttributeRequest.setAttributeValue(attributeValue);
 
-        Assert.assertNotNull(updateTopicAttributeRequest.getRequestParameterMap().get("value"));
+        Assert.assertNotNull(updateTopicAttributeRequest.getRequestParameterMap().get(VALUE));
     }
 
 }

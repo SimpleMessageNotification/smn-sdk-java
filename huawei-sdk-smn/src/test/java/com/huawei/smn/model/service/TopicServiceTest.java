@@ -56,6 +56,11 @@ public class TopicServiceTest extends TestCase {
 
     SmnConfiguration smnConfiguration = null;
 
+    final static String TOPIC_URN = "topic_urn";
+    final static String REQUEST_ID = "request_id";
+    final static String STATUS = "status";
+    final static String ATTRIBUTES = "attributes";
+
     /*
      * (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
@@ -74,9 +79,9 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.createTopic(createTopicRequest);
-        Assert.assertNotNull(res.get("topic_urn"));
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(TOPIC_URN));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
     }
 
     @Test
@@ -87,8 +92,8 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.deleteTopic(deleteTopicRequest);
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
     }
 
     @Test
@@ -97,8 +102,8 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.listTopics(listTopicsRequest);
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
     }
 
     @Test
@@ -109,9 +114,9 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.queryTopicDetail(queryTopicDetailRequest);
-        Assert.assertNotNull(res.get("topic_urn"));
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(TOPIC_URN));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
 
     }
 
@@ -124,9 +129,10 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.listTopicAttributes(listTopicAttributesRequest);
-        Assert.assertNotNull(res.get("attributes"));
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        System.err.println(res);
+        Assert.assertNotNull(res.get(ATTRIBUTES));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
 
     }
 
@@ -188,18 +194,18 @@ public class TopicServiceTest extends TestCase {
         // 策略里配置statement,可多个,这里以一个为例
         statements.add(singleStatement);
 
-        LinkedHashMap<String, Object> acessPolicy = new LinkedHashMap<String, Object>();
-        acessPolicy.put(AccessPolicyConstants.POLICY_ID, AccessPolicyConstants.DEFAULT_POLICY_ID);
-        acessPolicy.put(AccessPolicyConstants.POLICY_VERSION, AccessPolicyConstants.DEFAULT_VERSION);
-        acessPolicy.put(AccessPolicyConstants.POLICY_STATEMENT, statements);
+        LinkedHashMap<String, Object> attributeValue = new LinkedHashMap<String, Object>();
+        attributeValue.put(AccessPolicyConstants.POLICY_ID, AccessPolicyConstants.DEFAULT_POLICY_ID);
+        attributeValue.put(AccessPolicyConstants.POLICY_VERSION, AccessPolicyConstants.DEFAULT_VERSION);
+        attributeValue.put(AccessPolicyConstants.POLICY_STATEMENT, statements);
         // 创建新的access policy,默认的id与version
         // 设置 acessPolicy
-        updateTopicAttributeRequest.setAcessPolicy(acessPolicy);
+        updateTopicAttributeRequest.setAttributeValue(attributeValue);
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.updateTopicAttribute(updateTopicAttributeRequest);
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
     }
 
     @Test
@@ -213,8 +219,8 @@ public class TopicServiceTest extends TestCase {
         topicService.setSmnConfiguration(smnConfiguration);
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.deleteTopicAttributeByName(deleteTopicAttributeByNameRequest);
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
     }
 
     @Test
@@ -226,8 +232,8 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.deleteTopicAttributes(deleteTopicAttributeRequest);
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
     }
 
     @Test
@@ -239,8 +245,8 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.updateTopic(updateTopicRequest);
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.get(REQUEST_ID));
+        Assert.assertNotNull(res.get(STATUS));
     }
 
 }

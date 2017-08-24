@@ -36,6 +36,11 @@ public class UpdateTopicRequestTest extends TestCase {
     UpdateTopicRequest updateTopicRequest;
     final static String PROJECT_ID = "cffe4fc4c9a54219b60dbaf7b586e132";
 
+    /**
+     * final string "display_name"
+     */
+    private static final String DISPLAY_NAME = "display_name";
+
     @Before
     public void setUp() {
         updateTopicRequest = new UpdateTopicRequest();
@@ -51,7 +56,7 @@ public class UpdateTopicRequestTest extends TestCase {
     }
 
     public void testGetRequestParameterMap() throws Exception {
-        Assert.assertNotNull(updateTopicRequest.getRequestParameterMap());
+        Assert.assertNotNull(updateTopicRequest.getRequestParameterMap().get(DISPLAY_NAME));
     }
 
 }

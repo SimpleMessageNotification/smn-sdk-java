@@ -39,6 +39,9 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
 
     private static Logger LOGGER = LoggerFactory.getLogger(UpdateTopicRequest.class);
 
+    /**
+     * final string "display_name"
+     */
     private static final String DISPLAY_NAME = "display_name";
 
     /**
@@ -188,8 +191,7 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("UpdateTopicRequest [topicUrn=").append(topicUrn).append(", displayName=").append(displayName)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId).append("]");
         return builder.toString();
     }
 

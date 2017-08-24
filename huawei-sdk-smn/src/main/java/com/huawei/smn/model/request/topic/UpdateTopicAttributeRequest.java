@@ -42,9 +42,14 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(UpdateTopicAttributeRequest.class);
 
     /**
-     * attributes
+     * final string "attributes"
      */
     private static final String ATTRIBUTES = "attributes";
+
+    /**
+     * final string "value"
+     */
+    private static final String VALUE = "value";
 
     /**
      * attribute name
@@ -58,7 +63,7 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     /**
      * acess policy
      */
-    private LinkedHashMap<String, Object> acessPolicy = null;
+    private LinkedHashMap<String, Object> attributeValue = null;
 
     /**
      * smn endpoint
@@ -116,7 +121,7 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put("value", JsonUtil.getJsonStringByMap(getAcessPolicy()));
+        requestParameterMap.put(VALUE, JsonUtil.getJsonStringByMap(getAttributeValue()));
         return requestParameterMap;
     }
 
@@ -161,18 +166,18 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @return the acessPolicy
+     * @return the attributeValue
      */
-    public LinkedHashMap<String, Object> getAcessPolicy() {
-        return acessPolicy;
+    public LinkedHashMap<String, Object> getAttributeValue() {
+        return attributeValue;
     }
 
     /**
-     * @param acessPolicy
-     *            the acessPolicy to set
+     * @param attributeValue
+     *            the attributeValue to set
      */
-    public void setAcessPolicy(LinkedHashMap<String, Object> acessPolicy) {
-        this.acessPolicy = acessPolicy;
+    public void setAttributeValue(LinkedHashMap<String, Object> attributeValue) {
+        this.attributeValue = attributeValue;
     }
 
     /**
@@ -239,9 +244,8 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("UpdateTopicAttributeRequest [attributesName=").append(attributesName).append(", topicUrn=")
-                .append(topicUrn).append(", acessPolicy=").append(acessPolicy).append(", smnEndpoint=")
-                .append(smnEndpoint).append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken)
-                .append(", value=").append(value).append("]");
+                .append(topicUrn).append(", attributeValue=").append(attributeValue).append(", smnEndpoint=")
+                .append(smnEndpoint).append(", projectId=").append(projectId).append("]");
         return builder.toString();
     }
 
