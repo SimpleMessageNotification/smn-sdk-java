@@ -17,10 +17,13 @@
  */
 package com.huawei.smn.common.utils;
 
+
+import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 
-import com.huawei.smn.common.SmnConstants;
 import org.apache.commons.lang3.StringUtils;
+
+import com.huawei.smn.common.SmnConstants;
 
 /**
  * @author huangqiong
@@ -33,22 +36,23 @@ import org.apache.commons.lang3.StringUtils;
 public class ValidationUtil {
 
     /**
-     * 判断主题名的正则表达式
+     * validate topic regex
      */
     final static Pattern PATTERN_TOPIC = Pattern.compile("^[a-zA-Z0-9]{1}[-_a-zA-Z0-9]{0,255}$");
 
     /**
-     * 判断电话的正则表达式
+
+     * validate telephone regex
      */
     final static Pattern PATTERN_TELEPHONE = Pattern.compile("^\\+?[0-9]+$");
 
     /**
-     * 判断短信签名名称的正则表达式
+     * validate sms sigature regex
      */
     final static Pattern PATTERN_SMS_SIGN_NAME = Pattern.compile("[a-zA-Z0-9\\u4e00-\\u9fa5]{2,8}");
 
     /**
-     * 判断区位的正则表达式
+     * validate local regex
      */
     final static Pattern PATTERN_LOCALE = Pattern.compile("^[a-z]{2}-[a-z]{2}$");
 
@@ -119,18 +123,6 @@ public class ValidationUtil {
             return false;
         }
         return PATTERN_SMS_SIGN_NAME.matcher(smsSignName).matches();
-    }
-
-    /**
-     * validate attributValue
-     * <p>
-     * 
-     * @param attributValue
-     * @return boolean
-     */
-    public static boolean validateAttributValue(String attributValue) {
-
-        return false;
     }
 
     /**
@@ -209,6 +201,19 @@ public class ValidationUtil {
         return  false;
     }
 
+     * validate displayname
+     * 
+     * @param displayName
+     * @return boolean <code>true</code> displayName is valid
+     */
+    public static boolean validateDisplayName(String displayName) {
 
+        byte[] b = displayName.getBytes(Charset.forName(SmnConstants.DEFAULT_CHARSET));
+        if (b.length > SmnConstants.MAX_TOPIC_DISPLAY_NAME) {
+            return false;
+        } else {
+            return true;
+        }
 
+    }
 }
