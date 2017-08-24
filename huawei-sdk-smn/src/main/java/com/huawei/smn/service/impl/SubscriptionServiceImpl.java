@@ -38,6 +38,8 @@ import com.huawei.smn.service.SubscriptionService;
  * 
  * @author huangqiong
  * @version 0.1
+ * @author yangyanping
+ * @version 0.2
  *
  */
 public class SubscriptionServiceImpl extends AbstractCommonService implements SubscriptionService {

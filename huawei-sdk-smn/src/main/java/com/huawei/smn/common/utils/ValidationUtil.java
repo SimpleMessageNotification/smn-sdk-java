@@ -26,6 +26,9 @@ import org.apache.commons.lang3.StringUtils;
  * @author huangqiong
  * @date 2017年8月22日 上午11:35:28
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日
+ * @version 0.2
  */
 public class ValidationUtil {
 

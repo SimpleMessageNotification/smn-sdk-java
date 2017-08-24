@@ -32,6 +32,9 @@ import org.slf4j.LoggerFactory;
  * @author huangqiong
  * @date 2017年8月3日 下午5:15:58
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日
+ * @version 0.2
  */
 public class SmnConfiguration {
 

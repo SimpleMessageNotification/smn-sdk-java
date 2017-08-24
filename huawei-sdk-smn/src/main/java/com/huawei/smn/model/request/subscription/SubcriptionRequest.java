@@ -34,6 +34,9 @@ import com.huawei.smn.model.AbstractSmnRequest;
  * @author huangqiong
  * @date 2017年8月14日 下午4:33:56
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日 下午4:33:56
+ * @version 0.2
  */
 public class SubcriptionRequest extends AbstractSmnRequest {
 
@@ -80,7 +83,6 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public String getRequestUri() {
-    
         validate();
         if (StringUtils.isBlank(projectId) || StringUtils.isBlank(smnEndpoint)) {
             LOGGER.error("Subcription request projectId is null.");
@@ -107,8 +109,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
-    
-        validate();
+        
         if (!ValidationUtil.validateProtocol(protocol)) {
             LOGGER.error("Protocol is not valid.");
             throw new RuntimeException("Protocol is not valid.");

@@ -32,6 +32,9 @@ import com.huawei.smn.model.AbstractSmnRequest;
  * @author huangqiong
  * @date 2017年8月14日 下午4:34:18
  * @version 0.1
+ * author yangyanping
+ * @date 2017年8月24日 下午4:34:18
+ * @version 0.2
  */
 public class UnSubcriptionRequest extends AbstractSmnRequest {
 
@@ -102,7 +105,6 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         
-        validate();
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
         return requestParameterMap;
     }
@@ -111,8 +113,7 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      * @return the subscriptionUrn
      */
     public String getSubscriptionUrn() {
-    
-        validate();
+        
         return subscriptionUrn;
     }
 
@@ -129,7 +130,6 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      */
     public String getSmnEndpoint() {
         
-        validate();
         return smnEndpoint;
         
     }
@@ -146,8 +146,7 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      * @return the projectId
      */
     public String getProjectId() {
-    
-        validate();
+        
         return projectId;
     }
 
@@ -164,8 +163,7 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      * @return the xAuthToken
      */
     public String getxAuthToken() {
-    
-        validate();
+        
         return xAuthToken;
     }
 
@@ -179,7 +177,6 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public String toString() {
-        validate();
         StringBuilder builder = new StringBuilder();
         builder.append("UnSubcriptionRequest [subscriptionUrn=").append(subscriptionUrn).append(", smnEndpoint=")
                 .append(smnEndpoint).append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken)

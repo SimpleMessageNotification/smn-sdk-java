@@ -32,6 +32,9 @@ import com.huawei.smn.model.AbstractSmnRequest;
  * @author huangqiong
  * @date 2017年8月14日 下午4:33:12
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日 下午4:33:12
+ * @version 0.2
  */
 public class ListSubscriptionsRequest extends AbstractSmnRequest {
 
@@ -91,13 +94,13 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUBSCRIPTIONS);
 
         if (offset > 0) {
-            sb.append("?offset=" + getOffset());
+            sb.append("?offset=" + offset);
         } else {
             sb.append("?offset=" + "0");
         }
 
         if (limit > 0 && limit <= 100) {
-            sb.append("&limit=" + getLimit());
+            sb.append("&limit=" + limit);
         } else {
             sb.append("&limit=").append("100");
         }
