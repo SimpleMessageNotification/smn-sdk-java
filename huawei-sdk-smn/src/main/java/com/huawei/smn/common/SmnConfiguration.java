@@ -79,6 +79,19 @@ public class SmnConfiguration {
     private String smnEndpoint;
 
     /**
+     * get max remark length
+     * @return maxLength
+     */
+    public int getMaxRemarkLength() {
+        return maxRemarkLength;
+    }
+
+    /**
+     * smn remark
+     */
+    private int maxRemarkLength = 128;
+
+    /**
      * configure property file path
      * 
      * @param filepath
