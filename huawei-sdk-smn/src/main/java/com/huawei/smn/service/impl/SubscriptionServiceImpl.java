@@ -60,13 +60,6 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
     /*
      * (non-Javadoc)
      * @see
-     * com.huawei.smn.service.SubscriptionService#subscribe(com.huawei.smn.model
-     * .request.subscription.SubcriptionRequest)
-     */
-
-    /*
-     * (non-Javadoc)
-     * @see
      * com.huawei.smn.service.SubscriptionService#listSubscriptions(com.huawei.
      * smn.model.request.subscription.ListSubscriptionsRequest)
      */
