@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
 /**
  * property loading configuration
  * 
- * @author huangqiong
- * @date 2017年8月3日 下午5:15:58
+ * @author yangyanping
+ * @date 2017年8月24日 下午5:15:58
  * @version 0.1
  */
 public class SmnConfiguration {
@@ -77,6 +77,59 @@ public class SmnConfiguration {
      * smn endpoint
      */
     private String smnEndpoint;
+
+    /**
+     * 获取tag最大长度
+     * @return tag最大长度
+     */
+    public int getMaxTagLength() {
+        return maxTagLength;
+    }
+
+    /**
+     * 最大tags长度
+     */
+    private int maxTagLength = 1024;
+
+
+    /**
+     * 获取最大消息长度
+     * @return 最大消息长度
+     */
+    public int getMaxMessageLength() {
+        return maxMessageLength;
+    }
+
+    /**
+     * 最大消息长度
+     */
+    private int maxMessageLength = 256;
+
+    /**
+     * get max subject length
+     * @return 返回subject的最大长度
+     */
+    public int getMaxSubjectLength() {
+        return maxSubjectLength;
+    }
+
+    /**
+     * max subject length
+     */
+    private int maxSubjectLength = 512;
+
+    /**
+     * get max remark length
+     * @return maxLength
+     */
+    public int getMaxRemarkLength() {
+        return maxRemarkLength;
+    }
+
+    /**
+     * smn remark
+     */
+    private int maxRemarkLength = 128;
 
     /**
      * configure property file path
