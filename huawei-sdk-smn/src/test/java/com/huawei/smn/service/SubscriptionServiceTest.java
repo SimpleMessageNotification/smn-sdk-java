@@ -227,17 +227,6 @@ public class SubscriptionServiceTest extends TestCase {
         Assert.assertEquals(404, res.get("status"));
         LOGGER.info(res.toString());
 
-        /*
-        // test subscription_urn
-        String urn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi:9f8a5c94694d4836b491866f913ee886";// you need to choose an  subscription_count every time
-        deleteSubcription.setSubscriptionUrn(urn);
-        Map<String, Object> deleteRes = subscriptionService.unsubscribe(deleteSubcription);
-        int deleteCode = (Integer) deleteRes.get("status");
-        boolean deleteFlag = deleteCode>=200 && deleteCode<300;
-        Assert.assertTrue(deleteFlag);
-        */
-
-
     }
 
 }
