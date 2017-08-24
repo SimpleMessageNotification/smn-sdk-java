@@ -28,6 +28,8 @@ import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * query topic detail
+ * 
  * @author huangqiong
  *
  * @date 2017年8月2日
@@ -68,20 +70,20 @@ public class QueryTopicDetailRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(getProjectId())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Query topic detail request projectId is null.");
             throw new NullPointerException("Query topic detail request, projectId is null.");
         }
 
-        if (StringUtils.isBlank(getTopicUrn())) {
+        if (StringUtils.isBlank(topicUrn)) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(getTopicUrn());
+                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(topicUrn);
 
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();

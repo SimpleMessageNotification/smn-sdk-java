@@ -29,6 +29,8 @@ import com.huawei.smn.common.utils.ValidationUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * create topic
+ * 
  * @author huangqiong
  *
  * @date 2017年8月2日
@@ -79,14 +81,14 @@ public class CreateTopicRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(getProjectId())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Create topic request, projectId is null.");
             throw new NullPointerException("Create topic request, projectId is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI);
+                .append(projectId).append(SmnConstants.SMN_TOPIC_URI);
 
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
@@ -98,8 +100,8 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put(DISPLAY_NAME, getDisplayName());
-        requestParameterMap.put(NAME, getName());
+        requestParameterMap.put(DISPLAY_NAME, displayName);
+        requestParameterMap.put(NAME, name);
         return requestParameterMap;
     }
 

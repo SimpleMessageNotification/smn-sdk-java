@@ -29,6 +29,8 @@ import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * delete topic attribute
+ * 
  * @author huangqiong
  *
  * @date 2017年8月2日
@@ -74,26 +76,26 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(getProjectId())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Delete topic attribute by name request, projectId is null.");
             throw new NullPointerException("Delete topic attribute by name request, projectId is null.");
         }
 
-        if (StringUtils.isBlank(getTopicUrn())) {
+        if (StringUtils.isBlank(topicUrn)) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
-        if (StringUtils.isBlank(getAttributesName()) || !isValidAttributeName(getAttributesName())) {
+        if (StringUtils.isBlank(attributesName) || !isValidAttributeName(attributesName)) {
             LOGGER.error("Attributte name is null or not valid");
             throw new RuntimeException("Attributte name is null or not valid");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(getTopicUrn()).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
-                .append(SmnConstants.URL_DELIMITER).append(getAttributesName());
+                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(topicUrn).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
+                .append(SmnConstants.URL_DELIMITER).append(attributesName);
 
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();

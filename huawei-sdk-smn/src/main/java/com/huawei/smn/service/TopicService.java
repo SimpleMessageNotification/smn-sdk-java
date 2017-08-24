@@ -43,8 +43,6 @@ public interface TopicService extends CommonService {
     /**
      * create topic
      * <p>
-     * success，return<CODE>Map</CODE>including: request_id,message_id,status
-     * <p>
      * failed，return request_id and status
      * 
      * @param smnRequest
@@ -61,8 +59,6 @@ public interface TopicService extends CommonService {
     /**
      * delete topic
      * <p>
-     * success，return<CODE>Map</CODE>including: request_id,message_id,status
-     * <p>
      * failed，return request_id and status
      * 
      * @param smnRequest
@@ -78,7 +74,6 @@ public interface TopicService extends CommonService {
     /**
      * query topic list
      * <p>
-     * failed，return request_id and status
      * 
      * @param smnRequest
      *            request
@@ -92,7 +87,6 @@ public interface TopicService extends CommonService {
 
     /**
      * query topic detail
-     * failed，return request_id and status
      * 
      * @param smnRequest
      *            request

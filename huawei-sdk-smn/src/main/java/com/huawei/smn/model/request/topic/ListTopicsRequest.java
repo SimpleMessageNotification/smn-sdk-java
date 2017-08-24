@@ -28,6 +28,8 @@ import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * list topic
+ * 
  * @author huangqiong
  *
  * @date 2017年8月2日
@@ -68,23 +70,23 @@ public class ListTopicsRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(getProjectId())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("List topic request, projectId is null.");
             throw new NullPointerException("List topic request, projectId is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI);
+                .append(projectId).append(SmnConstants.SMN_TOPIC_URI);
 
-        if (getOffset() > 0) {
-            sb.append("?offset=" + getOffset());
+        if (offset > 0) {
+            sb.append("?offset=" + offset);
         } else {
             sb.append("?offset=" + "0");
         }
 
-        if (getLimit() > 0 && getLimit() < 100) {
-            sb.append("&limit=" + getLimit());
+        if (limit > 0 && limit < 100) {
+            sb.append("&limit=" + limit);
         } else {
             sb.append("&limit=").append("100");
         }

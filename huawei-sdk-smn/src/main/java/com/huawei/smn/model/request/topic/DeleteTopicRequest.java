@@ -28,6 +28,8 @@ import com.huawei.smn.common.SmnConstants;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * delete topic
+ * 
  * @author huangqiong
  *
  * @date 2017年8月2日
@@ -63,20 +65,20 @@ public class DeleteTopicRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(getProjectId())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Delete topic request, projectId is null.");
             throw new NullPointerException("Delete topic request, projectId is null.");
         }
 
-        if (StringUtils.isBlank(getTopicUrn())) {
+        if (StringUtils.isBlank(topicUrn)) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(getTopicUrn());
+                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(topicUrn);
 
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
@@ -88,7 +90,7 @@ public class DeleteTopicRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put(SmnConstants.TOPIC_URN, getTopicUrn());
+        requestParameterMap.put(SmnConstants.TOPIC_URN, topicUrn);
         return requestParameterMap;
     }
 

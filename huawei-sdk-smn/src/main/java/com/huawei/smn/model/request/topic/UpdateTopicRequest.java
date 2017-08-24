@@ -29,6 +29,8 @@ import com.huawei.smn.common.utils.ValidationUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * update topic request
+ * 
  * @author huangqiong
  *
  * @date 2017年8月2日
@@ -74,20 +76,20 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(getProjectId())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Update topic request, projectId is null.");
             throw new NullPointerException("Update topic request, projectId is null.");
         }
 
-        if (StringUtils.isBlank(getTopicUrn())) {
+        if (StringUtils.isBlank(topicUrn)) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(getTopicUrn());
+                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(topicUrn);
 
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
@@ -99,7 +101,7 @@ public class UpdateTopicRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put(DISPLAY_NAME, getDisplayName());
+        requestParameterMap.put(DISPLAY_NAME, displayName);
         return requestParameterMap;
     }
 

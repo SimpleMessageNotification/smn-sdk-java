@@ -31,6 +31,8 @@ import com.huawei.smn.common.utils.JsonUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * update topic attribute
+ * 
  * @author huangqiong
  *
  * @date 2017年8月2日
@@ -90,12 +92,12 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
      */
     public String getRequestUri() throws RuntimeException {
 
-        if (StringUtils.isBlank(getProjectId())) {
+        if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Update topic attribute request, projectId is null.");
             throw new NullPointerException("Update topic attribute request, projectId is null.");
         }
 
-        if (StringUtils.isBlank(getTopicUrn())) {
+        if (StringUtils.isBlank(topicUrn)) {
             LOGGER.error("TopicUrn is null.");
             throw new NullPointerException("TopicUrn is null.");
         }
@@ -107,8 +109,8 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
-                .append(getTopicUrn()).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
+                .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
+                .append(topicUrn).append(SmnConstants.URL_DELIMITER).append(ATTRIBUTES)
                 .append(SmnConstants.URL_DELIMITER).append(getAttributesName());
 
         LOGGER.info("Request uri is {}.", sb.toString());
