@@ -20,6 +20,7 @@ package com.huawei.smn.model.request.subscription;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.huawei.smn.common.utils.ValidationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,12 +57,24 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      */
     private String xAuthToken;
 
+
     /**
-     * build and get request url
+     *参数校验
+     */
+    private void validate(){
+        
+        if(!ValidationUtil.validateTopicUrn(subscriptionUrn)){
+            throw new RuntimeException("subscription urn is illegal");
+        }
+    }
+    
+    /**
+ * build and get request url
      */
     @Override
     public String getRequestUri() throws RuntimeException {
-
+    
+        validate();
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("UnSubcription request projectId is null.");
             throw new NullPointerException("UnSubcription request projectId is null.");
@@ -88,6 +101,8 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
+        
+        validate();
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
         return requestParameterMap;
     }
@@ -96,6 +111,8 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      * @return the subscriptionUrn
      */
     public String getSubscriptionUrn() {
+    
+        validate();
         return subscriptionUrn;
     }
 
@@ -111,7 +128,10 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      * @return the smnEndpoint
      */
     public String getSmnEndpoint() {
+        
+        validate();
         return smnEndpoint;
+        
     }
 
     /**
@@ -126,6 +146,8 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      * @return the projectId
      */
     public String getProjectId() {
+    
+        validate();
         return projectId;
     }
 
@@ -134,6 +156,7 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      *            the projectId to set
      */
     public void setProjectId(String projectId) {
+        
         this.projectId = projectId;
     }
 
@@ -141,6 +164,8 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      * @return the xAuthToken
      */
     public String getxAuthToken() {
+    
+        validate();
         return xAuthToken;
     }
 
@@ -154,6 +179,7 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public String toString() {
+        validate();
         StringBuilder builder = new StringBuilder();
         builder.append("UnSubcriptionRequest [subscriptionUrn=").append(subscriptionUrn).append(", smnEndpoint=")
                 .append(smnEndpoint).append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken)

@@ -20,6 +20,7 @@ package com.huawei.smn.model.request.subscription;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.huawei.smn.common.utils.ValidationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,12 +65,24 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      */
     private String xAuthToken;
 
+    
+    /**
+     * 校验参数
+     */
+    private void validate(){
+        
+        if (!ValidationUtil.validateTopicUrn(topicUrn)){
+            throw new RuntimeException("topic urn is illegal");
+        }
+    }
+
     /**
      * build and get request url
      */
     @Override
     public String getRequestUri() throws RuntimeException {
-
+    
+        validate();
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("List subscription by topic request projectId is null.");
             throw new RuntimeException("List subscription by topic request projectId is null.");
@@ -107,6 +120,8 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
+    
+        validate();
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
         return requestParameterMap;
     }
@@ -115,6 +130,8 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      * @return the offset
      */
     public int getOffset() {
+    
+        validate();
         return offset;
     }
 
@@ -132,6 +149,8 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      * @return the limit
      */
     public int getLimit() {
+    
+        validate();
         return limit;
     }
 
@@ -140,6 +159,7 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      *            the limit to set
      */
     public void setLimit(int limit) {
+        
         if (100 >= limit && limit > 0) {
             this.limit = limit;
         }
@@ -149,6 +169,8 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      * @return the topicUrn
      */
     public String getTopicUrn() {
+    
+        validate();
         return topicUrn;
     }
 
@@ -164,6 +186,8 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      * @return the smnEndpoint
      */
     public String getSmnEndpoint() {
+    
+        validate();
         return smnEndpoint;
     }
 
@@ -179,6 +203,8 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      * @return the projectId
      */
     public String getProjectId() {
+    
+        validate();
         return projectId;
     }
 
@@ -207,6 +233,8 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      */
     @Override
     public String toString() {
+    
+        validate();
         StringBuilder builder = new StringBuilder();
         builder.append("ListSubscriptionsByTopicRequest [offset=").append(offset).append(", limit=").append(limit)
                 .append(", topicUrn=").append(topicUrn).append(", smnEndpoint=").append(smnEndpoint)

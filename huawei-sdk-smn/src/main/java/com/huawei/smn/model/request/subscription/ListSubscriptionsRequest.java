@@ -20,6 +20,7 @@ package com.huawei.smn.model.request.subscription;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.huawei.smn.common.utils.ValidationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,13 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
      */
     private String xAuthToken;
 
+    /**
+     * 校验参数
+     */
+    private void validate(){
+    
+    }
+    
     /**
      * build and get request url
      */

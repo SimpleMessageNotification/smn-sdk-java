@@ -17,9 +17,11 @@
  */
 package com.huawei.smn.model.request.subscription;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.huawei.smn.common.SmnConfiguration;
 import com.huawei.smn.common.utils.ValidationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -78,8 +80,8 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public String getRequestUri() {
-
-
+    
+        validate();
         if (StringUtils.isBlank(projectId) || StringUtils.isBlank(smnEndpoint)) {
             LOGGER.error("Subcription request projectId is null.");
             throw new NullPointerException("Subcription request projectId is null.");
@@ -105,7 +107,8 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
-
+    
+        validate();
         if (!ValidationUtil.validateProtocol(protocol)) {
             LOGGER.error("Protocol is not valid.");
             throw new RuntimeException("Protocol is not valid.");
@@ -123,6 +126,42 @@ public class SubcriptionRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
+    /**
+     * 校验参数
+     */
+    private void validate(){
+        if(!ValidationUtil.validateTopicUrn(topicUrn)){
+            throw new RuntimeException(" subscribe request topic_urn is null.");
+        }
+    
+        if (!ValidationUtil.validateEndPoint(endpoint,protocol)){
+            throw  new RuntimeException("subscribe request smnEndpoint is illegal");
+        }
+        if(!checkRemark(remark)){
+            throw  new RuntimeException("subscribe request remark is illegal");
+        }
+    
+    }
+    /**
+     * check remark
+     * @param remark
+     * @return boolean
+     */
+    private boolean checkRemark(String remark){
+        SmnConfiguration smnConfiguration = new SmnConfiguration();
+        if(remark == null){
+            return  true;
+        }
+        try {
+            byte[] b = remark.getBytes("utf-8");
+            if (b.length > smnConfiguration.getMaxRemarkLength()){
+                return  false;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return  true;
+    }
 
     /**
      * @return the topicUrn
@@ -136,6 +175,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      *            the topicUrn to set
      */
     public void setTopicUrn(String topicUrn) {
+        
         this.topicUrn = topicUrn;
     }
 
@@ -226,6 +266,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      *            the xAuthToken to set
      */
     public void setxAuthToken(String xAuthToken) {
+        
         this.xAuthToken = xAuthToken;
     }
 
@@ -235,6 +276,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public String toString() {
+        validate();
         StringBuilder builder = new StringBuilder();
         builder.append("SubcriptionRequest [topicUrn=").append(topicUrn).append(", protocol=").append(protocol)
                 .append(", remark=").append(remark).append(", smnEndpoint=").append(smnEndpoint).append(", projectId=")

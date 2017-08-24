@@ -98,18 +98,6 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         try {
             smnEndpoint = smnConfiguration.getSmnEndpoint();
             subcriptionRequest.setSmnEndpoint(smnEndpoint);
-
-            if(!ValidationUtil.validateTopicUrn(subcriptionRequest.getTopicUrn())){
-                throw new RuntimeException(" subscribe request topic_urn is null.");
-            }
-
-            if (!ValidationUtil.validateEndPoint(subcriptionRequest.getEndpoint(),subcriptionRequest.getProtocol())){
-                throw  new RuntimeException("subscribe request smnEndpoint is illegal");
-            }
-            if(!checkRemark(subcriptionRequest.getRemark())){
-                throw  new RuntimeException("subscribe request remark is illegal");
-            }
-
             projectId = getIAMService().getAuthentication().getProjectId();
             subcriptionRequest.setProjectId(projectId);
             Map<String, String> requestHeader = subcriptionRequest.getRequestHeaderMap();
@@ -133,11 +121,7 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
     public Map<String, Object> unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException {
 
         LOGGER.info("Start delete a subscribtion.");
-
-        if(!ValidationUtil.validateTopicUrn(unSubcriptionRequest.getSubscriptionUrn())){
-            throw new RuntimeException("subscription urn is illegal");
-        }
-
+        
         try {
             Map<String, String> requestHeader = unSubcriptionRequest.getRequestHeaderMap();
             projectId = getIAMService().getAuthentication().getProjectId();
@@ -167,11 +151,7 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
             throws RuntimeException {
 
         LOGGER.info("Start list subscribtion by topic.");
-
-        if (!ValidationUtil.validateTopicUrn(listSubscriptionsByTopicRequest.getTopicUrn())){
-            throw new RuntimeException("topic urn is illegal");
-        }
-
+        
         try {
 
             Map<String, String> requestHeader = listSubscriptionsByTopicRequest.getRequestHeaderMap();
@@ -188,27 +168,5 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
             throw new RuntimeException("Fail to list subscribtion by topic.", e);
         }
     }
-
-    /**
-     * check remark
-     * @param remark
-     * @return boolean
-     */
-    private boolean checkRemark(String remark){
-        SmnConfiguration smnConfiguration = new SmnConfiguration();
-        if(remark == null){
-            return  true;
-        }
-        try {
-            byte[] b = remark.getBytes("utf-8");
-            if (b.length > smnConfiguration.getMaxRemarkLength()){
-                return  false;
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return  true;
-    }
-
 
 }

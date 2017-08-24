@@ -160,6 +160,7 @@ public class SubscriptionServiceTest extends TestCase {
 
     // 查询订阅者列表 pass
     public void testListSubscriptions() {
+        
         ListSubscriptionsRequest listSubscriptionsRequest = new ListSubscriptionsRequest();
         SubscriptionService subscriptionService = new SubscriptionServiceImpl();
         subscriptionService.setSmnConfiguration(smnConfiguration);
@@ -171,7 +172,6 @@ public class SubscriptionServiceTest extends TestCase {
 
 
         //check offset
-
         listSubscriptionsRequest.setOffset(-1);
         Boolean offsetFlag = listSubscriptionsRequest.getOffset() >= 0;
         Assert.assertTrue(offsetFlag);
@@ -184,6 +184,7 @@ public class SubscriptionServiceTest extends TestCase {
 
     // 查询指定主题的订阅者列表 pass
     public void testListSubscriptionsByTopic() {
+        
         String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi";
         ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest = new ListSubscriptionsByTopicRequest();
         listSubscriptionsByTopicRequest.setTopicUrn(topicUrn);
@@ -203,21 +204,12 @@ public class SubscriptionServiceTest extends TestCase {
         } catch (RuntimeException e) {
 
         }
-
-        //check offset
-        listSubscriptionsByTopicRequest.setOffset(-1);
-        Assert.assertEquals(0, listSubscriptionsByTopicRequest.getOffset());
-
-        //check limit
-        listSubscriptionsByTopicRequest.setLimit(-1);
-        boolean limitFlag = listSubscriptionsByTopicRequest.getLimit() > 0 && listSubscriptionsByTopicRequest.getLimit() <= 100;
-        Assert.assertTrue(limitFlag);
-
-
+        
     }
 
     // 取消订阅 pass
     public void testUnSubcription() {
+        
         String subscriptionUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate:162a44968d894e6fa5f3385e6dee5e0b";
         UnSubcriptionRequest deleteSubcription = new UnSubcriptionRequest();
         deleteSubcription.setSubscriptionUrn(subscriptionUrn);
@@ -226,7 +218,6 @@ public class SubscriptionServiceTest extends TestCase {
         Map<String, Object> res = subscriptionService.unsubscribe(deleteSubcription);
         Assert.assertEquals(404, res.get("status"));
         LOGGER.info(res.toString());
-
     }
 
 }
