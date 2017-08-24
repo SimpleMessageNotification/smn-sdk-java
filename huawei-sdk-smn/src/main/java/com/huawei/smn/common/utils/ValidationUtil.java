@@ -167,6 +167,9 @@ public class ValidationUtil {
         if(protocol.equals("http") && endPoint.startsWith("http://")){
             return true;
         }
+        if(protocol.equals("https") && endPoint.startsWith("https://")){
+            return true;
+        }
         if(protocol.equals("email") && validateEmail(endPoint)){
             return true;
         }
