@@ -170,6 +170,8 @@ public class SubscriptionServiceTest extends TestCase {
         Assert.assertTrue(flag);
         LOGGER.info(res.toString());
 
+
+
         //check offset
 
         listSubscriptionsRequest.setOffset(-1);

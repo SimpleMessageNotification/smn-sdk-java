@@ -38,7 +38,7 @@ public interface SubscriptionService extends CommonService {
      * @param subcriptionRequest
      * @return Map
      *         {@value request_id}
-     *         {@value message_id}
+     *         {@value subscription_urn}
      *         {@value status}
      * @throws RuntimeException
      */
@@ -50,7 +50,6 @@ public interface SubscriptionService extends CommonService {
      * @param unSubcriptionRequest
      * @return Map
      *         {@value request_id}
-     *         {@value message_id}
      *         {@value status}
      * @throws RuntimeException
      */
@@ -62,7 +61,8 @@ public interface SubscriptionService extends CommonService {
      * @param listSubscriptionsRequest
      * @return Map
      *         {@value request_id}
-     *         {@value message_id}
+     *         {@value subscription_count}
+     *         {@value subscriptions}
      *         {@value status}
      * @throws RuntimeException
      */
@@ -74,7 +74,8 @@ public interface SubscriptionService extends CommonService {
      * @param listSubscriptionsByTopicRequest
      * @return Map
      *         {@value request_id}
-     *         {@value message_id}
+     *         {@value subscription_count}
+     *         {@value subscriptions}
      *         {@value status}
      * @throws RuntimeException
      */

@@ -20,6 +20,7 @@ package com.huawei.smn.model.request.subscription;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.huawei.smn.common.utils.ValidationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +106,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
 
-        if (StringUtils.isBlank(protocol) || !isSubscriptionProtocol(protocol)) {
+        if (!ValidationUtil.validateProtocol(protocol)) {
             LOGGER.error("Protocol is not valid.");
             throw new RuntimeException("Protocol is not valid.");
         }
@@ -122,26 +123,6 @@ public class SubcriptionRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
-    /**
-     * valid protocol
-     * 
-     * @param protocol
-     * @return boolean
-     */
-    private boolean isSubscriptionProtocol(String protocol) {
-
-        if (SmnConstants.SMN_SUB_PROTOCOL_EMAIL.equals(protocol) || SmnConstants.SMN_SUB_PROTOCOL_SMS.equals(protocol)
-                || SmnConstants.SMN_SUB_PROTOCOL_HTTPS.equals(protocol)
-                || SmnConstants.SMN_SUB_PROTOCOL_HTTP.equals(protocol)
-                || SmnConstants.SMN_SUB_PROTOCOL_LAMBDA.equals(protocol)
-                || SmnConstants.SMN_SUB_PROTOCOL_APPLICATION.equals(protocol)) {
-
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 
     /**
      * @return the topicUrn

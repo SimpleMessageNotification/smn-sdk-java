@@ -91,7 +91,7 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
             sb.append("?offset=" + "0");
         }
 
-        if (getLimit() > 0 && getLimit() < 100) {
+        if (getLimit() > 0 && getLimit() <= 100) {
             sb.append("&limit=" + getLimit());
         } else {
             sb.append("&limit=").append("100");
