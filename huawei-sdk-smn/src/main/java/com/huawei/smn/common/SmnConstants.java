@@ -263,12 +263,12 @@ public interface SmnConstants {
     String DEFAULT_SMN_CRYPT_KEY = "20170807";
 
     /**
-     * ciper method
-     */
-    String DES = "DES";
-
-    /**
      * ciper aes method
      */
     String AES = "AES";
+
+    /**
+     * max length of topic's display name
+     */
+    int MAX_TOPIC_DISPLAY_NAME = 192;
 }
