@@ -68,14 +68,6 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
 
         LOGGER.info("Start list subscribtion.");
 
-        //check offset
-        if(!checkOffset(listSubscriptionsRequest.getOffset())){
-            throw  new RuntimeException("Fail to list subscriptions by checkOffset");
-        }
-        //check limit
-        if(!checkLimit(listSubscriptionsRequest.getLimit())){
-            throw  new RuntimeException("Fail to list subscriptions by limitOffset");
-        }
 
         try {
             Map<String, String> requestHeader = listSubscriptionsRequest.getRequestHeaderMap();
@@ -93,6 +85,12 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.huawei.smn.service.SubscriptionService#listSubscriptions(com.huawei.
+     * smn.model.request.subscription.ListSubscriptionsRequest)
+     */
     public Map<String, Object> subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException {
 
         LOGGER.info("Start a new  subscribtion.");
@@ -102,7 +100,6 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
             subcriptionRequest.setSmnEndpoint(smnEndpoint);
 
             if(!ValidationUtil.validateTopicUrn(subcriptionRequest.getTopicUrn())){
-                //System.out.println("+++"+subcriptionRequest.getTopicUrn());
                 throw new RuntimeException(" subscribe request topic_urn is null.");
             }
 
@@ -174,12 +171,6 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         if (!ValidationUtil.validateTopicUrn(listSubscriptionsByTopicRequest.getTopicUrn())){
             throw new RuntimeException("topic urn is illegal");
         }
-        if(!checkOffset(listSubscriptionsByTopicRequest.getOffset())){
-            throw new RuntimeException(" offset is illegal");
-        }
-        if(!checkLimit(listSubscriptionsByTopicRequest.getLimit())){
-            throw new RuntimeException(" limit is illegal");
-        }
 
         try {
 
@@ -219,21 +210,5 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         return  true;
     }
 
-    /**
-     * check offset
-     * @param offset
-     * @return boolean
-     */
-    private boolean checkOffset(int offset){
-        return offset>=0 ? true : false;
-    }
 
-    /**
-     * check limit
-     * @param limit
-     * @return boolean
-     */
-    private boolean checkLimit(int limit){
-        return  (limit>0 && limit<=100) ? true : false;
-    }
 }

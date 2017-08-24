@@ -190,6 +190,12 @@ public class ValidationUtil {
         }
         return  PATTERN_EMAIL.matcher(email).matches();
     }
+
+    /**
+     * validate protocol
+     * @param protocol
+     * @return boolean
+     */
     public static boolean validateProtocol(String protocol){
         if (StringUtils.isEmpty(protocol)) {
             return  false;

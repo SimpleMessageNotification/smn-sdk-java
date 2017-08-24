@@ -40,13 +40,13 @@ import static org.junit.Assert.assertThat;
 
 /**
  * @author yangyanping
- * @date 2017年8月23日
  * @version 0.1
+ * @date 2017年8月23日
  */
 public class SubscriptionServiceTest extends TestCase {
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionServiceTest.class);
     @Rule
-            public ExpectedException thrown = ExpectedException.none();
+    public ExpectedException thrown = ExpectedException.none();
 
     SmnConfiguration smnConfiguration = null;
 
@@ -70,7 +70,6 @@ public class SubscriptionServiceTest extends TestCase {
         String projectId = subcriptionRequest.getProjectId();
         subcriptionRequest.setTopicUrn(topicUrn);
         subcriptionRequest.setProtocol("sms");
-       // subcriptionRequest.setEndpoint("18588432306");
         String endPoint = "18246161627";
         subcriptionRequest.setEndpoint(endPoint);
         subcriptionRequest.setRemark("api订阅接口测试成功");
@@ -78,50 +77,50 @@ public class SubscriptionServiceTest extends TestCase {
         subscriptionService.setSmnConfiguration(smnConfiguration);
 
         Map<String, Object> res = subscriptionService.subscribe(subcriptionRequest);
-        int resCode =(Integer) res.get("status");
-        boolean flag = resCode >=200 && resCode<300;
+        int resCode = (Integer) res.get("status");
+        boolean flag = resCode >= 200 && resCode < 300;
         Assert.assertTrue(flag);
         LOGGER.info(res.toString());
-        System.out.println(res);
+       
 
         //check topic_urn
-       try{
-           subcriptionRequest.setTopicUrn(null);
-           subscriptionService.subscribe(subcriptionRequest);
-           fail("testSubcriptionSubscrible null topicUrn");
-       }catch (RuntimeException e){
+        try {
+            subcriptionRequest.setTopicUrn(null);
+            subscriptionService.subscribe(subcriptionRequest);
+            fail("testSubcriptionSubscrible null topicUrn");
+        } catch (RuntimeException e) {
 
-       }
-       subcriptionRequest.setTopicUrn(topicUrn);
+        }
+        subcriptionRequest.setTopicUrn(topicUrn);
 
         //check endpoint
-       try {
+        try {
             subcriptionRequest.setEndpoint("@@##");
             subscriptionService.subscribe(subcriptionRequest);
-           fail("check endPoint Expected an RuntimeException");
-       }catch (RuntimeException e){
-
-       }
-
-       //check email
-        try {
-           subcriptionRequest.setProtocol("email");
-           subcriptionRequest.setEndpoint("yangyanping3huawei.com");
-           subscriptionService.subscribe(subcriptionRequest);
-           fail("check email  Expected an RuntimeException");
-        }catch (RuntimeException e){
+            fail("check endPoint Expected an RuntimeException");
+        } catch (RuntimeException e) {
 
         }
 
-        subcriptionRequest.setProtocol("email");
-        subcriptionRequest.setEndpoint("liuqiangqiang@huawei.com");
-        Map<String, Object> resEmail = subscriptionService.subscribe(subcriptionRequest);
+        //check email
+        try {
+            subcriptionRequest.setProtocol("email");
+            subcriptionRequest.setEndpoint("yangyanping3huawei.com");
+            subscriptionService.subscribe(subcriptionRequest);
+            fail("check email  Expected an RuntimeException");
+        } catch (RuntimeException e) {
 
-        int resMailCode =(Integer) resEmail.get("status");
-        boolean emailFlag = resMailCode >=200 && resMailCode<300;
-        Assert.assertTrue(emailFlag);
-        LOGGER.info(res.toString());
-        System.out.println(res);
+        }
+
+         subcriptionRequest.setProtocol("email");
+         subcriptionRequest.setEndpoint("liuqiangqiang@huawei.com");
+         Map<String, Object> resEmail = subscriptionService.subscribe(subcriptionRequest);
+
+         int resMailCode = (Integer) resEmail.get("status");
+         boolean emailFlag = resMailCode >= 200 && resMailCode < 300;
+         Assert.assertTrue(emailFlag);
+         LOGGER.info(res.toString());
+        
 
 
         //check sms
@@ -130,7 +129,7 @@ public class SubscriptionServiceTest extends TestCase {
             subcriptionRequest.setEndpoint("11sdf33@");
             subscriptionService.subscribe(subcriptionRequest);
             fail("sms email  Expected an RuntimeException");
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
 
         }
         //check protocol
@@ -138,21 +137,21 @@ public class SubscriptionServiceTest extends TestCase {
             subcriptionRequest.setProtocol("emaill");
             subscriptionService.subscribe(subcriptionRequest);
             fail("check protocol Expected an RuntimeException");
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
 
         }
         subcriptionRequest.setProtocol("sms");
 
         //check remark
-        try{
+        try {
             StringBuilder sb = new StringBuilder();
-            for(int i=0;i<150;i++){
+            for (int i = 0; i < 150; i++) {
                 sb.append(1);
             }
             subcriptionRequest.setRemark(sb.toString());
             subscriptionService.subscribe(subcriptionRequest);
             fail("check remark Expected an RuntimeException");
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
 
         }
         subcriptionRequest.setRemark("1");
@@ -165,22 +164,21 @@ public class SubscriptionServiceTest extends TestCase {
         SubscriptionService subscriptionService = new SubscriptionServiceImpl();
         subscriptionService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = subscriptionService.listSubscriptions(listSubscriptionsRequest);
-        int resCode =(Integer) res.get("status");
-        boolean flag = resCode >=200 && resCode<300;
+        int resCode = (Integer) res.get("status");
+        boolean flag = resCode >= 200 && resCode < 300;
         Assert.assertTrue(flag);
         LOGGER.info(res.toString());
-
 
 
         //check offset
 
         listSubscriptionsRequest.setOffset(-1);
-        Boolean offsetFlag = listSubscriptionsRequest.getOffset()>=0;
+        Boolean offsetFlag = listSubscriptionsRequest.getOffset() >= 0;
         Assert.assertTrue(offsetFlag);
 
         //check limit
         listSubscriptionsRequest.setLimit(-1);
-        boolean limitFlag = listSubscriptionsRequest.getLimit()>0 && listSubscriptionsRequest.getLimit() <=100;
+        boolean limitFlag = listSubscriptionsRequest.getLimit() > 0 && listSubscriptionsRequest.getLimit() <= 100;
         Assert.assertTrue(limitFlag);
     }
 
@@ -192,8 +190,8 @@ public class SubscriptionServiceTest extends TestCase {
         SubscriptionService subscriptionService = new SubscriptionServiceImpl();
         subscriptionService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = subscriptionService.listSubscriptionsByTopic(listSubscriptionsByTopicRequest);
-        int resCode =(Integer) res.get("status");
-        boolean flag = resCode >=200 && resCode<300;
+        int resCode = (Integer) res.get("status");
+        boolean flag = resCode >= 200 && resCode < 300;
         Assert.assertTrue(flag);
         LOGGER.info(res.toString());
 
@@ -202,17 +200,17 @@ public class SubscriptionServiceTest extends TestCase {
             listSubscriptionsByTopicRequest.setTopicUrn(null);
             subscriptionService.listSubscriptionsByTopic(listSubscriptionsByTopicRequest);
             fail("test ListSubscriiptioonByTopic expected an RuntimeException");
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
 
         }
 
         //check offset
         listSubscriptionsByTopicRequest.setOffset(-1);
-        Assert.assertEquals(0,listSubscriptionsByTopicRequest.getOffset());
+        Assert.assertEquals(0, listSubscriptionsByTopicRequest.getOffset());
 
         //check limit
         listSubscriptionsByTopicRequest.setLimit(-1);
-        boolean limitFlag = listSubscriptionsByTopicRequest.getLimit()>0 && listSubscriptionsByTopicRequest.getLimit()<=100;
+        boolean limitFlag = listSubscriptionsByTopicRequest.getLimit() > 0 && listSubscriptionsByTopicRequest.getLimit() <= 100;
         Assert.assertTrue(limitFlag);
 
 

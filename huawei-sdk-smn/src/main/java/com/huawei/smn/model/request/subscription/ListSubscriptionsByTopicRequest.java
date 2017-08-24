@@ -140,7 +140,7 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      *            the limit to set
      */
     public void setLimit(int limit) {
-        if (100 > limit && limit > 0) {
+        if (100 >= limit && limit > 0) {
             this.limit = limit;
         }
     }

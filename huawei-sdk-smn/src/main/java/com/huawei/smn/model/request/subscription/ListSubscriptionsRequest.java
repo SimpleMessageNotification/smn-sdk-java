@@ -40,9 +40,11 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
      * paging list's starting page,default 0
      */
     private int offset = 0;
+
     /**
      * max returned items for a request,default 100
      */
+
     private int limit = 100;
     /**
      * message access point
