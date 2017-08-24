@@ -17,6 +17,7 @@
  */
 package com.huawei.smn.common.utils;
 
+
 import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 
@@ -28,6 +29,9 @@ import com.huawei.smn.common.SmnConstants;
  * @author huangqiong
  * @date 2017年8月22日 上午11:35:28
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日
+ * @version 0.2
  */
 public class ValidationUtil {
 
@@ -37,6 +41,7 @@ public class ValidationUtil {
     final static Pattern PATTERN_TOPIC = Pattern.compile("^[a-zA-Z0-9]{1}[-_a-zA-Z0-9]{0,255}$");
 
     /**
+
      * validate telephone regex
      */
     final static Pattern PATTERN_TELEPHONE = Pattern.compile("^\\+?[0-9]+$");
@@ -50,6 +55,11 @@ public class ValidationUtil {
      * validate local regex
      */
     final static Pattern PATTERN_LOCALE = Pattern.compile("^[a-z]{2}-[a-z]{2}$");
+
+    /**
+     * 判断Email的正则表达式
+     */
+    final  static Pattern PATTERN_EMAIL = Pattern.compile("^[a-zA-Z0-9]+([._\\-]*[a-zA-Z0-9])*@([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+.){1,63}[a-zA-Z0-9]+$");
 
     /**
      * validate locale if is conformed with specification
@@ -116,6 +126,81 @@ public class ValidationUtil {
     }
 
     /**
+     * validate project_id
+     * @param project_id
+     * @return boolean
+     */
+    public static boolean validateProjectId(String project_id){
+        if(StringUtils.isBlank(project_id)){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * validate TopicUrn
+     * @param topic_urn
+     * @return boolean
+     */
+    public static boolean validateTopicUrn(String topic_urn){
+        if(StringUtils.isBlank(topic_urn)){
+            return false;
+        }
+            return true;
+    }
+
+    /**
+     * validate EndPoint
+     * @param endPoint
+     * @param protocol
+     * @return boolean
+     */
+    public static boolean validateEndPoint(String  endPoint,String protocol){
+        if(StringUtils.isBlank(endPoint)){
+            return false;
+        }
+        if(protocol.equals("http") && endPoint.startsWith("http://")){
+            return true;
+        }
+        if(protocol.equals("https") && endPoint.startsWith("https://")){
+            return true;
+        }
+        if(protocol.equals("email") && validateEmail(endPoint)){
+            return true;
+        }
+        if(protocol.equals("sms") && validateTelephone(endPoint)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * validate Email
+     * @param email
+     * @return boolean
+     */
+    public static boolean validateEmail(String email){
+        if(StringUtils.isEmpty(email)){
+            return  false;
+        }
+        return  PATTERN_EMAIL.matcher(email).matches();
+    }
+
+    /**
+     * validate protocol
+     * @param protocol
+     * @return boolean
+     */
+    public static boolean validateProtocol(String protocol){
+        if (StringUtils.isEmpty(protocol)) {
+            return  false;
+        }
+        if(protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_EMAIL) || protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_SMS) || protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_HTTPS) || protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_HTTP)){
+            return true;
+        }
+        return  false;
+    }
+
      * validate displayname
      * 
      * @param displayName
