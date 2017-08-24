@@ -129,7 +129,6 @@ public class TopicServiceTest extends TestCase {
         TopicService topicService = new TopicServiceImpl();
         topicService.setSmnConfiguration(smnConfiguration);
         Map<String, Object> res = topicService.listTopicAttributes(listTopicAttributesRequest);
-        System.err.println(res);
         Assert.assertNotNull(res.get(ATTRIBUTES));
         Assert.assertNotNull(res.get(REQUEST_ID));
         Assert.assertNotNull(res.get(STATUS));
