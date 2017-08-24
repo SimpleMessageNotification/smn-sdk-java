@@ -414,7 +414,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
             return false;
         }
         try {
-            byte[] b = subject.getBytes("utf-8");
+            byte[] b = subject.getBytes(ConstantsUtil.URL_ENCODING);
             SmnConfiguration smnConfiguration = new SmnConfiguration();
             //判断消息的主题长度小于512byte
             if(b.length > smnConfiguration.getMaxSubjectLength()){
@@ -437,7 +437,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
             return  false;
         }
         try {
-            byte[] b = message.getBytes("utf-8");
+            byte[] b = message.getBytes(ConstantsUtil.URL_ENCODING);
             //判断消息的长度小于512byte
             SmnConfiguration smnConfiguration = new SmnConfiguration();
             if(b.length>smnConfiguration.getMaxMessageLength()){
