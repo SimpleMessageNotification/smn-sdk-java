@@ -223,8 +223,7 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      */
     @Override
     public String toString() {
-    
-        validate();
+   
         StringBuilder builder = new StringBuilder();
         builder.append("ListSubscriptionsByTopicRequest [offset=").append(offset).append(", limit=").append(limit)
                 .append(", topicUrn=").append(topicUrn).append(", smnEndpoint=").append(smnEndpoint)
