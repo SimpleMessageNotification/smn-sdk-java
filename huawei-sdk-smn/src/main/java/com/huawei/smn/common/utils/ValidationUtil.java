@@ -200,7 +200,7 @@ public class ValidationUtil {
         }
         return  false;
     }
-
+    /*
      * validate displayname
      * 
      * @param displayName
