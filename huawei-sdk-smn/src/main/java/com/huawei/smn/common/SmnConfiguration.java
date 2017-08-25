@@ -32,6 +32,9 @@ import org.slf4j.LoggerFactory;
  * @author huangqiong
  * @date 2017年8月3日 下午5:15:58
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日
+ * @version 0.2
  */
 public class SmnConfiguration {
 
@@ -77,6 +80,32 @@ public class SmnConfiguration {
      * smn endpoint
      */
     private String smnEndpoint;
+
+    /**
+     * smn remark
+     */
+    private int maxRemarkLength = 128;
+
+    /**
+     * max templateMessageContext length
+     */
+    private int maxTemplateMessageContextLength = 256*1024;
+
+    /**
+     * get ax templateMessageContext length
+     * @return max templateMessageContext length
+     */
+    public int getMaxTemplateMessageContextLength(){
+        return  maxTemplateMessageContextLength;
+    }
+    
+    /**
+     * get max remark length
+     * @return maxLength
+     */
+    public int getMaxRemarkLength() {
+        return maxRemarkLength;
+    }
 
     /**
      * configure property file path
