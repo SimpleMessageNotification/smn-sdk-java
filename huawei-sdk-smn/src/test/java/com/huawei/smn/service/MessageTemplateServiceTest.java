@@ -64,7 +64,7 @@ public class MessageTemplateServiceTest extends TestCase {
         CreateMessageTemplateRequest createMessageTemplateRequest = new CreateMessageTemplateRequest();
         MessageTemplateService messageTemplateService = new MessageTemplateServiceImpl();
         messageTemplateService.setSmnConfiguration(smnConfiguration);
-        createMessageTemplateRequest.setMessageTemplateName("dcragihfgs5d2d2");
+        createMessageTemplateRequest.setMessageTemplateName("dcragihfdfggs5d2d2");
         String content = "hello {name},hello {word},hello {gingo}";
         createMessageTemplateRequest.setContent(content);
         createMessageTemplateRequest.setProtocol("sms");// default,sms,http,https,email

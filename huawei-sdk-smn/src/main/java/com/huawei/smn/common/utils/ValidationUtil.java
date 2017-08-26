@@ -1,4 +1,4 @@
-/*
+package com.huawei.smn.common.utils;/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 
 import com.huawei.smn.common.SmnConfiguration;
+import com.huawei.smn.common.utils.ConstantsUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import com.huawei.smn.common.SmnConstants;
