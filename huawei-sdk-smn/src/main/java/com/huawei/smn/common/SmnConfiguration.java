@@ -32,6 +32,9 @@ import org.slf4j.LoggerFactory;
  * @author yangyanping
  * @date 2017年8月24日 下午5:15:58
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日
+ * @version 0.2
  */
 public class SmnConfiguration {
 
@@ -111,6 +114,19 @@ public class SmnConfiguration {
      * max subject length
      */
     private int maxSubjectLength = 512;
+
+    /**
+     * get max remark length
+     * @return maxLength
+     */
+    public int getMaxRemarkLength() {
+        return maxRemarkLength;
+    }
+
+    /**
+     * smn remark
+     */
+    private int maxRemarkLength = 128;
 
     /**
      * get max remark length

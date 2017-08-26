@@ -1,5 +1,4 @@
 /*
- * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
@@ -15,47 +14,53 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package com.huawei.smn.common.utils;
 
+import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 
-import com.huawei.smn.common.SmnConstants;
 import org.apache.commons.lang3.StringUtils;
 
+import com.huawei.smn.common.SmnConstants;
+
 /**
- * @author yangyanping
- * @date 2017年8月24日 下午4:35:39
+ * @author huangqiong
+ * @date 2017年8月22日 上午11:35:28
  * @version 0.1
+ * @author yangyanping
+ * @date 2017年8月24日
+ * @version 0.2
  */
 public class ValidationUtil {
 
     /**
-     * 判断主题名的正则表达式
+     * validate topic regex
      */
     final static Pattern PATTERN_TOPIC = Pattern.compile("^[a-zA-Z0-9]{1}[-_a-zA-Z0-9]{0,255}$");
 
     /**
-     * 判断电话的正则表达式
+     * validate telephone regex
      */
     final static Pattern PATTERN_TELEPHONE = Pattern.compile("^\\+?[0-9]+$");
 
     /**
-     * 判断短信签名名称的正则表达式
+     * validate sms sigature regex
      */
     final static Pattern PATTERN_SMS_SIGN_NAME = Pattern.compile("[a-zA-Z0-9\\u4e00-\\u9fa5]{2,8}");
 
     /**
-     * 判断区位的正则表达式
+     * validate local regex
      */
     final static Pattern PATTERN_LOCALE = Pattern.compile("^[a-z]{2}-[a-z]{2}$");
 
     /**
-     * 判断Email的正则表达式
+     * validate Email regex 
      */
     final  static Pattern PATTERN_EMAIL = Pattern.compile("^[a-zA-Z0-9]+([._\\-]*[a-zA-Z0-9])*@([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+.){1,63}[a-zA-Z0-9]+$");
 
     /**
-     * 判断主题的表达式
+     * validate subjet regex 
      */
     final  static Pattern PATTERN_SUBJECT =  Pattern.compile("^[^\\r\\n\\t\\f]+$");
 
@@ -124,11 +129,10 @@ public class ValidationUtil {
         return PATTERN_SMS_SIGN_NAME.matcher(smsSignName).matches();
     }
 
-
     /**
-     * validate project_id if conform to rule
+     * validate project_id
      * @param project_id
-     * @return boolean  <code>true</code> conform to rule will be true,or false
+     * @return boolean
      */
     public static boolean validateProjectId(String project_id){
         if(StringUtils.isBlank(project_id)){
@@ -138,9 +142,9 @@ public class ValidationUtil {
     }
 
     /**
-     * validate TopicUrn if conform to rule
+     * validate TopicUrn
      * @param topic_urn
-     * @return boolean  <code>true</code> conform to rule will be true,or false
+     * @return boolean
      */
     public static boolean validateTopicUrn(String topic_urn){
         if(StringUtils.isBlank(topic_urn)){
@@ -150,10 +154,10 @@ public class ValidationUtil {
     }
 
     /**
-     * validate EndPoint if conform to rule
+     * validate EndPoint
      * @param endPoint
      * @param protocol
-     * @return boolean  <code>true</code> conform to rule will be true,or false
+     * @return boolean
      */
     public static boolean validateEndPoint(String  endPoint,String protocol){
         if(StringUtils.isBlank(endPoint)){
@@ -175,9 +179,9 @@ public class ValidationUtil {
     }
 
     /**
-     * validate Email if conform to rule
+     * validate Email
      * @param email
-     * @return boolean  <code>true</code> conform to rule will be true,or false
+     * @return boolean
      */
     public static boolean validateEmail(String email){
         if(StringUtils.isEmpty(email)){
@@ -187,9 +191,9 @@ public class ValidationUtil {
     }
 
     /**
-     * Determine whether the protocol conforms to specifications and return <code>true</> if it meets
+     * validate protocol
      * @param protocol
-     * @return boolean  <code>true</code> conform to rule will be true,or false
+     * @return boolean
      */
     public static boolean validateProtocol(String protocol){
         if (StringUtils.isEmpty(protocol)) {
@@ -214,5 +218,20 @@ public class ValidationUtil {
         return  PATTERN_SUBJECT.matcher(subject).matches();
     }
 
+    /*
+     * validate displayname
+     * 
+     * @param displayName
+     * @return boolean <code>true</code> displayName is valid
+     */
+    public static boolean validateDisplayName(String displayName) {
 
+        byte[] b = displayName.getBytes(Charset.forName(SmnConstants.DEFAULT_CHARSET));
+        if (b.length > SmnConstants.MAX_TOPIC_DISPLAY_NAME) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }

@@ -34,6 +34,8 @@ import com.huawei.smn.service.AbstractCommonService;
 import com.huawei.smn.service.SmsService;
 
 /**
+ * send sms directly
+ * 
  * @author huangqiong
  * @date 2017年8月3日 下午5:41:10
  * @version 0.1
