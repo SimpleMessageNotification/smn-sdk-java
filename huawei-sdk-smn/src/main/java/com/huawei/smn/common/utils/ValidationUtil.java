@@ -1,5 +1,4 @@
 /*
- * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
@@ -15,8 +14,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.huawei.smn.common.utils;
 
+package com.huawei.smn.common.utils;
 
 import java.nio.charset.Charset;
 import java.util.regex.Pattern;
@@ -41,7 +40,6 @@ public class ValidationUtil {
     final static Pattern PATTERN_TOPIC = Pattern.compile("^[a-zA-Z0-9]{1}[-_a-zA-Z0-9]{0,255}$");
 
     /**
-
      * validate telephone regex
      */
     final static Pattern PATTERN_TELEPHONE = Pattern.compile("^\\+?[0-9]+$");
@@ -57,9 +55,15 @@ public class ValidationUtil {
     final static Pattern PATTERN_LOCALE = Pattern.compile("^[a-z]{2}-[a-z]{2}$");
 
     /**
-     * 判断Email的正则表达式
+     * validate Email regex 
      */
     final  static Pattern PATTERN_EMAIL = Pattern.compile("^[a-zA-Z0-9]+([._\\-]*[a-zA-Z0-9])*@([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+.){1,63}[a-zA-Z0-9]+$");
+
+    /**
+     * validate subjet regex 
+     */
+    final  static Pattern PATTERN_SUBJECT =  Pattern.compile("^[^\\r\\n\\t\\f]+$");
+
 
     /**
      * validate locale if is conformed with specification
@@ -200,6 +204,20 @@ public class ValidationUtil {
         }
         return  false;
     }
+
+    /**
+     * Determine whether the topic meets the naming conventions, and the <code>true</> indicates compliance with the specification, otherwise it does not conform to specifications
+     * <p> need to meet the beginning must be self, numbers, punctuation ASCALL text service, cannot contain newline characters and control </>
+     * @param subject
+     * @return boolean  <code>true</code> conform to rule will be true,or false
+     */
+    public  static boolean validateSubject(String subject){
+        if(StringUtils.isEmpty(subject)){
+            return  true;
+        }
+        return  PATTERN_SUBJECT.matcher(subject).matches();
+    }
+
     /*
      * validate displayname
      * 
