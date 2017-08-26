@@ -395,7 +395,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
             byte[] b = message.getBytes(ConstantsUtil.URL_ENCODING);
             //判断消息的长度小于512byte
             SmnConfiguration smnConfiguration = new SmnConfiguration();
-            if(b.length>smnConfiguration.getMaxMessageLength()){
+            if(b.length > smnConfiguration.getMaxMessageLength()){
                 LOGGER.error("Parameter: message is invalid. . The Length of message is {}.",b.length);
                 return  false;
             }
@@ -411,7 +411,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return boolean  <code>true</> 表示符合规范，否则不符合规范
      */
     private boolean checkMessageStruct(String messageStruct){
-            if (messageStruct==null){
+            if (messageStruct = null){
                 LOGGER.error("Parameter:MessageStruct is invalid");
                 return false;
             }
@@ -435,7 +435,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
             //解析JSON格式
             Map<String,Object> messageMap = (Map<String,Object>) messageObject;
             //消息不是json格式，返回异常
-            if(messageMap.size()==0){
+            if(messageMap.size() ==0){
                 LOGGER.error("Parameter:MessageStruct is invalid. Failed to parse MessageStructure.");
                 return false;
             }
@@ -453,7 +453,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @throws RuntimeException
      */
     private boolean checkTags() throws RuntimeException{
-            if(tags!=null){
+            if(tags != null){
                 if(!(tags instanceof Map<?,?>)){
                     LOGGER.error("Tag is error.");
                     return false;
@@ -472,7 +472,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
                         e.printStackTrace();
                     }
                     SmnConfiguration smnConfiguration = new SmnConfiguration();
-                    if (b.length> smnConfiguration.getMaxTagLength()){
+                    if (b.length > smnConfiguration.getMaxTagLength()){
                         LOGGER.error("Tag is erro . The tag length is {}.",b.length);
                         return false;
                     }
