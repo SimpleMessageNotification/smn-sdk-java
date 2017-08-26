@@ -238,7 +238,7 @@ public class ValidationUtil {
         try {
             byte[] b = content.getBytes(ConstantsUtil.URL_ENCODING);
             SmnConfiguration smnConfiguration = new SmnConfiguration();
-            if (b.length>smnConfiguration.getMaxTemplateMessageContextLength()){
+            if (b.length > smnConfiguration.getMaxTemplateMessageContextLength()){
                 return  false;
             }
         } catch (UnsupportedEncodingException e) {
@@ -266,7 +266,7 @@ public class ValidationUtil {
      * @return boolean
      */
     public static boolean validateOffset(int offset){
-        return offset>=0 ? true : false;
+        return offset >= 0 ? true : false;
     }
 
     /**
@@ -275,6 +275,6 @@ public class ValidationUtil {
      * @return boolean
      */
     public static boolean validateLimit(int limit){
-        return (limit>0 && limit<=100) ? true : false;
+        return (limit > 0 && limit <= 100) ? true : false;
     }
 }
