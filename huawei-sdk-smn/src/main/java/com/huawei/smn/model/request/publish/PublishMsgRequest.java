@@ -409,7 +409,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      */
     private boolean checkMessageStruct(String messageStruct){
-            if (messageStruct = null){
+            if (messageStruct == null){
                 LOGGER.error("Parameter:MessageStruct is invalid");
                 return false;
             }
