@@ -115,18 +115,8 @@ public class SmnConfiguration {
      */
     private int maxSubjectLength = 512;
 
-    /**
-     * get max remark length
-     * @return maxLength
-     */
-    public int getMaxRemarkLength() {
-        return maxRemarkLength;
-    }
 
-    /**
-     * smn remark
-     */
-    private int maxRemarkLength = 128;
+
 
     /**
      * get max remark length
