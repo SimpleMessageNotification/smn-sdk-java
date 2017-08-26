@@ -23,6 +23,4 @@ public class ConstantsUtil {
      */
     public static final String TAGS = "tags";
 
-    
-    
 }

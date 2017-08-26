@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
 /**
  * property loading configuration
  * 
- * @author huangqiong
- * @date 2017年8月3日 下午5:15:58
+ * @author yangyanping
+ * @date 2017年8月24日 下午5:15:58
  * @version 0.1
  * @author yangyanping
  * @date 2017年8月24日
@@ -81,6 +81,43 @@ public class SmnConfiguration {
      */
     private String smnEndpoint;
 
+ 
+
+    /**
+     * max tag length
+     */
+    private int maxTagLength = 1024;
+
+    /**
+     * max message length
+     */
+    private int maxMessageLength = 256;
+
+
+    /**
+     * Get max message length
+     * @return maxMessageLength
+     */
+    public int getMaxMessageLength() {
+        return maxMessageLength;
+    }
+
+    /**
+     * get max subject length
+     * @return maxSubjectLength
+     */
+    public int getMaxSubjectLength() {
+        return maxSubjectLength;
+    }
+
+    /**
+     * max subject length
+     */
+    private int maxSubjectLength = 512;
+
+
+
+
     /**
      * smn remark
      */
@@ -122,6 +159,14 @@ public class SmnConfiguration {
      */
     public SmnConfiguration() {
         LOGGER.info("New smnConfiguration.");
+    }
+
+    /**
+     * Get max tag length.
+     * @return maxTagLength
+     */
+    public int getMaxTagLength() {
+        return maxTagLength;
     }
 
     /**
