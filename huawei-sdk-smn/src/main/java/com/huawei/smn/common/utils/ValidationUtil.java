@@ -128,7 +128,7 @@ public class ValidationUtil {
     /**
      * validate project_id if conform to rule
      * @param project_id
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</code> conform to rule will be true,or false
      */
     public static boolean validateProjectId(String project_id){
         if(StringUtils.isBlank(project_id)){
@@ -140,7 +140,7 @@ public class ValidationUtil {
     /**
      * validate TopicUrn if conform to rule
      * @param topic_urn
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</code> conform to rule will be true,or false
      */
     public static boolean validateTopicUrn(String topic_urn){
         if(StringUtils.isBlank(topic_urn)){
@@ -153,7 +153,7 @@ public class ValidationUtil {
      * validate EndPoint if conform to rule
      * @param endPoint
      * @param protocol
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</code> conform to rule will be true,or false
      */
     public static boolean validateEndPoint(String  endPoint,String protocol){
         if(StringUtils.isBlank(endPoint)){
@@ -177,7 +177,7 @@ public class ValidationUtil {
     /**
      * validate Email if conform to rule
      * @param email
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</code> conform to rule will be true,or false
      */
     public static boolean validateEmail(String email){
         if(StringUtils.isEmpty(email)){
@@ -187,9 +187,9 @@ public class ValidationUtil {
     }
 
     /**
-     * 判断协议是否符合规范，如果符合则返回<code>true</>
+     * Determine whether the protocol conforms to specifications and return <code>true</> if it meets
      * @param protocol
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</code> conform to rule will be true,or false
      */
     public static boolean validateProtocol(String protocol){
         if (StringUtils.isEmpty(protocol)) {
@@ -202,10 +202,10 @@ public class ValidationUtil {
     }
 
     /**
-     * 判断主题是否满足命名规范，<code>true</> 表示符合规范，否则不符合规范
-     * <p>需要满足开头必须是自负，数字，标点服务的ASCALL文本，不能包含换行符以及控制</>
+     * Determine whether the topic meets the naming conventions, and the <code>true</> indicates compliance with the specification, otherwise it does not conform to specifications
+     * <p> need to meet the beginning must be self, numbers, punctuation ASCALL text service, cannot contain newline characters and control </>
      * @param subject
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</code> conform to rule will be true,or false
      */
     public  static boolean validateSubject(String subject){
         if(StringUtils.isEmpty(subject)){

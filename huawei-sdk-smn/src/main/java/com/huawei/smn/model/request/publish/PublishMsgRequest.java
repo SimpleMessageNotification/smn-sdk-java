@@ -96,7 +96,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     private String xAuthToken;
 
     /**
-     * 参数校验
+     * check params
      */
     private void validate() throws UnsupportedEncodingException,RuntimeException {
         //check topic urn
@@ -152,17 +152,17 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
 
     /**
-     * 三种消息发送方式
+     * Three ways of sending messages
      * 
      * message message_structure message_template_name
      * 
-     * 只需要设置其中一个，如果同时设置，生效的优先级为
+     * You only need to set one of them, and if you set it at the same time, the priority is
      * 
      * message_structure >
      * 
      * message_template_name >
      * 
-     * message url地址是一样的，在构造body参数时概据优先级确定哪一种发送方式
+     * The message URL address is the same, which determines which route of transmission will be determined based on the priority when constructing the body parameter
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
@@ -355,9 +355,9 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
 
     /**
-     * 检查subject是否符合规范，<code>true</> 表示符合规范，否则不符合规范
+     * Check that the subject conforms to specifications, and <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      * @param subject
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      */
     private boolean checkSubject(String subject){
         if (subject == null){
@@ -371,7 +371,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
         try {
             byte[] b = subject.getBytes(ConstantsUtil.URL_ENCODING);
             SmnConfiguration smnConfiguration = new SmnConfiguration();
-            //判断消息的主题长度小于512byte
             if(b.length > smnConfiguration.getMaxSubjectLength()){
                 LOGGER.error("Parameter: Subject is invalid. . The Length of Subject is {}.",b.length);
                 return  false;
@@ -383,9 +382,9 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
     
     /**
-     * 检查message是否符合规范 ，<code>true</> 表示符合规范，否则不符合规范
+     * Check that the message conforms to specifications, and <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      * @param message
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      */
     private boolean checkMessage(String message){
         if (message == null){
@@ -393,7 +392,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
         }
         try {
             byte[] b = message.getBytes(ConstantsUtil.URL_ENCODING);
-            //判断消息的长度小于512byte
             SmnConfiguration smnConfiguration = new SmnConfiguration();
             if(b.length > smnConfiguration.getMaxMessageLength()){
                 LOGGER.error("Parameter: message is invalid. . The Length of message is {}.",b.length);
@@ -406,9 +404,9 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
 
     /**
-     * 检查messageStruct是否合法
+     * Check that messageStruct is legal
      * @param messageStruct
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      */
     private boolean checkMessageStruct(String messageStruct){
             if (messageStruct = null){
@@ -431,15 +429,12 @@ public class PublishMsgRequest extends AbstractSmnRequest {
                 LOGGER.error("Parameter:MessageStruct is invalid, it is null");
                 return false;
             }
-            
-            //解析JSON格式
+        
             Map<String,Object> messageMap = (Map<String,Object>) messageObject;
-            //消息不是json格式，返回异常
             if(messageMap.size() ==0){
                 LOGGER.error("Parameter:MessageStruct is invalid. Failed to parse MessageStructure.");
                 return false;
             }
-            //校验default message string 类型
             if(!(messageMap.get(DEFAULT_MESSAGE) instanceof  String)){
                 LOGGER.error("Parameter:MessageStruct is invalid. Default message isn't String.");
                 return  false;
@@ -448,8 +443,8 @@ public class PublishMsgRequest extends AbstractSmnRequest {
         }
 
     /**
-     *检查tags 是否合法
-     * @return boolean  <code>true</> 表示符合规范，否则不符合规范
+     *Check that tags is legal
+     * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      * @throws RuntimeException
      */
     private boolean checkTags() throws RuntimeException{
@@ -458,14 +453,12 @@ public class PublishMsgRequest extends AbstractSmnRequest {
                     LOGGER.error("Tag is error.");
                     return false;
                 }
-                //检查每一个tag不能超过1kb
                 Map<?,?> tagsmap = (Map<?,?>) tags;
                 Iterator<Object> tagValues = (Iterator<Object>) tagsmap.values().iterator();
                 Object obj = null;
                 byte[] b = null;
                 while (tagValues.hasNext()){
                     obj = tagValues.next();
-                    //测试json值为空
                     try {
                         b = obj.toString().getBytes(ConstantsUtil.URL_ENCODING);
                     } catch (UnsupportedEncodingException e) {

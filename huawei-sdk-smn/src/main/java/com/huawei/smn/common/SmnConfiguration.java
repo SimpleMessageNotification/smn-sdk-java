@@ -78,36 +78,30 @@ public class SmnConfiguration {
      */
     private String smnEndpoint;
 
-    /**
-     * 获取tag最大长度
-     * @return tag最大长度
-     */
-    public int getMaxTagLength() {
-        return maxTagLength;
-    }
+ 
 
     /**
-     * 最大tags长度
+     * max tag length
      */
     private int maxTagLength = 1024;
 
+    /**
+     * max message length
+     */
+    private int maxMessageLength = 256;
+
 
     /**
-     * 获取最大消息长度
-     * @return 最大消息长度
+     * Get max message length
+     * @return maxMessageLength
      */
     public int getMaxMessageLength() {
         return maxMessageLength;
     }
 
     /**
-     * 最大消息长度
-     */
-    private int maxMessageLength = 256;
-
-    /**
      * get max subject length
-     * @return 返回subject的最大长度
+     * @return maxSubjectLength
      */
     public int getMaxSubjectLength() {
         return maxSubjectLength;
@@ -146,6 +140,14 @@ public class SmnConfiguration {
      */
     public SmnConfiguration() {
         LOGGER.info("New smnConfiguration.");
+    }
+
+    /**
+     * Get max tag length.
+     * @return maxTagLength
+     */
+    public int getMaxTagLength() {
+        return maxTagLength;
     }
 
     /**
