@@ -15,14 +15,18 @@
  * under the License.
  */
 
-package com.huawei.smn.common.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 
+import com.huawei.smn.common.SmnConfiguration;
 import org.apache.commons.lang3.StringUtils;
 
 import com.huawei.smn.common.SmnConstants;
+import sun.font.TrueTypeFont;
+
+
 
 /**
  * @author huangqiong
@@ -60,10 +64,14 @@ public class ValidationUtil {
     final  static Pattern PATTERN_EMAIL = Pattern.compile("^[a-zA-Z0-9]+([._\\-]*[a-zA-Z0-9])*@([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+.){1,63}[a-zA-Z0-9]+$");
 
     /**
+     * validate templateName
+     */
+    final  static Pattern PATTERN_TMPLATE_NAME = Pattern.compile("^[a-zA-Z0-9]{1}([-_a-zA-Z0-9]){0,64}");
+  
+    /*
      * validate subjet regex 
      */
     final  static Pattern PATTERN_SUBJECT =  Pattern.compile("^[^\\r\\n\\t\\f]+$");
-
 
     /**
      * validate locale if is conformed with specification
@@ -205,6 +213,7 @@ public class ValidationUtil {
         return  false;
     }
 
+
     /**
      * Determine whether the topic meets the naming conventions, and the <code>true</> indicates compliance with the specification, otherwise it does not conform to specifications
      * <p> need to meet the beginning must be self, numbers, punctuation ASCALL text service, cannot contain newline characters and control </>
@@ -233,5 +242,58 @@ public class ValidationUtil {
             return true;
         }
 
+    }
+
+
+    /**
+     * validate template templateMessageContent
+     * @param content
+     * @return boolean
+     */
+    public static boolean validateTemplateMessageContent(String content){
+        if (StringUtils.isBlank(content)){
+            return  false;
+        }
+        try {
+            byte[] b = content.getBytes(ConstantsUtil.URL_ENCODING);
+            SmnConfiguration smnConfiguration = new SmnConfiguration();
+            if (b.length > smnConfiguration.getMaxTemplateMessageContextLength()){
+                return  false;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    
+        return true;
+    }
+
+    /**
+     * validate template name
+     * @param templateName
+     * @return boolean
+     */
+    public static boolean validateTemplateName(String templateName){
+        if(StringUtils.isBlank(templateName)){
+            return  false;
+        }
+        return PATTERN_TMPLATE_NAME.matcher(templateName).matches();
+    }
+
+    /**
+     * validate offset
+     * @param offset
+     * @return boolean
+     */
+    public static boolean validateOffset(int offset){
+        return offset >= 0 ? true : false;
+    }
+
+    /**
+     * validate limit
+     * @param limit
+     * @return boolean
+     */
+    public static boolean validateLimit(int limit){
+        return (limit > 0 && limit <= 100) ? true : false;
     }
 }

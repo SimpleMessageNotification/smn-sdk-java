@@ -119,17 +119,30 @@ public class SmnConfiguration {
 
 
     /**
+     * smn remark
+     */
+    private int maxRemarkLength = 128;
+
+    /**
+     * max templateMessageContext length
+     */
+    private int maxTemplateMessageContextLength = 256*1024;
+
+    /**
+     * get ax templateMessageContext length
+     * @return max templateMessageContext length
+     */
+    public int getMaxTemplateMessageContextLength(){
+        return  maxTemplateMessageContextLength;
+    }
+    
+    /**
      * get max remark length
      * @return maxLength
      */
     public int getMaxRemarkLength() {
         return maxRemarkLength;
     }
-
-    /**
-     * smn remark
-     */
-    private int maxRemarkLength = 128;
 
     /**
      * configure property file path
