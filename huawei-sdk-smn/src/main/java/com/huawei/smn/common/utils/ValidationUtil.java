@@ -17,7 +17,6 @@
  */
 package com.huawei.smn.common.utils;
 
-
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.regex.Pattern;
@@ -27,6 +26,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.huawei.smn.common.SmnConstants;
 import sun.font.TrueTypeFont;
+
+import java.nio.charset.Charset;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.huawei.smn.common.SmnConstants;
+
 
 /**
  * @author huangqiong
@@ -208,7 +215,7 @@ public class ValidationUtil {
         }
         return  false;
     }
-    
+
     /*
      * validate displayname
      * 
@@ -225,6 +232,7 @@ public class ValidationUtil {
         }
 
     }
+
 
     /**
      * validate template templateMessageContent

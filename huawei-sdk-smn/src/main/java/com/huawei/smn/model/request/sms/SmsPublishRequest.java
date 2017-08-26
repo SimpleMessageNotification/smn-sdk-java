@@ -31,6 +31,8 @@ import com.huawei.smn.common.utils.AesUtil;
 import com.huawei.smn.model.AbstractSmnRequest;
 
 /**
+ * publish sms direct
+ * 
  * @author huangqiong
  * @date 2017年8月3日 下午5:30:35
  * @version 0.1
@@ -84,15 +86,16 @@ public class SmsPublishRequest extends AbstractSmnRequest {
 
         if (StringUtils.isBlank(projectId)) {
 
-            LOGGER.error("Publish sms projectId is null.");
+            LOGGER.error("Publish sms,projectId is null.");
             throw new NullPointerException("ProjectId is null.");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
-                .append(getProjectId()).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
+                .append(projectId).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUB_PROTOCOL_SMS);
-        LOGGER.info("Sms request url is: " + sb.toString());
+
+        LOGGER.info("Sms request url is {}.", sb.toString());
         return sb.toString();
     }
 
@@ -109,10 +112,10 @@ public class SmsPublishRequest extends AbstractSmnRequest {
         validatePhoneNumber(getEndpoint());
         validateMessage(getMessage());
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put(SmnConstants.ENDPOINT, getEndpoint());
-        requestParameterMap.put(SmnConstants.MESSAGE, getMessage());
-        if (StringUtils.isNoneBlank(getSignId())) {
-            requestParameterMap.put(SmnConstants.SIGN_ID, getSignId());
+        requestParameterMap.put(SmnConstants.ENDPOINT, endpoint);
+        requestParameterMap.put(SmnConstants.MESSAGE, message);
+        if (StringUtils.isNoneBlank(signId)) {
+            requestParameterMap.put(SmnConstants.SIGN_ID, signId);
         }
         return requestParameterMap;
     }

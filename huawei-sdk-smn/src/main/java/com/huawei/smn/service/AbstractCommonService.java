@@ -85,7 +85,7 @@ public abstract class AbstractCommonService implements CommonService {
             String iamUrl = new StringBuilder().append(SmnConstants.HTTPS_PREFFIX)
                     .append(smnConfiguration.getIamEndpoint()).append(SmnConstants.URL_DELIMITER)
                     .append(SmnConstants.IAM_URI).toString();
-            LOGGER.info("Iam url: " + iamUrl);
+            LOGGER.info("Iam url is{}.", iamUrl);
             iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
                     smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl);
         }
@@ -125,7 +125,7 @@ public abstract class AbstractCommonService implements CommonService {
      */
     protected void buildRequestHeader(Map<String, String> requestHeader) {
         if (null == getAuthenticationBean()) {
-            throw new RuntimeException("The authenticationBean is null");
+            throw new RuntimeException("The authenticationBean is null.");
         }
         requestHeader.put(SmnConstants.REGION_TAG, smnConfiguration.getRegionId());
         requestHeader.put(SmnConstants.X_PROJECT_ID, getAuthenticationBean().getProjectId());
