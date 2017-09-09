@@ -22,6 +22,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.topic.CreateTopicRequest;
 import com.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
@@ -62,13 +63,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     private String projectId;
 
     /**
-     * create topic
-     *
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> createTopic(CreateTopicRequest smnRequest) throws RuntimeException {
+	 * create topic
+	 *
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse createTopic(CreateTopicRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to create topic.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -79,8 +80,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to create topic.", e);
             throw new RuntimeException("Fail to create topic.", e);
@@ -88,13 +89,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * delete topic
-     * 
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException {
+	 * delete topic
+	 * 
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to delete topic.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -104,8 +105,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.delete(requestHeader, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to delete topic.", e);
             throw new RuntimeException("Fail to delete topic.", e);
@@ -113,13 +114,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * query topic list
-     * 
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> listTopics(ListTopicsRequest smnRequest) throws RuntimeException {
+	 * query topic list
+	 * 
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse listTopics(ListTopicsRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to list topic.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -129,8 +130,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to list topic.", e);
             throw new RuntimeException("Fail to list topic.", e);
@@ -138,13 +139,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * query topic detail
-     * 
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException {
+	 * query topic detail
+	 * 
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to query topic detail.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -154,8 +155,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to query topic.", e);
             throw new RuntimeException("Fail to query topic.", e);
@@ -169,7 +170,7 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
      * @return
      * @throws RuntimeException
      */
-    public Map<String, Object> updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException {
+	public HttpResponse updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to update topic.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -180,8 +181,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.put(requestHeader, requestParam, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.put(requestHeader, requestParam, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to update topic.", e);
             throw new RuntimeException("Fail to update topic.", e);
@@ -189,13 +190,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * query topic attribute
-     * 
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException {
+	 * query topic attribute
+	 * 
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to list topic attributes.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -205,8 +206,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to list topic attributes.", e);
             throw new RuntimeException("Fail to list topic attributes.", e);
@@ -214,13 +215,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * update topic attributes
-     * 
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException {
+	 * update topic attributes
+	 * 
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to update topic attributes.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -231,8 +232,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.put(requestHeader, requestParam, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.put(requestHeader, requestParam, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to update topic attributes.", e);
             throw new RuntimeException("Fail to update topic attributes.", e);
@@ -240,13 +241,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * delete attribute for designated topic
-     * 
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
+	 * delete attribute for designated topic
+	 * 
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
             throws RuntimeException {
         LOGGER.info("Start to delete topic attributes by name.");
         try {
@@ -257,8 +258,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.delete(requestHeader, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to delete topic attributes by name.", e);
             throw new RuntimeException("Fail to delete topic attributes by name.", e);
@@ -266,13 +267,13 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * delete all attributes
-     * 
-     * @param smnRequest
-     * @return Map<String, Object>
-     * @throws RuntimeException
-     */
-    public Map<String, Object> deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException {
+	 * delete all attributes
+	 * 
+	 * @param smnRequest
+	 * @return HttpResponse
+	 * @throws RuntimeException
+	 */
+	public HttpResponse deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to delete topic attributes.");
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
@@ -282,8 +283,8 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.delete(requestHeader, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to delete topic attributes.", e);
             throw new RuntimeException("Fail to delete topic attributes.", e);

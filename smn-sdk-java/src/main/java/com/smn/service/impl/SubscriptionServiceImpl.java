@@ -22,6 +22,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.subscription.ListSubscriptionsByTopicRequest;
 import com.smn.model.request.subscription.ListSubscriptionsRequest;
@@ -34,10 +35,7 @@ import com.smn.service.SubscriptionService;
  * Subscribe service implemented
  * 
  * @author huangqiong
- * @version 0.1
- * @author yangyanping
- * @version 0.2
- *
+ * @version 0.6
  */
 public class SubscriptionServiceImpl extends AbstractCommonService implements SubscriptionService {
 
@@ -58,15 +56,14 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
 
     /*
      * (non-Javadoc)
+     * 
      * @see
      * com.huawei.smn.service.SubscriptionService#listSubscriptions(com.huawei.
      * smn.model.request.subscription.ListSubscriptionsRequest)
      */
-    public Map<String, Object> listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest)
-            throws RuntimeException {
+    public HttpResponse listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest) throws RuntimeException {
 
         LOGGER.info("Start list subscribtion.");
-
 
         try {
             Map<String, String> requestHeader = listSubscriptionsRequest.getRequestHeaderMap();
@@ -76,8 +73,8 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
             listSubscriptionsRequest.setProjectId(projectId);
             String url = buildRequestUrl(listSubscriptionsRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to list subscriptions.", e);
             throw new RuntimeException("Fail to list subscriptions.", e);
@@ -86,11 +83,12 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
 
     /*
      * (non-Javadoc)
+     * 
      * @see
      * com.huawei.smn.service.SubscriptionService#listSubscriptions(com.huawei.
      * smn.model.request.subscription.ListSubscriptionsRequest)
      */
-    public Map<String, Object> subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException {
+    public HttpResponse subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException {
 
         LOGGER.info("Start a new  subscribtion.");
 
@@ -103,8 +101,8 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
             Map<String, Object> requestParam = subcriptionRequest.getRequestParameterMap();
             String url = buildRequestUrl(subcriptionRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to subscribe.", e);
             throw new RuntimeException("Fail to subscribe.", e);
@@ -113,14 +111,15 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
 
     /*
      * (non-Javadoc)
+     * 
      * @see
      * com.huawei.smn.service.SubscriptionService#unsubscribe(com.huawei.smn.
      * model.request.subscription.UnSubcriptionRequest)
      */
-    public Map<String, Object> unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException {
+    public HttpResponse unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException {
 
         LOGGER.info("Start delete a subscribtion.");
-        
+
         try {
             Map<String, String> requestHeader = unSubcriptionRequest.getRequestHeaderMap();
             projectId = getIAMService().getAuthentication().getProjectId();
@@ -129,8 +128,8 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
             unSubcriptionRequest.setProjectId(projectId);
             String url = buildRequestUrl(unSubcriptionRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.delete(requestHeader, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to unsubscribe.", e);
             throw new RuntimeException("Fail to unsubscribe.", e);
@@ -138,19 +137,18 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
 
     }
 
-
-
     /*
      * (non-Javadoc)
+     * 
      * @see
      * com.huawei.smn.service.SubscriptionService#listSubscriptionsByTopic(com.
      * huawei.smn.model.request.subscription.ListSubscriptionsByTopicRequest)
      */
-    public Map<String, Object> listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest)
+    public HttpResponse listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest)
             throws RuntimeException {
 
         LOGGER.info("Start list subscribtion by topic.");
-        
+
         try {
 
             Map<String, String> requestHeader = listSubscriptionsByTopicRequest.getRequestHeaderMap();
@@ -160,8 +158,8 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
             listSubscriptionsByTopicRequest.setProjectId(projectId);
             String url = buildRequestUrl(listSubscriptionsByTopicRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Fail to list subscribtion by topic.", e);
             throw new RuntimeException("Fail to list subscribtion by topic.", e);

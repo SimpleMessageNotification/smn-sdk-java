@@ -26,10 +26,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.common.utils.JsonUtil;
 import com.smn.model.request.publish.PublishMsgRequest;
-import com.smn.service.PublishService;
 import com.smn.service.impl.PublishServiceImpl;
 
 import junit.framework.TestCase;
@@ -47,6 +47,7 @@ public class PublishServiceTest extends TestCase {
 
     /*
      * (non-Javadoc)
+     * 
      * @see junit.framework.TestCase#setUp()
      */
     @Override
@@ -66,37 +67,36 @@ public class PublishServiceTest extends TestCase {
 
         PublishService publishService = new PublishServiceImpl();
         publishService.setSmnConfiguration(smnConfiguration);
-        Map<String, Object> res = null;
+        HttpResponse res = null;
         res = publishService.publish(publishMsgRequest);
 
         LOGGER.info(res.toString());
-        
-        //check topic urn
+
+        // check topic urn
         publishMsgRequest.setTopicUrn(null);
         try {
             publishService.publish(publishMsgRequest);
-            fail("check topic urn expected an RuntimeException" );
-        }catch (RuntimeException e){
+            fail("check topic urn expected an RuntimeException");
+        } catch (RuntimeException e) {
 
         }
         publishMsgRequest.setTopicUrn(topicUrn);
 
-        
-        //check message
+        // check message
         String message = publishMsgRequest.getMessage();
         publishMsgRequest.setMessage(null);
         try {
             publishService.publish(publishMsgRequest);
-            fail("check message expected an RuntimeException" );
-        }catch (RuntimeException e){
+            fail("check message expected an RuntimeException");
+        } catch (RuntimeException e) {
 
         }
         publishMsgRequest.setMessage(message);
-        
+
     }
 
     // 使用消息模板方式的消息发布 pass
-    public void testPublishMsgWithTemplate() throws JsonProcessingException{
+    public void testPublishMsgWithTemplate() throws JsonProcessingException {
         String topicUrn = "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:createMessageTemplate";
         PublishMsgRequest publishMsgRequest = new PublishMsgRequest();
         publishMsgRequest.setTopicUrn(topicUrn);
@@ -109,25 +109,24 @@ public class PublishServiceTest extends TestCase {
         publishMsgRequest.setSubject("publish msg with template");
         PublishService publishService = new PublishServiceImpl();
         publishService.setSmnConfiguration(smnConfiguration);
-        Map<String, Object> res = null;
+        HttpResponse res = null;
         try {
             res = publishService.publish(publishMsgRequest);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         LOGGER.info(res.toString());
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("message_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.getBody().get("request_id"));
+        Assert.assertNotNull(res.getBody().get("message_id"));
 
-        //check tag
-        Map<String,Object> tagTemp = publishMsgRequest.getTags();
-        Map<String,Object> tag = tagTemp;
+        // check tag
+        Map<String, Object> tagTemp = publishMsgRequest.getTags();
+        Map<String, Object> tag = tagTemp;
         StringBuilder sb = new StringBuilder();
-        for (int i=0;i<1025;i++){
+        for (int i = 0; i < 1025; i++) {
             sb.append(1);
         }
-        tag.put("tests0015",sb.toString());
+        tag.put("tests0015", sb.toString());
         publishMsgRequest.setTags(tag);
         try {
             try {
@@ -135,8 +134,8 @@ public class PublishServiceTest extends TestCase {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            fail("check messageTemplate expected an RuntimeException" );
-        }catch (RuntimeException e){
+            fail("check messageTemplate expected an RuntimeException");
+        } catch (RuntimeException e) {
 
         }
         publishMsgRequest.setTags(tagTemp);
@@ -157,16 +156,15 @@ public class PublishServiceTest extends TestCase {
         publishMsgRequest.setMessageStructure(JsonUtil.getJsonStringByMap(structMsgMap));
         PublishService publishService = new PublishServiceImpl();
         publishService.setSmnConfiguration(smnConfiguration);
-        Map<String, Object> res = null;
+        HttpResponse res = null;
 
         res = publishService.publish(publishMsgRequest);
 
         LOGGER.info(res.toString());
-        Assert.assertNotNull(res.get("request_id"));
-        System.out.println(res.get("request_id")+"+++++"+res.get("status"));
-        Assert.assertNotNull(res.get("message_id"));
-        Assert.assertNotNull(res.get("status"));
-        
+        Assert.assertNotNull(res.getBody().get("request_id"));
+        System.out.println(res.getBody().get("request_id") + "+++++" + res.getBody().get("status"));
+        Assert.assertNotNull(res.getBody().get("message_id"));
+
     }
 
 }

@@ -16,8 +16,7 @@
  * under the License.
  */
 
-import java.util.Map;
-
+import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.model.request.sms.SmsPublishRequest;
 import com.smn.service.SmsService;
@@ -47,11 +46,11 @@ public class SmnExample {
 
         smsPublishRequest.setEndpoint(endpoint);
         smsPublishRequest.setMessage(message);
-        // 企业用户可以使用自定义签名，如果不设置短信签名，默认签名【华为云】
-        //smsPublishRequest.setSignId("6be340e91e5241e4b5d85837e6709104");
+        // 企业用户需要先创建自定义签名,创建完签名后，设置签名id
+        smsPublishRequest.setSignId("6be340e91e5241e4b5d85837e6709104");
 
         // 发送短信
-        Map<String, Object> res = smsService.smsPublish(smsPublishRequest);
+        HttpResponse res = smsService.smsPublish(smsPublishRequest);
         System.out.println(res);
     }
 

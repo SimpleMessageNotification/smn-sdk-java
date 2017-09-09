@@ -17,8 +17,7 @@
  */
 package com.smn.service;
 
-import java.util.Map;
-
+import com.smn.common.HttpResponse;
 import com.smn.model.request.subscription.ListSubscriptionsByTopicRequest;
 import com.smn.model.request.subscription.ListSubscriptionsRequest;
 import com.smn.model.request.subscription.SubcriptionRequest;
@@ -42,7 +41,7 @@ public interface SubscriptionService extends CommonService {
      *         {@value status}
      * @throws RuntimeException
      */
-    Map<String, Object> subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException;
+	HttpResponse subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException;
 
     /**
      * unSubcription
@@ -53,7 +52,7 @@ public interface SubscriptionService extends CommonService {
      *         {@value status}
      * @throws RuntimeException
      */
-    Map<String, Object> unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException;
+	HttpResponse unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException;
 
     /**
      * list subscribers
@@ -66,7 +65,7 @@ public interface SubscriptionService extends CommonService {
      *         {@value status}
      * @throws RuntimeException
      */
-    Map<String, Object> listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest) throws RuntimeException;
+	HttpResponse listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest) throws RuntimeException;
 
     /**
      * list subscribers of designated topic
@@ -79,7 +78,7 @@ public interface SubscriptionService extends CommonService {
      *         {@value status}
      * @throws RuntimeException
      */
-    Map<String, Object> listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest)
+	HttpResponse listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest)
             throws RuntimeException;
 
 }

@@ -19,6 +19,7 @@ package com.smn.service;
 
 import java.util.Map;
 
+import com.smn.common.HttpResponse;
 import com.smn.model.request.topic.CreateTopicRequest;
 import com.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
 import com.smn.model.request.topic.DeleteTopicAttributesRequest;
@@ -54,7 +55,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> createTopic(CreateTopicRequest smnRequest) throws RuntimeException;
+	HttpResponse createTopic(CreateTopicRequest smnRequest) throws RuntimeException;
 
     /**
      * delete topic
@@ -69,7 +70,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException;
+	HttpResponse deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException;
 
     /**
      * query topic list
@@ -83,7 +84,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> listTopics(ListTopicsRequest smnRequest) throws RuntimeException;
+	HttpResponse listTopics(ListTopicsRequest smnRequest) throws RuntimeException;
 
     /**
      * query topic detail
@@ -97,7 +98,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException;
+	HttpResponse queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException;
 
     /**
      * update topic display name
@@ -111,7 +112,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException;
+	HttpResponse updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException;
 
     /**
      * query topic attributes
@@ -125,7 +126,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException;
+	HttpResponse listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException;
 
     /**
      * update topic attributes
@@ -138,7 +139,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException;
+	HttpResponse updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException;
 
     /**
      * delete designated topic attribute by name
@@ -151,7 +152,7 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
+	HttpResponse deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
             throws RuntimeException;
 
     /**
@@ -166,6 +167,6 @@ public interface TopicService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException;
+	HttpResponse deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException;
 
 }

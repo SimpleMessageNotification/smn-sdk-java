@@ -111,12 +111,11 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     public Map<String, Object> getRequestParameterMap() {
         validatePhoneNumber(getEndpoint());
         validateMessage(getMessage());
+		validateSignId(getSignId());
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
         requestParameterMap.put(SmnConstants.ENDPOINT, endpoint);
         requestParameterMap.put(SmnConstants.MESSAGE, message);
-        if (StringUtils.isNoneBlank(signId)) {
-            requestParameterMap.put(SmnConstants.SIGN_ID, signId);
-        }
+		requestParameterMap.put(SmnConstants.SIGN_ID, signId);
         return requestParameterMap;
     }
 
@@ -155,6 +154,14 @@ public class SmsPublishRequest extends AbstractSmnRequest {
             LOGGER.warn("SMS content is too long, more than {} characters of the message content will be cut off.",
                     500);
         }
+    }
+    
+    private void validateSignId(String signId){
+    	
+		if (StringUtils.isBlank(signId)) {
+			LOGGER.error("SignId is null.");
+			throw new NullPointerException("SignId is null.");
+		}
     }
 
     /**

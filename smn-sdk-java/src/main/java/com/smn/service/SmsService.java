@@ -25,6 +25,7 @@ package com.smn.service;
 
 import java.util.Map;
 
+import com.smn.common.HttpResponse;
 import com.smn.model.request.sms.SmsPublishRequest;
 
 /**
@@ -51,6 +52,6 @@ public interface SmsService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token will throw exception
      */
-    Map<String, Object> smsPublish(SmsPublishRequest smnRequest) throws RuntimeException;
+	HttpResponse smsPublish(SmsPublishRequest smnRequest) throws RuntimeException;
 
 }

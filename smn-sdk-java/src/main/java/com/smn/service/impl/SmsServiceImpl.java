@@ -28,6 +28,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.sms.SmsPublishRequest;
 import com.smn.service.AbstractCommonService;
@@ -65,7 +66,7 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
      *         {@value}status
      * @throws RuntimeException
      */
-    public Map<String, Object> smsPublish(SmsPublishRequest smnRequest) throws RuntimeException {
+    public HttpResponse smsPublish(SmsPublishRequest smnRequest) throws RuntimeException {
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
@@ -75,8 +76,8 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Failed to send sms.", e);
             throw new RuntimeException("Failed to send sms.", e);

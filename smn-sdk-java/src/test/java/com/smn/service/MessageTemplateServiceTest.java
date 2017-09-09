@@ -17,20 +17,18 @@
  */
 package com.smn.service;
 
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.model.request.template.CreateMessageTemplateRequest;
 import com.smn.model.request.template.DeleteMessageTemplateRequest;
 import com.smn.model.request.template.ListMessageTemplatesRequest;
 import com.smn.model.request.template.QueryMessageTemplateDetailRequest;
 import com.smn.model.request.template.UpdateMessageTemplateRequest;
-import com.smn.service.MessageTemplateService;
 import com.smn.service.impl.MessageTemplateServiceImpl;
 
 import junit.framework.TestCase;
@@ -69,10 +67,9 @@ public class MessageTemplateServiceTest extends TestCase {
         String content = "hello {name},hello {word},hello {gingo}";
         createMessageTemplateRequest.setContent(content);
         createMessageTemplateRequest.setProtocol("sms");// default,sms,http,https,email
-        Map<String, Object> res = messageTemplateService.createMessageTemplate(createMessageTemplateRequest);
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("message_template_id"));
-        Assert.assertNotNull(res.get("status"));
+        HttpResponse res = messageTemplateService.createMessageTemplate(createMessageTemplateRequest);
+        Assert.assertNotNull(res.getBody().get("request_id"));
+        Assert.assertNotNull(res.getBody().get("message_template_id"));
         LOGGER.info(res.toString());
     }
 
@@ -83,10 +80,9 @@ public class MessageTemplateServiceTest extends TestCase {
         MessageTemplateService messageTemplateService = new MessageTemplateServiceImpl();
         messageTemplateService.setSmnConfiguration(smnConfiguration);
         deleteMessageTemplateRequest.setMessageTemplateId(messageTemplateId);
-        Map<String, Object> res = messageTemplateService.deleteMessageTemplate(deleteMessageTemplateRequest);
+        HttpResponse res = messageTemplateService.deleteMessageTemplate(deleteMessageTemplateRequest);
         LOGGER.info(res.toString());
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.getBody().get("request_id"));
     }
 
     @Test
@@ -98,10 +94,9 @@ public class MessageTemplateServiceTest extends TestCase {
         updateMessageTemplateRequest.setMessageTemplateId(messageTemplateId);
         String content = "this year is {year},welcom {name} to join the {company} to create new life";
         updateMessageTemplateRequest.setContent(content);
-        Map<String, Object> res = messageTemplateService.updateMessageTemplate(updateMessageTemplateRequest);
+        HttpResponse res = messageTemplateService.updateMessageTemplate(updateMessageTemplateRequest);
         LOGGER.info(res.toString());
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.getBody().get("request_id"));
     }
 
     @Test
@@ -112,10 +107,9 @@ public class MessageTemplateServiceTest extends TestCase {
         listMessageTemplatesRequest.setMessageTemplateName("createMessageTemplate");
         listMessageTemplatesRequest.setLimit(100);
         listMessageTemplatesRequest.setProtocol("sms");
-        Map<String, Object> res = messageTemplateService.listMessageTemplates(listMessageTemplatesRequest);
+        HttpResponse res = messageTemplateService.listMessageTemplates(listMessageTemplatesRequest);
         LOGGER.info(res.toString());
-        Assert.assertNotNull(res.get("request_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.getBody().get("request_id"));
     }
 
     public void testQueryMessageTemplateDetailRequest() {
@@ -124,10 +118,9 @@ public class MessageTemplateServiceTest extends TestCase {
         MessageTemplateService messageTemplateService = new MessageTemplateServiceImpl();
         messageTemplateService.setSmnConfiguration(smnConfiguration);
         queryMessageTemplateDetailRequest.setMessageTemplateId(messageTemplateId);
-        Map<String, Object> res = messageTemplateService.queryMsgTemplateDetail(queryMessageTemplateDetailRequest);
+        HttpResponse res = messageTemplateService.queryMsgTemplateDetail(queryMessageTemplateDetailRequest);
         LOGGER.info(res.toString());
-        Assert.assertNotNull(res.get("message_template_id"));
-        Assert.assertNotNull(res.get("status"));
+        Assert.assertNotNull(res.getBody().get("message_template_id"));
 
     }
 
