@@ -19,6 +19,7 @@ package com.smn.service;
 
 import java.util.Map;
 
+import com.smn.common.HttpResponse;
 import com.smn.model.request.template.CreateMessageTemplateRequest;
 import com.smn.model.request.template.DeleteMessageTemplateRequest;
 import com.smn.model.request.template.ListMessageTemplatesRequest;
@@ -49,7 +50,7 @@ public interface MessageTemplateService extends CommonService {
      * @throws RuntimeException
      *             connect error throw exception
      */
-    Map<String, Object> createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException;
+	HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException;
 
     /**
      * update message template
@@ -63,7 +64,7 @@ public interface MessageTemplateService extends CommonService {
      * @throws RuntimeException
      *             connect error throw exception
      */
-    Map<String, Object> updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException;
+	HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException;
 
     /**
      * delete message template
@@ -78,7 +79,7 @@ public interface MessageTemplateService extends CommonService {
      * @throws RuntimeException
      *             connect error throw exception
      */
-    Map<String, Object> deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException;
+	HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException;
 
     /**
      * query message template list
@@ -92,7 +93,7 @@ public interface MessageTemplateService extends CommonService {
      * @throws RuntimeException
      *             connect error throw exception
      */
-    Map<String, Object> listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException;
+	HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException;
 
     /**
      * query message template detail
@@ -107,6 +108,6 @@ public interface MessageTemplateService extends CommonService {
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
-    Map<String, Object> queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest) throws RuntimeException;
+	HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest) throws RuntimeException;
 
 }

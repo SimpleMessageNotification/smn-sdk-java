@@ -18,8 +18,8 @@
 package com.smn.service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
+import com.smn.common.HttpResponse;
 import com.smn.model.request.publish.PublishMsgRequest;
 
 /**
@@ -27,25 +27,29 @@ import com.smn.model.request.publish.PublishMsgRequest;
  * 
  * @author huangqiong
  *
- * @date 2017年8月2日
+ * @date 2017年9月9日
  *
- * @version 0.1
+ * @version 0.6
  */
 public interface PublishService extends CommonService {
 
     /**
-     * publish message
-     * <p>
-     * success，return<CODE>Map</CODE>including: request_id,message_id,status
-     * <p>
-     * failed，return request_id and status
-     * 
-     * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
-     */
-    Map<String, Object> publish(PublishMsgRequest publishMsgRequest) throws RuntimeException, UnsupportedEncodingException;
+	 * publish message
+	 * <p>
+	 * success，return<CODE>HttpResponse</CODE>
+	 * <p>
+	 * failed，return request_id and status
+	 * 
+	 * @param smnRequest
+	 *            request
+	 * @return {@link HttpResponse}
+	 *         <p>
+	 *         {@code httpCode}
+	 *         <p>
+	 *         {@code body}Map<String,String>
+	 * @throws RuntimeException
+	 *             connect error,fail to get iam token ,throw exception
+	 */
+	HttpResponse publish(PublishMsgRequest publishMsgRequest) throws RuntimeException, UnsupportedEncodingException;
 
 }

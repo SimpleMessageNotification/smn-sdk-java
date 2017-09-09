@@ -40,6 +40,21 @@ public class SmnConfiguration {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SmnConfiguration.class);
 
+	/**
+	 * smn String
+	 */
+	private static String SMN = "smn";
+
+	/**
+	 * iam String
+	 */
+	private static String IAM = "iam";
+
+	/**
+	 * region name
+	 */
+	private static String ENDPOINT = "myhwclouds.com";
+
     private final String CONFIG = "config";
     private final String CONFIG_PROPERTIES = "configuration.properties";
     private final String SMN_CONFIGURATION_PROPERTIES = CONFIG + File.separator + CONFIG_PROPERTIES;
@@ -217,17 +232,15 @@ public class SmnConfiguration {
             LOGGER.error("RegionId in configuration properties is empty.");
             throw new RuntimeException("RegionId in configuration properties is empty.");
         }
-
-        if (StringUtils.isBlank(iamEndpoint)) {
-            LOGGER.error("Iam endpoint in configuration properties is empty.");
-            throw new RuntimeException("Iam endpoint in configuration properties is empty.");
-        }
-
-        if (StringUtils.isBlank(smnEndpoint)) {
-            LOGGER.error("SmnEndpoint in configuration properties is empty.");
-            throw new RuntimeException("SmnEndpoint in configuration properties is empty.");
-        }
-
+        // build smnEndpoint
+        StringBuilder smn = new StringBuilder();
+        smn.append(SMN).append(".").append(regionId).append(".").append(ENDPOINT);
+        setSmnEndpoint(smn.toString());
+        // build iamEndpoint
+        StringBuilder iam = new StringBuilder();
+        iam.append(IAM).append(".").append(regionId).append(".").append(ENDPOINT);
+        setIamEndpoint(iam.toString());
+		LOGGER.info("Smn.endpoint is {}.Iam.endpoint is {},", smnEndpoint, iamEndpoint);
         return true;
     }
 

@@ -22,6 +22,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.template.CreateMessageTemplateRequest;
 import com.smn.model.request.template.DeleteMessageTemplateRequest;
@@ -67,7 +68,7 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
      * @return
      * @throws RuntimeException
      */
-    public Map<String, Object> createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException {
+    public HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to create message template.");
 
         try {
@@ -79,8 +80,8 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Failed to create message template.", e);
             throw new RuntimeException("Failed to create message template.", e);
@@ -94,7 +95,7 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
      * @return
      * @throws RuntimeException
      */
-    public Map<String, Object> updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException {
+    public HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to update message template.");
 
         try {
@@ -106,8 +107,8 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.put(requestHeader, requestParam, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.put(requestHeader, requestParam, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Failed to update message template.", e);
             throw new RuntimeException("Failed to update message template.", e);
@@ -121,7 +122,7 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
      * @return
      * @throws RuntimeException
      */
-    public Map<String, Object> deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException {
+    public HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to delete message template.");
 
         try {
@@ -132,8 +133,8 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.delete(requestHeader, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.delete(requestHeader, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Failed to delete message template.", e);
             throw new RuntimeException("Failed to delete message template.", e);
@@ -147,7 +148,7 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
      * @return
      * @throws RuntimeException
      */
-    public Map<String, Object> listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException {
+    public HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to list message template.");
 
         try {
@@ -158,8 +159,8 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Failed to list message templates.", e);
             throw new RuntimeException("Failed to list message templates.", e);
@@ -173,7 +174,7 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
      * @return
      * @throws RuntimeException
      */
-    public Map<String, Object> queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest)
+    public HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest)
             throws RuntimeException {
         LOGGER.info("Start to query message template detail.");
 
@@ -185,8 +186,8 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.get(requestHeader, url);
-            return responseMap;
+            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
+            return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Failed to query message templates.", e);
             throw new RuntimeException("Failed to query message templates.", e);

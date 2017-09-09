@@ -23,6 +23,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.publish.PublishMsgRequest;
 import com.smn.service.AbstractCommonService;
@@ -30,13 +31,9 @@ import com.smn.service.PublishService;
 
 /**
  * Publish service implemented
+ * 
  * @author huangqiong
- * @version 0.1
- * @author yangyanping
- *
- * @date 2017年8月24日
- *
- * @version 0.1
+ * @version 0.6
  */
 public class PublishServiceImpl extends AbstractCommonService implements PublishService {
     /**
@@ -61,7 +58,7 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
      * @return
      * @throws RuntimeException
      */
-    public Map<String, Object> publish(PublishMsgRequest smnRequest) throws RuntimeException, UnsupportedEncodingException {
+	public HttpResponse publish(PublishMsgRequest smnRequest) throws RuntimeException, UnsupportedEncodingException {
         LOGGER.info("Start to publish message.");
 
         try {
@@ -73,14 +70,12 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
             smnRequest.setProjectId(projectId);
             String url = buildRequestUrl(smnRequest.getRequestUri());
             buildRequestHeader(requestHeader);
-            Map<String, Object> responseMap = HttpUtil.post(requestHeader, requestParam, url);
-            return responseMap;
+			HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
+			return httpResponse;
         } catch (Exception e) {
             LOGGER.error("Failed to publish message.", e);
             throw new RuntimeException("Failed to publish message.", e);
         }
     }
-
-   
 
 }

@@ -48,6 +48,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.model.AuthenticationBean;
 
 /**
@@ -159,7 +160,7 @@ public class HttpUtil {
      * @return {@code Map} request_id,status
      * @throws Exception
      */
-    public static Map<String, Object> post(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
+	public static HttpResponse post(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
             throws Exception {
         LOGGER.debug("Start to post request,requestUrl is {}.", url);
 
@@ -176,9 +177,11 @@ public class HttpUtil {
                 int status = response.getStatusLine().getStatusCode();
                 HttpEntity entity = response.getEntity();
                 String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
+				HttpResponse httpResponse = new HttpResponse();
+				httpResponse.setHttpCode(status);
                 Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-                messageMap.put("status", status);
-                return messageMap;
+				httpResponse.setBody(messageMap);
+				return httpResponse;
             } catch (ConnectException e) {
                 LOGGER.error("Post request connected error.", e);
                 throw new Exception(e);
@@ -202,7 +205,7 @@ public class HttpUtil {
      * @return {@code Map} request_id,status
      * @throws Exception
      */
-    public static Map<String, Object> put(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
+	public static HttpResponse put(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
             throws Exception {
         LOGGER.debug("Start to put request,requestUrl is {}.", url);
 
@@ -220,9 +223,11 @@ public class HttpUtil {
                 int status = response.getStatusLine().getStatusCode();
                 HttpEntity entity = response.getEntity();
                 String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
+				HttpResponse httpResponse = new HttpResponse();
+				httpResponse.setHttpCode(status);
                 Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-                messageMap.put("status", status);
-                return messageMap;
+				httpResponse.setBody(messageMap);
+				return httpResponse;
             } catch (ConnectException e) {
                 LOGGER.error("Smn post request connected error.", e);
                 throw new Exception(e);
@@ -246,7 +251,7 @@ public class HttpUtil {
      * @return {@code Map} request_id,status
      * @throws Exception
      */
-    public static Map<String, Object> delete(Map<String, String> headerParams, String url) throws Exception {
+	public static HttpResponse delete(Map<String, String> headerParams, String url) throws Exception {
         LOGGER.debug("Start to delete request,requestUrl is {}.", url);
 
         CloseableHttpClient httpclient = getHttpClient();
@@ -260,9 +265,11 @@ public class HttpUtil {
                 int status = response.getStatusLine().getStatusCode();
                 HttpEntity entity = response.getEntity();
                 String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
+				HttpResponse httpResponse = new HttpResponse();
+				httpResponse.setHttpCode(status);
                 Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-                messageMap.put("status", status);
-                return messageMap;
+				httpResponse.setBody(messageMap);
+				return httpResponse;
             } catch (ConnectException e) {
                 LOGGER.error("Smn delete request connected error.", e);
                 throw new Exception(e);
@@ -286,7 +293,7 @@ public class HttpUtil {
      * @return {@code Map} request_id,status
      * @throws Exception
      */
-    public static Map<String, Object> get(Map<String, String> headerParams, String url) throws Exception {
+	public static HttpResponse get(Map<String, String> headerParams, String url) throws Exception {
         CloseableHttpClient httpclient = getHttpClient();
         try {
             HttpGet httpGet = new HttpGet(url);
@@ -297,9 +304,11 @@ public class HttpUtil {
                 int status = response.getStatusLine().getStatusCode();
                 HttpEntity entity = response.getEntity();
                 String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
+				HttpResponse httpResponse = new HttpResponse();
+				httpResponse.setHttpCode(status);
                 Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-                messageMap.put("status", status);
-                return messageMap;
+				httpResponse.setBody(messageMap);
+				return httpResponse;
             } catch (ConnectException e) {
                 LOGGER.error("Smn get request connected error.", e);
                 throw new Exception(e);

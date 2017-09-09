@@ -17,8 +17,6 @@
  */
 package com.smn.service;
 
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,12 +24,12 @@ import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.model.request.subscription.ListSubscriptionsByTopicRequest;
 import com.smn.model.request.subscription.ListSubscriptionsRequest;
 import com.smn.model.request.subscription.SubcriptionRequest;
 import com.smn.model.request.subscription.UnSubcriptionRequest;
-import com.smn.service.SubscriptionService;
 import com.smn.service.impl.SubscriptionServiceImpl;
 
 import junit.framework.TestCase;
@@ -74,8 +72,8 @@ public class SubscriptionServiceTest extends TestCase {
         SubscriptionService subscriptionService = new SubscriptionServiceImpl();
         subscriptionService.setSmnConfiguration(smnConfiguration);
 
-        Map<String, Object> res = subscriptionService.subscribe(subcriptionRequest);
-        int resCode = (Integer) res.get("status");
+        HttpResponse res = subscriptionService.subscribe(subcriptionRequest);
+        int resCode = res.getHttpCode();
         boolean flag = resCode >= 200 && resCode < 300;
         Assert.assertTrue(flag);
         LOGGER.info(res.toString());
@@ -112,9 +110,9 @@ public class SubscriptionServiceTest extends TestCase {
 
          subcriptionRequest.setProtocol("email");
          subcriptionRequest.setEndpoint("liuqiangqiang@huawei.com");
-         Map<String, Object> resEmail = subscriptionService.subscribe(subcriptionRequest);
+        HttpResponse resEmail = subscriptionService.subscribe(subcriptionRequest);
 
-         int resMailCode = (Integer) resEmail.get("status");
+        int resMailCode = (Integer) resEmail.getHttpCode();
          boolean emailFlag = resMailCode >= 200 && resMailCode < 300;
          Assert.assertTrue(emailFlag);
          LOGGER.info(res.toString());
@@ -162,8 +160,8 @@ public class SubscriptionServiceTest extends TestCase {
         ListSubscriptionsRequest listSubscriptionsRequest = new ListSubscriptionsRequest();
         SubscriptionService subscriptionService = new SubscriptionServiceImpl();
         subscriptionService.setSmnConfiguration(smnConfiguration);
-        Map<String, Object> res = subscriptionService.listSubscriptions(listSubscriptionsRequest);
-        int resCode = (Integer) res.get("status");
+        HttpResponse res = subscriptionService.listSubscriptions(listSubscriptionsRequest);
+        int resCode = (Integer) res.getHttpCode();
         boolean flag = resCode >= 200 && resCode < 300;
         Assert.assertTrue(flag);
         LOGGER.info(res.toString());
@@ -188,8 +186,8 @@ public class SubscriptionServiceTest extends TestCase {
         listSubscriptionsByTopicRequest.setTopicUrn(topicUrn);
         SubscriptionService subscriptionService = new SubscriptionServiceImpl();
         subscriptionService.setSmnConfiguration(smnConfiguration);
-        Map<String, Object> res = subscriptionService.listSubscriptionsByTopic(listSubscriptionsByTopicRequest);
-        int resCode = (Integer) res.get("status");
+        HttpResponse res = subscriptionService.listSubscriptionsByTopic(listSubscriptionsByTopicRequest);
+        int resCode = (Integer) res.getHttpCode();
         boolean flag = resCode >= 200 && resCode < 300;
         Assert.assertTrue(flag);
         LOGGER.info(res.toString());
@@ -213,8 +211,8 @@ public class SubscriptionServiceTest extends TestCase {
         deleteSubcription.setSubscriptionUrn(subscriptionUrn);
         SubscriptionService subscriptionService = new SubscriptionServiceImpl();
         subscriptionService.setSmnConfiguration(smnConfiguration);
-        Map<String, Object> res = subscriptionService.unsubscribe(deleteSubcription);
-        Assert.assertEquals(404, res.get("status"));
+        HttpResponse res = subscriptionService.unsubscribe(deleteSubcription);
+        Assert.assertEquals(404, res.getHttpCode());
         LOGGER.info(res.toString());
     }
 
