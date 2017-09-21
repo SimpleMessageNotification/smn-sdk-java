@@ -11,9 +11,9 @@
 	<classpathentry kind="lib" path="lib/smn-3rd-libs/jackson-annotations-2.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/smn-3rd-libs/jackson-core-2.8.7.jar"/>
 	<classpathentry kind="lib" path="lib/smn-3rd-libs/jackson-databind-2.8.7.jar"/>
-	<classpathentry kind="lib" path="lib/smn-3rd-libs/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/smn-3rd-libs/slf4j-api-1.7.21.jar"/>
-	<classpathentry kind="lib" path="lib/smn-3rd-libs/slf4j-log4j12-1.7.21.jar"/>
-	<classpathentry kind="lib" path="lib/smn-sdk-java-0.6.jar"/>
+	<classpathentry kind="lib" path="lib/smn-sdk-java-0.7.jar" sourcepath="/smn-sdk-java"/>
+	<classpathentry kind="lib" path="lib/log-libs/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/log-libs/slf4j-log4j12-1.7.21.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
