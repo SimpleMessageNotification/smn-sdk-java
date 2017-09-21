@@ -1,3 +1,4 @@
+
 /*
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -28,30 +29,54 @@ import com.smn.service.impl.SmsServiceImpl;
  * @version 0.1
  */
 public class SmnExample {
-    public static void main(String[] args) {
+
+    /**
+     * 发送短信
+     */
+    public static void sendSms() {
 
         // 短信发送服务
         SmsService smsService = new SmsServiceImpl();
-        // 加载配置，未设置加载路径默认加载相对路径config/configuaration.properties
+        // 设置必要请求参数
         SmnConfiguration smnConfiguration = new SmnConfiguration();
-        smnConfiguration.setFilepath("config/configuaration.properties");
-        smnConfiguration.reload();
-        System.out.println(smnConfiguration.toString());
+        // 设置DomainName
+        smnConfiguration.setDomainName("liuqiangqiang");
+        // 设置用户名
+        smnConfiguration.setUserName("liuqiangqiang");
+        // 设置密码
+        smnConfiguration.setPassword("****");
+        // 设置访问的地狱
+        // 华为云华北区 cn-north-1
+        // 华为云华南区 cn-sourth-1
+        // 华为华东区 cn-east-2
+        smnConfiguration.setRegionId("cn-north-1");
+        // 设置配置信息
         smsService.setSmnConfiguration(smnConfiguration);
 
         // 构造请求对象
         SmsPublishRequest smsPublishRequest = new SmsPublishRequest();
-        String endpoint = "1330296****";
-        String message = "send sms";
+        // 发送手机号码 号码格式 (+)(国家码)(手机号码)
+        String phone = "+8618565889669";
+        // 短信内容
+        String message = "test message";
+        // 短信签名,需要在消息通知服务的自助页面申请签名，申请办理时间约2天
+        String signId = "6be340e91e5241e4b5d85837e6709104";
 
-        smsPublishRequest.setEndpoint(endpoint);
+        // 设置手机号码
+        smsPublishRequest.setEndpoint(phone);
+        // 设置短信内容，短信内容中不要出现【】或者[]
         smsPublishRequest.setMessage(message);
-        // 企业用户需要先创建自定义签名,创建完签名后，设置签名id
-        smsPublishRequest.setSignId("6be340e91e5241e4b5d85837e6709104");
+        // 设置短信签名
+        smsPublishRequest.setSignId(signId);
 
         // 发送短信
         HttpResponse res = smsService.smsPublish(smsPublishRequest);
         System.out.println(res);
+
+    }
+
+    public static void main(String[] args) {
+        SmnExample.sendSms();
     }
 
 }

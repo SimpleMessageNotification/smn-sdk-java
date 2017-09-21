@@ -40,20 +40,20 @@ public class SmnConfiguration {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SmnConfiguration.class);
 
-	/**
-	 * smn String
-	 */
-	private static String SMN = "smn";
+    /**
+     * smn String
+     */
+    private static String SMN = "smn";
 
-	/**
-	 * iam String
-	 */
-	private static String IAM = "iam";
+    /**
+     * iam String
+     */
+    private static String IAM = "iam";
 
-	/**
-	 * region name
-	 */
-	private static String ENDPOINT = "myhwclouds.com";
+    /**
+     * region name
+     */
+    private static String ENDPOINT = "myhwclouds.com";
 
     private final String CONFIG = "config";
     private final String CONFIG_PROPERTIES = "configuration.properties";
@@ -96,8 +96,6 @@ public class SmnConfiguration {
      */
     private String smnEndpoint;
 
- 
-
     /**
      * max tag length
      */
@@ -108,9 +106,9 @@ public class SmnConfiguration {
      */
     private int maxMessageLength = 256;
 
-
     /**
      * Get max message length
+     * 
      * @return maxMessageLength
      */
     public int getMaxMessageLength() {
@@ -119,6 +117,7 @@ public class SmnConfiguration {
 
     /**
      * get max subject length
+     * 
      * @return maxSubjectLength
      */
     public int getMaxSubjectLength() {
@@ -130,9 +129,6 @@ public class SmnConfiguration {
      */
     private int maxSubjectLength = 512;
 
-
-
-
     /**
      * smn remark
      */
@@ -141,18 +137,20 @@ public class SmnConfiguration {
     /**
      * max templateMessageContext length
      */
-    private int maxTemplateMessageContextLength = 256*1024;
+    private int maxTemplateMessageContextLength = 256 * 1024;
 
     /**
      * get ax templateMessageContext length
+     * 
      * @return max templateMessageContext length
      */
-    public int getMaxTemplateMessageContextLength(){
-        return  maxTemplateMessageContextLength;
+    public int getMaxTemplateMessageContextLength() {
+        return maxTemplateMessageContextLength;
     }
-    
+
     /**
      * get max remark length
+     * 
      * @return maxLength
      */
     public int getMaxRemarkLength() {
@@ -178,6 +176,7 @@ public class SmnConfiguration {
 
     /**
      * Get max tag length.
+     * 
      * @return maxTagLength
      */
     public int getMaxTagLength() {
@@ -210,8 +209,6 @@ public class SmnConfiguration {
         password = properties.getProperty(SmnConstants.PASSWORD);
         domainName = properties.getProperty(SmnConstants.DOMAIN_NAME);
         regionId = properties.getProperty(SmnConstants.REGION_ID);
-        smnEndpoint = properties.getProperty(SmnConstants.SMN_ENDPOINT);
-        iamEndpoint = properties.getProperty(SmnConstants.IAM_ENDPOINT);
 
         if (StringUtils.isBlank(userName)) {
             LOGGER.error("User name in configuration properties is empty.");
@@ -232,15 +229,7 @@ public class SmnConfiguration {
             LOGGER.error("RegionId in configuration properties is empty.");
             throw new RuntimeException("RegionId in configuration properties is empty.");
         }
-        // build smnEndpoint
-        StringBuilder smn = new StringBuilder();
-        smn.append(SMN).append(".").append(regionId).append(".").append(ENDPOINT);
-        setSmnEndpoint(smn.toString());
-        // build iamEndpoint
-        StringBuilder iam = new StringBuilder();
-        iam.append(IAM).append(".").append(regionId).append(".").append(ENDPOINT);
-        setIamEndpoint(iam.toString());
-		LOGGER.info("Smn.endpoint is {}.Iam.endpoint is {},", smnEndpoint, iamEndpoint);
+        LOGGER.info("Smn.endpoint is {}.Iam.endpoint is {},", smnEndpoint, iamEndpoint);
         return true;
     }
 
@@ -338,6 +327,11 @@ public class SmnConfiguration {
      * @return the smnEndpoint
      */
     public String getSmnEndpoint() {
+        if (smnEndpoint == null) {
+            StringBuilder smn = new StringBuilder();
+            smn.append(SMN).append(".").append(regionId).append(".").append(ENDPOINT);
+            smnEndpoint = smn.toString();
+        }
         return smnEndpoint;
     }
 
@@ -353,6 +347,11 @@ public class SmnConfiguration {
      * @return the iamEndpoint
      */
     public String getIamEndpoint() {
+        if (iamEndpoint == null) {
+            StringBuilder iam = new StringBuilder();
+            iam.append(IAM).append(".").append(regionId).append(".").append(ENDPOINT);
+            iamEndpoint = iam.toString();
+        }
         return iamEndpoint;
     }
 
@@ -366,6 +365,7 @@ public class SmnConfiguration {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
