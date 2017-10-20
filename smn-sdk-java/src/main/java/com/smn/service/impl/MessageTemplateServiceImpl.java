@@ -101,7 +101,7 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
         try {
             Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
             Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-            projectId = getAuthenticationBean().getProjectId();
+            projectId = getIAMService().getAuthentication().getProjectId();
             smnEndpoint = smnConfiguration.getSmnEndpoint();
             smnRequest.setSmnEndpoint(smnEndpoint);
             smnRequest.setProjectId(projectId);
