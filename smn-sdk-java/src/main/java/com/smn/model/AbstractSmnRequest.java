@@ -48,6 +48,7 @@ public abstract class AbstractSmnRequest implements SmnRequest {
      * xAuthToken
      */
     protected String xAuthToken;
+
     /**
      * Build common http's request header
      */

@@ -152,13 +152,6 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
         this.messageTemplateName = messageTemplateName;
     }
 
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        return smnEndpoint;
-    }
-
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
