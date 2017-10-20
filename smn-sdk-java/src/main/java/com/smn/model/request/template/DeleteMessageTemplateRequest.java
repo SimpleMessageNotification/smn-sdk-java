@@ -47,21 +47,6 @@ public class DeleteMessageTemplateRequest extends AbstractSmnRequest {
     private String messageTemplateId;
 
     /**
-     * smn endpoint
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * xAuthToken
-     */
-    private String xAuthToken;
-
-    /**
      * check params
      */
     private void validation(){
@@ -113,47 +98,6 @@ public class DeleteMessageTemplateRequest extends AbstractSmnRequest {
      */
     public void setMessageTemplateId(String messageTemplateId) {
         this.messageTemplateId = messageTemplateId;
-    }
-
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
-    /**
-     * @return the projectId
-     */
-    public String getProjectId() {
-        return projectId;
-    }
-
-    /**
-     * @param projectId
-     *            the projectId to set
-     */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    public void setxAuthToken(String xAuthToken) {
-        this.xAuthToken = xAuthToken;
     }
 
     /*

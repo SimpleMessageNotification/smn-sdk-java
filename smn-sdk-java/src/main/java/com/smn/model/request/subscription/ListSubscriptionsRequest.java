@@ -55,21 +55,6 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
     private String endpoint;
 
     /**
-     * smn endpoint
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * xAuthToken
-     */
-    private String xAuthToken;
-    
-    /**
      * build and get request url
      */
     @Override
