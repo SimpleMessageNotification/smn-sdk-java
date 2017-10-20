@@ -52,22 +52,6 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      * topic's unique resource identifier
      */
     private String topicUrn;
-
-    /**
-     * smn endpoint
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * xAuthToken
-     */
-    private String xAuthToken;
-
     
     /**
      * 校验参数
@@ -172,49 +156,6 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
      */
     public void setTopicUrn(String topicUrn) {
         this.topicUrn = topicUrn;
-    }
-
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
-    /**
-     * @return the projectId
-     */
-    public String getProjectId() {
-        
-        return projectId;
-    }
-
-    /**
-     * @param projectId
-     *            the projectId to set
-     */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    public void setxAuthToken(String xAuthToken) {
-        this.xAuthToken = xAuthToken;
     }
 
     /*

@@ -62,21 +62,6 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     private String signId;
 
     /**
-     * smn endpoint
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * xAuthToken
-     */
-    private String xAuthToken;
-
-    /**
      * get request uri
      * 
      * @return String uri
@@ -207,51 +192,6 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      */
     public void setSignId(String signId) {
         this.signId = signId;
-    }
-
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
-    /**
-     * @return the projectId
-     */
-    public String getProjectId() {
-        return projectId;
-    }
-
-    /**
-     * @param projectId
-     *            the projectId to set
-     */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    /**
-     * @param xAuthToken
-     *            the xAuthToken to set
-     */
-    public void setxAuthToken(String xAuthToken) {
-        this.xAuthToken = xAuthToken;
     }
 
     /*

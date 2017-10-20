@@ -62,21 +62,6 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     private String displayName;
 
     /**
-     * smn endpoint
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * xAuthToken
-     */
-    private String xAuthToken;
-
-    /**
      * build and get request uri
      */
     public String getRequestUri() throws RuntimeException {
@@ -151,47 +136,6 @@ public class CreateTopicRequest extends AbstractSmnRequest {
         } else {
             this.displayName = displayName;
         }
-    }
-
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
-    /**
-     * @return the projectId
-     */
-    public String getProjectId() {
-        return projectId;
-    }
-
-    /**
-     * @param projectId
-     *            the projectId to set
-     */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    public void setxAuthToken(String xAuthToken) {
-        this.xAuthToken = xAuthToken;
     }
 
     /*

@@ -62,21 +62,6 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     private String remark;
 
-    /**
-     * smn endpoint
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * xAuthToken
-     */
-    private String xAuthToken;
-
     /*
      * (non-Javadoc)
      * @see com.huawei.smn.model.AbstractSmnRequest#getRequestUri()
@@ -223,52 +208,6 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
-    /**
-     * @return the projectId
-     */
-    public String getProjectId() {
-        return projectId;
-    }
-
-    /**
-     * @param projectId
-     *            the projectId to set
-     */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    /**
-     * @param xAuthToken
-     *            the xAuthToken to set
-     */
-    public void setxAuthToken(String xAuthToken) {
-        
-        this.xAuthToken = xAuthToken;
     }
 
     /*

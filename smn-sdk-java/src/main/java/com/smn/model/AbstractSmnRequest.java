@@ -34,6 +34,20 @@ import com.smn.common.SmnConstants;
  * @version 0.1
  */
 public abstract class AbstractSmnRequest implements SmnRequest {
+    /**
+     * smn endpoint
+     */
+    protected String smnEndpoint;
+
+    /**
+     * project id
+     */
+    protected String projectId;
+
+    /**
+     * xAuthToken
+     */
+    protected String xAuthToken;
 
     /**
      * Build common http's request header
@@ -54,4 +68,47 @@ public abstract class AbstractSmnRequest implements SmnRequest {
      */
     public abstract Map<String, Object> getRequestParameterMap();
 
+
+    /**
+     * @return the smnEndpoint
+     */
+    public String getSmnEndpoint() {
+
+        return smnEndpoint;
+    }
+
+    /**
+     * @param smnEndpoint
+     *            the smnEndpoint to set
+     */
+    public void setSmnEndpoint(String smnEndpoint) {
+        this.smnEndpoint = smnEndpoint;
+    }
+
+    /**
+     * @return the projectId
+     */
+    public String getProjectId() {
+
+        return projectId;
+    }
+
+    /**
+     * @param projectId
+     *            the projectId to set
+     */
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    /**
+     * @return the xAuthToken
+     */
+    public String getxAuthToken() {
+        return xAuthToken;
+    }
+
+    public void setxAuthToken(String xAuthToken) {
+        this.xAuthToken = xAuthToken;
+    }
 }

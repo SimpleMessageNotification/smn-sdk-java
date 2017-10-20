@@ -21,7 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -75,21 +74,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * message to send
      */
     private String message;
-
-    /**
-     * smn endpoint
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * xAuthToken
-     */
-    private String xAuthToken;
 
     /**
      * check params
@@ -177,7 +161,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
    
          // message template has secondary priority
          if (StringUtils.isNoneBlank(getMessageTemplateName())) {
-             if (Objects.isNull(getTags())) {
+             if (null == getTags()) {
                  LOGGER.error("Tags is null");
                  throw new RuntimeException("Tags is null");
              }
@@ -291,47 +275,6 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      */
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
-    /**
-     * @return the projectId
-     */
-    public String getProjectId() {
-        return projectId;
-    }
-
-    /**
-     * @param projectId
-     *            the projectId to set
-     */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    public void setxAuthToken(String xAuthToken) {
-        this.xAuthToken = xAuthToken;
     }
 
     /*
