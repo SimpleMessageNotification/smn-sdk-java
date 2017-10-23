@@ -17,13 +17,11 @@
  */
 package com.smn.service.impl;
 
-import java.util.Map;
-
+import com.smn.common.utils.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.smn.common.HttpResponse;
-import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.template.CreateMessageTemplateRequest;
 import com.smn.model.request.template.DeleteMessageTemplateRequest;
 import com.smn.model.request.template.ListMessageTemplatesRequest;
@@ -34,15 +32,12 @@ import com.smn.service.MessageTemplateService;
 
 /**
  * Message template service implemented
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
- * @version 0.1
  * @author yangyanping
- * @date 2017年8月25日
- * @version  0.2
+ * @author zhangyx
+ * @version 0.2
+ * @version 0.7
  */
 public class MessageTemplateServiceImpl extends AbstractCommonService implements MessageTemplateService {
 
@@ -52,36 +47,15 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageTemplateServiceImpl.class);
 
     /**
-     * smn host url
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
-     * create template
-     * 
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * (non-Javadoc)
+     *
+     * @see MessageTemplateService#createMessageTemplate(CreateMessageTemplateRequest)
      */
     public HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to create message template.");
 
         try {
-            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            smnRequest.setSmnEndpoint(smnEndpoint);
-            smnRequest.setProjectId(projectId);
-            String url = buildRequestUrl(smnRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
-            return httpResponse;
+            return sendRequest(smnRequest, HttpMethod.POST);
         } catch (Exception e) {
             LOGGER.error("Failed to create message template.", e);
             throw new RuntimeException("Failed to create message template.", e);
@@ -89,26 +63,15 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * update template
-     * 
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * (non-Javadoc)
+     *
+     * @see MessageTemplateService#updateMessageTemplate(UpdateMessageTemplateRequest)
      */
     public HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to update message template.");
 
         try {
-            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            smnRequest.setSmnEndpoint(smnEndpoint);
-            smnRequest.setProjectId(projectId);
-            String url = buildRequestUrl(smnRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.put(requestHeader, requestParam, url);
-            return httpResponse;
+            return sendRequest(smnRequest, HttpMethod.PUT);
         } catch (Exception e) {
             LOGGER.error("Failed to update message template.", e);
             throw new RuntimeException("Failed to update message template.", e);
@@ -116,25 +79,15 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * delete template
-     * 
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * (non-Javadoc)
+     *
+     * @see MessageTemplateService#deleteMessageTemplate(DeleteMessageTemplateRequest)
      */
     public HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to delete message template.");
 
         try {
-            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            smnRequest.setSmnEndpoint(smnEndpoint);
-            smnRequest.setProjectId(projectId);
-            String url = buildRequestUrl(smnRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.delete(requestHeader, url);
-            return httpResponse;
+            return sendRequest(smnRequest, HttpMethod.DELETE);
         } catch (Exception e) {
             LOGGER.error("Failed to delete message template.", e);
             throw new RuntimeException("Failed to delete message template.", e);
@@ -142,25 +95,15 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * query template list
-     * 
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * (non-Javadoc)
+     *
+     * @see MessageTemplateService#listMessageTemplates(ListMessageTemplatesRequest)
      */
     public HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to list message template.");
 
         try {
-            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            smnRequest.setSmnEndpoint(smnEndpoint);
-            smnRequest.setProjectId(projectId);
-            String url = buildRequestUrl(smnRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
-            return httpResponse;
+            return sendRequest(smnRequest, HttpMethod.GET);
         } catch (Exception e) {
             LOGGER.error("Failed to list message templates.", e);
             throw new RuntimeException("Failed to list message templates.", e);
@@ -168,26 +111,16 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * query template detail
-     * 
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * (non-Javadoc)
+     *
+     * @see MessageTemplateService#queryMsgTemplateDetail(QueryMessageTemplateDetailRequest)
      */
     public HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest)
             throws RuntimeException {
         LOGGER.info("Start to query message template detail.");
 
         try {
-            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            smnRequest.setSmnEndpoint(smnEndpoint);
-            smnRequest.setProjectId(projectId);
-            String url = buildRequestUrl(smnRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
-            return httpResponse;
+            return sendRequest(smnRequest, HttpMethod.GET);
         } catch (Exception e) {
             LOGGER.error("Failed to query message templates.", e);
             throw new RuntimeException("Failed to query message templates.", e);

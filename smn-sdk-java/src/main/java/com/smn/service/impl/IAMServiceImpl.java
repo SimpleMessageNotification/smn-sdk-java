@@ -35,8 +35,9 @@ import com.smn.service.IAMService;
 
 /**
  * @author huangqiong
- * @date 2017年8月3日 下午5:36:41
+ * @author zhangyx
  * @version 0.1
+ * @version 0.7
  */
 public class IAMServiceImpl implements IAMService {
     private static Logger LOGGER = LoggerFactory.getLogger(IAMServiceImpl.class);
@@ -83,12 +84,12 @@ public class IAMServiceImpl implements IAMService {
 
     /**
      * constructor
-     * 
-     * @param userName
-     * @param password
-     * @param domainName
-     * @param regionId
-     * @param iamUrl
+     *
+     * @param userName   userName
+     * @param password   password
+     * @param domainName domainName
+     * @param regionId   regionId
+     * @param iamUrl     iamUrl
      */
     public IAMServiceImpl(String userName, String password, String domainName, String regionId, String iamUrl) {
         setUserName(userName);
@@ -104,8 +105,8 @@ public class IAMServiceImpl implements IAMService {
     /**
      * Obtain authorization information from the IAM service, which includes
      * projectId, user token, and token expiration time
-     * 
-     * @return {@code AuthBean} User token information
+     *
+     * @return {@link AuthenticationBean} User token information
      * @throws RuntimeException
      *             Failed to get token, then ran out of the exception
      */

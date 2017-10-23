@@ -27,6 +27,7 @@ import java.util.Map;
 
 import com.smn.common.HttpResponse;
 import com.smn.model.request.sms.SmsPublishRequest;
+import com.smn.model.request.topic.DeleteTopicAttributesRequest;
 
 /**
  * @author huangqiong
@@ -44,11 +45,12 @@ public interface SmsService extends CommonService {
      * 发送fail，return request_id and status
      * 
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value message_id}
-     *         {@value status}
+     *            {@link SmsPublishRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token will throw exception
      */
