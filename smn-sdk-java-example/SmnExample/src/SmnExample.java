@@ -39,6 +39,7 @@ public class SmnExample {
         SmsService smsService = new SmsServiceImpl();
         // 设置必要请求参数
         SmnConfiguration smnConfiguration = new SmnConfiguration();
+
         // 设置DomainName
         smnConfiguration.setDomainName("liuqiangqiang");
         // 设置用户名
@@ -50,13 +51,14 @@ public class SmnExample {
         // 华为云华南区 cn-sourth-1
         // 华为华东区 cn-east-2
         smnConfiguration.setRegionId("cn-north-1");
+
         // 设置配置信息
         smsService.setSmnConfiguration(smnConfiguration);
 
         // 构造请求对象
         SmsPublishRequest smsPublishRequest = new SmsPublishRequest();
         // 发送手机号码 号码格式 (+)(国家码)(手机号码)
-        String phone = "+8618565889669";
+        String phone = "+8618246161627";
         // 短信内容
         String message = "test message";
         // 短信签名,需要在消息通知服务的自助页面申请签名，申请办理时间约2天
@@ -67,7 +69,7 @@ public class SmnExample {
         // 设置短信内容，短信内容中不要出现【】或者[]
         smsPublishRequest.setMessage(message);
         // 设置短信签名
-        smsPublishRequest.setSignId(signId);
+        //smsPublishRequest.setSignId(signId);
 
         // 发送短信
         HttpResponse res = smsService.smsPublish(smsPublishRequest);
