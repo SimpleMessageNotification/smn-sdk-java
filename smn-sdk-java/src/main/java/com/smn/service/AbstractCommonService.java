@@ -19,12 +19,15 @@
  * @author huangqiong
  * @date 2017年8月3日 下午5:33:12
  * @version 0.1
- * 
  */
 package com.smn.service;
 
 import java.util.Map;
 
+import com.smn.common.HttpResponse;
+import com.smn.common.utils.HttpMethod;
+import com.smn.common.utils.HttpUtil;
+import com.smn.model.AbstractSmnRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +38,8 @@ import com.smn.service.impl.IAMServiceImpl;
 
 /**
  * @author huangqiong
- * @date 2017年8月3日 下午5:33:12
  * @version 0.1
+ * @date 2017年8月3日 下午5:33:12
  */
 public abstract class AbstractCommonService implements CommonService {
 
@@ -72,7 +75,7 @@ public abstract class AbstractCommonService implements CommonService {
 
     /**
      * get iamService
-     * 
+     *
      * @return iamService
      */
     protected IAMService getIAMService() {
@@ -95,19 +98,19 @@ public abstract class AbstractCommonService implements CommonService {
 
     /**
      * request for authenticationBean
-     * 
+     *
      * @return AuthenticationBean
-     *         {@value} authToken
-     *         {@value} projectId
-     *         {@value} expiresAt
-     *         {@value} expiresTime
+     * {@value} authToken
+     * {@value} projectId
+     * {@value} expiresAt
+     * {@value} expiresTime
      */
     protected AuthenticationBean getAuthenticationBean() {
         // 获取authenticationBean线程安全
-        if (null == authenticationBean) {
+        if (null == authenticationBean || authenticationBean.isExpired()) {
             synchronized (this) {
-                if (authenticationBean == null) {
-                    authenticationBean = iamService.getAuthentication();
+                if (authenticationBean == null || authenticationBean.isExpired()) {
+                    authenticationBean = getIAMService().getAuthentication();
                 }
             }
         }
@@ -116,12 +119,11 @@ public abstract class AbstractCommonService implements CommonService {
 
     /**
      * build request header
-     * 
-     * @param requestHeader
-     *            {@value}region
-     *            {@value}X-Project-Id
-     *            {@value}X-Auth-Token
-     *            {@value}content-type
+     *
+     * @param requestHeader {@value}region
+     *                      {@value}X-Project-Id
+     *                      {@value}X-Auth-Token
+     *                      {@value}content-type
      */
     protected void buildRequestHeader(Map<String, String> requestHeader) {
         if (null == getAuthenticationBean()) {
@@ -134,7 +136,7 @@ public abstract class AbstractCommonService implements CommonService {
 
     /**
      * build request url
-     * 
+     *
      * @param uri
      * @return String url
      */
@@ -142,5 +144,37 @@ public abstract class AbstractCommonService implements CommonService {
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.HTTPS_PREFFIX).append(smnConfiguration.getSmnEndpoint()).append(uri);
         return sb.toString();
+    }
+
+    /**
+     * send http request
+     *
+     * @param smnRequest the request to send
+     * @return
+     * @throws Exception
+     */
+    protected <Request extends AbstractSmnRequest> HttpResponse sendRequest(Request smnRequest, HttpMethod httpMethod) throws Exception {
+        Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+        String projectId = getAuthenticationBean().getProjectId();
+        String smnEndpoint = smnConfiguration.getSmnEndpoint();
+        smnRequest.setSmnEndpoint(smnEndpoint);
+        smnRequest.setProjectId(projectId);
+        String url = buildRequestUrl(smnRequest.getRequestUri());
+        buildRequestHeader(requestHeader);
+
+        HttpResponse httpResponse = null;
+        if (httpMethod == HttpMethod.GET) {
+            httpResponse = HttpUtil.get(requestHeader, url);
+        } else if (httpMethod == HttpMethod.DELETE) {
+            httpResponse = HttpUtil.delete(requestHeader, url);
+        } else if (httpMethod == HttpMethod.POST) {
+            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            httpResponse = HttpUtil.post(requestHeader, requestParam, url);
+        } else if (httpMethod == HttpMethod.PUT) {
+            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
+            httpResponse = HttpUtil.put(requestHeader, requestParam, url);
+        }
+
+        return httpResponse;
     }
 }

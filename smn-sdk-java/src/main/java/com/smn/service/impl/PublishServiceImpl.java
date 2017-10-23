@@ -18,13 +18,12 @@
 package com.smn.service.impl;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
+import com.smn.common.utils.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.smn.common.HttpResponse;
-import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.publish.PublishMsgRequest;
 import com.smn.service.AbstractCommonService;
 import com.smn.service.PublishService;
@@ -42,16 +41,6 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
     private static final Logger LOGGER = LoggerFactory.getLogger(PublishServiceImpl.class);
 
     /**
-     * smn host url
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
-
-    /**
      * message publish
      * 
      * @param smnRequest
@@ -62,16 +51,7 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
         LOGGER.info("Start to publish message.");
 
         try {
-            Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
-            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            smnRequest.setSmnEndpoint(smnEndpoint);
-            smnRequest.setProjectId(projectId);
-            String url = buildRequestUrl(smnRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-			HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
-			return httpResponse;
+			return sendRequest(smnRequest, HttpMethod.POST);
         } catch (Exception e) {
             LOGGER.error("Failed to publish message.", e);
             throw new RuntimeException("Failed to publish message.", e);

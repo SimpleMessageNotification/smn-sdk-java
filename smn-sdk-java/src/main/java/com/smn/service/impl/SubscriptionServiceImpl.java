@@ -17,13 +17,11 @@
  */
 package com.smn.service.impl;
 
-import java.util.Map;
-
+import com.smn.common.utils.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.smn.common.HttpResponse;
-import com.smn.common.utils.HttpUtil;
 import com.smn.model.request.subscription.ListSubscriptionsByTopicRequest;
 import com.smn.model.request.subscription.ListSubscriptionsRequest;
 import com.smn.model.request.subscription.SubcriptionRequest;
@@ -33,7 +31,7 @@ import com.smn.service.SubscriptionService;
 
 /**
  * Subscribe service implemented
- * 
+ *
  * @author huangqiong
  * @version 0.6
  */
@@ -43,16 +41,6 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
      * LOGGER
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
-
-    /**
-     * smn host url
-     */
-    private String smnEndpoint;
-
-    /**
-     * project id
-     */
-    private String projectId;
 
     /*
      * (non-Javadoc)
@@ -66,15 +54,7 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         LOGGER.info("Start list subscribtion.");
 
         try {
-            Map<String, String> requestHeader = listSubscriptionsRequest.getRequestHeaderMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            listSubscriptionsRequest.setSmnEndpoint(smnEndpoint);
-            listSubscriptionsRequest.setProjectId(projectId);
-            String url = buildRequestUrl(listSubscriptionsRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
-            return httpResponse;
+            return sendRequest(listSubscriptionsRequest, HttpMethod.GET);
         } catch (Exception e) {
             LOGGER.error("Fail to list subscriptions.", e);
             throw new RuntimeException("Fail to list subscriptions.", e);
@@ -93,16 +73,7 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         LOGGER.info("Start a new  subscribtion.");
 
         try {
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            subcriptionRequest.setSmnEndpoint(smnEndpoint);
-            projectId = getIAMService().getAuthentication().getProjectId();
-            subcriptionRequest.setProjectId(projectId);
-            Map<String, String> requestHeader = subcriptionRequest.getRequestHeaderMap();
-            Map<String, Object> requestParam = subcriptionRequest.getRequestParameterMap();
-            String url = buildRequestUrl(subcriptionRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.post(requestHeader, requestParam, url);
-            return httpResponse;
+            return sendRequest(subcriptionRequest, HttpMethod.POST);
         } catch (Exception e) {
             LOGGER.error("Fail to subscribe.", e);
             throw new RuntimeException("Fail to subscribe.", e);
@@ -121,15 +92,7 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         LOGGER.info("Start delete a subscribtion.");
 
         try {
-            Map<String, String> requestHeader = unSubcriptionRequest.getRequestHeaderMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            unSubcriptionRequest.setSmnEndpoint(smnEndpoint);
-            unSubcriptionRequest.setProjectId(projectId);
-            String url = buildRequestUrl(unSubcriptionRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.delete(requestHeader, url);
-            return httpResponse;
+            return sendRequest(unSubcriptionRequest, HttpMethod.DELETE);
         } catch (Exception e) {
             LOGGER.error("Fail to unsubscribe.", e);
             throw new RuntimeException("Fail to unsubscribe.", e);
@@ -150,16 +113,7 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         LOGGER.info("Start list subscribtion by topic.");
 
         try {
-
-            Map<String, String> requestHeader = listSubscriptionsByTopicRequest.getRequestHeaderMap();
-            projectId = getIAMService().getAuthentication().getProjectId();
-            smnEndpoint = smnConfiguration.getSmnEndpoint();
-            listSubscriptionsByTopicRequest.setSmnEndpoint(smnEndpoint);
-            listSubscriptionsByTopicRequest.setProjectId(projectId);
-            String url = buildRequestUrl(listSubscriptionsByTopicRequest.getRequestUri());
-            buildRequestHeader(requestHeader);
-            HttpResponse httpResponse = HttpUtil.get(requestHeader, url);
-            return httpResponse;
+            return sendRequest(listSubscriptionsByTopicRequest, HttpMethod.GET);
         } catch (Exception e) {
             LOGGER.error("Fail to list subscribtion by topic.", e);
             throw new RuntimeException("Fail to list subscribtion by topic.", e);
