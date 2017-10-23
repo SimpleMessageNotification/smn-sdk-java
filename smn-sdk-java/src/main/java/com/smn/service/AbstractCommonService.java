@@ -151,8 +151,8 @@ public abstract class AbstractCommonService implements CommonService {
      * send http request
      *
      * @param smnRequest the request to send
-     * @return
-     * @throws Exception
+     * @return response {@link HttpResponse}
+     * @throws Exception connect error throw exception
      */
     protected <Request extends AbstractSmnRequest> HttpResponse sendRequest(Request smnRequest, HttpMethod httpMethod) throws Exception {
         Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
