@@ -17,8 +17,6 @@
  */
 package com.smn.service;
 
-import java.util.Map;
-
 import com.smn.common.HttpResponse;
 import com.smn.model.request.topic.CreateTopicRequest;
 import com.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
@@ -32,11 +30,8 @@ import com.smn.model.request.topic.UpdateTopicRequest;
 
 /**
  * topic service
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
  */
 public interface TopicService extends CommonService {
@@ -45,13 +40,14 @@ public interface TopicService extends CommonService {
      * create topic
      * <p>
      * failed，return request_id and status
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value topic_urn}
-     *         {@value status}
+     *            {@link CreateTopicRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -61,12 +57,14 @@ public interface TopicService extends CommonService {
      * delete topic
      * <p>
      * failed，return request_id and status
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value status}
+     *            {@link DeleteTopicRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -75,12 +73,14 @@ public interface TopicService extends CommonService {
     /**
      * query topic list
      * <p>
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value status}
+     *            {@link ListTopicsRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -88,13 +88,14 @@ public interface TopicService extends CommonService {
 
     /**
      * query topic detail
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value topic_urn}
-     *         {@value status}
+     *            {@link QueryTopicDetailRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -102,13 +103,14 @@ public interface TopicService extends CommonService {
 
     /**
      * update topic display name
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value message_id}
-     *         {@value status}
+     *            {@link UpdateTopicRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -116,13 +118,14 @@ public interface TopicService extends CommonService {
 
     /**
      * query topic attributes
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value attributes}
-     *         {@value status}
+     *            {@link ListTopicAttributesRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -130,12 +133,14 @@ public interface TopicService extends CommonService {
 
     /**
      * update topic attributes
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value status}
+     *            {@link UpdateTopicAttributeRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -143,12 +148,14 @@ public interface TopicService extends CommonService {
 
     /**
      * delete designated topic attribute by name
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value status}
+     *            {@link DeleteTopicAttributeByNameRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */
@@ -158,12 +165,14 @@ public interface TopicService extends CommonService {
     /**
      * delete all topic attributes
      * <p>
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value status}
+     *            {@link DeleteTopicAttributesRequest} request
+     * @return {@link HttpResponse}
+     *         <p>
+     *         {@code httpCode}
+     *         <p>
+     *         {@code body}Map&lt;String,String%gt;
      * @throws RuntimeException
      *             connect error,fail to get iam token ,throw exception
      */

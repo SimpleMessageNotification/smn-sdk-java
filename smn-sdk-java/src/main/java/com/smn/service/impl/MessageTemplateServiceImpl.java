@@ -35,9 +35,9 @@ import com.smn.service.MessageTemplateService;
  *
  * @author huangqiong
  * @author yangyanping
+ * @author zhangyx
  * @version 0.2
- * @date 2017年8月2日
- * @date 2017年8月25日
+ * @version 0.7
  */
 public class MessageTemplateServiceImpl extends AbstractCommonService implements MessageTemplateService {
 
@@ -47,11 +47,9 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageTemplateServiceImpl.class);
 
     /**
-     * create template
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * @see MessageTemplateService#createMessageTemplate(CreateMessageTemplateRequest)
      */
     public HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to create message template.");
@@ -65,11 +63,9 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * update template
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * @see MessageTemplateService#updateMessageTemplate(UpdateMessageTemplateRequest)
      */
     public HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to update message template.");
@@ -83,11 +79,9 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * delete template
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * @see MessageTemplateService#deleteMessageTemplate(DeleteMessageTemplateRequest)
      */
     public HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to delete message template.");
@@ -101,11 +95,9 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * query template list
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * @see MessageTemplateService#listMessageTemplates(ListMessageTemplatesRequest)
      */
     public HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to list message template.");
@@ -119,11 +111,9 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     }
 
     /**
-     * query template detail
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * @see MessageTemplateService#queryMsgTemplateDetail(QueryMessageTemplateDetailRequest)
      */
     public HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest)
             throws RuntimeException {

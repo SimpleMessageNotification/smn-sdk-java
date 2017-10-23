@@ -40,13 +40,13 @@ public interface PublishService extends CommonService {
 	 * <p>
 	 * failed，return request_id and status
 	 * 
-	 * @param smnRequest
-	 *            request
+	 * @param publishMsgRequest
+	 *            {@link PublishMsgRequest} request
 	 * @return {@link HttpResponse}
 	 *         <p>
 	 *         {@code httpCode}
 	 *         <p>
-	 *         {@code body}Map<String,String>
+	 *         {@code body}Map&lt;String,String%gt;
 	 * @throws RuntimeException
 	 *             connect error,fail to get iam token ,throw exception
 	 */

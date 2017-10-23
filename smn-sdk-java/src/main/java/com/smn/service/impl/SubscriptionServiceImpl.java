@@ -33,7 +33,9 @@ import com.smn.service.SubscriptionService;
  * Subscribe service implemented
  *
  * @author huangqiong
+ * @author zhangyx
  * @version 0.6
+ * @version 0.7
  */
 public class SubscriptionServiceImpl extends AbstractCommonService implements SubscriptionService {
 
@@ -42,12 +44,10 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
 
-    /*
+    /**
      * (non-Javadoc)
-     * 
-     * @see
-     * com.huawei.smn.service.SubscriptionService#listSubscriptions(com.huawei.
-     * smn.model.request.subscription.ListSubscriptionsRequest)
+     *
+     * @see SubscriptionService#listSubscriptions(ListSubscriptionsRequest)
      */
     public HttpResponse listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest) throws RuntimeException {
 
@@ -61,12 +61,10 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see
-     * com.huawei.smn.service.SubscriptionService#listSubscriptions(com.huawei.
-     * smn.model.request.subscription.ListSubscriptionsRequest)
+     * @see SubscriptionService#subscribe(SubcriptionRequest)
      */
     public HttpResponse subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException {
 
@@ -80,12 +78,10 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
-     * 
-     * @see
-     * com.huawei.smn.service.SubscriptionService#unsubscribe(com.huawei.smn.
-     * model.request.subscription.UnSubcriptionRequest)
+     *
+     * @see SubscriptionService#unsubscribe(UnSubcriptionRequest)
      */
     public HttpResponse unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException {
 
@@ -100,12 +96,10 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
 
     }
 
-    /*
+    /**
      * (non-Javadoc)
-     * 
-     * @see
-     * com.huawei.smn.service.SubscriptionService#listSubscriptionsByTopic(com.
-     * huawei.smn.model.request.subscription.ListSubscriptionsByTopicRequest)
+     *
+     * @see SubscriptionService#listSubscriptionsByTopic(ListSubscriptionsByTopicRequest)
      */
     public HttpResponse listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest)
             throws RuntimeException {

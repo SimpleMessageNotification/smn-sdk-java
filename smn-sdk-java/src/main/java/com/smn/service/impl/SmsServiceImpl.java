@@ -23,8 +23,6 @@
  */
 package com.smn.service.impl;
 
-import java.util.Map;
-
 import com.smn.common.utils.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +36,9 @@ import com.smn.service.SmsService;
  * send sms directly
  * 
  * @author huangqiong
- * @date 2017年8月3日 下午5:41:10
+ * @author zhangyx
  * @version 0.1
+ * @version 0.7
  */
 public class SmsServiceImpl extends AbstractCommonService implements SmsService {
     /**
@@ -48,13 +47,9 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
     private static final Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
 
     /**
-     * send sms directly
-     * 
-     * @param smnRequest
-     * @return {@link Map}
-     *         {@value}request_id
-     *         {@value}status
-     * @throws RuntimeException
+     * (non-Javadoc)
+     *
+     * @see SmsService#smsPublish(SmsPublishRequest)
      */
     public HttpResponse smsPublish(SmsPublishRequest smnRequest) throws RuntimeException {
         try {

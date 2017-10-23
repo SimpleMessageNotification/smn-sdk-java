@@ -17,11 +17,11 @@
  */
 package com.smn.service.impl;
 
-import com.smn.common.utils.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.smn.common.HttpResponse;
+import com.smn.common.utils.HttpMethod;
 import com.smn.model.request.topic.CreateTopicRequest;
 import com.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
 import com.smn.model.request.topic.DeleteTopicAttributesRequest;
@@ -38,8 +38,9 @@ import com.smn.service.TopicService;
  * Topic service implemented
  *
  * @author huangqiong
+ * @author zhangyx
  * @version 0.1
- * @date 2017年8月2日
+ * @version 0.7
  */
 public class TopicServiceImpl extends AbstractCommonService implements TopicService {
 
@@ -49,11 +50,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
 
     /**
-     * create topic
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#createTopic(CreateTopicRequest)
      */
     public HttpResponse createTopic(CreateTopicRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to create topic.");
@@ -66,11 +65,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * delete topic
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#deleteTopic(DeleteTopicRequest)
      */
     public HttpResponse deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to delete topic.");
@@ -83,11 +80,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * query topic list
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#listTopics(ListTopicsRequest)
      */
     public HttpResponse listTopics(ListTopicsRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to list topic.");
@@ -100,11 +95,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * query topic detail
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#queryTopicDetail(QueryTopicDetailRequest)
      */
     public HttpResponse queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to query topic detail.");
@@ -117,11 +110,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * update topic
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * @see TopicService#updateTopic(UpdateTopicRequest)
      */
     public HttpResponse updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to update topic.");
@@ -134,11 +125,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * query topic attribute
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#listTopicAttributes(ListTopicAttributesRequest)
      */
     public HttpResponse listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to list topic attributes.");
@@ -151,11 +140,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * update topic attributes
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#updateTopicAttribute(UpdateTopicAttributeRequest)
      */
     public HttpResponse updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to update topic attributes.");
@@ -168,11 +155,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * delete attribute for designated topic
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest)
      */
     public HttpResponse deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
             throws RuntimeException {
@@ -186,11 +171,9 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     }
 
     /**
-     * delete all attributes
+     * (non-Javadoc)
      *
-     * @param smnRequest
-     * @return HttpResponse
-     * @throws RuntimeException
+     * @see TopicService#deleteTopicAttributes(DeleteTopicAttributesRequest)
      */
     public HttpResponse deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to delete topic attributes.");

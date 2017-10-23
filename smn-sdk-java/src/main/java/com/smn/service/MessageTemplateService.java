@@ -17,8 +17,6 @@
  */
 package com.smn.service;
 
-import java.util.Map;
-
 import com.smn.common.HttpResponse;
 import com.smn.model.request.template.CreateMessageTemplateRequest;
 import com.smn.model.request.template.DeleteMessageTemplateRequest;
@@ -28,86 +26,82 @@ import com.smn.model.request.template.UpdateMessageTemplateRequest;
 
 /**
  * Message template service
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
+ * @date 2017年8月2日
  */
 public interface MessageTemplateService extends CommonService {
 
     /**
      * create message template
-     * 
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value message_id}
-     *         {@value status}
-     * @throws RuntimeException
-     *             connect error throw exception
+     *            {@link CreateMessageTemplateRequest} request
+     * @return {@link HttpResponse}
+     *          <p>
+     *          {@code httpCode}
+     *          <p>
+     *         {@code body}Map&lt;String,String%gt;
+     * @throws RuntimeException connect error throw exception
      */
-	HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException;
+    HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException;
 
     /**
      * update message template
-     * 
-     * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value message_id}
-     *         {@value status}
-     * @throws RuntimeException
-     *             connect error throw exception
+     *
+     * @param smnRequest request
+     * @return {@link HttpResponse}
+     *          <p>
+     *          {@code httpCode}
+     *          <p>
+     *         {@code body}Map&lt;String,String%gt;
+     * @throws RuntimeException connect error throw exception
      */
-	HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException;
+    HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException;
 
     /**
      * delete message template
      * <p>
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value message_id}
-     *         {@value status}
-     * @throws RuntimeException
-     *             connect error throw exception
+     *            {@link DeleteMessageTemplateRequest} request
+     * @return {@link HttpResponse}
+     *          <p>
+     *          {@code httpCode}
+     *          <p>
+     *         {@code body}Map&lt;String,String%gt;
+     * @throws RuntimeException connect error throw exception
      */
-	HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException;
+    HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException;
 
     /**
      * query message template list
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value message_id}
-     *         {@value status}
-     * @throws RuntimeException
-     *             connect error throw exception
+     *            {@link ListMessageTemplatesRequest} request
+     * @return {@link HttpResponse}
+     *          <p>
+     *          {@code httpCode}
+     *          <p>
+     *         {@code body}Map&lt;String,String%gt;
+     * @throws RuntimeException connect error throw exception
      */
-	HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException;
+    HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException;
 
     /**
      * query message template detail
      * <p>
-     * 
+     *
      * @param smnRequest
-     *            request
-     * @return {@link Map} return Map
-     *         {@value request_id}
-     *         {@value message_id}
-     *         {@value status}
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     *            {@link QueryMessageTemplateDetailRequest} request
+     * @return {@link HttpResponse}
+     *          <p>
+     *          {@code httpCode}
+     *          <p>
+     *         {@code body}Map&lt;String,String%gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest) throws RuntimeException;
+    HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest) throws RuntimeException;
 
 }

@@ -38,8 +38,9 @@ import com.smn.service.impl.IAMServiceImpl;
 
 /**
  * @author huangqiong
+ * @author zhangyx
  * @version 0.1
- * @date 2017年8月3日 下午5:33:12
+ * @version 0.7
  */
 public abstract class AbstractCommonService implements CommonService {
 

@@ -32,7 +32,9 @@ import com.smn.service.PublishService;
  * Publish service implemented
  * 
  * @author huangqiong
+ * @author zhangyx
  * @version 0.6
+ * @version 0.7
  */
 public class PublishServiceImpl extends AbstractCommonService implements PublishService {
     /**
@@ -41,11 +43,9 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
     private static final Logger LOGGER = LoggerFactory.getLogger(PublishServiceImpl.class);
 
     /**
-     * message publish
-     * 
-     * @param smnRequest
-     * @return
-     * @throws RuntimeException
+     * (non-Javadoc)
+     *
+     * @see PublishService#publish(PublishMsgRequest)
      */
 	public HttpResponse publish(PublishMsgRequest smnRequest) throws RuntimeException, UnsupportedEncodingException {
         LOGGER.info("Start to publish message.");
