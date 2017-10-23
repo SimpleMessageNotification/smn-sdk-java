@@ -90,13 +90,12 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      * @return Map
      *         {@value}endpoint
      *         {@value}message
-     *         {@value optional}sign_id
      * 
      */
     public Map<String, Object> getRequestParameterMap() {
         validatePhoneNumber(getEndpoint());
         validateMessage(getMessage());
-		validateSignId(getSignId());
+
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
         requestParameterMap.put(SmnConstants.ENDPOINT, endpoint);
         requestParameterMap.put(SmnConstants.MESSAGE, message);

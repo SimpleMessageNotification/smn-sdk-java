@@ -163,7 +163,9 @@ public class SmnConfiguration {
      * @param filepath
      */
     public SmnConfiguration(String filepath) {
+        LOGGER.info("New smnConfiguration.File path is {}.", filepath);
         this.filepath = filepath;
+        reload();
     }
 
     /**
@@ -172,6 +174,7 @@ public class SmnConfiguration {
      */
     public SmnConfiguration() {
         LOGGER.info("New smnConfiguration.");
+        reload();
     }
 
     /**
