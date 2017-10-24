@@ -235,14 +235,15 @@ public class ValidationUtil {
      * @return boolean <code>true</code> displayName is valid
      */
     public static boolean validateDisplayName(String displayName) {
-
-        byte[] b = displayName.getBytes(Charset.forName(SmnConstants.DEFAULT_CHARSET));
-        if (b.length > SmnConstants.MAX_TOPIC_DISPLAY_NAME) {
-            return false;
-        } else {
-            return true;
+        try {
+            byte[] b = displayName.getBytes(SmnConstants.DEFAULT_CHARSET);
+            if (b.length > SmnConstants.MAX_TOPIC_DISPLAY_NAME) {
+                return false;
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("validate display name error");
         }
-
+        return true;
     }
 
 
@@ -263,7 +264,7 @@ public class ValidationUtil {
                 return false;
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            throw new RuntimeException("validate template message content error");
         }
 
         return true;
