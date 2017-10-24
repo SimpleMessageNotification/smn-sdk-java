@@ -18,6 +18,7 @@
 package com.smn.model.request.sms;
 
 import com.smn.common.SmnConstants;
+import com.smn.common.utils.ValidationUtil;
 import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
@@ -112,6 +113,16 @@ public class ListSmsMsgReportRequest extends AbstractSmnRequest {
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("List sms msg report request projectId is null.");
             throw new RuntimeException("List sms msg report request projectId is null.");
+        }
+
+        if(!ValidationUtil.validateOffset(offset)){
+            LOGGER.error("List sms msg report request offset is invalid.");
+            throw new RuntimeException("List sms msg report request offset is invalid.");
+        }
+
+        if (!ValidationUtil.validateLimit(limit)){
+            LOGGER.error("List sms msg report request limit is invalid.");
+            throw new RuntimeException("List sms msg report request limit is invalid.");
         }
 
         StringBuilder sb = new StringBuilder();
