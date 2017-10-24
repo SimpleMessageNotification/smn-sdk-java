@@ -30,7 +30,10 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(ListSmsCallbackEventRequest.class);
 
     /**
-     * 短信回调事件类型，取值 {@link EventType}
+     * 短信回调事件类型，取值
+     * {@link SmnConstants#SMS_CALLBACK_FAIL}
+     * {@link SmnConstants#SMS_CALLBACK_SUCCESS}
+     * {@link SmnConstants#SMS_CALLBACK_REPLY}
      */
     private String eventType;
 
@@ -111,14 +114,5 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
                 ", projectId='" + projectId + '\'' +
                 ", xAuthToken='" + xAuthToken + '\'' +
                 '}';
-    }
-
-    /**
-     * 回调event type类型常量定义
-     */
-    class EventType {
-        public final static String SUCCESS = "sms_success_event";
-        public final static String FAIL = "sms_fail_event";
-        public final static String REPLY = "sms_reply_event";
     }
 }

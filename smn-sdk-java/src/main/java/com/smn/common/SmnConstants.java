@@ -317,4 +317,29 @@ public interface SmnConstants {
      * 模板消息的标签tags
      */
     String TAGS = "tags";
+
+    /**
+     * 查询统短信发送的状态统计类型，按天查询
+     */
+    String DAILY = "daily";
+
+    /**
+     * 查询统短信发送的状态统计类型，按小时查询
+     */
+    String HOURLY = "hourly";
+
+    /**
+     * 短信回调事件类型
+     */
+    public final static String SMS_CALLBACK_SUCCESS = "sms_success_event";
+
+    /**
+     * 短信回调事件类型
+     */
+    public final static String SMS_CALLBACK_FAIL = "sms_fail_event";
+
+    /**
+     * 短信回调事件类型
+     */
+    public final static String SMS_CALLBACK_REPLY = "sms_reply_event";
 }

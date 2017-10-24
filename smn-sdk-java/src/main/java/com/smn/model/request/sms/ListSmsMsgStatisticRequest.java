@@ -68,7 +68,7 @@ public class ListSmsMsgStatisticRequest extends AbstractSmnRequest {
     private String signId;
 
     /**
-     * 查询类型 {@link StatisticType}
+     * 查询类型 {@link SmnConstants#HOURLY} {@link SmnConstants#DAILY}
      * daily按天查询
      * hourly按小时查询
      */
@@ -103,12 +103,12 @@ public class ListSmsMsgStatisticRequest extends AbstractSmnRequest {
             throw new RuntimeException("List sms msg statistic request type is null");
         }
 
-        if (StatisticType.DAILY.equals(type) && StringUtils.isBlank(startDate)) {
+        if (SmnConstants.DAILY.equals(type) && StringUtils.isBlank(startDate)) {
             LOGGER.error("List sms msg statistic request startDate is null");
             throw new RuntimeException("List sms msg statistic request startDate is null");
         }
 
-        if (StatisticType.DAILY.equals(type) && StringUtils.isBlank(endDate)) {
+        if (SmnConstants.DAILY.equals(type) && StringUtils.isBlank(endDate)) {
             LOGGER.error("List sms msg statistic request endDate is null");
             throw new RuntimeException("List sms msg statistic request endDate is null");
         }
@@ -239,13 +239,5 @@ public class ListSmsMsgStatisticRequest extends AbstractSmnRequest {
                 ", projectId='" + projectId + '\'' +
                 ", xAuthToken='" + xAuthToken + '\'' +
                 '}';
-    }
-
-    /**
-     * 统计类型常量定义
-     */
-    class StatisticType {
-        public static final String DAILY = "daily";
-        public static final String HOURLY = "hourly";
     }
 }
