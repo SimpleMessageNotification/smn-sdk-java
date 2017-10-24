@@ -260,7 +260,7 @@ public class SmsServiceExample {
 
         // 设置回调事件列表
         List<SmsCallback> callbacks = new ArrayList<SmsCallback>();
-        callbacks.add(new SmsCallback("sms_fail_event", "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi"))
+        callbacks.add(new SmsCallback("sms_fail_event", "urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi"));
 
         updateSmsCallbackEventRequest.setCallbacks(callbacks);
 
