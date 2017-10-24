@@ -12,6 +12,12 @@ public class SmsCallback {
     private String topicUrn;
 
     /**
+     * no args construct
+     */
+    public SmsCallback(){
+
+    }
+    /**
      * construct
      *
      * @param eventType the eventType to set
