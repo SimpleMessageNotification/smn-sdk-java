@@ -19,21 +19,22 @@
  * @author huangqiong
  * @date 2017年8月3日 下午5:41:10
  * @version 0.1
+ * 
  */
 package com.smn.service.impl;
 
 import com.smn.common.utils.HttpMethod;
-import com.smn.model.request.sms.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.smn.common.HttpResponse;
+import com.smn.model.request.sms.SmsPublishRequest;
 import com.smn.service.AbstractCommonService;
 import com.smn.service.SmsService;
 
 /**
  * send sms directly
- *
+ * 
  * @author huangqiong
  * @author zhangyx
  * @version 0.1
@@ -53,76 +54,6 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
     public HttpResponse smsPublish(SmsPublishRequest smnRequest) throws RuntimeException {
         try {
             return sendRequest(smnRequest, HttpMethod.POST);
-        } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
-        }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see SmsService#listSmsMsgStatistic(ListSmsMsgStatisticRequest)
-     */
-    public HttpResponse listSmsMsgStatistic(ListSmsMsgStatisticRequest smnRequest) {
-        try {
-            return sendRequest(smnRequest, HttpMethod.GET);
-        } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
-        }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see SmsService#listSmsMsgReport(ListSmsMsgReportRequest)
-     */
-    public HttpResponse listSmsMsgReport(ListSmsMsgReportRequest smnRequest) {
-        try {
-            return sendRequest(smnRequest, HttpMethod.GET);
-        } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
-        }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see SmsService#getSmsMessage(GetSmsMessageRequest)
-     */
-    public HttpResponse getSmsMessage(GetSmsMessageRequest smnRequest) {
-        try {
-            return sendRequest(smnRequest, HttpMethod.GET);
-        } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
-        }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see SmsService#listSmsCallbackEvent(ListSmsCallbackEventRequest)
-     */
-    public HttpResponse listSmsCallbackEvent(ListSmsCallbackEventRequest smnRequest) {
-        try {
-            return sendRequest(smnRequest, HttpMethod.GET);
-        } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
-        }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see SmsService#updateSmsCallbackEvent(UpdateSmsCallbackEventRequest)
-     */
-    public HttpResponse updateSmsCallbackEvent(UpdateSmsCallbackEventRequest smnRequest) {
-        try {
-            return sendRequest(smnRequest, HttpMethod.PUT);
         } catch (Exception e) {
             LOGGER.error("Failed to send sms.", e);
             throw new RuntimeException("Failed to send sms.", e);
