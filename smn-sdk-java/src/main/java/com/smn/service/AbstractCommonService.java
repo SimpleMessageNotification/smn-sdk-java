@@ -156,6 +156,7 @@ public abstract class AbstractCommonService implements CommonService {
      */
     protected <Request extends AbstractSmnRequest> HttpResponse sendRequest(Request smnRequest, HttpMethod httpMethod) throws Exception {
         Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
+        Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
         String projectId = getAuthenticationBean().getProjectId();
         String smnEndpoint = smnConfiguration.getSmnEndpoint();
         smnRequest.setSmnEndpoint(smnEndpoint);
@@ -169,10 +170,8 @@ public abstract class AbstractCommonService implements CommonService {
         } else if (httpMethod == HttpMethod.DELETE) {
             httpResponse = HttpUtil.delete(requestHeader, url);
         } else if (httpMethod == HttpMethod.POST) {
-            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
             httpResponse = HttpUtil.post(requestHeader, requestParam, url);
         } else if (httpMethod == HttpMethod.PUT) {
-            Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
             httpResponse = HttpUtil.put(requestHeader, requestParam, url);
         }
 

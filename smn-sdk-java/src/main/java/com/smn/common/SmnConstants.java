@@ -257,6 +257,42 @@ public interface SmnConstants {
      */
     String SMN_TOPIC_ATTRIBUTE_VALUE = "value";
 
+
+    /**
+     * smn statistic
+     */
+    String STATISTIC = "statistic";
+
+    /**
+     * smn report
+     */
+    String REPORT = "report";
+
+    /**
+     * callback request
+     */
+    String CALLBACK_REQUEST = "callback";
+
+    /**
+     * callback field
+     */
+    String CALLBACK_FIELD = "callback";
+
+    /**
+     * event_type field
+     */
+    String EVENT_TYPE = "event_type";
+
+    /**
+     * smn offset field
+     */
+    String OFFSET = "offset";
+
+    /**
+     * smn limit field
+     */
+    String LIMIT = "limit";
+
     /**
      * smn crypt key
      */
