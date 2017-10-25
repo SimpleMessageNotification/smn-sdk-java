@@ -56,7 +56,7 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     /**
      * template name
      */
-    private String messageTemplateName;
+    private String fuzzyMessageTemplateName;
     /**
      * paging list's starting page,default 0
      */
@@ -78,9 +78,9 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
             LOGGER.error("List message template request protocol is invalid.");
             throw new NullPointerException("List message template request protoclo is invalid.");
         }
-        if (!ValidationUtil.validateTemplateName(messageTemplateName)) {
-            LOGGER.error("List message template request messageTemplateName is invalid.");
-            throw new NullPointerException("List message template request messageTemplateName is invalid.");
+        if (!ValidationUtil.validateTemplateName(fuzzyMessageTemplateName)) {
+            LOGGER.error("List message template request fuzzyMessageTemplateName is invalid.");
+            throw new NullPointerException("List message template request fuzzyMessageTemplateName is invalid.");
         }
         if (!ValidationUtil.validateOffset(offset)) {
             LOGGER.error("List message template request offset is invalid.");
@@ -124,8 +124,8 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
             nameValuePairs.add(new BasicNameValuePair(SmnConstants.SMN_PROTOCOL, protocol));
         }
 
-        if (!StringUtils.isBlank(messageTemplateName)) {
-            nameValuePairs.add(new BasicNameValuePair(SmnConstants.SMN_MESSAGE_TEMPLATE_NAME, messageTemplateName));
+        if (!StringUtils.isBlank(fuzzyMessageTemplateName)) {
+            nameValuePairs.add(new BasicNameValuePair(SmnConstants.SMN_FUZZY_MESSAGE_TEMPLATE_NAME, fuzzyMessageTemplateName));
         }
 
         nameValuePairs.add(new BasicNameValuePair(SmnConstants.OFFSET, String.valueOf(offset)));
@@ -166,17 +166,17 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @return the messageTemplateName
+     * @return the fuzzyMessageTemplateName
      */
-    public String getMessageTemplateName() {
-        return messageTemplateName;
+    public String getFuzzyMessageTemplateName() {
+        return fuzzyMessageTemplateName;
     }
 
     /**
-     * @param messageTemplateName the messageTemplateName to set
+     * @param fuzzyMessageTemplateName the fuzzyMessageTemplateName to set
      */
-    public void setMessageTemplateName(String messageTemplateName) {
-        this.messageTemplateName = messageTemplateName;
+    public void setFuzzyMessageTemplateName(String fuzzyMessageTemplateName) {
+        this.fuzzyMessageTemplateName = fuzzyMessageTemplateName;
     }
 
     /**
@@ -214,8 +214,8 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ListMessageTemplatesRequest [protocol=").append(protocol).append(", messageTemplateName=")
-                .append(messageTemplateName).append(", offset=").append(offset).append(", limit=").append(limit)
+        builder.append("ListMessageTemplatesRequest [protocol=").append(protocol).append(", fuzzyMessageTemplateName=")
+                .append(fuzzyMessageTemplateName).append(", offset=").append(offset).append(", limit=").append(limit)
                 .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
                 .append(", xAuthToken=").append(xAuthToken).append("]");
         return builder.toString();

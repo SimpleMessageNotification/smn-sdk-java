@@ -12,7 +12,7 @@ import com.smn.service.impl.MessageTemplateServiceImpl;
  */
 public class MessageTemplateServiceExample {
     public static void main(String[] args) {
-        deleteMessageTemplate();
+        listMessageTemplate();
     }
 
     /**
@@ -152,7 +152,7 @@ public class MessageTemplateServiceExample {
         ListMessageTemplatesRequest listMessageTemplatesRequest = new ListMessageTemplatesRequest();
 
         // 设置模板名称
-        listMessageTemplatesRequest.setMessageTemplateName("createMessageTemplate");
+        listMessageTemplatesRequest.setFuzzyMessageTemplateName("createMessageTemplate");
 
         //设置模板支持的协议内省
         listMessageTemplatesRequest.setProtocol("sms");
