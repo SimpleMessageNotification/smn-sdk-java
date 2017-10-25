@@ -62,28 +62,14 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
     /**
      * (non-Javadoc)
      *
-     * @see SmsService#listSmsMsgStatistic(ListSmsMsgStatisticRequest)
-     */
-    public HttpResponse listSmsMsgStatistic(ListSmsMsgStatisticRequest smnRequest) {
-        try {
-            return sendRequest(smnRequest, HttpMethod.GET);
-        } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
-        }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
      * @see SmsService#listSmsMsgReport(ListSmsMsgReportRequest)
      */
     public HttpResponse listSmsMsgReport(ListSmsMsgReportRequest smnRequest) {
         try {
             return sendRequest(smnRequest, HttpMethod.GET);
         } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
+            LOGGER.error("Failed to list sms msg report.", e);
+            throw new RuntimeException("Failed to list sms msg report.", e);
         }
     }
 
@@ -96,8 +82,8 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
         try {
             return sendRequest(smnRequest, HttpMethod.GET);
         } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
+            LOGGER.error("Failed to get sms message.", e);
+            throw new RuntimeException("Failed to get sms message.", e);
         }
     }
 
@@ -110,8 +96,8 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
         try {
             return sendRequest(smnRequest, HttpMethod.GET);
         } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
+            LOGGER.error("Failed to list sms callback event.", e);
+            throw new RuntimeException("Failed to list sms callback event.", e);
         }
     }
 
@@ -124,8 +110,8 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
         try {
             return sendRequest(smnRequest, HttpMethod.PUT);
         } catch (Exception e) {
-            LOGGER.error("Failed to send sms.", e);
-            throw new RuntimeException("Failed to send sms.", e);
+            LOGGER.error("Failed to update sms callback event.", e);
+            throw new RuntimeException("Failed to update sms callback event.", e);
         }
     }
 }
