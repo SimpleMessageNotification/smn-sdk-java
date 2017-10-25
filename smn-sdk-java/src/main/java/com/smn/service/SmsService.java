@@ -51,18 +51,6 @@ public interface SmsService extends CommonService {
     HttpResponse smsPublish(SmsPublishRequest smnRequest) throws RuntimeException;
 
     /**
-     * 查询短信发送状态统计
-     *
-     * @param smnRequest {@link ListSmsMsgStatisticRequest} request message
-     * @return {@link HttpResponse}
-     * <p>
-     * {@code httpCode}
-     * <p>
-     * {@code body}Map&lt;String,String%gt;
-     */
-    HttpResponse listSmsMsgStatistic(ListSmsMsgStatisticRequest smnRequest);
-
-    /**
      * 查询短信的发送状态
      *
      * @param smnRequest {@link ListSmsMsgReportRequest} request message

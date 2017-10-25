@@ -81,42 +81,6 @@ public class SmsServiceExample {
     }
 
     /**
-     * 查询短信发送的状态统计的demo
-     */
-    public static void listSmsMsgStatistic() {
-
-        // 短信发送服务
-        SmsService smsService = new SmsServiceImpl();
-        // 设置必要请求参数
-        SmnConfiguration smnConfiguration = new SmnConfiguration();
-        // 设置DomainName/设置用户名/设置密码
-        smnConfiguration.setDomainName("XXX");
-        smnConfiguration.setUserName("XXXX");
-        smnConfiguration.setPassword("XXXXX");
-
-        // 设置访问的地狱
-        // 华为云华北区 cn-north-1
-        // 华为云华南区 cn-sourth-1
-        // 华为华东区 cn-east-2
-        smnConfiguration.setRegionId("cn-north-1");
-        // 设置配置信息
-        smsService.setSmnConfiguration(smnConfiguration);
-
-        // 构造请求对象
-        ListSmsMsgStatisticRequest listSmsMsgStatisticRequest = new ListSmsMsgStatisticRequest();
-
-        // 设置短信签名
-        listSmsMsgStatisticRequest.setSignId("6be340e91e5241e4b5d85837e6709104");
-
-        // 设置查询类型, 按小时统计不需要设置startDate和endDate
-        listSmsMsgStatisticRequest.setType("hourly");
-
-        // 查询短信发送的状态统计
-        HttpResponse res = smsService.listSmsMsgStatistic(listSmsMsgStatisticRequest);
-        System.out.println(res);
-    }
-
-    /**
      * 查询短信的发送状态的demo
      */
     public static void listSmsMsgReport() {

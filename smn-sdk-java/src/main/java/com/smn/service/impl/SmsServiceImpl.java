@@ -62,20 +62,6 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
     /**
      * (non-Javadoc)
      *
-     * @see SmsService#listSmsMsgStatistic(ListSmsMsgStatisticRequest)
-     */
-    public HttpResponse listSmsMsgStatistic(ListSmsMsgStatisticRequest smnRequest) {
-        try {
-            return sendRequest(smnRequest, HttpMethod.GET);
-        } catch (Exception e) {
-            LOGGER.error("Failed to list sms msg statistic.", e);
-            throw new RuntimeException("Failed to sms msg statistic.", e);
-        }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
      * @see SmsService#listSmsMsgReport(ListSmsMsgReportRequest)
      */
     public HttpResponse listSmsMsgReport(ListSmsMsgReportRequest smnRequest) {
