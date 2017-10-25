@@ -81,7 +81,7 @@ public class SmsServiceExample {
     }
 
     /**
-     * 查询短信发生的状态统计的demo
+     * 查询短信发送的状态统计的demo
      */
     public static void listSmsMsgStatistic() {
 
@@ -117,7 +117,7 @@ public class SmsServiceExample {
     }
 
     /**
-     * 查询短信的发生状态的demo
+     * 查询短信的发送状态的demo
      */
     public static void listSmsMsgReport() {
 
@@ -201,7 +201,7 @@ public class SmsServiceExample {
     }
 
     /**
-     * 查询短信回调事情的demo
+     * 查询短信回调事件的demo
      */
     public static void listSmsCallbackEvent() {
 
@@ -234,7 +234,7 @@ public class SmsServiceExample {
     }
 
     /**
-     * 更新短信回调时间
+     * 更新短信回调事件
      */
     public static void updateSmsCallbackEvent() {
 
