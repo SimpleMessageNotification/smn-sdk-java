@@ -168,7 +168,7 @@ public class SmsServiceExample {
     }
 
     /**
-     * 查询已发生短信的内容的demo
+     * 查询已发送短信的内容的demo
      */
     public static void getSmsMessage() {
 
