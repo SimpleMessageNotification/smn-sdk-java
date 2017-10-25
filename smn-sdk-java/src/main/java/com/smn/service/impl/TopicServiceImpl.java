@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.smn.common.HttpResponse;
-import com.smn.common.utils.HttpMethod;
+import com.smn.common.HttpMethod;
 import com.smn.model.request.topic.CreateTopicRequest;
 import com.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
 import com.smn.model.request.topic.DeleteTopicAttributesRequest;

@@ -25,7 +25,7 @@ package com.smn.service;
 import java.util.Map;
 
 import com.smn.common.HttpResponse;
-import com.smn.common.utils.HttpMethod;
+import com.smn.common.HttpMethod;
 import com.smn.common.utils.HttpUtil;
 import com.smn.model.AbstractSmnRequest;
 import org.slf4j.Logger;

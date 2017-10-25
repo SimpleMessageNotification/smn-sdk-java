@@ -30,12 +30,12 @@ import com.smn.model.AbstractSmnRequest;
 
 /**
  * list topic attribute
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
+ * @date 2017年8月2日
+ * @author zhangyx
+ * @version 0.8
  */
 public class ListTopicAttributesRequest extends AbstractSmnRequest {
 
@@ -81,6 +81,7 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
                 .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
                 .append(topicUrn).append(LIST_TOPIC_ATTRIBUTE_SUFFIX);
 
+        // 设置参数
         if (StringUtils.isNoneBlank(getAttributesName()) && isValidAttributeName(attributesName)) {
             sb.append(NAME_SUFFIX).append(getAttributesName());
         }
@@ -117,8 +118,7 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param topicUrn
-     *            the topicUrn to set
+     * @param topicUrn the topicUrn to set
      */
     public void setTopicUrn(String topicUrn) {
         this.topicUrn = topicUrn;
@@ -132,8 +132,7 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param attributesName
-     *            the attributesName to set
+     * @param attributesName the attributesName to set
      */
     public void setAttributesName(String attributesName) {
         this.attributesName = attributesName;

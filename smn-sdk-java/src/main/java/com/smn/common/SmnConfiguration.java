@@ -174,7 +174,6 @@ public class SmnConfiguration {
      */
     public SmnConfiguration() {
         LOGGER.info("New smnConfiguration.");
-        reload();
     }
 
     /**

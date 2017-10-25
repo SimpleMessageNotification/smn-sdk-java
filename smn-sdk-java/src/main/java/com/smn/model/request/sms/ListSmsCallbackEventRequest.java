@@ -1,6 +1,8 @@
 package com.smn.model.request.sms;
 
+import com.smn.common.AccessPolicyType;
 import com.smn.common.SmnConstants;
+import com.smn.common.SmsCallbackEventType;
 import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
@@ -31,9 +33,9 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
 
     /**
      * 短信回调事件类型，取值
-     * {@link SmnConstants#SMS_CALLBACK_FAIL}
-     * {@link SmnConstants#SMS_CALLBACK_SUCCESS}
-     * {@link SmnConstants#SMS_CALLBACK_REPLY}
+     * {@link SmsCallbackEventType#SMS_CALLBACK_SUCCESS}
+     * {@link SmsCallbackEventType#SMS_CALLBACK_SUCCESS}
+     * {@link SmsCallbackEventType#SMS_CALLBACK_REPLY}
      */
     private String eventType;
 
@@ -45,6 +47,11 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("List sms event request projectId is null.");
             throw new RuntimeException("List sms event request projectId is null.");
+        }
+
+        if(!StringUtils.isBlank(projectId) && !isValidEventType()){
+            LOGGER.error("List sms event request event_type is invalid.");
+            throw new RuntimeException("List sms event request event_type is invalid.");
         }
 
         StringBuilder sb = new StringBuilder();
@@ -60,6 +67,18 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
         }
         LOGGER.info("Request url is {}. ", sb.toString());
         return sb.toString();
+    }
+
+    /**
+     * check eventType is invalid
+     */
+    private boolean isValidEventType() {
+        if (SmsCallbackEventType.SMS_CALLBACK_FAIL.equals(eventType)
+                || SmsCallbackEventType.SMS_CALLBACK_REPLY.equals(eventType)
+                || SmsCallbackEventType.SMS_CALLBACK_SUCCESS.equals(eventType)) {
+            return true;
+        }
+        return false;
     }
 
     /**

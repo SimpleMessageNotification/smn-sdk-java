@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.smn.common.utils;
+package com.smn.common;
 
 /**
  * http method list enum
