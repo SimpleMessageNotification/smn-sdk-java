@@ -121,7 +121,7 @@ public class ListSmsMsgStatisticRequest extends AbstractSmnRequest {
 
         // 设置get参数
         String params = getRequestParamString();
-        if (StringUtils.isEmpty(params)) {
+        if (!StringUtils.isEmpty(params)) {
             sb.append("?").append(params);
         }
         LOGGER.info("Request url is {}. ", sb.toString());

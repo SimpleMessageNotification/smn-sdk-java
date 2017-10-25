@@ -43,11 +43,6 @@ public class IAMServiceImpl implements IAMService {
     private static Logger LOGGER = LoggerFactory.getLogger(IAMServiceImpl.class);
 
     /**
-     * request info for iam
-     */
-    private static final String IAM_TOKEN_REQUEST = "{\"auth\":{\"identity\":{\"methods\":[\"password\"],\"password\":{\"user\":{\"name\":\"{0}\",\"password\":\"{1}\",\"domain\":{\"name\":\"{2}\"}}}},\"scope\":{\"project\":{\"name\":\"{3}\"}}}}";
-
-    /**
      * user's name
      */
     private String userName;
@@ -97,9 +92,29 @@ public class IAMServiceImpl implements IAMService {
         setDomainName(domainName);
         setRegionId(regionId);
         setIamUrl(iamUrl);
-
-        requestMessage = IAM_TOKEN_REQUEST.replaceFirst("\\{0\\}", userName).replaceFirst("\\{2\\}", domainName)
-                .replaceFirst("\\{3\\}", regionId).replaceFirst("\\{1\\}", password);
+        requestMessage = "{" +
+                "    \"auth\": {" +
+                "        \"identity\": {" +
+                "            \"methods\": [" +
+                "                \"password\"" +
+                "            ]," +
+                "            \"password\": {" +
+                "                \"user\": {" +
+                "                    \"name\": \"" + userName + "\"," +
+                "                    \"password\": \"" + password + "\"," +
+                "                    \"domain\": {" +
+                "                        \"name\": \"" + domainName + "\"" +
+                "                    }" +
+                "                }" +
+                "            }" +
+                "        }," +
+                "        \"scope\": {" +
+                "            \"project\": {" +
+                "                \"name\": \"" + regionId + "\"" +
+                "            }" +
+                "        }" +
+                "    }" +
+                "}";
     }
 
     /**
