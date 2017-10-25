@@ -82,8 +82,7 @@ public abstract class AbstractCommonService implements CommonService {
     protected IAMService getIAMService() {
 
         if (smnConfiguration == null) {
-            LOGGER.error("SmnConfiguration is null.");
-            throw new RuntimeException("SmnConfiguration is null.");
+            smnConfiguration = new SmnConfiguration();
         }
         if (iamService == null) {
             String iamUrl = new StringBuilder().append(SmnConstants.HTTPS_PREFFIX)
