@@ -215,7 +215,7 @@ public interface SmnConstants {
     /**
      * message template name
      */
-    String SMN_FUZZY_MESSAGE_TEMPLATE_NAME = "fuzzy_message_template_name";
+    String SMN_MESSAGE_TEMPLATE_NAME = "message_template_name";
 
     /**
      * sms signature

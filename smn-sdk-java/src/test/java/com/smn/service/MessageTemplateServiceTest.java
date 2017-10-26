@@ -104,7 +104,7 @@ public class MessageTemplateServiceTest extends TestCase {
         ListMessageTemplatesRequest listMessageTemplatesRequest = new ListMessageTemplatesRequest();
         MessageTemplateService messageTemplateService = new MessageTemplateServiceImpl();
         messageTemplateService.setSmnConfiguration(smnConfiguration);
-        listMessageTemplatesRequest.setFuzzyMessageTemplateName("createMessageTemplate");
+        listMessageTemplatesRequest.setMessageTemplateName("createMessageTemplate");
         listMessageTemplatesRequest.setLimit(100);
         listMessageTemplatesRequest.setProtocol("sms");
         HttpResponse res = messageTemplateService.listMessageTemplates(listMessageTemplatesRequest);
