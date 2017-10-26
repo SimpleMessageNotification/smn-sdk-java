@@ -152,7 +152,7 @@ public class MessageTemplateServiceExample {
         ListMessageTemplatesRequest listMessageTemplatesRequest = new ListMessageTemplatesRequest();
 
         // 设置模板名称
-        listMessageTemplatesRequest.setFuzzyMessageTemplateName("createMessageTemplate");
+        listMessageTemplatesRequest.setMessageTemplateName("createMessageTemplate");
 
         //设置模板支持的协议内省
         listMessageTemplatesRequest.setProtocol("sms");
