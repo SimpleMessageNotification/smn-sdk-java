@@ -17,10 +17,18 @@
  */
 package com.smn.model.request.template;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,13 +38,12 @@ import com.smn.model.AbstractSmnRequest;
 
 /**
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
- * @version 0.1
  * @author yangyanping
- * @date 2017年8月25日
+ * @author zhangyx
  * @version 0.2
+ * @version 0.8
+ * @date 2017年8月2日
+ * @date 2017年8月25日
  */
 public class ListMessageTemplatesRequest extends AbstractSmnRequest {
 
@@ -62,29 +69,29 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     /**
      * check params
      */
-    private void validation(){
+    private void validation() {
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("List message template request projectId is null.");
             throw new NullPointerException("List message template request projectId is null.");
         }
-        if (!ValidationUtil.validateProtocol(protocol)){
+        if (!ValidationUtil.validateProtocol(protocol)) {
             LOGGER.error("List message template request protocol is invalid.");
             throw new NullPointerException("List message template request protoclo is invalid.");
         }
-        if(!ValidationUtil.validateTemplateName(messageTemplateName)){
+        if (!ValidationUtil.validateTemplateName(messageTemplateName)) {
             LOGGER.error("List message template request messageTemplateName is invalid.");
             throw new NullPointerException("List message template request messageTemplateName is invalid.");
         }
-        if(!ValidationUtil.validateOffset(offset)){
+        if (!ValidationUtil.validateOffset(offset)) {
             LOGGER.error("List message template request offset is invalid.");
             throw new NullPointerException("List message template request offset is invalid.");
         }
-        if (!ValidationUtil.validateLimit(limit)){
+        if (!ValidationUtil.validateLimit(limit)) {
             LOGGER.error("List message template request limit is invalid.");
             throw new NullPointerException("List message template request limit is invalid.");
         }
     }
-    
+
     /**
      * build and get request url
      */
@@ -96,7 +103,43 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(projectId).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_MESSAGE_TEMPLATE);
+
+        // 设置get参数
+        String params = getRequestParamString();
+        if (!StringUtils.isEmpty(params)) {
+            sb.append("?").append(params);
+        }
+
         return sb.toString();
+    }
+
+    /**
+     * obtain the get request param
+     *
+     * @return the param string
+     */
+    private String getRequestParamString() {
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        if (!StringUtils.isBlank(protocol)) {
+            nameValuePairs.add(new BasicNameValuePair(SmnConstants.SMN_PROTOCOL, protocol));
+        }
+
+        if (!StringUtils.isBlank(messageTemplateName)) {
+            nameValuePairs.add(new BasicNameValuePair(SmnConstants.SMN_MESSAGE_TEMPLATE_NAME, messageTemplateName));
+        }
+
+        nameValuePairs.add(new BasicNameValuePair(SmnConstants.OFFSET, String.valueOf(offset)));
+        nameValuePairs.add(new BasicNameValuePair(SmnConstants.LIMIT, String.valueOf(limit)));
+
+        String param = "";
+        if (!nameValuePairs.isEmpty()) {
+            try {
+                param = EntityUtils.toString(new UrlEncodedFormEntity(nameValuePairs, Charset.forName("UTF-8")));
+            } catch (IOException e) {
+                throw new RuntimeException("get request param error");
+            }
+        }
+        return param;
     }
 
     /**
@@ -116,8 +159,7 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param protocol
-     *            the protocol to set
+     * @param protocol the protocol to set
      */
     public void setProtocol(String protocol) {
         this.protocol = protocol;
@@ -131,8 +173,7 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param messageTemplateName
-     *            the messageTemplateName to set
+     * @param messageTemplateName the messageTemplateName to set
      */
     public void setMessageTemplateName(String messageTemplateName) {
         this.messageTemplateName = messageTemplateName;
@@ -146,8 +187,7 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param offset
-     *            the offset to set
+     * @param offset the offset to set
      */
     public void setOffset(int offset) {
         this.offset = offset;
@@ -161,8 +201,7 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param limit
-     *            the limit to set
+     * @param limit the limit to set
      */
     public void setLimit(int limit) {
         this.limit = limit;
@@ -181,5 +220,4 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
                 .append(", xAuthToken=").append(xAuthToken).append("]");
         return builder.toString();
     }
-
 }

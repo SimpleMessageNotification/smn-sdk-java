@@ -153,7 +153,7 @@ public class HttpUtil {
 
     /**
      * 
-     * @param paramsMap
+     * @param headerParams
      *            http request including header , reqeusted url and body params
      * @param url
      *            restful post request
@@ -198,7 +198,7 @@ public class HttpUtil {
 
     /**
      * 
-     * @param paramsMap
+     * @param headerParams
      *            http request including header , reqeusted url and body params
      * @param url
      *            restful put request
@@ -244,7 +244,7 @@ public class HttpUtil {
 
     /**
      * 
-     * @param paramsMap
+     * @param headerParams
      *            http request including header and reqeusted url
      * @param url
      *            restful delete request
@@ -286,7 +286,7 @@ public class HttpUtil {
 
     /**
      * 
-     * @param paramsMap
+     * @param headerParams
      *            http request including header and reqeusted url
      * @param url
      *            restful get request

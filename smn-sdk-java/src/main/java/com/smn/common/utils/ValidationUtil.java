@@ -207,7 +207,10 @@ public class ValidationUtil {
         if (StringUtils.isEmpty(protocol)) {
             return false;
         }
-        if (protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_EMAIL) || protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_SMS) || protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_HTTPS) || protocol.equals(SmnConstants.SMN_SUB_PROTOCOL_HTTP)) {
+        if (SmnConstants.SMN_SUB_PROTOCOL_EMAIL.equals(protocol)
+                || SmnConstants.SMN_SUB_PROTOCOL_SMS.equals(protocol)
+                || SmnConstants.SMN_SUB_PROTOCOL_HTTPS.equals(protocol)
+                || SmnConstants.SMN_SUB_PROTOCOL_HTTP.equals(protocol)) {
             return true;
         }
         return false;

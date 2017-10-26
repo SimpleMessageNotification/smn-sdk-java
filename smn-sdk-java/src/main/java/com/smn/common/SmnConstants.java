@@ -213,6 +213,11 @@ public interface SmnConstants {
     String SMN_MESSAGE_TEMPLATE = "message_template";
 
     /**
+     * message template name
+     */
+    String SMN_MESSAGE_TEMPLATE_NAME = "message_template_name";
+
+    /**
      * sms signature
      */
     String SMS_SIGNATURE = "sms_sign";
@@ -327,19 +332,4 @@ public interface SmnConstants {
      * 查询统短信发送的状态统计类型，按小时查询
      */
     String HOURLY = "hourly";
-
-    /**
-     * 短信回调事件类型
-     */
-    public final static String SMS_CALLBACK_SUCCESS = "sms_success_event";
-
-    /**
-     * 短信回调事件类型
-     */
-    public final static String SMS_CALLBACK_FAIL = "sms_fail_event";
-
-    /**
-     * 短信回调事件类型
-     */
-    public final static String SMS_CALLBACK_REPLY = "sms_reply_event";
 }

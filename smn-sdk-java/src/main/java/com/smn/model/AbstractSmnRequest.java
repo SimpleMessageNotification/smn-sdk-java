@@ -108,6 +108,9 @@ public abstract class AbstractSmnRequest implements SmnRequest {
         return xAuthToken;
     }
 
+    /**
+     * @param xAuthToken the xAuthToken to set
+     */
     public void setxAuthToken(String xAuthToken) {
         this.xAuthToken = xAuthToken;
     }

@@ -22,7 +22,7 @@
  */
 package com.smn.service.impl;
 
-import com.smn.common.utils.HttpMethod;
+import com.smn.common.HttpMethod;
 import com.smn.model.request.sms.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

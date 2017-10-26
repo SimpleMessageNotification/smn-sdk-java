@@ -17,10 +17,18 @@
  */
 package com.smn.model.request.subscription;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +42,8 @@ import com.smn.model.AbstractSmnRequest;
  * @author yangyanping
  * @date 2017年8月24日 下午4:33:12
  * @version 0.2
+ * @author zhangyx
+ * @version 0.8
  */
 public class ListSubscriptionsRequest extends AbstractSmnRequest {
 
@@ -49,10 +59,6 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
      */
 
     private int limit = 100;
-    /**
-     * message access point
-     */
-    private String endpoint;
 
     /**
      * build and get request url
@@ -70,25 +76,36 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
                 .append(projectId).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUBSCRIPTIONS);
 
-        if (offset > 0) {
-            sb.append("?offset=" + offset);
-        } else {
-            sb.append("?offset=" + "0");
+        // 设置get参数
+        String params = getRequestParamString();
+        if (!StringUtils.isEmpty(params)) {
+            sb.append("?").append(params);
         }
-
-        if (limit > 0 && limit <= 100) {
-            sb.append("&limit=" + limit);
-        } else {
-            sb.append("&limit=").append("100");
-        }
-
-        if (StringUtils.isNoneBlank(endpoint)) {
-            sb.append("&endpoint=").append(endpoint);
-        }
-
         LOGGER.info("Request url is {}. ", sb.toString());
 
         return sb.toString();
+    }
+
+    /**
+     * obtain the get request param
+     *
+     * @return the param string
+     */
+    private String getRequestParamString() {
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+        nameValuePairs.add(new BasicNameValuePair(SmnConstants.OFFSET, String.valueOf(offset)));
+        nameValuePairs.add(new BasicNameValuePair(SmnConstants.LIMIT, String.valueOf(limit)));
+
+        String param = "";
+        if (!nameValuePairs.isEmpty()) {
+            try {
+                param = EntityUtils.toString(new UrlEncodedFormEntity(nameValuePairs, Charset.forName("UTF-8")));
+            } catch (IOException e) {
+                throw new RuntimeException("get request param error");
+            }
+        }
+        return param;
     }
 
     /**
@@ -132,21 +149,6 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
         if (100 >= limit && limit > 0) {
             this.limit = limit;
         }
-    }
-
-    /**
-     * @return the endpoint
-     */
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    /**
-     * @param endpoint
-     *            the endpoint to set
-     */
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
     }
 
     /**

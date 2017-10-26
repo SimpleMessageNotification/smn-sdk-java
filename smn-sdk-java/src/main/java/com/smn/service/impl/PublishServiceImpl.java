@@ -19,7 +19,7 @@ package com.smn.service.impl;
 
 import java.io.UnsupportedEncodingException;
 
-import com.smn.common.utils.HttpMethod;
+import com.smn.common.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

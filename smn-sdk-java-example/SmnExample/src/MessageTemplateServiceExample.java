@@ -12,7 +12,7 @@ import com.smn.service.impl.MessageTemplateServiceImpl;
  */
 public class MessageTemplateServiceExample {
     public static void main(String[] args) {
-        deleteMessageTemplate();
+        listMessageTemplate();
     }
 
     /**
