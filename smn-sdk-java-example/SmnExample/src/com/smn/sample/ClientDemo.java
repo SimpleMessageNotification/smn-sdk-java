@@ -1,6 +1,6 @@
 package com.smn.sample;
 
-import com.smn.account.HwAccount;
+import com.smn.account.CloudAccount;
 import com.smn.client.SmnClient;
 import com.smn.common.HttpResponse;
 import com.smn.common.utils.JsonUtil;
@@ -22,7 +22,7 @@ public class ClientDemo {
      * 构造函数
      */
     public ClientDemo() {
-        HwAccount hwAccount = new HwAccount(
+        CloudAccount hwAccount = new CloudAccount(
                 "******",
                 "******",
                 "******",
@@ -37,6 +37,32 @@ public class ClientDemo {
         clientDemo.smsPublish();
         clientDemo.listMessageTemplate();
         clientDemo.listSubscriptions();
+    }
+
+    /**
+     * 发送短信
+     */
+    public void smsPublish() {
+
+        // 构造请求对象
+        SmsPublishRequest smsPublishRequest = new SmsPublishRequest();
+        // 发送手机号码 号码格式 (+)(国家码)(手机号码)
+        String phone = "+8613688807587";
+        // 短信内容
+        String message = "您的验证码是:1234，请查收";
+        // 短信签名必填,需要在消息通知服务的自助页面申请签名，申请办理时间约2天
+        String signId = "6be340e91e5241e4b5d85837e6709104";
+
+        // 设置手机号码
+        smsPublishRequest.setEndpoint(phone);
+        // 设置短信内容，短信内容中不要出现【】或者[]
+        smsPublishRequest.setMessage(message);
+        // 设置短信签名
+        smsPublishRequest.setSignId(signId);
+
+        // 发送短信
+        HttpResponse res = smnClient.smsPublish(smsPublishRequest);
+        System.out.println(res);
     }
 
     /**
@@ -211,28 +237,77 @@ public class ClientDemo {
     }
 
     /**
-     * 发送短信
+     * 消息发布
      */
-    public void smsPublish() {
+    public void publishWithMessage() {
 
-        // 构造请求对象
-        SmsPublishRequest smsPublishRequest = new SmsPublishRequest();
-        // 发送手机号码 号码格式 (+)(国家码)(手机号码)
-        String phone = "+8613688807587";
-        // 短信内容
-        String message = "您的验证码是:1234，请查收";
-        // 短信签名必填,需要在消息通知服务的自助页面申请签名，申请办理时间约2天
-        String signId = "6be340e91e5241e4b5d85837e6709104";
+        //构造请求对象
+        PublishMsgRequest publishMsgRequest = new PublishMsgRequest();
 
-        // 设置手机号码
-        smsPublishRequest.setEndpoint(phone);
-        // 设置短信内容，短信内容中不要出现【】或者[]
-        smsPublishRequest.setMessage(message);
-        // 设置短信签名
-        smsPublishRequest.setSignId(signId);
+        // 设置要发送的topic
+        publishMsgRequest.setTopicUrn("urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi");
 
-        // 发送短信
-        HttpResponse res = smnClient.smsPublish(smsPublishRequest);
+        // 设置要发送的message大小
+        publishMsgRequest.setMessage("测试sdk发布消息，10.24");
+
+        // 设置主题
+        publishMsgRequest.setSubject("ready to release");
+
+        HttpResponse res = smnClient.publish(publishMsgRequest);
+        System.out.println(res);
+
+    }
+
+    /**
+     * 使用消息结构体方式的消息发布
+     */
+    public void publishMsgWithStruct() {
+        //构造请求对象
+        PublishMsgRequest publishMsgRequest = new PublishMsgRequest();
+
+        // 设置要发送的topic
+        publishMsgRequest.setTopicUrn("urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi");
+
+        // 构造message_struct
+        Map<String, Object> structMsgMap = new HashMap<String, Object>();
+        structMsgMap.put("default", "hello 2017,welcome struct test");
+        structMsgMap.put("sms", "hello 2017,welcome struct test");
+        structMsgMap.put("http", "hello 2017,welcome struct test");
+        structMsgMap.put("https", "hello 2017,welcome struct test");
+        structMsgMap.put("email", "hello 2017,welcome struct test");
+        publishMsgRequest.setMessageStructure(JsonUtil.getJsonStringByMap(structMsgMap));
+
+        // 设置主题
+        publishMsgRequest.setSubject("ready to release");
+
+        HttpResponse res = smnClient.publish(publishMsgRequest);
+        System.out.println(res);
+    }
+
+    /**
+     * 使用消息模板方式的消息发布
+     */
+    public void publishMsgWithTemplate() {
+        //构造请求对象
+        PublishMsgRequest publishMsgRequest = new PublishMsgRequest();
+
+        // 设置要发送的topic
+        publishMsgRequest.setTopicUrn("urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi");
+
+        // 构造模板标签对应的变量
+        Map<String, Object> tagsMap = new HashMap<String, Object>();
+        tagsMap.put("year", "2017");
+        tagsMap.put("name", "qiong");
+        tagsMap.put("company", "huawei");
+        publishMsgRequest.setTags(tagsMap);
+
+        // 设置消息模板名称
+        publishMsgRequest.setMessageTemplateName("createMessageTemplate");
+
+        // 设置主题
+        publishMsgRequest.setSubject("ready to release_sdk");
+
+        HttpResponse res = smnClient.publish(publishMsgRequest);
         System.out.println(res);
     }
 
@@ -495,80 +570,4 @@ public class ClientDemo {
         HttpResponse res = smnClient.listSubscriptionsByTopic(listSubscriptionsByTopicRequest);
         System.out.println(res);
     }
-
-    /**
-     * 消息发布
-     */
-    public void publishWithMessage() {
-
-        //构造请求对象
-        PublishMsgRequest publishMsgRequest = new PublishMsgRequest();
-
-        // 设置要发送的topic
-        publishMsgRequest.setTopicUrn("urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi");
-
-        // 设置要发送的message大小
-        publishMsgRequest.setMessage("测试sdk发布消息，10.24");
-
-        // 设置主题
-        publishMsgRequest.setSubject("ready to release");
-
-        HttpResponse res = smnClient.publish(publishMsgRequest);
-        System.out.println(res);
-
-    }
-
-    /**
-     * 使用消息结构体方式的消息发布
-     */
-    public void publishMsgWithStruct() {
-        //构造请求对象
-        PublishMsgRequest publishMsgRequest = new PublishMsgRequest();
-
-        // 设置要发送的topic
-        publishMsgRequest.setTopicUrn("urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi");
-
-        // 构造message_struct
-        Map<String, Object> structMsgMap = new HashMap<String, Object>();
-        structMsgMap.put("default", "hello 2017,welcome struct test");
-        structMsgMap.put("sms", "hello 2017,welcome struct test");
-        structMsgMap.put("http", "hello 2017,welcome struct test");
-        structMsgMap.put("https", "hello 2017,welcome struct test");
-        structMsgMap.put("email", "hello 2017,welcome struct test");
-        publishMsgRequest.setMessageStructure(JsonUtil.getJsonStringByMap(structMsgMap));
-
-        // 设置主题
-        publishMsgRequest.setSubject("ready to release");
-
-        HttpResponse res = smnClient.publish(publishMsgRequest);
-        System.out.println(res);
-    }
-
-    /**
-     * 使用消息模板方式的消息发布
-     */
-    public void publishMsgWithTemplate() {
-        //构造请求对象
-        PublishMsgRequest publishMsgRequest = new PublishMsgRequest();
-
-        // 设置要发送的topic
-        publishMsgRequest.setTopicUrn("urn:smn:cn-north-1:cffe4fc4c9a54219b60dbaf7b586e132:SmnApi");
-
-        // 构造模板标签对应的变量
-        Map<String, Object> tagsMap = new HashMap<String, Object>();
-        tagsMap.put("year", "2017");
-        tagsMap.put("name", "qiong");
-        tagsMap.put("company", "huawei");
-        publishMsgRequest.setTags(tagsMap);
-
-        // 设置消息模板名称
-        publishMsgRequest.setMessageTemplateName("createMessageTemplate");
-
-        // 设置主题
-        publishMsgRequest.setSubject("ready to release_sdk");
-
-        HttpResponse res = smnClient.publish(publishMsgRequest);
-        System.out.println(res);
-    }
-
 }
