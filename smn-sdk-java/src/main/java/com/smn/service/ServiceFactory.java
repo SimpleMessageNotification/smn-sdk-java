@@ -17,7 +17,7 @@
  */
 package com.smn.service;
 
-import com.smn.Exception.ClientException;
+import com.smn.exception.ClientException;
 import com.smn.common.ErrorCode;
 import com.smn.common.SmnConfiguration;
 import com.smn.common.SmnConstants;

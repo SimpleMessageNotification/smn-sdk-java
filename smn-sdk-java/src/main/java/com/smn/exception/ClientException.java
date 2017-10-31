@@ -1,4 +1,4 @@
-package com.smn.Exception;
+package com.smn.exception;
 
 import com.smn.common.ErrorCode;
 
