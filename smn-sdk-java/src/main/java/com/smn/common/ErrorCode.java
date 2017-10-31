@@ -17,32 +17,18 @@
  */
 package com.smn.common;
 
-/**
- * acess policy
- *
- * @author huangqiong
- * @version 0.1
- * @date 2017年8月2日
- */
-public final class AccessPolicyType {
-
-    private AccessPolicyType() {
+public final class ErrorCode {
+    private ErrorCode() {
 
     }
 
     /**
-     * set access policy to access topic resource
+     * 未知错误
      */
-    public final static String ACCESS_POLICY = "access_policy";
+    public final static String UNKNOWN = "-1";
 
     /**
-     * set profile of topic,to confirm for mail and sms
+     * 参数无效
      */
-    public final static String INTRODUCTION = "introduction";
-
-    /**
-     * support sms sign id
-     */
-    public final static String SMS_SIGN_ID = "sms_sign_id";
-
+    public final static String INVALID_PARAM = "-2";
 }

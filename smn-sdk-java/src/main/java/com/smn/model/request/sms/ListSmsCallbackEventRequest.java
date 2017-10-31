@@ -1,6 +1,5 @@
 package com.smn.model.request.sms;
 
-import com.smn.common.AccessPolicyType;
 import com.smn.common.SmnConstants;
 import com.smn.common.SmsCallbackEventType;
 import com.smn.model.AbstractSmnRequest;
@@ -49,7 +48,7 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
             throw new RuntimeException("List sms event request projectId is null.");
         }
 
-        if(!StringUtils.isBlank(projectId) && !isValidEventType()){
+        if(!StringUtils.isBlank(eventType) && !isValidEventType()){
             LOGGER.error("List sms event request event_type is invalid.");
             throw new RuntimeException("List sms event request event_type is invalid.");
         }

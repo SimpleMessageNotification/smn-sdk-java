@@ -39,7 +39,6 @@ import com.smn.service.impl.IAMServiceImpl;
 /**
  * @author huangqiong
  * @author zhangyx
- * @version 0.1
  * @version 0.7
  */
 public abstract class AbstractCommonService implements CommonService {
@@ -60,9 +59,27 @@ public abstract class AbstractCommonService implements CommonService {
     protected IAMService iamService;
 
     /**
-     * authentication bean
+     * cache authentication bean
      */
     protected AuthenticationBean authenticationBean;
+
+    /**
+     * 无参构造函数
+     */
+    public AbstractCommonService(){
+
+    }
+
+    /**
+     * 给定iamService和smnConfiguration构造实例
+     *
+     * @param iamService       the iamService to set
+     * @param smnConfiguration the smnConfiguration to set
+     */
+    public AbstractCommonService(IAMService iamService, SmnConfiguration smnConfiguration) {
+        this.iamService = iamService;
+        this.smnConfiguration = smnConfiguration;
+    }
 
     /*
      * (non-Javadoc)
@@ -106,15 +123,7 @@ public abstract class AbstractCommonService implements CommonService {
      * {@value} expiresTime
      */
     protected AuthenticationBean getAuthenticationBean() {
-        // 获取authenticationBean线程安全
-        if (null == authenticationBean || authenticationBean.isExpired()) {
-            synchronized (this) {
-                if (authenticationBean == null || authenticationBean.isExpired()) {
-                    authenticationBean = getIAMService().getAuthentication();
-                }
-            }
-        }
-        return authenticationBean;
+        return getIAMService().getAuthenticationBean();
     }
 
     /**

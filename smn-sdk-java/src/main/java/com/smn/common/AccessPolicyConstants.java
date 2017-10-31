@@ -19,93 +19,95 @@ package com.smn.common;
 
 /**
  * Common configuration for access policy
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
+ * @date 2017年8月2日
  */
-public interface AccessPolicyConstants {
+public final class AccessPolicyConstants {
+
+    private AccessPolicyConstants() {
+
+    }
 
     /**
      * sid
      */
-    String POLICY_STATEMENT_ID = "Sid";
+    public final static String POLICY_STATEMENT_ID = "Sid";
 
     /**
      * effect
      */
-    String POLICY_EFFECT = "Effect";
+    public final static String POLICY_EFFECT = "Effect";
 
     /**
      * resource
      */
-    String POLICY_RESOURCE = "Resource";
+    public final static String POLICY_RESOURCE = "Resource";
 
     /**
      * not resource
      */
-    String POLICY_NOT_RESOURCE = "NotResource";
+    public final static String POLICY_NOT_RESOURCE = "NotResource";
 
     /**
      * action
      */
-    String POLICY_ACTION = "Action";
+    public final static String POLICY_ACTION = "Action";
 
     /**
      * not action
      */
-    String POLICY_NOT_ACTION = "NotAction";
+    public final static String POLICY_NOT_ACTION = "NotAction";
 
     /**
      * principal
      */
-    String POLICY_PRINCIPAL = "Principal";
+    public final static String POLICY_PRINCIPAL = "Principal";
 
     /**
      * not principal
      */
-    String POLICY_NOT_PRINCIPAL = "NotPrincipal";
+    public final static String POLICY_NOT_PRINCIPAL = "NotPrincipal";
 
     /**
      * condition
      */
-    String POLICY_CONDITION = "Condition";
+    public final static String POLICY_CONDITION = "Condition";
 
     /**
      * id
      */
-    String POLICY_ID = "Id";
+    public final static String POLICY_ID = "Id";
 
     /**
      * version
      */
-    String POLICY_VERSION = "Version";
+    public final static String POLICY_VERSION = "Version";
 
     /**
      * statement
      */
-    String POLICY_STATEMENT = "Statement";
+    public final static String POLICY_STATEMENT = "Statement";
 
     /**
      * csp
      */
-    String POLICY_CSP = "CSP";
+    public final static String POLICY_CSP = "CSP";
 
     /**
      * allow
      */
-    String POLICY_EFFECT_ALLOW = "Allow";
+    public final static String POLICY_EFFECT_ALLOW = "Allow";
 
     /**
      * default policy
      */
-    String DEFAULT_POLICY_ID = "__default_policy_ID";
+    public final static String DEFAULT_POLICY_ID = "__default_policy_ID";
 
     /**
      * default version
      */
-    String DEFAULT_VERSION = "2016-09-07";
+    public final static String DEFAULT_VERSION = "2016-09-07";
 
 }

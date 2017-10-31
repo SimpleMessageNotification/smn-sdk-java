@@ -71,12 +71,6 @@ public class UpdateSmsCallbackEventRequest extends AbstractSmnRequest {
         if (null == callbacks || callbacks.size() == 0) {
             return false;
         }
-        for (SmsCallback smsCallback : callbacks) {
-            if (StringUtils.isEmpty(smsCallback.getEventType())
-                    || StringUtils.isEmpty(smsCallback.getTopicUrn())) {
-                return false;
-            }
-        }
         return true;
     }
 

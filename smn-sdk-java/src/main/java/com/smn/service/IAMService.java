@@ -19,7 +19,6 @@
  * @author huangqiong
  * @date 2017年8月3日 下午5:33:48
  * @version 0.1
- * 
  */
 package com.smn.service;
 
@@ -36,7 +35,7 @@ public interface IAMService {
     /**
      * Obtain authorization information from the IAM service, which includes
      * projectId, user token, and token expiration time
-     * 
+     *
      * @return {@code AuthBean} User token information
      * @throws RuntimeException
      *             Failed to get token, then ran out of the exception
@@ -44,8 +43,18 @@ public interface IAMService {
     AuthenticationBean getAuthentication() throws RuntimeException;
 
     /**
+     * Obtain authorization information
+     * <p>
+     * if exist, return
+     * or get a new instance from iam service
+     *
+     * @return {@link AuthenticationBean} User token information
+     */
+    AuthenticationBean getAuthenticationBean();
+
+    /**
      * set the user of name.
-     * 
+     *
      * @param userName
      *            the name of user
      */
@@ -53,7 +62,7 @@ public interface IAMService {
 
     /**
      * set the password of user
-     * 
+     *
      * @param password
      *            the password of user
      */
@@ -61,7 +70,7 @@ public interface IAMService {
 
     /**
      * set the name of domain
-     * 
+     *
      * @param domainName
      *            the name of domain
      */
@@ -69,7 +78,7 @@ public interface IAMService {
 
     /**
      * set the id of region
-     * 
+     *
      * @param regionId
      *            the id of region
      */
@@ -77,7 +86,7 @@ public interface IAMService {
 
     /**
      * set the url of iam
-     * 
+     *
      * @param iamUrl
      *            the url of iam
      */

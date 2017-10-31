@@ -20,6 +20,8 @@ package com.smn.service.impl;
 import java.io.UnsupportedEncodingException;
 
 import com.smn.common.HttpMethod;
+import com.smn.common.SmnConfiguration;
+import com.smn.service.IAMService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,10 +32,9 @@ import com.smn.service.PublishService;
 
 /**
  * Publish service implemented
- * 
+ *
  * @author huangqiong
  * @author zhangyx
- * @version 0.6
  * @version 0.7
  */
 public class PublishServiceImpl extends AbstractCommonService implements PublishService {
@@ -43,15 +44,32 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
     private static final Logger LOGGER = LoggerFactory.getLogger(PublishServiceImpl.class);
 
     /**
+     * 无参构造函数
+     */
+    public PublishServiceImpl() {
+        super();
+    }
+
+    /**
+     * 给定iamService和smnConfiguration构造实例
+     *
+     * @param iamService       the iamService to set
+     * @param smnConfiguration the smnConfiguration to set
+     */
+    public PublishServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
+        super(iamService, smnConfiguration);
+    }
+
+    /**
      * (non-Javadoc)
      *
      * @see PublishService#publish(PublishMsgRequest)
      */
-	public HttpResponse publish(PublishMsgRequest smnRequest) throws RuntimeException, UnsupportedEncodingException {
+    public HttpResponse publish(PublishMsgRequest smnRequest) throws RuntimeException {
         LOGGER.info("Start to publish message.");
 
         try {
-			return sendRequest(smnRequest, HttpMethod.POST);
+            return sendRequest(smnRequest, HttpMethod.POST);
         } catch (Exception e) {
             LOGGER.error("Failed to publish message.", e);
             throw new RuntimeException("Failed to publish message.", e);

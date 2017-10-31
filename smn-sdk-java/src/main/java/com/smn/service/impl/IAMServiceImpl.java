@@ -19,7 +19,6 @@
  * @author huangqiong
  * @date 2017年8月3日 下午5:36:41
  * @version 0.1
- * 
  */
 package com.smn.service.impl;
 
@@ -36,7 +35,6 @@ import com.smn.service.IAMService;
 /**
  * @author huangqiong
  * @author zhangyx
- * @version 0.1
  * @version 0.7
  */
 public class IAMServiceImpl implements IAMService {
@@ -76,6 +74,11 @@ public class IAMServiceImpl implements IAMService {
      * IAM获取token请求的请求体
      */
     private String requestMessage = null;
+
+    /**
+     * cache authentication bean
+     */
+    protected AuthenticationBean authenticationBean;
 
     /**
      * constructor
@@ -122,8 +125,7 @@ public class IAMServiceImpl implements IAMService {
      * projectId, user token, and token expiration time
      *
      * @return {@link AuthenticationBean} User token information
-     * @throws RuntimeException
-     *             Failed to get token, then ran out of the exception
+     * @throws RuntimeException Failed to get token, then ran out of the exception
      */
     public AuthenticationBean getAuthentication() throws RuntimeException {
 
@@ -143,6 +145,26 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
+     * Obtain authorization information
+     * <p>
+     * if exist, return
+     * or get from iam service
+     *
+     * @return {@link AuthenticationBean} User token information
+     */
+    public AuthenticationBean getAuthenticationBean() {
+        // 获取authenticationBean线程安全
+        if (null == authenticationBean || authenticationBean.isExpired()) {
+            synchronized (this) {
+                if (authenticationBean == null || authenticationBean.isExpired()) {
+                    authenticationBean = getAuthentication();
+                }
+            }
+        }
+        return authenticationBean;
+    }
+
+    /**
      * @return the expiredInterval
      */
     public long getExpiredInterval() {
@@ -150,8 +172,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param expiredInterval
-     *            the expiredInterval to set
+     * @param expiredInterval the expiredInterval to set
      */
     public void setExpiredInterval(long expiredInterval) {
         this.expiredInterval = expiredInterval;
@@ -193,8 +214,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param userName
-     *            the userName to set
+     * @param userName the userName to set
      */
     public void setUserName(String userName) {
         if (userName == null) {
@@ -205,8 +225,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param password
-     *            the password to set
+     * @param password the password to set
      */
     public void setPassword(String password) {
         if (password == null) {
@@ -217,8 +236,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param domainName
-     *            the domainName to set
+     * @param domainName the domainName to set
      */
     public void setDomainName(String domainName) {
         if (domainName == null) {
@@ -229,8 +247,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param regionId
-     *            the regionId to set
+     * @param regionId the regionId to set
      */
     public void setRegionId(String regionId) {
         if (regionId == null) {
@@ -241,8 +258,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param iamUrl
-     *            the iamUrl to set
+     * @param iamUrl the iamUrl to set
      */
     public void setIamUrl(String iamUrl) {
         if (iamUrl == null) {

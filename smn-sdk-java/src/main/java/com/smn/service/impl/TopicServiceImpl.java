@@ -17,6 +17,8 @@
  */
 package com.smn.service.impl;
 
+import com.smn.common.SmnConfiguration;
+import com.smn.service.IAMService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +50,23 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
      * LOGGER
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
+
+    /**
+     * 无参构造函数
+     */
+    public TopicServiceImpl() {
+        super();
+    }
+
+    /**
+     * 给定iamService和smnConfiguration构造实例
+     *
+     * @param iamService       the iamService to set
+     * @param smnConfiguration the smnConfiguration to set
+     */
+    public TopicServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
+        super(iamService, smnConfiguration);
+    }
 
     /**
      * (non-Javadoc)

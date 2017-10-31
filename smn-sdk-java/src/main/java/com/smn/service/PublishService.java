@@ -17,8 +17,6 @@
  */
 package com.smn.service;
 
-import java.io.UnsupportedEncodingException;
-
 import com.smn.common.HttpResponse;
 import com.smn.model.request.publish.PublishMsgRequest;
 
@@ -50,6 +48,6 @@ public interface PublishService extends CommonService {
 	 * @throws RuntimeException
 	 *             connect error,fail to get iam token ,throw exception
 	 */
-	HttpResponse publish(PublishMsgRequest publishMsgRequest) throws RuntimeException, UnsupportedEncodingException;
+	HttpResponse publish(PublishMsgRequest publishMsgRequest) throws RuntimeException;
 
 }
