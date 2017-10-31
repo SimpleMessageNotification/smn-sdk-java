@@ -20,6 +20,7 @@ package com.smn.account;
 import com.smn.client.DefaultSmnClient;
 import com.smn.client.SmnClient;
 import com.smn.common.SmnConfiguration;
+import com.smn.http.HttpConfiguration;
 import com.smn.service.ServiceFactory;
 
 /**
@@ -87,6 +88,23 @@ public class CloudAccount {
             synchronized (this) {
                 if (smnClient == null) {
                     ServiceFactory serviceFactory = new ServiceFactory(smnConfiguration);
+                    smnClient = new DefaultSmnClient(serviceFactory);
+                }
+            }
+        }
+        return smnClient;
+    }
+
+    /**
+     * get smn client by custom http configuration
+     *
+     * @return the smnClient instance
+     */
+    public SmnClient getSmnClient(HttpConfiguration httpConfiguration) {
+        if (smnClient == null) {
+            synchronized (this) {
+                if (smnClient == null) {
+                    ServiceFactory serviceFactory = new ServiceFactory(smnConfiguration, httpConfiguration);
                     smnClient = new DefaultSmnClient(serviceFactory);
                 }
             }

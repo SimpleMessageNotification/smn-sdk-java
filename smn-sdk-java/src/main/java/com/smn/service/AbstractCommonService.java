@@ -27,6 +27,7 @@ import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.common.SmnConstants;
 import com.smn.common.utils.HttpUtil;
+import com.smn.http.HttpConfiguration;
 import com.smn.model.AbstractSmnRequest;
 import com.smn.model.AuthenticationBean;
 import com.smn.service.impl.IAMServiceImpl;
@@ -58,9 +59,9 @@ public abstract class AbstractCommonService implements CommonService {
     protected IAMService iamService;
 
     /**
-     * cache authentication bean
+     * http config
      */
-    protected AuthenticationBean authenticationBean;
+    protected HttpConfiguration httpConfiguration;
 
     /**
      * 无参构造函数
@@ -75,9 +76,10 @@ public abstract class AbstractCommonService implements CommonService {
      * @param iamService       the iamService to set
      * @param smnConfiguration the smnConfiguration to set
      */
-    public AbstractCommonService(IAMService iamService, SmnConfiguration smnConfiguration) {
+    public AbstractCommonService(IAMService iamService, SmnConfiguration smnConfiguration, HttpConfiguration httpConfiguration) {
         this.iamService = iamService;
         this.smnConfiguration = smnConfiguration;
+        this.httpConfiguration = httpConfiguration;
     }
 
     /*
@@ -100,13 +102,18 @@ public abstract class AbstractCommonService implements CommonService {
         if (smnConfiguration == null) {
             smnConfiguration = new SmnConfiguration();
         }
+
+        if (httpConfiguration == null) {
+            httpConfiguration = new HttpConfiguration();
+        }
+
         if (iamService == null) {
             String iamUrl = new StringBuilder().append(SmnConstants.HTTPS_PREFFIX)
                     .append(smnConfiguration.getIamEndpoint()).append(SmnConstants.URL_DELIMITER)
                     .append(SmnConstants.IAM_URI).toString();
             LOGGER.info("Iam url is{}.", iamUrl);
             iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
-                    smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl);
+                    smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl, httpConfiguration);
         }
 
         return iamService;
@@ -162,6 +169,10 @@ public abstract class AbstractCommonService implements CommonService {
      * @throws Exception connect error throw exception
      */
     protected <Request extends AbstractSmnRequest> HttpResponse sendRequest(Request smnRequest, HttpMethod httpMethod) throws Exception {
+        if (httpConfiguration == null) {
+            httpConfiguration = new HttpConfiguration();
+        }
+
         Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
         Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
         String projectId = getAuthenticationBean().getProjectId();
@@ -171,7 +182,7 @@ public abstract class AbstractCommonService implements CommonService {
         String url = buildRequestUrl(smnRequest.getRequestUri());
         buildRequestHeader(requestHeader);
 
-        HttpResponse httpResponse = HttpUtil.sendRequest(requestHeader, requestParam, url, httpMethod);
+        HttpResponse httpResponse = HttpUtil.sendRequest(requestHeader, requestParam, url, httpMethod, httpConfiguration);
 
         return httpResponse;
     }

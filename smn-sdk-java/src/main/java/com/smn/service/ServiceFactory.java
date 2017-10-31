@@ -19,6 +19,7 @@ package com.smn.service;
 
 import com.smn.common.SmnConfiguration;
 import com.smn.common.SmnConstants;
+import com.smn.http.HttpConfiguration;
 import com.smn.service.impl.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,12 +73,28 @@ public class ServiceFactory {
     private SmnConfiguration smnConfiguration;
 
     /**
-     * 给定配置文件，构造factory实例
+     * smn configuration
+     */
+    private HttpConfiguration httpConfiguration;
+
+    /**
+     * 给定smn配置文件，构造factory实例
      *
      * @param smnConfiguration smn配置
      */
     public ServiceFactory(SmnConfiguration smnConfiguration) {
         this.smnConfiguration = smnConfiguration;
+        this.httpConfiguration = new HttpConfiguration();
+    }
+
+    /**
+     * 给定smn和http配置文件，构造factory实例
+     *
+     * @param smnConfiguration smn配置
+     */
+    public ServiceFactory(SmnConfiguration smnConfiguration, HttpConfiguration httpConfiguration) {
+        this.smnConfiguration = smnConfiguration;
+        this.httpConfiguration = httpConfiguration;
     }
 
     /**
@@ -100,7 +117,7 @@ public class ServiceFactory {
                             .append(SmnConstants.IAM_URI).toString();
                     LOGGER.info("Iam url is{}.", iamUrl);
                     iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
-                            smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl);
+                            smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl, httpConfiguration);
                 }
             }
         }
@@ -123,7 +140,7 @@ public class ServiceFactory {
         if (smsService == null) {
             synchronized (ServiceFactory.class) {
                 if (smsService == null) {
-                    smsService = new SmsServiceImpl(iamService, smnConfiguration);
+                    smsService = new SmsServiceImpl(iamService, smnConfiguration, httpConfiguration);
                 }
             }
         }
@@ -145,7 +162,7 @@ public class ServiceFactory {
         if (messageTemplateService == null) {
             synchronized (ServiceFactory.class) {
                 if (messageTemplateService == null) {
-                    messageTemplateService = new MessageTemplateServiceImpl(iamService, smnConfiguration);
+                    messageTemplateService = new MessageTemplateServiceImpl(iamService, smnConfiguration, httpConfiguration);
                 }
             }
         }
@@ -167,7 +184,7 @@ public class ServiceFactory {
         if (subscriptionService == null) {
             synchronized (ServiceFactory.class) {
                 if (subscriptionService == null) {
-                    subscriptionService = new SubscriptionServiceImpl(iamService, smnConfiguration);
+                    subscriptionService = new SubscriptionServiceImpl(iamService, smnConfiguration, httpConfiguration);
                 }
             }
         }
@@ -189,7 +206,7 @@ public class ServiceFactory {
         if (publishService == null) {
             synchronized (ServiceFactory.class) {
                 if (publishService == null) {
-                    publishService = new PublishServiceImpl(iamService, smnConfiguration);
+                    publishService = new PublishServiceImpl(iamService, smnConfiguration, httpConfiguration);
                 }
             }
         }
@@ -211,7 +228,7 @@ public class ServiceFactory {
         if (topicService == null) {
             synchronized (ServiceFactory.class) {
                 if (topicService == null) {
-                    topicService = new TopicServiceImpl(iamService, smnConfiguration);
+                    topicService = new TopicServiceImpl(iamService, smnConfiguration, httpConfiguration);
                 }
             }
         }
