@@ -17,8 +17,6 @@
  */
 package com.smn.service;
 
-import com.smn.exception.ClientException;
-import com.smn.common.ErrorCode;
 import com.smn.common.SmnConfiguration;
 import com.smn.common.SmnConstants;
 import com.smn.service.impl.*;
@@ -92,7 +90,7 @@ public class ServiceFactory {
     private IAMService getIAMService() {
 
         if (smnConfiguration == null) {
-            throw new ClientException(ErrorCode.INVALID_PARAM, "smn configuration is null");
+            throw new RuntimeException("smn configuration is null");
         }
         if (iamService == null) {
             synchronized (ServiceFactory.class) {
@@ -119,7 +117,7 @@ public class ServiceFactory {
         IAMService iamService = getIAMService();
 
         if (iamService == null) {
-            throw new ClientException(ErrorCode.UNKNOWN, "get iam service fail");
+            throw new RuntimeException("get iam service fail");
         }
 
         if (smsService == null) {
@@ -141,7 +139,7 @@ public class ServiceFactory {
         IAMService iamService = getIAMService();
 
         if (iamService == null) {
-            throw new ClientException(ErrorCode.UNKNOWN, "get iam service fail");
+            throw new RuntimeException("get iam service fail");
         }
 
         if (messageTemplateService == null) {
@@ -163,7 +161,7 @@ public class ServiceFactory {
         IAMService iamService = getIAMService();
 
         if (iamService == null) {
-            throw new ClientException(ErrorCode.UNKNOWN, "get iam service fail");
+            throw new RuntimeException("get iam service fail");
         }
 
         if (subscriptionService == null) {
@@ -185,7 +183,7 @@ public class ServiceFactory {
         IAMService iamService = getIAMService();
 
         if (iamService == null) {
-            throw new ClientException(ErrorCode.UNKNOWN, "get iam service fail");
+            throw new RuntimeException("get iam service fail");
         }
 
         if (publishService == null) {
@@ -207,7 +205,7 @@ public class ServiceFactory {
         IAMService iamService = getIAMService();
 
         if (iamService == null) {
-            throw new ClientException(ErrorCode.UNKNOWN, "get iam service fail");
+            throw new RuntimeException("get iam service fail");
         }
 
         if (topicService == null) {
