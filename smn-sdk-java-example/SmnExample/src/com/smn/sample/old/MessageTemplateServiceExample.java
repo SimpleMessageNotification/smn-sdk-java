@@ -1,3 +1,5 @@
+package com.smn.sample.old;
+
 import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.model.request.template.*;

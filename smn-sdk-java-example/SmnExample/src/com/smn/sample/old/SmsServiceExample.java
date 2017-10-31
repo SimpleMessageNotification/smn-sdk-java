@@ -1,4 +1,4 @@
-
+package com.smn.sample.old;
 /*
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -118,7 +118,7 @@ public class SmsServiceExample {
         listSmsMsgReportRequest.setStatus("1");
 
         // 设置接收短信的手机
-        listSmsMsgReportRequest.setStatus("13688800000");
+        listSmsMsgReportRequest.setMobile("13688800000");
 
         // 设置每页的最大条目数
         listSmsMsgReportRequest.setLimit(100);

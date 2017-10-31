@@ -1,3 +1,5 @@
+package com.smn.sample.old;
+
 import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.common.utils.JsonUtil;
@@ -49,12 +51,9 @@ public class PublishServiceExample {
         // 设置主题
         publishMsgRequest.setSubject("ready to release");
 
-        try {
-            HttpResponse res = publishService.publish(publishMsgRequest);
-            System.out.println(res);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        HttpResponse res = publishService.publish(publishMsgRequest);
+        System.out.println(res);
+
     }
 
     /**
@@ -95,12 +94,9 @@ public class PublishServiceExample {
         // 设置主题
         publishMsgRequest.setSubject("ready to release");
 
-        try {
-            HttpResponse res = publishService.publish(publishMsgRequest);
-            System.out.println(res);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        HttpResponse res = publishService.publish(publishMsgRequest);
+        System.out.println(res);
+
     }
 
     /**
@@ -142,11 +138,8 @@ public class PublishServiceExample {
         // 设置主题
         publishMsgRequest.setSubject("ready to release");
 
-        try {
-            HttpResponse res = publishService.publish(publishMsgRequest);
-            System.out.println(res);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        HttpResponse res = publishService.publish(publishMsgRequest);
+        System.out.println(res);
+
     }
 }

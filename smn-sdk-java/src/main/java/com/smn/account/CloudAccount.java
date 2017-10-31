@@ -23,12 +23,12 @@ import com.smn.common.SmnConfiguration;
 import com.smn.service.ServiceFactory;
 
 /**
- * hw cloud account
+ * smn cloud account
  *
  * @author zhangyx
  * @version 0.9
  */
-public class HwCloudAccount {
+public class CloudAccount {
 
     /**
      * user name
@@ -68,7 +68,7 @@ public class HwCloudAccount {
      * @param domainName the domainName to set
      * @param regionId   the regionId to set
      */
-    public HwCloudAccount(String userName, String password, String domainName, String regionId) {
+    public CloudAccount(String userName, String password, String domainName, String regionId) {
         this.userName = userName;
         this.password = password;
         this.domainName = domainName;
