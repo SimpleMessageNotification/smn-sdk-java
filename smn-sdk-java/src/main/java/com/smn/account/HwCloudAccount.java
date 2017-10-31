@@ -22,7 +22,7 @@ import com.smn.client.SmnClient;
 import com.smn.common.SmnConfiguration;
 import com.smn.service.ServiceFactory;
 
-public class HwAccount {
+public class HwCloudAccount {
 
     /**
      * user name
@@ -62,7 +62,7 @@ public class HwAccount {
      * @param domainName the domainName to set
      * @param regionId   the regionId to set
      */
-    public HwAccount(String userName, String password, String domainName, String regionId) {
+    public HwCloudAccount(String userName, String password, String domainName, String regionId) {
         this.userName = userName;
         this.password = password;
         this.domainName = domainName;
