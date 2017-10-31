@@ -47,9 +47,9 @@ public class SmsServiceExample {
         // 设置必要请求参数
         SmnConfiguration smnConfiguration = new SmnConfiguration();
         // 设置DomainName/设置用户名/设置密码
-        smnConfiguration.setDomainName("liuqiangqiang");
-        smnConfiguration.setUserName("liuqiangqiang");
-        smnConfiguration.setPassword("lj@19871114");
+        smnConfiguration.setDomainName("XXX");
+        smnConfiguration.setUserName("XXXX");
+        smnConfiguration.setPassword("XXXXX");
 
         // 设置访问的地狱
         // 华为云华北区 cn-north-1
