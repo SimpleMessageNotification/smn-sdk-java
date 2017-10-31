@@ -22,6 +22,12 @@ import com.smn.client.SmnClient;
 import com.smn.common.SmnConfiguration;
 import com.smn.service.ServiceFactory;
 
+/**
+ * hw cloud account
+ *
+ * @author zhangyx
+ * @version 0.9
+ */
 public class HwCloudAccount {
 
     /**
