@@ -22,19 +22,18 @@
  */
 package com.smn.service;
 
-import java.util.Map;
-
-import com.smn.common.HttpResponse;
 import com.smn.common.HttpMethod;
+import com.smn.common.HttpResponse;
+import com.smn.common.SmnConfiguration;
+import com.smn.common.SmnConstants;
 import com.smn.common.utils.HttpUtil;
 import com.smn.model.AbstractSmnRequest;
+import com.smn.model.AuthenticationBean;
+import com.smn.service.impl.IAMServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConfiguration;
-import com.smn.common.SmnConstants;
-import com.smn.model.AuthenticationBean;
-import com.smn.service.impl.IAMServiceImpl;
+import java.util.Map;
 
 /**
  * @author huangqiong
@@ -66,7 +65,7 @@ public abstract class AbstractCommonService implements CommonService {
     /**
      * 无参构造函数
      */
-    public AbstractCommonService(){
+    public AbstractCommonService() {
 
     }
 
@@ -172,16 +171,7 @@ public abstract class AbstractCommonService implements CommonService {
         String url = buildRequestUrl(smnRequest.getRequestUri());
         buildRequestHeader(requestHeader);
 
-        HttpResponse httpResponse = null;
-        if (httpMethod == HttpMethod.GET) {
-            httpResponse = HttpUtil.get(requestHeader, url);
-        } else if (httpMethod == HttpMethod.DELETE) {
-            httpResponse = HttpUtil.delete(requestHeader, url);
-        } else if (httpMethod == HttpMethod.POST) {
-            httpResponse = HttpUtil.post(requestHeader, requestParam, url);
-        } else if (httpMethod == HttpMethod.PUT) {
-            httpResponse = HttpUtil.put(requestHeader, requestParam, url);
-        }
+        HttpResponse httpResponse = HttpUtil.sendRequest(requestHeader, requestParam, url, httpMethod);
 
         return httpResponse;
     }

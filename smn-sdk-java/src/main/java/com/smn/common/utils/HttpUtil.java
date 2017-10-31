@@ -19,23 +19,15 @@
  * @author huangqiong
  * @date 2017年8月3日 下午5:19:22
  * @version 0.1
- * 
  */
 package com.smn.common.utils;
 
-import java.net.ConnectException;
-import java.util.Map;
-
-import javax.net.ssl.SSLContext;
-
+import com.smn.common.HttpMethod;
+import com.smn.common.HttpResponse;
+import com.smn.model.AuthenticationBean;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
@@ -48,13 +40,14 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.HttpResponse;
-import com.smn.model.AuthenticationBean;
+import javax.net.ssl.SSLContext;
+import java.net.ConnectException;
+import java.util.Map;
 
 /**
  * @author huangqiong
- * @date 2017年8月3日 下午5:19:22
  * @version 0.1
+ * @date 2017年8月3日 下午5:19:22
  */
 public class HttpUtil {
 
@@ -102,14 +95,11 @@ public class HttpUtil {
 
     /**
      * Get auth info from IAM service
-     * 
-     * @param iamUrl
-     *            the URL of IAM service
-     * @param bodyMessage
-     *            the body of message
+     *
+     * @param iamUrl      the URL of IAM service
+     * @param bodyMessage the body of message
      * @return {@code AuthBean}
-     * @throws Exception
-     *             Failed to get IAM information, throw an exception
+     * @throws Exception Failed to get IAM information, throw an exception
      */
     @SuppressWarnings("rawtypes")
     public static AuthenticationBean postForIamToken(String iamUrl, String bodyMessage) throws Exception {
@@ -152,36 +142,72 @@ public class HttpUtil {
     }
 
     /**
-     * 
-     * @param headerParams
-     *            http request including header , reqeusted url and body params
-     * @param url
-     *            restful post request
-     * @return {@code Map} request_id,status
-     * @throws Exception
+     * to create http request instance
+     *
+     * @param headerParams the header parmas
+     * @param bodyParams   the body params
+     * @param url          the url
+     * @param httpMethod   the request http method
+     * @return the request instance
      */
-	public static HttpResponse post(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
+    private static HttpRequestBase createHttpRequest(Map<String, String> headerParams, Map<String, Object> bodyParams, String url, HttpMethod httpMethod) {
+        HttpRequestBase httpRequestBase = null;
+        if (httpMethod == HttpMethod.GET) {
+            HttpGet httpGet = new HttpGet(url);
+            httpGet.setConfig(getRequestConfig());
+            httpRequestBase = httpGet;
+        } else if (httpMethod == HttpMethod.DELETE) {
+            HttpDelete httpDelete = new HttpDelete(url);
+            httpRequestBase = httpDelete;
+        } else if (httpMethod == HttpMethod.POST) {
+            HttpPost httpPost = new HttpPost(url);
+            String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
+            httpPost.setEntity(new StringEntity(bodyString, ContentType.APPLICATION_JSON));
+            httpRequestBase = httpPost;
+        } else if (httpMethod == HttpMethod.PUT) {
+            HttpPut httpPut = new HttpPut(url);
+            String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
+            httpPut.setEntity(new StringEntity(bodyString, ContentType.APPLICATION_JSON));
+            httpRequestBase = httpPut;
+        } else if (httpMethod == HttpMethod.HEAD) {
+            HttpHead httpHead = new HttpHead(url);
+            httpHead.setConfig(getRequestConfig());
+            httpRequestBase = httpHead;
+        } else {
+            throw new IllegalArgumentException(String.format(
+                    "Unsupported HTTP method:%s .", httpMethod.getName()));
+        }
+        httpRequestBase.setConfig(getRequestConfig());
+        buildHttpHeader(headerParams, httpRequestBase);
+        return httpRequestBase;
+    }
+
+    /**
+     * to send request
+     *
+     * @param headerParams the header parmas
+     * @param bodyParams   the body params
+     * @param url          the url
+     * @param httpMethod   the request http method
+     * @return the response
+     */
+    public static HttpResponse sendRequest(Map<String, String> headerParams, Map<String, Object> bodyParams, String url, HttpMethod httpMethod)
             throws Exception {
         LOGGER.debug("Start to post request,requestUrl is {}.", url);
 
         CloseableHttpClient httpclient = getHttpClient();
         try {
-            HttpPost httpPost = new HttpPost(url);
-            httpPost.setConfig(getRequestConfig());
-            Map<String, String> requestHeader = headerParams;
-            buildHttpHeader(requestHeader, httpPost);
-            String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
-            httpPost.setEntity(new StringEntity(bodyString, ContentType.APPLICATION_JSON));
-            CloseableHttpResponse response = httpclient.execute(httpPost);
+            HttpRequestBase httpRequestBase = createHttpRequest(headerParams, bodyParams, url, httpMethod);
+            CloseableHttpResponse response = httpclient.execute(httpRequestBase);
             try {
                 int status = response.getStatusLine().getStatusCode();
                 HttpEntity entity = response.getEntity();
                 String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
-				HttpResponse httpResponse = new HttpResponse();
-				httpResponse.setHttpCode(status);
+                HttpResponse httpResponse = new HttpResponse();
+                httpResponse.setHttpCode(status);
                 Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-				httpResponse.setBody(messageMap);
-				return httpResponse;
+                httpResponse.setBody(messageMap);
+                return httpResponse;
             } catch (ConnectException e) {
                 LOGGER.error("Post request connected error.", e);
                 throw new Exception(e);
@@ -197,135 +223,8 @@ public class HttpUtil {
     }
 
     /**
-     * 
-     * @param headerParams
-     *            http request including header , reqeusted url and body params
-     * @param url
-     *            restful put request
-     * @return {@code Map} request_id,status
-     * @throws Exception
-     */
-	public static HttpResponse put(Map<String, String> headerParams, Map<String, Object> bodyParams, String url)
-            throws Exception {
-        LOGGER.debug("Start to put request,requestUrl is {}.", url);
-
-        CloseableHttpClient httpclient = getHttpClient();
-        try {
-            HttpPut httpPut = new HttpPut(url);
-            httpPut.setConfig(getRequestConfig());
-            Map<String, String> requestHeader = headerParams;
-            buildHttpHeader(requestHeader, httpPut);
-            String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
-            LOGGER.debug("Put request body String:" + bodyString);
-            httpPut.setEntity(new StringEntity(bodyString, ContentType.APPLICATION_JSON));
-            CloseableHttpResponse response = httpclient.execute(httpPut);
-            try {
-                int status = response.getStatusLine().getStatusCode();
-                HttpEntity entity = response.getEntity();
-                String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
-				HttpResponse httpResponse = new HttpResponse();
-				httpResponse.setHttpCode(status);
-                Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-				httpResponse.setBody(messageMap);
-				return httpResponse;
-            } catch (ConnectException e) {
-                LOGGER.error("Smn post request connected error.", e);
-                throw new Exception(e);
-            } catch (Exception e) {
-                LOGGER.error("Smn post request error.", e);
-                throw new Exception(e);
-            } finally {
-                response.close();
-            }
-        } finally {
-            httpclient.close();
-        }
-    }
-
-    /**
-     * 
-     * @param headerParams
-     *            http request including header and reqeusted url
-     * @param url
-     *            restful delete request
-     * @return {@code Map} request_id,status
-     * @throws Exception
-     */
-	public static HttpResponse delete(Map<String, String> headerParams, String url) throws Exception {
-        LOGGER.debug("Start to delete request,requestUrl is {}.", url);
-
-        CloseableHttpClient httpclient = getHttpClient();
-        try {
-            HttpDelete httpDelete = new HttpDelete(url);
-            httpDelete.setConfig(getRequestConfig());
-            Map<String, String> requestHeader = headerParams;
-            buildHttpHeader(requestHeader, httpDelete);
-            CloseableHttpResponse response = httpclient.execute(httpDelete);
-            try {
-                int status = response.getStatusLine().getStatusCode();
-                HttpEntity entity = response.getEntity();
-                String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
-				HttpResponse httpResponse = new HttpResponse();
-				httpResponse.setHttpCode(status);
-                Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-				httpResponse.setBody(messageMap);
-				return httpResponse;
-            } catch (ConnectException e) {
-                LOGGER.error("Smn delete request connected error.", e);
-                throw new Exception(e);
-            } catch (Exception e) {
-                LOGGER.error("Smn delete request error.", e);
-                throw new Exception(e);
-            } finally {
-                response.close();
-            }
-        } finally {
-            httpclient.close();
-        }
-    }
-
-    /**
-     * 
-     * @param headerParams
-     *            http request including header and reqeusted url
-     * @param url
-     *            restful get request
-     * @return {@code Map} request_id,status
-     * @throws Exception
-     */
-	public static HttpResponse get(Map<String, String> headerParams, String url) throws Exception {
-        CloseableHttpClient httpclient = getHttpClient();
-        try {
-            HttpGet httpGet = new HttpGet(url);
-            httpGet.setConfig(getRequestConfig());
-            buildHttpHeader(headerParams, httpGet);
-            CloseableHttpResponse response = httpclient.execute(httpGet);
-            try {
-                int status = response.getStatusLine().getStatusCode();
-                HttpEntity entity = response.getEntity();
-                String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
-				HttpResponse httpResponse = new HttpResponse();
-				httpResponse.setHttpCode(status);
-                Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-				httpResponse.setBody(messageMap);
-				return httpResponse;
-            } catch (ConnectException e) {
-                LOGGER.error("Smn get request connected error.", e);
-                throw new Exception(e);
-            } catch (Exception e) {
-                LOGGER.error("Smn get request error.", e);
-                throw new Exception(e);
-            } finally {
-                response.close();
-            }
-        } finally {
-            httpclient.close();
-        }
-    }
-
-    /**
      * Construct http header
-     * 
+     *
      * @param requestHeaderMap
      * @param httpMethod
      */
@@ -341,7 +240,7 @@ public class HttpUtil {
 
     /**
      * Construct httpclient with SSL protocol
-     * 
+     *
      * @return {@code CloseableHttpClient}
      * @throws Exception
      */
@@ -356,7 +255,7 @@ public class HttpUtil {
 
     /**
      * Config request timeout milliseconds ,socket timeout milliseconds
-     * 
+     *
      * @return {@code RequestConfig}
      */
     public static RequestConfig getRequestConfig() {
