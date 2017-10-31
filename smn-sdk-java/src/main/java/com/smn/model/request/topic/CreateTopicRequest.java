@@ -49,7 +49,7 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     /**
      * final string "displayName"
      */
-    final static String DISPLAY_NAME = "displayName";
+    final static String DISPLAY_NAME = "display_name";
 
     /**
      * topic name

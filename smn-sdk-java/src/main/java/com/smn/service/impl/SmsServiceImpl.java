@@ -23,7 +23,9 @@
 package com.smn.service.impl;
 
 import com.smn.common.HttpMethod;
+import com.smn.common.SmnConfiguration;
 import com.smn.model.request.sms.*;
+import com.smn.service.IAMService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +38,6 @@ import com.smn.service.SmsService;
  *
  * @author huangqiong
  * @author zhangyx
- * @version 0.1
  * @version 0.7
  */
 public class SmsServiceImpl extends AbstractCommonService implements SmsService {
@@ -44,6 +45,23 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
      * LOGGER
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
+
+    /**
+     * 无参构造函数
+     */
+    public SmsServiceImpl() {
+        super();
+    }
+
+    /**
+     * 给定iamService和smnConfiguration构造实例
+     *
+     * @param iamService       the iamService to set
+     * @param smnConfiguration the smnConfiguration to set
+     */
+    public SmsServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
+        super(iamService, smnConfiguration);
+    }
 
     /**
      * (non-Javadoc)

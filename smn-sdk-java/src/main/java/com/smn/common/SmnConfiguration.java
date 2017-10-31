@@ -177,6 +177,21 @@ public class SmnConfiguration {
     }
 
     /**
+     * new smnConfiguration
+     *
+     * @param userName   the userName to set
+     * @param password   the password to set
+     * @param domainName the domain name to set
+     * @param regionId   the region id to set
+     */
+    public SmnConfiguration(String userName, String password, String domainName, String regionId) {
+        this.userName = userName;
+        this.password = password;
+        this.domainName = domainName;
+        this.regionId = regionId;
+    }
+
+    /**
      * Get max tag length.
      * 
      * @return maxTagLength

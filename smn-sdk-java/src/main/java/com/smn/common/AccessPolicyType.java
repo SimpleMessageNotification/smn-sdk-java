@@ -19,28 +19,30 @@ package com.smn.common;
 
 /**
  * acess policy
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
+ * @date 2017年8月2日
  */
-public interface AccessPolicyType {
+public final class AccessPolicyType {
+
+    private AccessPolicyType() {
+
+    }
 
     /**
      * set access policy to access topic resource
      */
-    String ACCESS_POLICY = "access_policy";
+    public final static String ACCESS_POLICY = "access_policy";
 
     /**
      * set profile of topic,to confirm for mail and sms
      */
-    String INTRODUCTION = "introduction";
+    public final static String INTRODUCTION = "introduction";
 
     /**
      * support sms sign id
      */
-    String SMS_SIGN_ID = "sms_sign_id";
+    public final static String SMS_SIGN_ID = "sms_sign_id";
 
 }
