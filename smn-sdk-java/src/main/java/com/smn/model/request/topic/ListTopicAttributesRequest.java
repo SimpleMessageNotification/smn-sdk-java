@@ -17,25 +17,23 @@
  */
 package com.smn.model.request.topic;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.AccessPolicyType;
+import com.smn.common.SmnConstants;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.AccessPolicyType;
-import com.smn.common.SmnConstants;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * list topic attribute
  *
  * @author huangqiong
- * @version 0.1
- * @date 2017年8月2日
  * @author zhangyx
  * @version 0.8
+ * @date 2017年8月2日
  */
 public class ListTopicAttributesRequest extends AbstractSmnRequest {
 
@@ -76,13 +74,18 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
             throw new NullPointerException("TopicUrn is null.");
         }
 
+        if (!StringUtils.isEmpty(getAttributesName()) && !isValidAttributeName(attributesName)) {
+            LOGGER.error("Attribute name is not valid.");
+            throw new RuntimeException("Attribute name is not valid.");
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(projectId).append(SmnConstants.SMN_TOPIC_URI).append(SmnConstants.URL_DELIMITER)
                 .append(topicUrn).append(LIST_TOPIC_ATTRIBUTE_SUFFIX);
 
         // 设置参数
-        if (StringUtils.isNoneBlank(getAttributesName()) && isValidAttributeName(attributesName)) {
+        if (!StringUtils.isEmpty(getAttributesName())) {
             sb.append(NAME_SUFFIX).append(getAttributesName());
         }
 

@@ -132,7 +132,7 @@ public class SmnConfiguration {
     /**
      * smn remark
      */
-    private int maxRemarkLength = 128;
+    private int maxRemarkLength = 126;
 
     /**
      * max templateMessageContext length
