@@ -67,7 +67,7 @@ public abstract class AbstractCommonService implements CommonService {
      * 无参构造函数
      */
     public AbstractCommonService() {
-
+        this.clientConfiguration = new ClientConfiguration();
     }
 
     /**
