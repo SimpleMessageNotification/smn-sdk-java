@@ -26,7 +26,7 @@ public class TopicDemo {
         clientDemo.updateTopicAttribute();
 
         // 删除指定名称的topic属性的demo
-        clientDemo.updateTopicAttribute();
+        clientDemo.deleteTopicAttributeByName();
 
         // 删除所有的topic属性的demo
         clientDemo.deleteTopicAttributes();

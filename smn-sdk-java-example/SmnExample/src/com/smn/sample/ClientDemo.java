@@ -22,7 +22,7 @@ public class ClientDemo {
      * 构造函数
      */
     public ClientDemo() {
-        CloudAccount hwAccount = new CloudAccount(
+        CloudAccount cloudAccount = new CloudAccount(
                 "******",
                 "******",
                 "******",
@@ -41,14 +41,14 @@ public class ClientDemo {
         // timeout params
         //clientConfiguration.setConnectTimeOut(300000);
         //clientConfiguration.setSocketTimeOut(300000);
-        //CloudAccount hwAccount = new CloudAccount(
+        //CloudAccount cloudAccount = new CloudAccount(
         //        "******",
         //        "******",
         //       "******",
         //       "cn-north-1",
         //       clientConfiguration);
 
-        smnClient = hwAccount.getSmnClient();
+        smnClient = cloudAccount.getSmnClient();
     }
 
     public static void main(String[] args) {
