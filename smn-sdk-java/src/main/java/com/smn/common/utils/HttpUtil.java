@@ -88,16 +88,6 @@ public class HttpUtil {
     private static final String TOKEN = "token";
 
     /**
-     * connect time out ,in millisecond
-     */
-    private static int connectTimeOut = 10000;
-
-    /**
-     * read time out,in millisecond
-     */
-    private static int socketTimeOut = 10000;
-
-    /**
      * config timeout milliseconds
      */
     private static RequestConfig requestConfig = null;
