@@ -24,7 +24,7 @@ package com.smn.service.impl;
 
 import com.smn.common.utils.DateUtil;
 import com.smn.common.utils.HttpUtil;
-import com.smn.http.HttpConfiguration;
+import com.smn.common.ClientConfiguration;
 import com.smn.model.AuthenticationBean;
 import com.smn.service.IAMService;
 import org.slf4j.Logger;
@@ -81,9 +81,9 @@ public class IAMServiceImpl implements IAMService {
     protected AuthenticationBean authenticationBean;
 
     /**
-     * http config
+     * client config
      */
-    protected HttpConfiguration httpConfiguration;
+    protected ClientConfiguration clientConfiguration;
 
     /**
      * constructor
@@ -93,16 +93,16 @@ public class IAMServiceImpl implements IAMService {
      * @param domainName        domainName
      * @param regionId          regionId
      * @param iamUrl            iamUrl
-     * @param httpConfiguration the http configuration
+     * @param clientConfiguration the client configuration
      */
     public IAMServiceImpl(String userName, String password, String domainName,
-                          String regionId, String iamUrl, HttpConfiguration httpConfiguration) {
+                          String regionId, String iamUrl, ClientConfiguration clientConfiguration) {
         setUserName(userName);
         setPassword(password);
         setDomainName(domainName);
         setRegionId(regionId);
         setIamUrl(iamUrl);
-        setHttpConfiguration(httpConfiguration);
+        setClientConfiguration(clientConfiguration);
 
         requestMessage = "{" +
                 "    \"auth\": {" +
@@ -140,7 +140,7 @@ public class IAMServiceImpl implements IAMService {
 
         AuthenticationBean authenticationBean = null;
         try {
-            authenticationBean = HttpUtil.postForIamToken(iamUrl, requestMessage, httpConfiguration);
+            authenticationBean = HttpUtil.postForIamToken(iamUrl, requestMessage, clientConfiguration);
             // parse time
             Date tempDate = DateUtil.parseDate(authenticationBean.getExpiresAt());
             authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
@@ -280,10 +280,10 @@ public class IAMServiceImpl implements IAMService {
     /**
      * the http configuration to set
      *
-     * @param httpConfiguration http configuration
+     * @param clientConfiguration http configuration
      */
-    public void setHttpConfiguration(HttpConfiguration httpConfiguration) {
-        this.httpConfiguration = httpConfiguration;
+    public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+        this.clientConfiguration = clientConfiguration;
     }
 
     public String getRequestMessage() {

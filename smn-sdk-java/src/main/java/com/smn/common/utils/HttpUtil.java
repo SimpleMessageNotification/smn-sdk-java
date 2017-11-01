@@ -22,9 +22,9 @@
  */
 package com.smn.common.utils;
 
+import com.smn.common.ClientConfiguration;
 import com.smn.common.HttpMethod;
 import com.smn.common.HttpResponse;
-import com.smn.http.HttpConfiguration;
 import com.smn.model.AuthenticationBean;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -111,12 +111,12 @@ public class HttpUtil {
      * @throws Exception Failed to get IAM information, throw an exception
      */
     @SuppressWarnings("rawtypes")
-    public static AuthenticationBean postForIamToken(String iamUrl, String bodyMessage, HttpConfiguration httpConfiguration) throws Exception {
+    public static AuthenticationBean postForIamToken(String iamUrl, String bodyMessage, ClientConfiguration clientConfiguration) throws Exception {
         LOGGER.debug("Start to get iam token. IamUrl is {}.", iamUrl);
-        CloseableHttpClient httpclient = getHttpClient(httpConfiguration);
+        CloseableHttpClient httpclient = getHttpClient(clientConfiguration);
         try {
             HttpPost httpPost = new HttpPost(iamUrl);
-            httpPost.setConfig(getRequestConfig(httpConfiguration));
+            httpPost.setConfig(getRequestConfig(clientConfiguration));
             httpPost.addHeader("Content-Type", "application/json");
             httpPost.setEntity(new StringEntity(bodyMessage, ContentType.APPLICATION_JSON));
             // execute HTTPS post
@@ -157,11 +157,11 @@ public class HttpUtil {
      * @param bodyParams        the body params
      * @param url               the url
      * @param httpMethod        the request http method
-     * @param httpConfiguration the http configuration
+     * @param clientConfiguration the client configuration
      * @return the request instance
      */
     private static HttpRequestBase createHttpRequest(Map<String, String> headerParams, Map<String, Object> bodyParams,
-                                                     String url, HttpMethod httpMethod, HttpConfiguration httpConfiguration) {
+                                                     String url, HttpMethod httpMethod, ClientConfiguration clientConfiguration) {
         HttpRequestBase httpRequestBase = null;
         if (httpMethod == HttpMethod.GET) {
             HttpGet httpGet = new HttpGet(url);
@@ -186,7 +186,7 @@ public class HttpUtil {
             throw new IllegalArgumentException(String.format(
                     "Unsupported HTTP method:%s .", httpMethod.getName()));
         }
-        httpRequestBase.setConfig(getRequestConfig(httpConfiguration));
+        httpRequestBase.setConfig(getRequestConfig(clientConfiguration));
         buildHttpHeader(headerParams, httpRequestBase);
         return httpRequestBase;
     }
@@ -194,21 +194,21 @@ public class HttpUtil {
     /**
      * to send request
      *
-     * @param headerParams      the header parmas
-     * @param bodyParams        the body params
-     * @param url               the url
-     * @param httpMethod        the request http method
-     * @param httpConfiguration the http configuration
+     * @param headerParams        the header parmas
+     * @param bodyParams          the body params
+     * @param url                 the url
+     * @param httpMethod          the request http method
+     * @param clientConfiguration the client configuration, contain http configuration
      * @return the response
      */
     public static HttpResponse sendRequest(Map<String, String> headerParams, Map<String, Object> bodyParams, String url,
-                                           HttpMethod httpMethod, HttpConfiguration httpConfiguration)
+                                           HttpMethod httpMethod, ClientConfiguration clientConfiguration)
             throws Exception {
         LOGGER.debug("Start to post request,requestUrl is {}.", url);
 
-        CloseableHttpClient httpclient = getHttpClient(httpConfiguration);
+        CloseableHttpClient httpclient = getHttpClient(clientConfiguration);
         try {
-            HttpRequestBase httpRequestBase = createHttpRequest(headerParams, bodyParams, url, httpMethod, httpConfiguration);
+            HttpRequestBase httpRequestBase = createHttpRequest(headerParams, bodyParams, url, httpMethod, clientConfiguration);
             CloseableHttpResponse response = httpclient.execute(httpRequestBase);
             try {
                 int status = response.getStatusLine().getStatusCode();
@@ -239,7 +239,7 @@ public class HttpUtil {
      * @param requestHeaderMap
      * @param httpMethod
      */
-    public static void buildHttpHeader(Map<String, String> requestHeaderMap, HttpRequestBase httpMethod) {
+    private static void buildHttpHeader(Map<String, String> requestHeaderMap, HttpRequestBase httpMethod) {
         if (requestHeaderMap == null || requestHeaderMap.isEmpty()) {
             LOGGER.error("Request header map is empty.");
             throw new RuntimeException("Request header map is empty.");
@@ -252,12 +252,13 @@ public class HttpUtil {
     /**
      * Construct httpclient with SSL protocol
      *
+     * @param clientConfiguration the client configuration
      * @return {@code CloseableHttpClient}
      * @throws Exception
      */
-    public static CloseableHttpClient getHttpClient(HttpConfiguration httpConfiguration) throws Exception {
-        if (httpConfiguration == null) {
-            httpConfiguration = new HttpConfiguration();
+    private static CloseableHttpClient getHttpClient(ClientConfiguration clientConfiguration) throws Exception {
+        if (clientConfiguration == null) {
+            clientConfiguration = new ClientConfiguration();
         }
 
         SSLContext sslContext = SSLContexts.custom().useProtocol("TLSV1.1")
@@ -267,15 +268,15 @@ public class HttpUtil {
         HttpClientBuilder builder = HttpClients.custom();
 
         // 设置代理
-        String proxyHost = httpConfiguration.getProxyHost();
-        int proxyPort = httpConfiguration.getProxyPort();
+        String proxyHost = clientConfiguration.getProxyHost();
+        int proxyPort = clientConfiguration.getProxyPort();
 
         if (!StringUtils.isEmpty(proxyHost) && proxyPort > 0) {
             HttpHost proxy = new HttpHost(proxyHost, proxyPort);
             builder.setProxy(proxy);
 
-            String username = httpConfiguration.getProxyUserName();
-            String password = httpConfiguration.getProxyPassword();
+            String username = clientConfiguration.getProxyUserName();
+            String password = clientConfiguration.getProxyPassword();
 
             if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
                 CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
@@ -286,24 +287,24 @@ public class HttpUtil {
                 builder.setDefaultCredentialsProvider(credentialsProvider);
             }
         }
-        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslSocketFactory).build();
+        CloseableHttpClient httpclient = builder.setSSLSocketFactory(sslSocketFactory).build();
         return httpclient;
     }
 
     /**
      * Config request timeout milliseconds ,socket timeout milliseconds
      *
+     * @param clientConfiguration the client configuration
      * @return {@code RequestConfig}
      */
-    public static RequestConfig getRequestConfig(HttpConfiguration httpConfiguration) {
-        if (httpConfiguration == null) {
-            httpConfiguration = new HttpConfiguration();
+    private static RequestConfig getRequestConfig(ClientConfiguration clientConfiguration) {
+        if (clientConfiguration == null) {
+            clientConfiguration = new ClientConfiguration();
         }
         requestConfig = RequestConfig.custom()
-                .setConnectTimeout(httpConfiguration.getConnectTimeOut())
-                .setSocketTimeout(httpConfiguration.getSocketTimeOut())
+                .setConnectTimeout(clientConfiguration.getConnectTimeOut())
+                .setSocketTimeout(clientConfiguration.getSocketTimeOut())
                 .build();
         return requestConfig;
     }
-
 }

@@ -25,7 +25,7 @@ package com.smn.service.impl;
 import com.smn.common.HttpMethod;
 import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
-import com.smn.http.HttpConfiguration;
+import com.smn.common.ClientConfiguration;
 import com.smn.model.request.sms.*;
 import com.smn.service.AbstractCommonService;
 import com.smn.service.IAMService;
@@ -58,10 +58,10 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
      *
      * @param iamService        the iamService to set
      * @param smnConfiguration  the smnConfiguration to set
-     * @param httpConfiguration the http configuration
+     * @param clientConfiguration the client configuration
      */
-    public SmsServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration, HttpConfiguration httpConfiguration) {
-        super(iamService, smnConfiguration, httpConfiguration);
+    public SmsServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
+        super(iamService, smnConfiguration, clientConfiguration);
     }
 
     /**
