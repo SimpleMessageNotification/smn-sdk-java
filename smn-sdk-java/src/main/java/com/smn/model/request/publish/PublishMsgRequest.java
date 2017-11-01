@@ -17,29 +17,25 @@
  */
 package com.smn.model.request.publish;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smn.common.SmnConfiguration;
 import com.smn.common.SmnConstants;
 import com.smn.common.utils.JsonUtil;
 import com.smn.common.utils.ValidationUtil;
 import com.smn.model.AbstractSmnRequest;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
- * @version 0.1
- * @author  yangyanping
+ * @author yangyanping
  * @version 0.2
+ * @date 2017年8月2日
  */
 public class PublishMsgRequest extends AbstractSmnRequest {
 
@@ -78,45 +74,45 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     /**
      * check params
      */
-    private void validate() throws UnsupportedEncodingException,RuntimeException {
+    private void validate() throws UnsupportedEncodingException, RuntimeException {
         //check topic urn
-        
-        if(!ValidationUtil.validateTopicUrn(topicUrn)){
+
+        if (!ValidationUtil.validateTopicUrn(topicUrn)) {
             throw new RuntimeException("topic urn is illegal");
         }
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Publish message request projectId is null.");
             throw new RuntimeException("Publish message request projectId is null.");
         }
-        
+
         //check subject
-        if(!checkSubject(subject)){
+        if (!checkSubject(subject)) {
             throw new RuntimeException("subject is illegal");
         }
-     
+
         //check message
-        if(messageStructure!=null){
-            if(!checkMessageStruct(messageStructure)){
+        if (messageStructure != null) {
+            if (!checkMessageStruct(messageStructure)) {
                 throw new RuntimeException("messageStructure is illegal");
             }
-        }else if(messageTemplateName!=null){
-            if (!checkTags()){
+        } else if (messageTemplateName != null) {
+            if (!checkTags()) {
                 throw new RuntimeException();
             }
-        }else  {
+        } else {
             if (!checkMessage(message)) {
                 throw new RuntimeException("message is illegal");
             }
         }
-      
+
     }
-    
+
     /**
      * build and get request url
      */
     @Override
-    public String getRequestUri() throws RuntimeException{
-    
+    public String getRequestUri() throws RuntimeException {
+
         try {
             validate();
         } catch (UnsupportedEncodingException e) {
@@ -133,47 +129,47 @@ public class PublishMsgRequest extends AbstractSmnRequest {
 
     /**
      * Three ways of sending messages
-     * 
+     * <p>
      * message message_structure message_template_name
-     * 
+     * <p>
      * You only need to set one of them, and if you set it at the same time, the priority is
-     * 
+     * <p>
      * message_structure >
-     * 
+     * <p>
      * message_template_name >
-     * 
+     * <p>
      * The message URL address is the same, which determines which route of transmission will be determined based on the priority when constructing the body parameter
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
 
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-    
+
         if (StringUtils.isNotBlank(getSubject())) {
-             requestParameterMap.put("subject", getSubject());
+            requestParameterMap.put("subject", getSubject());
         }
-    
+
         // message structure has highest priority
         if (StringUtils.isNoneBlank(messageStructure)) {
             requestParameterMap.put("message_structure", getMessageStructure());
             return requestParameterMap;
         }
-   
-         // message template has secondary priority
-         if (StringUtils.isNoneBlank(getMessageTemplateName())) {
-             if (null == getTags()) {
-                 LOGGER.error("Tags is null");
-                 throw new RuntimeException("Tags is null");
-             }
-             requestParameterMap.put("message_template_name", getMessageTemplateName());
-             requestParameterMap.put("tags", getTags());
-             LOGGER.info(requestParameterMap.toString());
-             if(!checkTags()){
-                 throw new RuntimeException();
-             }
-             return requestParameterMap;
-         }
-        
+
+        // message template has secondary priority
+        if (StringUtils.isNoneBlank(getMessageTemplateName())) {
+            if (null == getTags()) {
+                LOGGER.error("Tags is null");
+                throw new RuntimeException("Tags is null");
+            }
+            requestParameterMap.put("message_template_name", getMessageTemplateName());
+            requestParameterMap.put("tags", getTags());
+            LOGGER.info(requestParameterMap.toString());
+            if (!checkTags()) {
+                throw new RuntimeException();
+            }
+            return requestParameterMap;
+        }
+
         // common message ,least priority
         if (StringUtils.isBlank(getMessage())) {
             throw new RuntimeException("Message is null");
@@ -192,8 +188,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param topicUrn
-     *            the topicUrn to set
+     * @param topicUrn the topicUrn to set
      */
     public void setTopicUrn(String topicUrn) {
         this.topicUrn = topicUrn;
@@ -207,8 +202,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param subject
-     *            the subject to set
+     * @param subject the subject to set
      */
     public void setSubject(String subject) {
         this.subject = subject;
@@ -222,8 +216,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param tags
-     *            the tags to set
+     * @param tags the tags to set
      */
     public void setTags(Map<String, Object> tags) {
         this.tags = tags;
@@ -232,14 +225,12 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     /**
      * @return the messageTemplateName
      */
-    public String getMessageTemplateName()
-    {
+    public String getMessageTemplateName() {
         return messageTemplateName;
     }
 
     /**
-     * @param messageTemplateName
-     *            the messageTemplateName to set
+     * @param messageTemplateName the messageTemplateName to set
      */
     public void setMessageTemplateName(String messageTemplateName) {
         this.messageTemplateName = messageTemplateName;
@@ -254,8 +245,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param messageStructure
-     *            the messageStructure to set
+     * @param messageStructure the messageStructure to set
      */
     public void setMessageStructure(String messageStructure) {
         this.messageStructure = messageStructure;
@@ -265,13 +255,12 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * @return the message
      */
     public String getMessage() {
-        
+
         return message;
     }
 
     /**
-     * @param message
-     *            the message to set
+     * @param message the message to set
      */
     public void setMessage(String message) {
         this.message = message;
@@ -283,7 +272,7 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      */
     @Override
     public String toString() {
-        
+
         StringBuilder builder = new StringBuilder();
         builder.append("PublishMsgRequest [topicUrn=").append(topicUrn).append(", subject=").append(subject)
                 .append(", tags=").append(tags).append(", messageTemplateName=").append(messageTemplateName)
@@ -295,127 +284,131 @@ public class PublishMsgRequest extends AbstractSmnRequest {
 
     /**
      * Check that the subject conforms to specifications, and <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
+     *
      * @param subject
      * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      */
-    private boolean checkSubject(String subject){
-        if (subject == null){
+    private boolean checkSubject(String subject) {
+        if (subject == null) {
             LOGGER.debug("subject is null");
-            return  true;
+            return true;
         }
-        if(!ValidationUtil.validateSubject(subject)){
+        if (!ValidationUtil.validateSubject(subject)) {
             LOGGER.error("Parameter: Subject is invalid. ");
             return false;
         }
         try {
             byte[] b = subject.getBytes(SmnConstants.DEFAULT_CHARSET);
             SmnConfiguration smnConfiguration = new SmnConfiguration();
-            if(b.length > smnConfiguration.getMaxSubjectLength()){
-                LOGGER.error("Parameter: Subject is invalid. . The Length of Subject is {}.",b.length);
-                return  false;
+            if (b.length > smnConfiguration.getMaxSubjectLength()) {
+                LOGGER.error("Parameter: Subject is invalid. . The Length of Subject is {}.", b.length);
+                return false;
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return true;
     }
-    
+
     /**
      * Check that the message conforms to specifications, and <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
+     *
      * @param message
      * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      */
-    private boolean checkMessage(String message){
-        if (message == null){
-            return  false;
+    private boolean checkMessage(String message) {
+        if (message == null) {
+            return false;
         }
         try {
             byte[] b = message.getBytes(SmnConstants.DEFAULT_CHARSET);
             SmnConfiguration smnConfiguration = new SmnConfiguration();
-            if(b.length > smnConfiguration.getMaxMessageLength()){
-                LOGGER.error("Parameter: message is invalid. . The Length of message is {}.",b.length);
-                return  false;
+            if (b.length > smnConfiguration.getMaxMessageLength()) {
+                LOGGER.error("Parameter: message is invalid. . The Length of message is {}.", b.length);
+                return false;
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return true;
     }
 
     /**
      * Check that messageStruct is legal
+     *
      * @param messageStruct
      * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      */
     @SuppressWarnings("unchecked")
-	private boolean checkMessageStruct(String messageStruct){
-            if (messageStruct == null){
-                LOGGER.error("Parameter:MessageStruct is invalid");
+    private boolean checkMessageStruct(String messageStruct) {
+        if (messageStruct == null) {
+            LOGGER.error("Parameter:MessageStruct is invalid");
+            return false;
+        }
+        try {
+            SmnConfiguration smnConfiguration = new SmnConfiguration();
+            byte[] b = messageStruct.getBytes(SmnConstants.DEFAULT_CHARSET);
+            if (b.length > smnConfiguration.getMaxMessageLength()) {
+                LOGGER.error("Parameter:MessageStruct is invalid,it is too long");
                 return false;
             }
-            try {
-                SmnConfiguration smnConfiguration = new SmnConfiguration();
-                byte[] b = messageStruct.getBytes(SmnConstants.DEFAULT_CHARSET);
-                if(b.length > smnConfiguration.getMaxMessageLength()){
-                    LOGGER.error("Parameter:MessageStruct is invalid,it is too long");
-                    return  false;
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            
-            Object messageObject = JsonUtil.parseJsonMessage(messageStruct);
-            if(!(messageObject instanceof Map<?,?>)){
-                LOGGER.error("Parameter:MessageStruct is invalid, it is null");
-                return false;
-            }
-        
-            Map<String,Object> messageMap = (Map<String,Object>) messageObject;
-            if(messageMap.size() ==0){
-                LOGGER.error("Parameter:MessageStruct is invalid. Failed to parse MessageStructure.");
-                return false;
-            }
-            if(!(messageMap.get(SmnConstants.DEFAULT_MESSAGE) instanceof  String)){
-                LOGGER.error("Parameter:MessageStruct is invalid. Default message isn't String.");
-                return  false;
-            }
-            return true;
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
 
+        Object messageObject = JsonUtil.parseJsonMessage(messageStruct);
+        if (!(messageObject instanceof Map<?, ?>)) {
+            LOGGER.error("Parameter:MessageStruct is invalid, it is null");
+            return false;
+        }
+
+        Map<String, Object> messageMap = (Map<String, Object>) messageObject;
+        if (messageMap.size() == 0) {
+            LOGGER.error("Parameter:MessageStruct is invalid. Failed to parse MessageStructure.");
+            return false;
+        }
+        if (!(messageMap.get(SmnConstants.DEFAULT_MESSAGE) instanceof String)) {
+            LOGGER.error("Parameter:MessageStruct is invalid. Default message isn't String.");
+            return false;
+        }
+        return true;
+    }
+
     /**
-     *Check that tags is legal
+     * Check that tags is legal
+     *
      * @return boolean  <code>true</> indicates compliance with specifications, otherwise it does not conform to specifications
      * @throws RuntimeException
      */
     @SuppressWarnings("unchecked")
-	private boolean checkTags() throws RuntimeException{
-            if(tags != null){
-                if(!(tags instanceof Map<?,?>)){
-                    LOGGER.error("Tag is error.");
-                    return false;
-                }
-                Map<?,?> tagsmap = (Map<?,?>) tags;
-                Iterator<Object> tagValues = (Iterator<Object>) tagsmap.values().iterator();
-                Object obj = null;
-                byte[] b = null;
-                while (tagValues.hasNext()){
-                    obj = tagValues.next();
-                    try {
-                        b = obj.toString().getBytes(SmnConstants.DEFAULT_CHARSET);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    SmnConfiguration smnConfiguration = new SmnConfiguration();
-                    if (b.length > smnConfiguration.getMaxTagLength()){
-                        LOGGER.error("Tag is erro . The tag length is {}.",b.length);
-                        return false;
-                    }
-                }
-            }else{
-                LOGGER.info("EmptyTag.");
+    private boolean checkTags() throws RuntimeException {
+        if (tags != null) {
+            if (!(tags instanceof Map<?, ?>)) {
+                LOGGER.error("Tag is error.");
                 return false;
             }
-            return true;
+            Map<?, ?> tagsmap = (Map<?, ?>) tags;
+            Iterator<Object> tagValues = (Iterator<Object>) tagsmap.values().iterator();
+            Object obj = null;
+            byte[] b = null;
+            while (tagValues.hasNext()) {
+                obj = tagValues.next();
+                try {
+                    b = obj.toString().getBytes(SmnConstants.DEFAULT_CHARSET);
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+                SmnConfiguration smnConfiguration = new SmnConfiguration();
+                if (b.length > smnConfiguration.getMaxTagLength()) {
+                    LOGGER.error("Tag is erro . The tag length is {}.", b.length);
+                    return false;
+                }
+            }
+        } else {
+            LOGGER.info("EmptyTag.");
+            return false;
         }
-    
+        return true;
     }
+
+}

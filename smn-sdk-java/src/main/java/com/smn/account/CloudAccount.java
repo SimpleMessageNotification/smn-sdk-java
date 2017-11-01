@@ -19,6 +19,7 @@ package com.smn.account;
 
 import com.smn.client.DefaultSmnClient;
 import com.smn.client.SmnClient;
+import com.smn.common.ClientConfiguration;
 import com.smn.common.SmnConfiguration;
 import com.smn.service.ServiceFactory;
 
@@ -61,6 +62,11 @@ public class CloudAccount {
     private SmnClient smnClient;
 
     /**
+     * http configuration
+     */
+    private ClientConfiguration clientConfiguration;
+
+    /**
      * 构造函数
      *
      * @param userName   the userName to set
@@ -69,13 +75,32 @@ public class CloudAccount {
      * @param regionId   the regionId to set
      */
     public CloudAccount(String userName, String password, String domainName, String regionId) {
+        this(userName, password, domainName, regionId, null);
+    }
+
+    /**
+     * 构造函数, 可自定义ClientConfiguration
+     *
+     * @param userName            the userName to set
+     * @param password            the password to set
+     * @param domainName          the domainName to set
+     * @param regionId            the regionId to set
+     * @param clientConfiguration the client configuration
+     */
+    public CloudAccount(String userName, String password, String domainName, String regionId, ClientConfiguration clientConfiguration) {
         this.userName = userName;
         this.password = password;
         this.domainName = domainName;
         this.regionId = regionId;
 
-        smnConfiguration = new SmnConfiguration(userName, password, domainName, regionId);
+        this.smnConfiguration = new SmnConfiguration(userName, password, domainName, regionId);
+        this.clientConfiguration = clientConfiguration;
+
+        if (clientConfiguration == null) {
+            this.clientConfiguration = new ClientConfiguration();
+        }
     }
+
 
     /**
      * get smn client
@@ -86,7 +111,7 @@ public class CloudAccount {
         if (smnClient == null) {
             synchronized (this) {
                 if (smnClient == null) {
-                    ServiceFactory serviceFactory = new ServiceFactory(smnConfiguration);
+                    ServiceFactory serviceFactory = new ServiceFactory(this.smnConfiguration, this.clientConfiguration);
                     smnClient = new DefaultSmnClient(serviceFactory);
                 }
             }

@@ -72,8 +72,8 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
         }
 
         if (StringUtils.isBlank(attributesName) || !isValidAttributeName(attributesName)) {
-            LOGGER.error("Attributte name is null or not valid");
-            throw new RuntimeException("Attributte name is null or not valid");
+            LOGGER.error("Attribute name is null or not valid");
+            throw new RuntimeException("Attribute name is null or not valid");
         }
 
         StringBuilder sb = new StringBuilder();

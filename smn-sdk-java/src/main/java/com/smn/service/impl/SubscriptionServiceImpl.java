@@ -18,25 +18,24 @@
 package com.smn.service.impl;
 
 import com.smn.common.HttpMethod;
-import com.smn.common.SmnConfiguration;
-import com.smn.service.IAMService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smn.common.HttpResponse;
+import com.smn.common.SmnConfiguration;
+import com.smn.common.ClientConfiguration;
 import com.smn.model.request.subscription.ListSubscriptionsByTopicRequest;
 import com.smn.model.request.subscription.ListSubscriptionsRequest;
 import com.smn.model.request.subscription.SubcriptionRequest;
 import com.smn.model.request.subscription.UnSubcriptionRequest;
 import com.smn.service.AbstractCommonService;
+import com.smn.service.IAMService;
 import com.smn.service.SubscriptionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Subscribe service implemented
  *
  * @author huangqiong
  * @author zhangyx
- * @version 0.6
  * @version 0.7
  */
 public class SubscriptionServiceImpl extends AbstractCommonService implements SubscriptionService {
@@ -56,11 +55,12 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
     /**
      * 给定iamService和smnConfiguration构造实例
      *
-     * @param iamService       the iamService to set
-     * @param smnConfiguration the smnConfiguration to set
+     * @param iamService        the iamService to set
+     * @param smnConfiguration  the smnConfiguration to set
+     * @param clientConfiguration the client configuration
      */
-    public SubscriptionServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
-        super(iamService, smnConfiguration);
+    public SubscriptionServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
+        super(iamService, smnConfiguration, clientConfiguration);
     }
 
     /**
@@ -82,7 +82,7 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see SubscriptionService#subscribe(SubcriptionRequest)
      */
     public HttpResponse subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException {

@@ -22,19 +22,19 @@
  */
 package com.smn.service;
 
-import java.util.Map;
-
-import com.smn.common.HttpResponse;
 import com.smn.common.HttpMethod;
+import com.smn.common.HttpResponse;
+import com.smn.common.SmnConfiguration;
+import com.smn.common.SmnConstants;
 import com.smn.common.utils.HttpUtil;
+import com.smn.common.ClientConfiguration;
 import com.smn.model.AbstractSmnRequest;
+import com.smn.model.AuthenticationBean;
+import com.smn.service.impl.IAMServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConfiguration;
-import com.smn.common.SmnConstants;
-import com.smn.model.AuthenticationBean;
-import com.smn.service.impl.IAMServiceImpl;
+import java.util.Map;
 
 /**
  * @author huangqiong
@@ -59,15 +59,15 @@ public abstract class AbstractCommonService implements CommonService {
     protected IAMService iamService;
 
     /**
-     * cache authentication bean
+     * client config
      */
-    protected AuthenticationBean authenticationBean;
+    protected ClientConfiguration clientConfiguration;
 
     /**
      * 无参构造函数
      */
-    public AbstractCommonService(){
-
+    public AbstractCommonService() {
+        this.clientConfiguration = new ClientConfiguration();
     }
 
     /**
@@ -76,9 +76,10 @@ public abstract class AbstractCommonService implements CommonService {
      * @param iamService       the iamService to set
      * @param smnConfiguration the smnConfiguration to set
      */
-    public AbstractCommonService(IAMService iamService, SmnConfiguration smnConfiguration) {
+    public AbstractCommonService(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
         this.iamService = iamService;
         this.smnConfiguration = smnConfiguration;
+        this.clientConfiguration = clientConfiguration;
     }
 
     /*
@@ -101,13 +102,18 @@ public abstract class AbstractCommonService implements CommonService {
         if (smnConfiguration == null) {
             smnConfiguration = new SmnConfiguration();
         }
+
+        if (clientConfiguration == null) {
+            clientConfiguration = new ClientConfiguration();
+        }
+
         if (iamService == null) {
             String iamUrl = new StringBuilder().append(SmnConstants.HTTPS_PREFFIX)
                     .append(smnConfiguration.getIamEndpoint()).append(SmnConstants.URL_DELIMITER)
                     .append(SmnConstants.IAM_URI).toString();
             LOGGER.info("Iam url is{}.", iamUrl);
             iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
-                    smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl);
+                    smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl, clientConfiguration);
         }
 
         return iamService;
@@ -163,6 +169,10 @@ public abstract class AbstractCommonService implements CommonService {
      * @throws Exception connect error throw exception
      */
     protected <Request extends AbstractSmnRequest> HttpResponse sendRequest(Request smnRequest, HttpMethod httpMethod) throws Exception {
+        if (clientConfiguration == null) {
+            clientConfiguration = new ClientConfiguration();
+        }
+
         Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
         Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
         String projectId = getAuthenticationBean().getProjectId();
@@ -172,16 +182,7 @@ public abstract class AbstractCommonService implements CommonService {
         String url = buildRequestUrl(smnRequest.getRequestUri());
         buildRequestHeader(requestHeader);
 
-        HttpResponse httpResponse = null;
-        if (httpMethod == HttpMethod.GET) {
-            httpResponse = HttpUtil.get(requestHeader, url);
-        } else if (httpMethod == HttpMethod.DELETE) {
-            httpResponse = HttpUtil.delete(requestHeader, url);
-        } else if (httpMethod == HttpMethod.POST) {
-            httpResponse = HttpUtil.post(requestHeader, requestParam, url);
-        } else if (httpMethod == HttpMethod.PUT) {
-            httpResponse = HttpUtil.put(requestHeader, requestParam, url);
-        }
+        HttpResponse httpResponse = HttpUtil.sendRequest(requestHeader, requestParam, url, httpMethod, clientConfiguration);
 
         return httpResponse;
     }

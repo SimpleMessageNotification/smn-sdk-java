@@ -22,15 +22,15 @@
  */
 package com.smn.service.impl;
 
-import java.util.Date;
-
+import com.smn.common.utils.DateUtil;
+import com.smn.common.utils.HttpUtil;
+import com.smn.common.ClientConfiguration;
+import com.smn.model.AuthenticationBean;
+import com.smn.service.IAMService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.utils.DateUtil;
-import com.smn.common.utils.HttpUtil;
-import com.smn.model.AuthenticationBean;
-import com.smn.service.IAMService;
+import java.util.Date;
 
 /**
  * @author huangqiong
@@ -81,20 +81,29 @@ public class IAMServiceImpl implements IAMService {
     protected AuthenticationBean authenticationBean;
 
     /**
+     * client config
+     */
+    protected ClientConfiguration clientConfiguration;
+
+    /**
      * constructor
      *
-     * @param userName   userName
-     * @param password   password
-     * @param domainName domainName
-     * @param regionId   regionId
-     * @param iamUrl     iamUrl
+     * @param userName          userName
+     * @param password          password
+     * @param domainName        domainName
+     * @param regionId          regionId
+     * @param iamUrl            iamUrl
+     * @param clientConfiguration the client configuration
      */
-    public IAMServiceImpl(String userName, String password, String domainName, String regionId, String iamUrl) {
+    public IAMServiceImpl(String userName, String password, String domainName,
+                          String regionId, String iamUrl, ClientConfiguration clientConfiguration) {
         setUserName(userName);
         setPassword(password);
         setDomainName(domainName);
         setRegionId(regionId);
         setIamUrl(iamUrl);
+        setClientConfiguration(clientConfiguration);
+
         requestMessage = "{" +
                 "    \"auth\": {" +
                 "        \"identity\": {" +
@@ -131,7 +140,7 @@ public class IAMServiceImpl implements IAMService {
 
         AuthenticationBean authenticationBean = null;
         try {
-            authenticationBean = HttpUtil.postForIamToken(iamUrl, requestMessage);
+            authenticationBean = HttpUtil.postForIamToken(iamUrl, requestMessage, clientConfiguration);
             // parse time
             Date tempDate = DateUtil.parseDate(authenticationBean.getExpiresAt());
             authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
@@ -266,6 +275,15 @@ public class IAMServiceImpl implements IAMService {
             throw new NullPointerException("iamUrl is null.");
         }
         this.iamUrl = iamUrl;
+    }
+
+    /**
+     * the http configuration to set
+     *
+     * @param clientConfiguration http configuration
+     */
+    public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+        this.clientConfiguration = clientConfiguration;
     }
 
     public String getRequestMessage() {

@@ -22,12 +22,33 @@ public class ClientDemo {
      * 构造函数
      */
     public ClientDemo() {
-        CloudAccount hwAccount = new CloudAccount(
+        CloudAccount cloudAccount = new CloudAccount(
                 "******",
                 "******",
                 "******",
                 "cn-north-1");
-        smnClient = hwAccount.getSmnClient();
+
+        // if you want custom HTTP parameters
+        // or use http proxy, you can use like this
+        //ClientConfiguration clientConfiguration = new ClientConfiguration();
+        // if you want not use http proxy ,the proxyHost, proxyPort, proxyUserName
+        // and proxyPassword not need to set
+        //clientConfiguration.setProxyHost("proxycn2.huawei.com");
+        //clientConfiguration.setProxyPort(8080);
+        // password or username is optional
+        //clientConfiguration.setProxyUserName("******");
+        //clientConfiguration.setProxyPassword("******");
+        // timeout params
+        //clientConfiguration.setConnectTimeOut(300000);
+        //clientConfiguration.setSocketTimeOut(300000);
+        //CloudAccount cloudAccount = new CloudAccount(
+        //        "******",
+        //        "******",
+        //       "******",
+        //       "cn-north-1",
+        //       clientConfiguration);
+
+        smnClient = cloudAccount.getSmnClient();
     }
 
     public static void main(String[] args) {

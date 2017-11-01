@@ -18,19 +18,15 @@
 package com.smn.service.impl;
 
 import com.smn.common.HttpMethod;
+import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
+import com.smn.common.ClientConfiguration;
+import com.smn.model.request.template.*;
+import com.smn.service.AbstractCommonService;
 import com.smn.service.IAMService;
+import com.smn.service.MessageTemplateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.smn.common.HttpResponse;
-import com.smn.model.request.template.CreateMessageTemplateRequest;
-import com.smn.model.request.template.DeleteMessageTemplateRequest;
-import com.smn.model.request.template.ListMessageTemplatesRequest;
-import com.smn.model.request.template.QueryMessageTemplateDetailRequest;
-import com.smn.model.request.template.UpdateMessageTemplateRequest;
-import com.smn.service.AbstractCommonService;
-import com.smn.service.MessageTemplateService;
 
 /**
  * Message template service implemented
@@ -38,7 +34,6 @@ import com.smn.service.MessageTemplateService;
  * @author huangqiong
  * @author yangyanping
  * @author zhangyx
- * @version 0.2
  * @version 0.7
  */
 public class MessageTemplateServiceImpl extends AbstractCommonService implements MessageTemplateService {
@@ -58,11 +53,12 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     /**
      * 给定iamService和smnConfiguration构造实例
      *
-     * @param iamService       the iamService to set
-     * @param smnConfiguration the smnConfiguration to set
+     * @param iamService        the iamService to set
+     * @param smnConfiguration  the smnConfiguration to set
+     * @param clientConfiguration the client configuration
      */
-    public MessageTemplateServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
-        super(iamService, smnConfiguration);
+    public MessageTemplateServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
+        super(iamService, smnConfiguration, clientConfiguration);
     }
 
     /**

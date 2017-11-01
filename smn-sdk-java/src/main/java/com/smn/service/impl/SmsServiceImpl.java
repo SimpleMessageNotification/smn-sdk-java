@@ -23,15 +23,15 @@
 package com.smn.service.impl;
 
 import com.smn.common.HttpMethod;
+import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
+import com.smn.common.ClientConfiguration;
 import com.smn.model.request.sms.*;
+import com.smn.service.AbstractCommonService;
 import com.smn.service.IAMService;
+import com.smn.service.SmsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.smn.common.HttpResponse;
-import com.smn.service.AbstractCommonService;
-import com.smn.service.SmsService;
 
 /**
  * send sms directly
@@ -56,11 +56,12 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
     /**
      * 给定iamService和smnConfiguration构造实例
      *
-     * @param iamService       the iamService to set
-     * @param smnConfiguration the smnConfiguration to set
+     * @param iamService        the iamService to set
+     * @param smnConfiguration  the smnConfiguration to set
+     * @param clientConfiguration the client configuration
      */
-    public SmsServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
-        super(iamService, smnConfiguration);
+    public SmsServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
+        super(iamService, smnConfiguration, clientConfiguration);
     }
 
     /**

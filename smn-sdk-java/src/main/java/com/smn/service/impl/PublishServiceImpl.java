@@ -17,18 +17,16 @@
  */
 package com.smn.service.impl;
 
-import java.io.UnsupportedEncodingException;
-
 import com.smn.common.HttpMethod;
-import com.smn.common.SmnConfiguration;
-import com.smn.service.IAMService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smn.common.HttpResponse;
+import com.smn.common.SmnConfiguration;
+import com.smn.common.ClientConfiguration;
 import com.smn.model.request.publish.PublishMsgRequest;
 import com.smn.service.AbstractCommonService;
+import com.smn.service.IAMService;
 import com.smn.service.PublishService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Publish service implemented
@@ -53,11 +51,12 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
     /**
      * 给定iamService和smnConfiguration构造实例
      *
-     * @param iamService       the iamService to set
-     * @param smnConfiguration the smnConfiguration to set
+     * @param iamService        the iamService to set
+     * @param smnConfiguration  the smnConfiguration to set
+     * @param clientConfiguration the client configuration
      */
-    public PublishServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
-        super(iamService, smnConfiguration);
+    public PublishServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
+        super(iamService, smnConfiguration, clientConfiguration);
     }
 
     /**

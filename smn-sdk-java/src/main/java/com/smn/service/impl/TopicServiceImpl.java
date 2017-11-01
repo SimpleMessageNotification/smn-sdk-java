@@ -17,31 +17,22 @@
  */
 package com.smn.service.impl;
 
+import com.smn.common.HttpMethod;
+import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
+import com.smn.common.ClientConfiguration;
+import com.smn.model.request.topic.*;
+import com.smn.service.AbstractCommonService;
 import com.smn.service.IAMService;
+import com.smn.service.TopicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.smn.common.HttpResponse;
-import com.smn.common.HttpMethod;
-import com.smn.model.request.topic.CreateTopicRequest;
-import com.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
-import com.smn.model.request.topic.DeleteTopicAttributesRequest;
-import com.smn.model.request.topic.DeleteTopicRequest;
-import com.smn.model.request.topic.ListTopicAttributesRequest;
-import com.smn.model.request.topic.ListTopicsRequest;
-import com.smn.model.request.topic.QueryTopicDetailRequest;
-import com.smn.model.request.topic.UpdateTopicAttributeRequest;
-import com.smn.model.request.topic.UpdateTopicRequest;
-import com.smn.service.AbstractCommonService;
-import com.smn.service.TopicService;
 
 /**
  * Topic service implemented
  *
  * @author huangqiong
  * @author zhangyx
- * @version 0.1
  * @version 0.7
  */
 public class TopicServiceImpl extends AbstractCommonService implements TopicService {
@@ -61,11 +52,12 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     /**
      * 给定iamService和smnConfiguration构造实例
      *
-     * @param iamService       the iamService to set
-     * @param smnConfiguration the smnConfiguration to set
+     * @param iamService        the iamService to set
+     * @param smnConfiguration  the smnConfiguration to set
+     * @param clientConfiguration the client configuration
      */
-    public TopicServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration) {
-        super(iamService, smnConfiguration);
+    public TopicServiceImpl(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
+        super(iamService, smnConfiguration, clientConfiguration);
     }
 
     /**
