@@ -55,7 +55,9 @@ import java.util.Map;
 
 /**
  * @author huangqiong
+ * @author zhangyx
  * @version 0.1
+ * @version 0.9
  * @date 2017年8月3日 下午5:19:22
  */
 public class HttpUtil {
