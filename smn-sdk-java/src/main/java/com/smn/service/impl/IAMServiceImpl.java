@@ -19,33 +19,26 @@
  * @author huangqiong
  * @date 2017年8月3日 下午5:36:41
  * @version 0.1
- * 
  */
 package com.smn.service.impl;
 
-import java.util.Date;
-
+import com.smn.common.utils.DateUtil;
+import com.smn.common.utils.HttpUtil;
+import com.smn.common.ClientConfiguration;
+import com.smn.model.AuthenticationBean;
+import com.smn.service.IAMService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.utils.DateUtil;
-import com.smn.common.utils.HttpUtil;
-import com.smn.model.AuthenticationBean;
-import com.smn.service.IAMService;
+import java.util.Date;
 
 /**
  * @author huangqiong
  * @author zhangyx
- * @version 0.1
  * @version 0.7
  */
 public class IAMServiceImpl implements IAMService {
     private static Logger LOGGER = LoggerFactory.getLogger(IAMServiceImpl.class);
-
-    /**
-     * request info for iam
-     */
-    private static final String IAM_TOKEN_REQUEST = "{\"auth\":{\"identity\":{\"methods\":[\"password\"],\"password\":{\"user\":{\"name\":\"{0}\",\"password\":\"{1}\",\"domain\":{\"name\":\"{2}\"}}}},\"scope\":{\"project\":{\"name\":\"{3}\"}}}}";
 
     /**
      * user's name
@@ -83,23 +76,57 @@ public class IAMServiceImpl implements IAMService {
     private String requestMessage = null;
 
     /**
+     * cache authentication bean
+     */
+    protected AuthenticationBean authenticationBean;
+
+    /**
+     * client config
+     */
+    protected ClientConfiguration clientConfiguration;
+
+    /**
      * constructor
      *
-     * @param userName   userName
-     * @param password   password
-     * @param domainName domainName
-     * @param regionId   regionId
-     * @param iamUrl     iamUrl
+     * @param userName          userName
+     * @param password          password
+     * @param domainName        domainName
+     * @param regionId          regionId
+     * @param iamUrl            iamUrl
+     * @param clientConfiguration the client configuration
      */
-    public IAMServiceImpl(String userName, String password, String domainName, String regionId, String iamUrl) {
+    public IAMServiceImpl(String userName, String password, String domainName,
+                          String regionId, String iamUrl, ClientConfiguration clientConfiguration) {
         setUserName(userName);
         setPassword(password);
         setDomainName(domainName);
         setRegionId(regionId);
         setIamUrl(iamUrl);
+        setClientConfiguration(clientConfiguration);
 
-        requestMessage = IAM_TOKEN_REQUEST.replaceFirst("\\{0\\}", userName).replaceFirst("\\{2\\}", domainName)
-                .replaceFirst("\\{3\\}", regionId).replaceFirst("\\{1\\}", password);
+        requestMessage = "{" +
+                "    \"auth\": {" +
+                "        \"identity\": {" +
+                "            \"methods\": [" +
+                "                \"password\"" +
+                "            ]," +
+                "            \"password\": {" +
+                "                \"user\": {" +
+                "                    \"name\": \"" + userName + "\"," +
+                "                    \"password\": \"" + password + "\"," +
+                "                    \"domain\": {" +
+                "                        \"name\": \"" + domainName + "\"" +
+                "                    }" +
+                "                }" +
+                "            }" +
+                "        }," +
+                "        \"scope\": {" +
+                "            \"project\": {" +
+                "                \"name\": \"" + regionId + "\"" +
+                "            }" +
+                "        }" +
+                "    }" +
+                "}";
     }
 
     /**
@@ -107,14 +134,13 @@ public class IAMServiceImpl implements IAMService {
      * projectId, user token, and token expiration time
      *
      * @return {@link AuthenticationBean} User token information
-     * @throws RuntimeException
-     *             Failed to get token, then ran out of the exception
+     * @throws RuntimeException Failed to get token, then ran out of the exception
      */
     public AuthenticationBean getAuthentication() throws RuntimeException {
 
         AuthenticationBean authenticationBean = null;
         try {
-            authenticationBean = HttpUtil.postForIamToken(iamUrl, requestMessage);
+            authenticationBean = HttpUtil.postForIamToken(iamUrl, requestMessage, clientConfiguration);
             // parse time
             Date tempDate = DateUtil.parseDate(authenticationBean.getExpiresAt());
             authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
@@ -128,6 +154,26 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
+     * Obtain authorization information
+     * <p>
+     * if exist, return
+     * or get from iam service
+     *
+     * @return {@link AuthenticationBean} User token information
+     */
+    public AuthenticationBean getAuthenticationBean() {
+        // 获取authenticationBean线程安全
+        if (null == authenticationBean || authenticationBean.isExpired()) {
+            synchronized (this) {
+                if (authenticationBean == null || authenticationBean.isExpired()) {
+                    authenticationBean = getAuthentication();
+                }
+            }
+        }
+        return authenticationBean;
+    }
+
+    /**
      * @return the expiredInterval
      */
     public long getExpiredInterval() {
@@ -135,8 +181,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param expiredInterval
-     *            the expiredInterval to set
+     * @param expiredInterval the expiredInterval to set
      */
     public void setExpiredInterval(long expiredInterval) {
         this.expiredInterval = expiredInterval;
@@ -178,8 +223,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param userName
-     *            the userName to set
+     * @param userName the userName to set
      */
     public void setUserName(String userName) {
         if (userName == null) {
@@ -190,8 +234,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param password
-     *            the password to set
+     * @param password the password to set
      */
     public void setPassword(String password) {
         if (password == null) {
@@ -202,8 +245,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param domainName
-     *            the domainName to set
+     * @param domainName the domainName to set
      */
     public void setDomainName(String domainName) {
         if (domainName == null) {
@@ -214,8 +256,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param regionId
-     *            the regionId to set
+     * @param regionId the regionId to set
      */
     public void setRegionId(String regionId) {
         if (regionId == null) {
@@ -226,8 +267,7 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @param iamUrl
-     *            the iamUrl to set
+     * @param iamUrl the iamUrl to set
      */
     public void setIamUrl(String iamUrl) {
         if (iamUrl == null) {
@@ -235,6 +275,15 @@ public class IAMServiceImpl implements IAMService {
             throw new NullPointerException("iamUrl is null.");
         }
         this.iamUrl = iamUrl;
+    }
+
+    /**
+     * the http configuration to set
+     *
+     * @param clientConfiguration http configuration
+     */
+    public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+        this.clientConfiguration = clientConfiguration;
     }
 
     public String getRequestMessage() {

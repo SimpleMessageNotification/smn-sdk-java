@@ -19,266 +19,320 @@
  * @author huangqiong
  * @date 下午5:04:43
  * @version 0.1
- * 
  */
 package com.smn.common;
 
 /**
  * String constants
- * 
+ *
  * @author huangqiong
  * @date 2017年8月3日 下午5:16:42
  * @version 0.1
  */
-public interface SmnConstants {
+public final class SmnConstants {
+
+    private SmnConstants() {
+
+    }
 
     /**
      * default charset
      */
-    String DEFAULT_CHARSET = "UTF-8";
+    public final static String DEFAULT_CHARSET = "UTF-8";
 
     /**
      * default content type
      */
-    String DEFAULT_CONTENT_TYPE = "application/json; charset=UTF-8";
+    public final static String DEFAULT_CONTENT_TYPE = "application/json; charset=UTF-8";
 
     /**
      * header segment X-Auth-Token
      */
-    String X_AUTH_TOKEN = "X-Auth-Token";
+    public final static String X_AUTH_TOKEN = "X-Auth-Token";
 
     /**
      * header segment X-Project-Id
      */
-    String X_PROJECT_ID = "X-Project-Id";
+    public final static String X_PROJECT_ID = "X-Project-Id";
 
     /**
      * tenant id
      */
-    String TENANT_ID = "tenant_id";
+    public final static String TENANT_ID = "tenant_id";
 
     /**
      * content type tag
      */
-    String CONTENT_TYPE_TAG = "Content-Type";
+    public final static String CONTENT_TYPE_TAG = "Content-Type";
 
     /**
      * topic tag
      */
-    String TOPIC_TAG = "Topic";
+    public final static String TOPIC_TAG = "Topic";
 
     /**
      * queue tag
      */
-    String QUEUE_NAME_TAG = "QueueName";
+    public final static String QUEUE_NAME_TAG = "QueueName";
 
     /**
      * topic name tag
      */
-    String TOPIC_NAME_TAG = "TopicName";
+    public final static String TOPIC_NAME_TAG = "TopicName";
 
     /**
      * subscription tag
      */
-    String SUBSCRIPTION_TAG = "Subscription";
+    public final static String SUBSCRIPTION_TAG = "Subscription";
 
     /**
      * last modify time tag
      */
-    String LASTMODIFYTIME_TAG = "LastModifyTime";
+    public final static String LASTMODIFYTIME_TAG = "LastModifyTime";
 
     /**
      * create time tag
      */
-    String CREATE_TIME_TAG = "CreateTime";
+    public final static String CREATE_TIME_TAG = "CreateTime";
 
     /**
      * region tag
      */
-    String REGION_TAG = "region";
+    public final static String REGION_TAG = "region";
 
     /**
      * url delimiter
      */
-    String URL_DELIMITER = "/";
+    public final static String URL_DELIMITER = "/";
 
     /**
      * https preffix
      */
-    String HTTPS_PREFFIX = "https://";
+    public final static String HTTPS_PREFFIX = "https://";
 
     /**
      * smn region
      */
-    String REGION = "smn.region";
+    public final static String REGION = "smn.region";
 
     /**
      * smn iam host name
      */
-    String IAM_ENDPOINT = "iam.endpoint";
+    public final static String IAM_ENDPOINT = "iam.endpoint";
 
     /**
      * smn endpoint
      */
-    String SMN_ENDPOINT = "smn.endpoint";
+    public final static String SMN_ENDPOINT = "smn.endpoint";
 
     /**
      * iam uri
      */
-    String IAM_URI = "/v3/auth/tokens";
+    public final static String IAM_URI = "/v3/auth/tokens";
 
     /**
      * smn topic uri
      */
-    String SMN_TOPIC_URI = "/notifications/topics";
+    public final static String SMN_TOPIC_URI = "/notifications/topics";
 
     /**
      * v2 version
      */
-    String V2_VERSION = "v2";
+    public final static String V2_VERSION = "v2";
 
     /**
      * user name
      */
-    String USER_NAME = "iam.user.name";
+    public final static String USER_NAME = "iam.user.name";
 
     /**
      * password
      */
-    String PASSWORD = "iam.user.password";
+    public final static String PASSWORD = "iam.user.password";
 
     /**
      * domain name
      */
-    String DOMAIN_NAME = "iam.domain.name";
+    public final static String DOMAIN_NAME = "iam.domain.name";
 
     /**
      * region id
      */
-    String REGION_ID = "region.id";
+    public final static String REGION_ID = "region.id";
 
     /**
      * topic urn
      */
-    String TOPIC_URN = "topic_urn";
+    public final static String TOPIC_URN = "topic_urn";
 
     /**
      * project id
      */
-    String PROJECT_ID = "project_id";
+    public final static String PROJECT_ID = "project_id";
 
     /**
      * protocol
      */
-    String SMN_PROTOCOL = "protocol";
+    public final static String SMN_PROTOCOL = "protocol";
 
     /**
      * endpoint
      */
-    String ENDPOINT = "endpoint";
+    public final static String ENDPOINT = "endpoint";
 
     /**
      * remark
      */
-    String SMN_SUBCRIBE_REMARK = "remark";
+    public final static String SMN_SUBCRIBE_REMARK = "remark";
 
     /**
      * message
      */
-    String MESSAGE = "message";
+    public final static String MESSAGE = "message";
 
     /**
      * sign_id
      */
-    String SIGN_ID = "sign_id";
+    public final static String SIGN_ID = "sign_id";
 
     /**
      * subscriptions
      */
-    String SMN_SUBSCRIPTIONS = "subscriptions";
+    public final static String SMN_SUBSCRIPTIONS = "subscriptions";
 
     /**
      * notifications
      */
-    String SMN_NOTIFICATIONS = "notifications";
+    public final static String SMN_NOTIFICATIONS = "notifications";
 
     /**
      * publish
      */
-    String SMN_PUBLISH = "publish";
+    public final static String SMN_PUBLISH = "publish";
 
     /**
      * message template
      */
-    String SMN_MESSAGE_TEMPLATE = "message_template";
+    public final static String SMN_MESSAGE_TEMPLATE = "message_template";
+
+    /**
+     * message template name
+     */
+    public final static String SMN_MESSAGE_TEMPLATE_NAME = "message_template_name";
 
     /**
      * sms signature
      */
-    String SMS_SIGNATURE = "sms_sign";
+    public final static String SMS_SIGNATURE = "sms_sign";
 
     /**
      * email protocol
      */
-    String SMN_SUB_PROTOCOL_EMAIL = "email";
+    public final static String SMN_SUB_PROTOCOL_EMAIL = "email";
 
     /**
      * sms protocol
      */
-    String SMN_SUB_PROTOCOL_SMS = "sms";
+    public final static String SMN_SUB_PROTOCOL_SMS = "sms";
 
     /**
      * http protocol
      */
-    String SMN_SUB_PROTOCOL_HTTP = "http";
+    public final static String SMN_SUB_PROTOCOL_HTTP = "http";
 
     /**
      * https protocol
      */
-    String SMN_SUB_PROTOCOL_HTTPS = "https";
+    public final static String SMN_SUB_PROTOCOL_HTTPS = "https";
 
     /**
      * application protocol
      */
-    String SMN_SUB_PROTOCOL_APPLICATION = "application";
+    public final static String SMN_SUB_PROTOCOL_APPLICATION = "application";
 
     /**
      * lambda protocol
      */
-    String SMN_SUB_PROTOCOL_LAMBDA = "functionStage";
+    public final static String SMN_SUB_PROTOCOL_LAMBDA = "functionStage";
 
     /**
      * attribute
      */
-    String SMN_TOPIC_ATTRIBTUES = "attributes";
+    public final static String SMN_TOPIC_ATTRIBTUES = "attributes";
 
     /**
      * attribute value
      */
-    String SMN_TOPIC_ATTRIBUTE_VALUE = "value";
+    public final static String SMN_TOPIC_ATTRIBUTE_VALUE = "value";
+
+
+    /**
+     * smn statistic
+     */
+    public final static String STATISTIC = "statistic";
+
+    /**
+     * smn report
+     */
+    public final static String REPORT = "report";
+
+    /**
+     * callback request
+     */
+    public final static String CALLBACK_REQUEST = "callback";
+
+    /**
+     * callback field
+     */
+    public final static String CALLBACK_FIELD = "callback";
+
+    /**
+     * event_type field
+     */
+    public final static String EVENT_TYPE = "event_type";
+
+    /**
+     * smn offset field
+     */
+    public final static String OFFSET = "offset";
+
+    /**
+     * smn limit field
+     */
+    public final static String LIMIT = "limit";
 
     /**
      * smn crypt key
      */
-    String DEFAULT_SMN_CRYPT_KEY = "20170807";
+    public final static String DEFAULT_SMN_CRYPT_KEY = "20170807";
 
     /**
      * ciper aes method
      */
-    String AES = "AES";
+    public final static String AES = "AES";
 
     /**
      * max length of topic's display name
      */
-    int MAX_TOPIC_DISPLAY_NAME = 192;
-    
+    public final static int MAX_TOPIC_DISPLAY_NAME = 192;
+
     /**
      * 默认的消息
      */
-    String DEFAULT_MESSAGE = "default";
+    public final static String DEFAULT_MESSAGE = "default";
 
     /**
      * 模板消息的标签tags
      */
-    String TAGS = "tags";
+    public final static String TAGS = "tags";
+
+    /**
+     * 查询统短信发送的状态统计类型，按天查询
+     */
+    public final static String DAILY = "daily";
+
+    /**
+     * 查询统短信发送的状态统计类型，按小时查询
+     */
+    public final static String HOURLY = "hourly";
 }

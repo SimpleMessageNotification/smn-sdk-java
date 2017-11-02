@@ -17,26 +17,24 @@
  */
 package com.smn.model.request.subscription;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smn.common.SmnConfiguration;
 import com.smn.common.SmnConstants;
 import com.smn.common.utils.ValidationUtil;
 import com.smn.model.AbstractSmnRequest;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author huangqiong
- * @date 2017年8月14日 下午4:33:56
- * @version 0.1
  * @author yangyanping
- * @date 2017年8月24日 下午4:33:56
  * @version 0.2
+ * @date 2017年8月14日 下午4:33:56
+ * @date 2017年8月24日 下午4:33:56
  */
 public class SubcriptionRequest extends AbstractSmnRequest {
 
@@ -94,7 +92,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     @Override
     public Map<String, Object> getRequestParameterMap() {
-        
+
         if (!ValidationUtil.validateProtocol(protocol)) {
             LOGGER.error("Protocol is not valid.");
             throw new RuntimeException("Protocol is not valid.");
@@ -115,38 +113,40 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     /**
      * 校验参数
      */
-    private void validate(){
-        if(!ValidationUtil.validateTopicUrn(topicUrn)){
+    private void validate() {
+        if (!ValidationUtil.validateTopicUrn(topicUrn)) {
             throw new RuntimeException(" subscribe request topic_urn is null.");
         }
-    
-        if (!ValidationUtil.validateEndPoint(endpoint,protocol)){
-            throw  new RuntimeException("subscribe request smnEndpoint is illegal");
+
+        if (!ValidationUtil.validateEndPoint(endpoint, protocol)) {
+            throw new RuntimeException("subscribe request smnEndpoint is illegal");
         }
-        if(!checkRemark(remark)){
-            throw  new RuntimeException("subscribe request remark is illegal");
+        if (!checkRemark(remark)) {
+            throw new RuntimeException("subscribe request remark is illegal");
         }
-    
+
     }
+
     /**
      * check remark
+     *
      * @param remark
      * @return boolean
      */
-    private boolean checkRemark(String remark){
+    private boolean checkRemark(String remark) {
         SmnConfiguration smnConfiguration = new SmnConfiguration();
-        if(remark == null){
-            return  true;
+        if (remark == null) {
+            return true;
         }
         try {
             byte[] b = remark.getBytes("utf-8");
-            if (b.length > smnConfiguration.getMaxRemarkLength()){
-                return  false;
+            if (b.length > smnConfiguration.getMaxRemarkLength()) {
+                return false;
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return  true;
+        return true;
     }
 
     /**
@@ -157,11 +157,10 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param topicUrn
-     *            the topicUrn to set
+     * @param topicUrn the topicUrn to set
      */
     public void setTopicUrn(String topicUrn) {
-        
+
         this.topicUrn = topicUrn;
     }
 
@@ -173,8 +172,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param protocol
-     *            the protocol to set
+     * @param protocol the protocol to set
      */
     public void setProtocol(String protocol) {
         this.protocol = protocol;
@@ -188,8 +186,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param endpoint
-     *            the endpoint to set
+     * @param endpoint the endpoint to set
      */
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
@@ -203,8 +200,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param remark
-     *            the remark to set
+     * @param remark the remark to set
      */
     public void setRemark(String remark) {
         this.remark = remark;

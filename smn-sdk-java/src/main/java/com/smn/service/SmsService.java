@@ -19,22 +19,18 @@
  * @author huangqiong
  * @date 2017年8月3日 下午5:32:17
  * @version 0.1
- * 
  */
 package com.smn.service;
 
-import java.util.Map;
-
 import com.smn.common.HttpResponse;
-import com.smn.model.request.sms.SmsPublishRequest;
-import com.smn.model.request.topic.DeleteTopicAttributesRequest;
+import com.smn.model.request.sms.*;
 
 /**
  * @author huangqiong
+ * @author zhangyx
+ * @version 0.7
  * @date 2017年8月3日 下午5:32:17
- * @version 0.1
  */
-
 public interface SmsService extends CommonService {
 
     /**
@@ -43,17 +39,62 @@ public interface SmsService extends CommonService {
      * sucess,return<CODE>Map</CODE>including:request_id,message_id and status
      * <p>
      * 发送fail，return request_id and status
-     * 
-     * @param smnRequest
-     *            {@link SmsPublishRequest} request
+     *
+     * @param smnRequest {@link SmsPublishRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token will throw exception
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,String%gt;
+     * @throws RuntimeException connect error,fail to get iam token will throw exception
      */
-	HttpResponse smsPublish(SmsPublishRequest smnRequest) throws RuntimeException;
+    HttpResponse smsPublish(SmsPublishRequest smnRequest) throws RuntimeException;
 
+    /**
+     * 查询短信的发送状态
+     *
+     * @param smnRequest {@link ListSmsMsgReportRequest} request message
+     * @return {@link HttpResponse}
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,String%gt;
+     */
+    HttpResponse listSmsMsgReport(ListSmsMsgReportRequest smnRequest);
+
+    /**
+     * 查询已发送短信的内容
+     *
+     * @param smnRequest {@link GetSmsMessageRequest} request message
+     * @return {@link HttpResponse}
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,String%gt;
+     */
+    HttpResponse getSmsMessage(GetSmsMessageRequest smnRequest);
+
+    /**
+     * 查询短信回调时间列表
+     *
+     * @param smnRequest {@link ListSmsCallbackEventRequest} request message
+     * @return {@link HttpResponse}
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,String%gt;
+     */
+    HttpResponse listSmsCallbackEvent(ListSmsCallbackEventRequest smnRequest);
+
+    /**
+     * 查询短信回调时间列表
+     *
+     * @param smnRequest {@link ListSmsCallbackEventRequest} request message
+     * @return {@link HttpResponse}
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,String%gt;
+     */
+    HttpResponse updateSmsCallbackEvent(UpdateSmsCallbackEventRequest smnRequest);
 }

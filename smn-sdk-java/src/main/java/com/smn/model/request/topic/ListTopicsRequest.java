@@ -17,10 +17,18 @@
  */
 package com.smn.model.request.topic;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,12 +37,12 @@ import com.smn.model.AbstractSmnRequest;
 
 /**
  * list topic
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
+ * @date 2017年8月2日
+ * @author zhangyx
+ * @version 0.8
  */
 public class ListTopicsRequest extends AbstractSmnRequest {
 
@@ -43,12 +51,12 @@ public class ListTopicsRequest extends AbstractSmnRequest {
     /**
      * paging list's starting page,default 0
      */
-    private int offset;
+    private int offset = 0;
 
     /**
      * max returned items for a request,default 100
      */
-    private int limit;
+    private int limit = 100;
 
     /**
      * build and get request uri
@@ -64,20 +72,36 @@ public class ListTopicsRequest extends AbstractSmnRequest {
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(projectId).append(SmnConstants.SMN_TOPIC_URI);
 
-        if (offset > 0) {
-            sb.append("?offset=" + offset);
-        } else {
-            sb.append("?offset=" + "0");
-        }
-
-        if (limit > 0 && limit < 100) {
-            sb.append("&limit=" + limit);
-        } else {
-            sb.append("&limit=").append("100");
+        // 设置get参数
+        String params = getRequestParamString();
+        if (!StringUtils.isEmpty(params)) {
+            sb.append("?").append(params);
         }
 
         LOGGER.info("Request uri is {}.", sb.toString());
         return sb.toString();
+    }
+
+    /**
+     * obtain the get request param
+     *
+     * @return the param string
+     */
+    private String getRequestParamString() {
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+        nameValuePairs.add(new BasicNameValuePair(SmnConstants.OFFSET, String.valueOf(offset)));
+        nameValuePairs.add(new BasicNameValuePair(SmnConstants.LIMIT, String.valueOf(limit)));
+
+        String param = "";
+        if (!nameValuePairs.isEmpty()) {
+            try {
+                param = EntityUtils.toString(new UrlEncodedFormEntity(nameValuePairs, Charset.forName("UTF-8")));
+            } catch (IOException e) {
+                throw new RuntimeException("get request param error");
+            }
+        }
+        return param;
     }
 
     /**
@@ -97,8 +121,7 @@ public class ListTopicsRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param offset
-     *            the offset to set
+     * @param offset the offset to set
      */
     public void setOffset(int offset) {
         if (offset > 0) {
@@ -114,8 +137,7 @@ public class ListTopicsRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param limit
-     *            the limit to set
+     * @param limit the limit to set
      */
     public void setLimit(int limit) {
         if (100 > limit && limit > 0) {

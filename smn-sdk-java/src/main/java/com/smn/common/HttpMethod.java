@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.smn.common.utils;
+package com.smn.common;
 
 /**
  * http method list enum
@@ -24,12 +24,19 @@ package com.smn.common.utils;
  * @version 0.7
  */
 public enum HttpMethod {
-    DELETE,
-    PUT,
-    POST,
-    GET,
-    HEAD;
+    DELETE("delete"),
+    PUT("put"),
+    POST("post"),
+    GET("get"),
+    HEAD("head");
 
-    private HttpMethod() {
+    private String name;
+
+    private HttpMethod(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

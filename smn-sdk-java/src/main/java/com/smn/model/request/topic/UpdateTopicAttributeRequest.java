@@ -88,8 +88,8 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
         }
 
         if (StringUtils.isBlank(getAttributesName()) || !isValidAttributeName(getAttributesName())) {
-            LOGGER.error("Attributte name is null or not valid");
-            throw new RuntimeException("Attributte name is null or not valid");
+            LOGGER.error("Attribute name is null or not valid");
+            throw new RuntimeException("Attribute name is null or not valid");
         }
 
         StringBuilder sb = new StringBuilder();

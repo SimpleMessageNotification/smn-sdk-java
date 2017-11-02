@@ -18,24 +18,23 @@
 
 package com.smn.model.request.sms;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-
+import com.smn.common.SmnConstants;
+import com.smn.common.utils.AesUtil;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.common.utils.AesUtil;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * publish sms direct
- * 
+ *
  * @author huangqiong
- * @date 2017年8月3日 下午5:30:35
  * @version 0.1
+ * @date 2017年8月3日 下午5:30:35
  */
 public class SmsPublishRequest extends AbstractSmnRequest {
 
@@ -63,9 +62,8 @@ public class SmsPublishRequest extends AbstractSmnRequest {
 
     /**
      * get request uri
-     * 
+     *
      * @return String uri
-     * 
      */
     public String getRequestUri() {
 
@@ -86,26 +84,25 @@ public class SmsPublishRequest extends AbstractSmnRequest {
 
     /**
      * build and get request parameters
-     * 
+     *
      * @return Map
-     *         {@value}endpoint
-     *         {@value}message
-     * 
+     * {@value}endpoint
+     * {@value}message
      */
     public Map<String, Object> getRequestParameterMap() {
         validatePhoneNumber(getEndpoint());
         validateMessage(getMessage());
-
+		validateSignId(getSignId());
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
         requestParameterMap.put(SmnConstants.ENDPOINT, endpoint);
         requestParameterMap.put(SmnConstants.MESSAGE, message);
-		requestParameterMap.put(SmnConstants.SIGN_ID, signId);
+        requestParameterMap.put(SmnConstants.SIGN_ID, signId);
         return requestParameterMap;
     }
 
     /**
      * validate phonenumber
-     * 
+     *
      * @param endpoint
      */
     private void validatePhoneNumber(String endpoint) {
@@ -123,7 +120,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
 
     /**
      * validate sms message
-     * 
+     *
      * @param message
      */
     private void validateMessage(String message) {
@@ -139,13 +136,13 @@ public class SmsPublishRequest extends AbstractSmnRequest {
                     500);
         }
     }
-    
-    private void validateSignId(String signId){
-    	
-		if (StringUtils.isBlank(signId)) {
-			LOGGER.error("SignId is null.");
-			throw new NullPointerException("SignId is null.");
-		}
+
+    private void validateSignId(String signId) {
+
+        if (StringUtils.isBlank(signId)) {
+            LOGGER.error("SignId is null.");
+            throw new NullPointerException("SignId is null.");
+        }
     }
 
     /**
@@ -156,8 +153,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param endpoint
-     *            the endpoint to set
+     * @param endpoint the endpoint to set
      */
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
@@ -171,8 +167,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param message
-     *            the message to set
+     * @param message the message to set
      */
     public void setMessage(String message) {
         this.message = message;
@@ -186,8 +181,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param signId
-     *            the signId to set
+     * @param signId the signId to set
      */
     public void setSignId(String signId) {
         this.signId = signId;
