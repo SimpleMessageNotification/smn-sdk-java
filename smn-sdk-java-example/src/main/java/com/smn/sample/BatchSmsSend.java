@@ -76,10 +76,16 @@ public class BatchSmsSend {
     public void send() {
         for (int i = 0; i < phoneList.size(); i++) {
             String phoneNum = phoneList.get(i);
+
+            System.out.println("正在发送第" + (i+1) + "个手机, phone=" + phoneNum);
+            logger.info("正在发送第" + (i+1) + "个手机, phone=" + phoneNum);
+
             SmsPublishRequest request = getRequest(phoneNum);
             HttpResponse response = smnClient.smsPublish(request);
-            System.out.println("phone=" + phoneNum + ", result= " + response);
-            logger.info("phone[" + phoneNum + "], result[" + response + "]");
+
+            System.out.println("第" + (i+1) + "个手机发送完成, phone=" + phoneNum + ", result= " + response);
+            logger.info("第" + (i+1) + "个手机发送完成, phone[" + phoneNum + "], result[" + response + "]");
+
             // 发送延时
             try {
                 Thread.sleep(sleepTime);
