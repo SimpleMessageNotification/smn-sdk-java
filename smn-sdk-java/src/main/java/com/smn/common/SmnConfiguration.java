@@ -17,14 +17,14 @@
  */
 package com.smn.common;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * property loading configuration
@@ -104,7 +104,7 @@ public class SmnConfiguration {
     /**
      * max message length
      */
-    private int maxMessageLength = 256;
+    private int maxMessageLength = 256 * 1024;
 
     /**
      * Get max message length

@@ -200,7 +200,7 @@ public class ClientDemo {
         updateTopicAttributeRequest.setAttributesName("access_policy");
 
         // 设置属性值
-        LinkedHashMap<String, Object> attributeValue = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> attributeValue = new LinkedHashMap<String, Object>();
         attributeValue.put("Version", "2016-09-07");
         attributeValue.put("Id", "__default_policy_ID");
 

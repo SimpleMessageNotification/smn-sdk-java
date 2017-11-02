@@ -17,27 +17,25 @@
  */
 package com.smn.service;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
 import com.smn.common.utils.JsonUtil;
 import com.smn.model.request.publish.PublishMsgRequest;
 import com.smn.service.impl.PublishServiceImpl;
-
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author huangqiong
- * @date 2017年8月14日 下午9:44:25
  * @version 0.1
+ * @date 2017年8月14日 下午9:44:25
  */
 public class PublishServiceTest extends TestCase {
 
@@ -109,12 +107,8 @@ public class PublishServiceTest extends TestCase {
         publishMsgRequest.setSubject("publish msg with template");
         PublishService publishService = new PublishServiceImpl();
         publishService.setSmnConfiguration(smnConfiguration);
-        HttpResponse res = null;
-        try {
-            res = publishService.publish(publishMsgRequest);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        HttpResponse res = publishService.publish(publishMsgRequest);
+
         LOGGER.info(res.toString());
         Assert.assertNotNull(res.getBody().get("request_id"));
         Assert.assertNotNull(res.getBody().get("message_id"));
@@ -129,11 +123,7 @@ public class PublishServiceTest extends TestCase {
         tag.put("tests0015", sb.toString());
         publishMsgRequest.setTags(tag);
         try {
-            try {
-                publishService.publish(publishMsgRequest);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            publishService.publish(publishMsgRequest);
             fail("check messageTemplate expected an RuntimeException");
         } catch (RuntimeException e) {
 
