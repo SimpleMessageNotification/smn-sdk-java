@@ -1,5 +1,4 @@
 <assembly>
-    <id>assembly</id>
     <formats>
         <format>zip</format>
         <format>dir</format>
@@ -20,6 +19,11 @@
     <dependencySets>
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory><!-- 将scope为system的依赖包打包到lib目录下。 -->
+            <useProjectArtifact>true</useProjectArtifact>
+            <scope>system</scope>
         </dependencySet>
     </dependencySets>
 </assembly>

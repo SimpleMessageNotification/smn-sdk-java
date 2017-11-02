@@ -109,6 +109,7 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
+					<finalName>smsbatchsendtool</finalName>
 					<descriptor>src/main/assembly/assembly.xml</descriptor>
 				</configuration>
 				<executions>
