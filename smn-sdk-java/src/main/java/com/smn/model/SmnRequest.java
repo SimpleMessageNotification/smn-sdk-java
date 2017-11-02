@@ -43,7 +43,7 @@ public interface SmnRequest {
 
     /**
      * get the request header's parameters of smn
-     *
+     * 
      * @return Map
      *         {@value} Content-Type
      *         {@value} X-Auth-Token
