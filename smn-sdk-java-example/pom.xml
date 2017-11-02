@@ -109,14 +109,14 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<descriptor>src/main/assembly/assembly.xml</descriptor><!--指定插件目录-->
+					<descriptor>src/main/assembly/assembly.xml</descriptor>
 				</configuration>
 				<executions>
 					<execution>
 						<id>make-assembly</id>
-						<phase>package</phase><!--绑定到package-->
+						<phase>package</phase>
 						<goals>
-							<goal>single</goal><!--只运行一次-->
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>

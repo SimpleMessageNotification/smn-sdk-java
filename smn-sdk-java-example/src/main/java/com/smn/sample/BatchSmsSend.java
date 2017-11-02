@@ -119,6 +119,7 @@ public class BatchSmsSend {
             FileInputStream fis = new FileInputStream(filePath);
             properties.load(fis);
         } catch (IOException e) {
+            logger.error("fail to read configuration file.", e);
             throw new RuntimeException(e);
         }
 
@@ -190,6 +191,7 @@ public class BatchSmsSend {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error("fail to read content file.", e);
         } finally {
             try {
                 if (br != null) br.close();
@@ -221,6 +223,7 @@ public class BatchSmsSend {
             content = result.toString();
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error("fail to read content file.", e);
         } finally {
             try {
                 if (br != null) br.close();
