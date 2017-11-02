@@ -104,7 +104,7 @@ public class SmnConfiguration {
     /**
      * max message length
      */
-    private int maxMessageLength = 256;
+    private int maxMessageLength = 256 * 1024;
 
     /**
      * Get max message length
