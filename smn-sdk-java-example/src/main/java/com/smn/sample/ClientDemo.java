@@ -23,9 +23,9 @@ public class ClientDemo {
      */
     public ClientDemo() {
         CloudAccount cloudAccount = new CloudAccount(
-                "songjinfu",
-                "Huawei@8899",
-                "hwcloudsxfzy",
+                "*********",
+                "*********",
+                "*********",
                 "cn-north-1");
 
         // if you want custom HTTP parameters
