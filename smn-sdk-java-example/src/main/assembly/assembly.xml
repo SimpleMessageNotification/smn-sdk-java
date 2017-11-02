@@ -1,0 +1,29 @@
+<assembly>
+    <formats>
+        <format>zip</format>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>config</directory>
+            <outputDirectory>config</outputDirectory>
+            <fileMode>0644</fileMode><!--0664的权限-->
+        </fileSet>
+        <fileSet>
+            <directory>bin</directory>  <!-- 将src/main/bin目录下的文件打包到根目录(/bin)下. -->
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode> <!-- 0775的权限 随意权限-->
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory><!-- 将scope为system的依赖包打包到lib目录下。 -->
+            <useProjectArtifact>true</useProjectArtifact>
+            <scope>system</scope>
+        </dependencySet>
+    </dependencySets>
+</assembly>
