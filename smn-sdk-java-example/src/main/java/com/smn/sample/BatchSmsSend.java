@@ -187,7 +187,9 @@ public class BatchSmsSend {
             br = new BufferedReader(isr);
             String s = null;
             while ((s = br.readLine()) != null) {
-                phoneList.add(s.trim());
+                if (!StringUtils.isBlank(s)) {
+                    phoneList.add(s.trim());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
