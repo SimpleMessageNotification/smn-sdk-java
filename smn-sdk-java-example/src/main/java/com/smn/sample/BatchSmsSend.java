@@ -71,7 +71,7 @@ public class BatchSmsSend {
     }
 
     /**
-     * 只需发生
+     * 直接发送
      */
     public void send() {
         for (int i = 0; i < phoneList.size(); i++) {
@@ -92,7 +92,7 @@ public class BatchSmsSend {
     /**
      * 获取请求
      *
-     * @param phone
+     * @param phone 需要发送的手机号码
      * @return
      */
     private SmsPublishRequest getRequest(String phone) {
