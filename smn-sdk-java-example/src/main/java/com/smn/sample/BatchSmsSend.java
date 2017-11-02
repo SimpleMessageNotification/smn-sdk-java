@@ -79,7 +79,7 @@ public class BatchSmsSend {
             SmsPublishRequest request = getRequest(phoneNum);
             HttpResponse response = smnClient.smsPublish(request);
             System.out.println("phone=" + phoneNum + ", result= " + response);
-            logger.info("phone["+phoneNum+"], result["+response+"]");
+            logger.info("phone[" + phoneNum + "], result[" + response + "]");
             // 发送延时
             try {
                 Thread.sleep(sleepTime);
@@ -183,7 +183,7 @@ public class BatchSmsSend {
         InputStreamReader isr = null;
         try {
             fis = new FileInputStream(new File(filePath));
-            isr = new InputStreamReader(fis);
+            isr = new InputStreamReader(fis, "UTF-8");
             br = new BufferedReader(isr);
             String s = null;
             while ((s = br.readLine()) != null) {
@@ -191,12 +191,15 @@ public class BatchSmsSend {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("fail to read content file.", e);
+            logger.error("fail to read phone list file.", e);
         } finally {
             try {
                 if (br != null) br.close();
+                if (isr != null) isr.close();
+                if (fis != null) fis.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                logger.error("fail to close phone list file.", e);
             }
         }
     }
@@ -214,7 +217,7 @@ public class BatchSmsSend {
         InputStreamReader isr = null;
         try {
             fis = new FileInputStream(new File(filePath));
-            isr = new InputStreamReader(fis);
+            isr = new InputStreamReader(fis, "UTF-8");
             br = new BufferedReader(isr);
             String s = null;
             while ((s = br.readLine()) != null) {
@@ -227,8 +230,11 @@ public class BatchSmsSend {
         } finally {
             try {
                 if (br != null) br.close();
+                if (isr != null) isr.close();
+                if (fis != null) fis.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                logger.error("fail to close content file.", e);
             }
 
         }
