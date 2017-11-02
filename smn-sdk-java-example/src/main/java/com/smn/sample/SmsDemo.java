@@ -10,6 +10,9 @@ public class SmsDemo {
         //查询短信的发送状态的demo
         clientDemo.listSmsMsgReport();
 
+        // 查询短信的内容
+        clientDemo.getSmsMessage();
+
         // 查询短信回调事件的demo
         clientDemo.listSmsCallbackEvent();
 
