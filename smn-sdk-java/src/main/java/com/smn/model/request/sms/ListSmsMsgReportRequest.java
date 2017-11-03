@@ -69,40 +69,40 @@ public class ListSmsMsgReportRequest extends AbstractSmnRequest {
     public static final String STATUS = "status";
 
     /**
-     * 短信报告查询的开始时间
+     * query start time
      */
     private String startTime;
 
     /**
-     * 短信报告查询的结束时间
+     * query end time
      */
     private String endTime;
 
     /**
-     * signature identitier
+     * signature id
      */
     private String signId;
 
     /**
-     * 接收短信的电话号码
+     * mobile
      */
     private String mobile;
 
     /**
-     * 短信发送状态
-     * 2 已发送无状态
-     * 1 发送成功
-     * 0 发送失败
+     * sms send status
+     * 2 sent without state
+     * 1 send success
+     * 0 send fail
      */
     private String status;
 
     /**
-     * 短信发送状态查询的开始页
+     * the offset of the query
      */
     private int offset = 0;
 
     /**
-     * 短信发送状态查询的每页数量限制
+     * per page size limit
      */
     private int limit = 100;
 
@@ -131,7 +131,7 @@ public class ListSmsMsgReportRequest extends AbstractSmnRequest {
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUB_PROTOCOL_SMS)
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.REPORT);
 
-        // 设置get参数
+        // set the request parameter
         String params = getRequestParamString();
         if (!StringUtils.isEmpty(params)) {
             sb.append("?").append(params);

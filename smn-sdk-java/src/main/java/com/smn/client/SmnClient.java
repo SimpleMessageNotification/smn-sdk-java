@@ -44,7 +44,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse listTopics(ListTopicsRequest smnRequest);
@@ -59,7 +59,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse deleteTopic(DeleteTopicRequest smnRequest);
@@ -74,7 +74,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse createTopic(CreateTopicRequest smnRequest);
@@ -87,7 +87,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse queryTopicDetail(QueryTopicDetailRequest smnRequest);
@@ -100,7 +100,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse updateTopic(UpdateTopicRequest smnRequest);
@@ -113,7 +113,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse listTopicAttributes(ListTopicAttributesRequest smnRequest);
@@ -126,7 +126,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse updateTopicAttribute(UpdateTopicAttributeRequest smnRequest);
@@ -139,7 +139,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest);
@@ -153,7 +153,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest);
@@ -166,7 +166,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse subscribe(SubcriptionRequest subcriptionRequest);
@@ -179,7 +179,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse unsubscribe(UnSubcriptionRequest unSubcriptionRequest);
@@ -192,7 +192,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest);
@@ -205,7 +205,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest);
@@ -218,7 +218,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest);
@@ -231,7 +231,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest);
@@ -245,7 +245,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest);
@@ -258,7 +258,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest);
@@ -272,7 +272,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest);
@@ -289,7 +289,7 @@ public interface SmnClient {
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse publish(PublishMsgRequest publishMsgRequest);
@@ -299,88 +299,88 @@ public interface SmnClient {
      * <p>
      * sucess,return<CODE>Map</CODE>including:request_id,message_id and status
      * <p>
-     * 发送fail，return request_id and status
+     * send fail，return request_id and status
      *
      * @param smnRequest {@link SmsPublishRequest} request
      * @return {@link HttpResponse}
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      * @throws RuntimeException connect error,fail to get iam token will throw exception
      */
     HttpResponse smsPublish(SmsPublishRequest smnRequest);
 
     /**
-     * 查询短信的发送状态
+     * query the report of the message
      *
      * @param smnRequest {@link ListSmsMsgReportRequest} request message
      * @return {@link HttpResponse}
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      */
     HttpResponse listSmsMsgReport(ListSmsMsgReportRequest smnRequest);
 
     /**
-     * 查询已发送短信的内容
+     * query the content of the sms sent
      *
      * @param smnRequest {@link GetSmsMessageRequest} request message
      * @return {@link HttpResponse}
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      */
     HttpResponse getSmsMessage(GetSmsMessageRequest smnRequest);
 
 
     /**
-     * 查询短信回调时间列表
+     * query message callback event list
      *
      * @param smnRequest {@link ListSmsCallbackEventRequest} request message
      * @return {@link HttpResponse}
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      */
     HttpResponse listSmsCallbackEvent(ListSmsCallbackEventRequest smnRequest);
 
     /**
-     * 查询短信回调时间列表
+     * update sms message callback event
      *
      * @param smnRequest {@link ListSmsCallbackEventRequest} request message
      * @return {@link HttpResponse}
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      */
     HttpResponse updateSmsCallbackEvent(UpdateSmsCallbackEventRequest smnRequest);
 
     /**
-     * 查询短信签名
+     * query sms signature
      *
      * @param smnRequest {@link ListSmsSignsRequest} request message
      * @return {@link HttpResponse}
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      */
     HttpResponse listSmsSigns(ListSmsSignsRequest smnRequest);
 
     /**
-     * 删除短信签名
+     * delete sms signature
      *
      * @param smnRequest {@link DeleteSmsSignRequest} request message
      * @return {@link HttpResponse}
      * <p>
      * {@code httpCode}
      * <p>
-     * {@code body}Map&lt;String,String%gt;
+     * {@code body}Map&lt;String,String&gt;
      */
     HttpResponse deleteSmsSign(DeleteSmsSignRequest smnRequest);
 }

@@ -34,7 +34,6 @@ import java.util.regex.Pattern;
  *
  * @author huangqiong
  * @version 0.1
- * @date 2017年8月3日 下午5:30:35
  */
 public class SmsPublishRequest extends AbstractSmnRequest {
 
@@ -86,8 +85,8 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      * build and get request parameters
      *
      * @return Map
-     * {@value}endpoint
-     * {@value}message
+     * <code>endpoint</code>
+     * <code>message</code>
      */
     public Map<String, Object> getRequestParameterMap() {
         validatePhoneNumber(getEndpoint());
@@ -130,7 +129,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
             throw new NullPointerException("Message is null.");
         }
 
-        // 短信发送时，需要注意短信长度,CMPP协议短信最多500字符
+        // attention to sms length, CMPP protocol up to 500 characters
         if (message.length() > 500) {
             LOGGER.warn("SMS content is too long, more than {} characters of the message content will be cut off.",
                     500);

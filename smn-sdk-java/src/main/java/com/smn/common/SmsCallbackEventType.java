@@ -7,17 +7,17 @@ public final class SmsCallbackEventType {
     }
 
     /**
-     * 短信回调事件类型
+     * sms callback event type
      */
     public final static String SMS_CALLBACK_SUCCESS = "sms_success_event";
 
     /**
-     * 短信回调事件类型
+     * sms callback event type
      */
     public final static String SMS_CALLBACK_FAIL = "sms_fail_event";
 
     /**
-     * 短信回调事件类型
+     * sms callback event type
      */
     public final static String SMS_CALLBACK_REPLY = "sms_reply_event";
 }

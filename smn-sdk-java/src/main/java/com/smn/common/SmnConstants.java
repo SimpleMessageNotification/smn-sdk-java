@@ -26,7 +26,6 @@ package com.smn.common;
  * String constants
  *
  * @author huangqiong
- * @date 2017年8月3日 下午5:16:42
  * @version 0.1
  */
 public final class SmnConstants {
@@ -317,22 +316,12 @@ public final class SmnConstants {
     public final static int MAX_TOPIC_DISPLAY_NAME = 192;
 
     /**
-     * 默认的消息
+     * default message
      */
     public final static String DEFAULT_MESSAGE = "default";
 
     /**
-     * 模板消息的标签tags
+     * message template tags
      */
     public final static String TAGS = "tags";
-
-    /**
-     * 查询统短信发送的状态统计类型，按天查询
-     */
-    public final static String DAILY = "daily";
-
-    /**
-     * 查询统短信发送的状态统计类型，按小时查询
-     */
-    public final static String HOURLY = "hourly";
 }

@@ -15,12 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:32:42
- * @version 0.1
- * 
- */
 package com.smn.service;
 
 import com.smn.common.SmnConfiguration;
@@ -29,7 +23,6 @@ import com.smn.common.SmnConfiguration;
  * common service interface
  * 
  * @author huangqiong
- * @date 2017年8月3日 下午5:32:42
  * @version 0.1
  */
 public interface CommonService {

@@ -17,25 +17,21 @@
  */
 package com.smn.model.request.template;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.common.utils.ValidationUtil;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.common.utils.ValidationUtil;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * the request to update message template
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
- * @version 0.1
  * @author yangyanping
- * @date 2017年8月25日
  * @version 0.2
  */
 public class UpdateMessageTemplateRequest extends AbstractSmnRequest {
@@ -54,22 +50,22 @@ public class UpdateMessageTemplateRequest extends AbstractSmnRequest {
     /**
      * build and get request url
      */
-    
+
     /**
      * check params
      */
-    private void validation(){
-        
+    private void validation() {
+
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Update message template detail request projectId is null.");
             throw new NullPointerException("Update message template detail request projectId is null.");
         }
-    
+
         if (StringUtils.isBlank(getMessageTemplateId())) {
             LOGGER.warn("Message template id is null");
             throw new NullPointerException("Message template id is null");
         }
-        if (!ValidationUtil.validateTemplateMessageContent(content)){
+        if (!ValidationUtil.validateTemplateMessageContent(content)) {
             LOGGER.warn("Message template id is null");
             throw new NullPointerException("Message template id is null");
         }
@@ -77,7 +73,7 @@ public class UpdateMessageTemplateRequest extends AbstractSmnRequest {
 
     @Override
     public String getRequestUri() throws RuntimeException {
-        
+
         validation();
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
@@ -107,8 +103,7 @@ public class UpdateMessageTemplateRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param messageTemplateId
-     *            the messageTemplateId to set
+     * @param messageTemplateId the messageTemplateId to set
      */
     public void setMessageTemplateId(String messageTemplateId) {
         this.messageTemplateId = messageTemplateId;
@@ -122,8 +117,7 @@ public class UpdateMessageTemplateRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param content
-     *            the content to set
+     * @param content the content to set
      */
     public void setContent(String content) {
         this.content = content;

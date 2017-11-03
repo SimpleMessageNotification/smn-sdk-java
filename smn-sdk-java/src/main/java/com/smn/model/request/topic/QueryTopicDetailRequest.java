@@ -28,12 +28,9 @@ import com.smn.common.SmnConstants;
 import com.smn.model.AbstractSmnRequest;
 
 /**
- * query topic detail
+ * the request to query topic detail
  * 
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
  */
 public class QueryTopicDetailRequest extends AbstractSmnRequest {

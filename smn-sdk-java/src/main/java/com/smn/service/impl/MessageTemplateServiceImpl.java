@@ -44,14 +44,14 @@ public class MessageTemplateServiceImpl extends AbstractCommonService implements
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageTemplateServiceImpl.class);
 
     /**
-     * 无参构造函数
+     * no arg constructor
      */
     public MessageTemplateServiceImpl() {
         super();
     }
 
     /**
-     * 给定iamService和smnConfiguration构造实例
+     * give iamService and smnConfiguration constructor
      *
      * @param iamService        the iamService to set
      * @param smnConfiguration  the smnConfiguration to set

@@ -28,12 +28,9 @@ import com.smn.common.SmnConstants;
 import com.smn.model.AbstractSmnRequest;
 
 /**
- * delete topic
+ * the request to delete topic
  * 
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
  */
 public class DeleteTopicRequest extends AbstractSmnRequest {

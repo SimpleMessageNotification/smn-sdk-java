@@ -16,10 +16,10 @@
  * under the License.
  */
 /**
+ * json utils
+ *
  * @author huangqiong
- * @date 2017年8月3日 下午5:22:46
  * @version 0.1
- * 
  */
 package com.smn.common.utils;
 
@@ -35,7 +35,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * json utils
  * 
  * @author huangqiong
- * @date 2017年8月3日 下午5:22:46
  * @version 0.1
  */
 public class JsonUtil {

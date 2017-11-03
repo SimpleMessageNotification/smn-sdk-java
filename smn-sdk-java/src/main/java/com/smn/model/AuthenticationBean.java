@@ -15,19 +15,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:25:10
- * @version 0.1
- * 
- */
 package com.smn.model;
 
 import java.io.Serializable;
 
 /**
+ * the info of the authentication
+ *
  * @author huangqiong
- * @date 2017年8月3日 下午5:25:10
  * @version 0.1
  */
 

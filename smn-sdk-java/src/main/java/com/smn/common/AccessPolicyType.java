@@ -18,11 +18,10 @@
 package com.smn.common;
 
 /**
- * acess policy
+ * access policy
  *
  * @author huangqiong
  * @version 0.1
- * @date 2017年8月2日
  */
 public final class AccessPolicyType {
 

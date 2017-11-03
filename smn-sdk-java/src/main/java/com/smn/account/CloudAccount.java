@@ -67,7 +67,7 @@ public class CloudAccount {
     private ClientConfiguration clientConfiguration;
 
     /**
-     * 构造函数
+     * constructor
      *
      * @param userName   the userName to set
      * @param password   the password to set
@@ -79,7 +79,7 @@ public class CloudAccount {
     }
 
     /**
-     * 构造函数, 可自定义ClientConfiguration
+     * constructor
      *
      * @param userName            the userName to set
      * @param password            the password to set
@@ -100,7 +100,6 @@ public class CloudAccount {
             this.clientConfiguration = new ClientConfiguration();
         }
     }
-
 
     /**
      * get smn client
