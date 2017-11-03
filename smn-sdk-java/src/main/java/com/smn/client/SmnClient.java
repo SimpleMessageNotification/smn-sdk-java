@@ -359,4 +359,28 @@ public interface SmnClient {
      * {@code body}Map&lt;String,String%gt;
      */
     HttpResponse updateSmsCallbackEvent(UpdateSmsCallbackEventRequest smnRequest);
+
+    /**
+     * 查询短信签名
+     *
+     * @param smnRequest {@link ListSmsSignsRequest} request message
+     * @return {@link HttpResponse}
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,String%gt;
+     */
+    HttpResponse listSmsSigns(ListSmsSignsRequest smnRequest);
+
+    /**
+     * 删除短信签名
+     *
+     * @param smnRequest {@link DeleteSmsSignRequest} request message
+     * @return {@link HttpResponse}
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,String%gt;
+     */
+    HttpResponse deleteSmsSign(DeleteSmsSignRequest smnRequest);
 }

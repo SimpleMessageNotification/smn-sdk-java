@@ -133,4 +133,32 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
             throw new RuntimeException("Failed to update sms callback event.", e);
         }
     }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see SmsService#listSmsSigns(ListSmsSignsRequest)
+     */
+    public HttpResponse listSmsSigns(ListSmsSignsRequest smnRequest) {
+        try {
+            return sendRequest(smnRequest, HttpMethod.GET);
+        } catch (Exception e) {
+            LOGGER.error("Failed to list sms signs.", e);
+            throw new RuntimeException("Failed to list sms signs", e);
+        }
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see SmsService#deleteSmsSign(DeleteSmsSignRequest)
+     */
+    public HttpResponse deleteSmsSign(DeleteSmsSignRequest smnRequest) {
+        try {
+            return sendRequest(smnRequest, HttpMethod.DELETE);
+        } catch (Exception e) {
+            LOGGER.error("Failed to delete sms sign.", e);
+            throw new RuntimeException("Failed to delete sms sign", e);
+        }
+    }
 }

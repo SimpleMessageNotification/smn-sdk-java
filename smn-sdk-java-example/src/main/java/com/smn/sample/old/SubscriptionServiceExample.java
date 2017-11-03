@@ -11,6 +11,10 @@ import com.smn.service.impl.SubscriptionServiceImpl;
 
 /**
  * 订阅操作相关的demo
+ * <p>
+ * 0.8及以前版本的demo使用示例
+ * <p>
+ * 0.9版本的sdk请使用{@link com.smn.sample.ClientDemo}中的示例
  *
  * @author zhangyx
  * @version 0.7

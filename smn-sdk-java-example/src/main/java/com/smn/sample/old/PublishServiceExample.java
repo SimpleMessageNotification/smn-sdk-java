@@ -7,12 +7,18 @@ import com.smn.model.request.publish.PublishMsgRequest;
 import com.smn.service.PublishService;
 import com.smn.service.impl.PublishServiceImpl;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * publishService发送消息示例
+ * <p>
+ * 0.8及以前版本的demo使用示例
+ * <p>
+ * 0.9版本的sdk请使用{@link com.smn.sample.ClientDemo}中的示例
+ *
+ * @author zhangyx
+ * @version 0.7
  */
 public class PublishServiceExample {
     public static void main(String[] args) {

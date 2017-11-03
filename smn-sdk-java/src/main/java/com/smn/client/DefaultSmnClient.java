@@ -289,4 +289,24 @@ public class DefaultSmnClient implements SmnClient {
         SmsService smsService = serviceFactory.getSmsService();
         return smsService.updateSmsCallbackEvent(smnRequest);
     }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see SmnClient#listSmsSigns(ListSmsSignsRequest)
+     */
+    public HttpResponse listSmsSigns(ListSmsSignsRequest smnRequest) {
+        SmsService smsService = serviceFactory.getSmsService();
+        return smsService.listSmsSigns(smnRequest);
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see SmnClient#deleteSmsSign(DeleteSmsSignRequest)
+     */
+    public HttpResponse deleteSmsSign(DeleteSmsSignRequest smnRequest) {
+        SmsService smsService = serviceFactory.getSmsService();
+        return smsService.deleteSmsSign(smnRequest);
+    }
 }
