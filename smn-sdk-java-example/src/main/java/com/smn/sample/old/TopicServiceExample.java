@@ -2,15 +2,21 @@ package com.smn.sample.old;
 
 import com.smn.common.HttpResponse;
 import com.smn.common.SmnConfiguration;
-import com.smn.common.utils.JsonUtil;
 import com.smn.model.request.topic.*;
 import com.smn.service.TopicService;
 import com.smn.service.impl.TopicServiceImpl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * topic操作相关的demo
+ * <p>
+ * 0.8及以前版本的demo使用示例
+ * <p>
+ * 0.9版本的sdk请使用{@link com.smn.sample.ClientDemo}中的示例
  *
  * @author zhangyx
  * @version 0.7
@@ -264,7 +270,7 @@ public class TopicServiceExample {
         attributeValue.put("Version", "2016-09-07");
         attributeValue.put("Id", "__default_policy_ID");
 
-        List<LinkedHashMap<String, Object>> statements= new ArrayList<LinkedHashMap<String, Object>>();
+        List<LinkedHashMap<String, Object>> statements = new ArrayList<LinkedHashMap<String, Object>>();
         LinkedHashMap<String, Object> statement1 = new LinkedHashMap<String, Object>();
         statement1.put("Sid", "__user_pub_0");
         statement1.put("Effect", "Allow");
