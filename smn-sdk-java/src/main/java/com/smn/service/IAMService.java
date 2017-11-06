@@ -15,18 +15,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:33:48
- * @version 0.1
- */
 package com.smn.service;
 
 import com.smn.model.AuthenticationBean;
 
 /**
  * @author huangqiong
- * @date 2017年8月3日 下午5:33:48
  * @version 0.1
  */
 

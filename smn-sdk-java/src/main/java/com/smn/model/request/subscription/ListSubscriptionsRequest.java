@@ -36,11 +36,11 @@ import com.smn.common.SmnConstants;
 import com.smn.model.AbstractSmnRequest;
 
 /**
+ * the request to list all subscription
+ *
  * @author huangqiong
- * @date 2017年8月14日 下午4:33:12
  * @version 0.1
  * @author yangyanping
- * @date 2017年8月24日 下午4:33:12
  * @version 0.2
  * @author zhangyx
  * @version 0.8

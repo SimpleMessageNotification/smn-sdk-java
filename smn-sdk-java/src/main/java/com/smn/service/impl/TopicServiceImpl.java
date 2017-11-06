@@ -43,14 +43,14 @@ public class TopicServiceImpl extends AbstractCommonService implements TopicServ
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
 
     /**
-     * 无参构造函数
+     * no arg constructor
      */
     public TopicServiceImpl() {
         super();
     }
 
     /**
-     * 给定iamService和smnConfiguration构造实例
+     * give iamService and smnConfiguration constructor
      *
      * @param iamService        the iamService to set
      * @param smnConfiguration  the smnConfiguration to set

@@ -18,5 +18,11 @@ public class SmsDemo {
 
         //更新短信回调事件
         clientDemo.updateSmsCallbackEvent();
+
+        // 查询短信签名
+        clientDemo.listSmsSigns();
+
+        //删除签名
+        clientDemo.deleteSmsSign();
     }
 }

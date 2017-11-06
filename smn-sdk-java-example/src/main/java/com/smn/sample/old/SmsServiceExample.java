@@ -27,9 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 短信相关操作的demo
+ * <p>
+ * 0.8及以前版本的demo使用示例
+ * <p>
+ * 0.9版本的sdk请使用{@link com.smn.sample.ClientDemo}中的示例
+ *
  * @author huangqiong
- * @version 0.1
- * @date 2017年8月3日 下午10:19:18
+ * @author zhangyx
+ * @version 0.7
  */
 public class SmsServiceExample {
 

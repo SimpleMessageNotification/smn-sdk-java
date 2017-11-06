@@ -15,19 +15,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:33:12
- * @version 0.1
- */
 package com.smn.service;
 
-import com.smn.common.HttpMethod;
-import com.smn.common.HttpResponse;
-import com.smn.common.SmnConfiguration;
-import com.smn.common.SmnConstants;
+import com.smn.common.*;
 import com.smn.common.utils.HttpUtil;
-import com.smn.common.ClientConfiguration;
 import com.smn.model.AbstractSmnRequest;
 import com.smn.model.AuthenticationBean;
 import com.smn.service.impl.IAMServiceImpl;
@@ -64,17 +55,18 @@ public abstract class AbstractCommonService implements CommonService {
     protected ClientConfiguration clientConfiguration;
 
     /**
-     * 无参构造函数
+     * constructor
      */
     public AbstractCommonService() {
         this.clientConfiguration = new ClientConfiguration();
     }
 
     /**
-     * 给定iamService和smnConfiguration构造实例
+     * constructor
      *
-     * @param iamService       the iamService to set
-     * @param smnConfiguration the smnConfiguration to set
+     * @param iamService          the iamService to set
+     * @param smnConfiguration    the smnConfiguration to set
+     * @param clientConfiguration the clientConfiguration to set
      */
     public AbstractCommonService(IAMService iamService, SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
         this.iamService = iamService;
@@ -123,10 +115,7 @@ public abstract class AbstractCommonService implements CommonService {
      * request for authenticationBean
      *
      * @return AuthenticationBean
-     * {@value} authToken
-     * {@value} projectId
-     * {@value} expiresAt
-     * {@value} expiresTime
+     * {@link AuthenticationBean} the info of the authentication
      */
     protected AuthenticationBean getAuthenticationBean() {
         return getIAMService().getAuthenticationBean();
@@ -135,10 +124,10 @@ public abstract class AbstractCommonService implements CommonService {
     /**
      * build request header
      *
-     * @param requestHeader {@value}region
-     *                      {@value}X-Project-Id
-     *                      {@value}X-Auth-Token
-     *                      {@value}content-type
+     * @param requestHeader contains the following parameters:
+     *                      <code>region</code>
+     *                      <code>X-Project-Id</code>
+     *                      <code>X-Auth-Token</code>
      */
     protected void buildRequestHeader(Map<String, String> requestHeader) {
         if (null == getAuthenticationBean()) {
@@ -152,7 +141,7 @@ public abstract class AbstractCommonService implements CommonService {
     /**
      * build request url
      *
-     * @param uri
+     * @param uri the uri to request
      * @return String url
      */
     protected String buildRequestUrl(String uri) {
@@ -165,6 +154,7 @@ public abstract class AbstractCommonService implements CommonService {
      * send http request
      *
      * @param smnRequest the request to send
+     * @param httpMethod the http method
      * @return response {@link HttpResponse}
      * @throws Exception connect error throw exception
      */

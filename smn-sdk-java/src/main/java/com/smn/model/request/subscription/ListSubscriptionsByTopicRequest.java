@@ -37,11 +37,11 @@ import com.smn.common.utils.ValidationUtil;
 import com.smn.model.AbstractSmnRequest;
 
 /**
+ * the request to list subscriptions by topic
+ *
  * @author huangqiong
- * @date 2017年8月14日 下午4:32:42
  * @version 0.1
  * @author yangyanping
- * @date 2017年8月24日 下午4:32:42
  * @version 0.2
  * @author zhangyx
  * @version 0.8
@@ -64,7 +64,7 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
     private String topicUrn;
     
     /**
-     * 校验参数
+     * validate parameter
      */
     private void validate(){
         

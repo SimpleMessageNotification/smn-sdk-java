@@ -23,9 +23,9 @@ public class ClientDemo {
      */
     public ClientDemo() {
         CloudAccount cloudAccount = new CloudAccount(
-                "******",
-                "******",
-                "******",
+                "*********",
+                "*********",
+                "*********",
                 "cn-north-1");
 
         // if you want custom HTTP parameters
@@ -48,6 +48,7 @@ public class ClientDemo {
         //       "cn-north-1",
         //       clientConfiguration);
 
+        // the CloudAccount and SmnClient just only need initialize once, you can use singleton
         smnClient = cloudAccount.getSmnClient();
     }
 
@@ -411,6 +412,32 @@ public class ClientDemo {
 
         // 更新短信回调事件
         HttpResponse res = smnClient.updateSmsCallbackEvent(updateSmsCallbackEventRequest);
+        System.out.println(res);
+    }
+
+    /**
+     * 查询短信签名
+     */
+    public void listSmsSigns() {
+        // 构造请求对象
+        ListSmsSignsRequest listSmsSignsRequest = new ListSmsSignsRequest();
+
+        // 更新短信回调事件
+        HttpResponse res = smnClient.listSmsSigns(listSmsSignsRequest);
+        System.out.println(res);
+    }
+
+    /**
+     * 删除短信签名
+     */
+    public void deleteSmsSign() {
+        // 构造请求对象
+        DeleteSmsSignRequest deleteSmsSignRequest = new DeleteSmsSignRequest();
+
+        // 设置签名ID
+        deleteSmsSignRequest.setSignId("7a33649fd1d549c1b68ab22bf0880452");
+        // 删除短信签名
+        HttpResponse res = smnClient.deleteSmsSign(deleteSmsSignRequest);
         System.out.println(res);
     }
 

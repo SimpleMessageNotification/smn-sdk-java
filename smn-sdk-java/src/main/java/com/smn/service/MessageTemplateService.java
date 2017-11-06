@@ -18,31 +18,26 @@
 package com.smn.service;
 
 import com.smn.common.HttpResponse;
-import com.smn.model.request.template.CreateMessageTemplateRequest;
-import com.smn.model.request.template.DeleteMessageTemplateRequest;
-import com.smn.model.request.template.ListMessageTemplatesRequest;
-import com.smn.model.request.template.QueryMessageTemplateDetailRequest;
-import com.smn.model.request.template.UpdateMessageTemplateRequest;
+import com.smn.model.request.template.*;
 
 /**
  * Message template service
  *
  * @author huangqiong
  * @version 0.1
- * @date 2017年8月2日
  */
 public interface MessageTemplateService extends CommonService {
 
     /**
      * create message template
      *
-     * @param smnRequest
-     *            {@link CreateMessageTemplateRequest} request
+     * @param smnRequest {@link CreateMessageTemplateRequest} request
      * @return {@link HttpResponse}
-     *          <p>
-     *          {@code httpCode}
-     *          <p>
-     *         {@code body}Map&lt;String,String%gt;
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse createMessageTemplate(CreateMessageTemplateRequest smnRequest) throws RuntimeException;
@@ -52,10 +47,11 @@ public interface MessageTemplateService extends CommonService {
      *
      * @param smnRequest request
      * @return {@link HttpResponse}
-     *          <p>
-     *          {@code httpCode}
-     *          <p>
-     *         {@code body}Map&lt;String,String%gt;
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse updateMessageTemplate(UpdateMessageTemplateRequest smnRequest) throws RuntimeException;
@@ -64,13 +60,13 @@ public interface MessageTemplateService extends CommonService {
      * delete message template
      * <p>
      *
-     * @param smnRequest
-     *            {@link DeleteMessageTemplateRequest} request
+     * @param smnRequest {@link DeleteMessageTemplateRequest} request
      * @return {@link HttpResponse}
-     *          <p>
-     *          {@code httpCode}
-     *          <p>
-     *         {@code body}Map&lt;String,String%gt;
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse deleteMessageTemplate(DeleteMessageTemplateRequest smnRequest) throws RuntimeException;
@@ -78,13 +74,13 @@ public interface MessageTemplateService extends CommonService {
     /**
      * query message template list
      *
-     * @param smnRequest
-     *            {@link ListMessageTemplatesRequest} request
+     * @param smnRequest {@link ListMessageTemplatesRequest} request
      * @return {@link HttpResponse}
-     *          <p>
-     *          {@code httpCode}
-     *          <p>
-     *         {@code body}Map&lt;String,String%gt;
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
      * @throws RuntimeException connect error throw exception
      */
     HttpResponse listMessageTemplates(ListMessageTemplatesRequest smnRequest) throws RuntimeException;
@@ -93,13 +89,13 @@ public interface MessageTemplateService extends CommonService {
      * query message template detail
      * <p>
      *
-     * @param smnRequest
-     *            {@link QueryMessageTemplateDetailRequest} request
+     * @param smnRequest {@link QueryMessageTemplateDetailRequest} request
      * @return {@link HttpResponse}
-     *          <p>
-     *          {@code httpCode}
-     *          <p>
-     *         {@code body}Map&lt;String,String%gt;
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
      * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
     HttpResponse queryMsgTemplateDetail(QueryMessageTemplateDetailRequest smnRequest) throws RuntimeException;

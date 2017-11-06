@@ -15,12 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:28:21
- * @version 0.1
- * 
- */
 package com.smn.model;
 
 import java.util.HashMap;
@@ -29,8 +23,9 @@ import java.util.Map;
 import com.smn.common.SmnConstants;
 
 /**
+ * abstract request
+ *
  * @author huangqiong
- * @date 2017年8月3日 下午5:28:21
  * @version 0.1
  */
 public abstract class AbstractSmnRequest implements SmnRequest {
@@ -99,19 +94,5 @@ public abstract class AbstractSmnRequest implements SmnRequest {
      */
     public void setProjectId(String projectId) {
         this.projectId = projectId;
-    }
-
-    /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    /**
-     * @param xAuthToken the xAuthToken to set
-     */
-    public void setxAuthToken(String xAuthToken) {
-        this.xAuthToken = xAuthToken;
     }
 }

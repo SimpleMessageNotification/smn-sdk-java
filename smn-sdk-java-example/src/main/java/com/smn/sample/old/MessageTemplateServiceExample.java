@@ -8,6 +8,10 @@ import com.smn.service.impl.MessageTemplateServiceImpl;
 
 /**
  * 模板操作相关demo
+ * <p>
+ * 0.8及以前版本的demo使用示例
+ * <p>
+ * 0.9版本的sdk请使用{@link com.smn.sample.ClientDemo}中的示例
  *
  * @author zhangyx
  * @version 0.7

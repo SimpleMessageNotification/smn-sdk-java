@@ -15,29 +15,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月7日 下午2:13:59
- * @version 0.1
- * 
- */
 package com.smn.common.utils;
 
-import java.security.SecureRandom;
+import com.smn.common.SmnConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.smn.common.SmnConstants;
+import java.security.SecureRandom;
 
 /**
+ * aes tool
+ *
  * @author huangqiong
- * @date 2017年8月7日 下午2:13:59
  * @version 0.1
  */
 public class AesUtil {
@@ -46,14 +39,10 @@ public class AesUtil {
 
     /**
      * encrypt
-     * 
-     * @param content
-     *            content to be encrpted
-     * @param password
-     *            encrypt password
-     * @return String
-     *         <p>
-     *         encrypted content
+     *
+     * @param content  content to be encrpted
+     * @param password encrypt password
+     * @return String encrypted content
      */
     public static String encrypt(String content, String password) {
         try {
@@ -95,14 +84,10 @@ public class AesUtil {
 
     /**
      * decrypt aes string
-     * 
-     * @param content
-     *            encrypted content
-     * @param password
-     * 
-     * @return String
-     *         <p>
-     *         decrypted content
+     *
+     * @param content  encrypted content
+     * @param password password
+     * @return String decrypted content
      */
     public static String decrypt(String content, String password) {
         try {
@@ -139,9 +124,10 @@ public class AesUtil {
 
     /**
      * parse byte array to string
-     * 
-     * @param buf
+     *
+     * @param buf byte array
      * @return String
+     * the convert string
      */
     public static String parseByte2HexStr(byte buf[]) {
         StringBuffer sb = new StringBuffer();
@@ -157,10 +143,10 @@ public class AesUtil {
 
     /**
      * parse hex string to byte array
-     * 
-     * @param hexStr
+     *
+     * @param hexStr the string to byte array
      * @return byte[]
-     *         to decrypted bytes
+     * to decrypted bytes
      */
     public static byte[] parseHexStr2Byte(String hexStr) {
         if (hexStr.length() < 1)

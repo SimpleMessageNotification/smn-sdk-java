@@ -31,12 +31,9 @@ import com.smn.common.utils.JsonUtil;
 import com.smn.model.AbstractSmnRequest;
 
 /**
- * update topic attribute
+ * the request to update topic attribute
  * 
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
  */
 public class UpdateTopicAttributeRequest extends AbstractSmnRequest {

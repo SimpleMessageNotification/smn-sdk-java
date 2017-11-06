@@ -29,7 +29,7 @@ import com.smn.model.request.topic.*;
 import com.smn.service.*;
 
 /**
- * {@link SmnClient} 的默认实现
+ * {@link SmnClient} 的default implement
  *
  * @author zhangyx
  * @version 0.9
@@ -42,9 +42,9 @@ public class DefaultSmnClient implements SmnClient {
     private ServiceFactory serviceFactory;
 
     /**
-     * 给定serviceFacory创建实例
+     * create serviceFactory instance
      *
-     * @param serviceFactory
+     * @param serviceFactory the service factory
      */
     public DefaultSmnClient(ServiceFactory serviceFactory) {
         this.serviceFactory = serviceFactory;
@@ -288,5 +288,25 @@ public class DefaultSmnClient implements SmnClient {
     public HttpResponse updateSmsCallbackEvent(UpdateSmsCallbackEventRequest smnRequest) {
         SmsService smsService = serviceFactory.getSmsService();
         return smsService.updateSmsCallbackEvent(smnRequest);
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see SmnClient#listSmsSigns(ListSmsSignsRequest)
+     */
+    public HttpResponse listSmsSigns(ListSmsSignsRequest smnRequest) {
+        SmsService smsService = serviceFactory.getSmsService();
+        return smsService.listSmsSigns(smnRequest);
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see SmnClient#deleteSmsSign(DeleteSmsSignRequest)
+     */
+    public HttpResponse deleteSmsSign(DeleteSmsSignRequest smnRequest) {
+        SmsService smsService = serviceFactory.getSmsService();
+        return smsService.deleteSmsSign(smnRequest);
     }
 }

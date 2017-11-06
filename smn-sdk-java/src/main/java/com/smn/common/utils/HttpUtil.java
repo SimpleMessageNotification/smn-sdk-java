@@ -15,11 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:19:22
- * @version 0.1
- */
 package com.smn.common.utils;
 
 import com.smn.common.ClientConfiguration;
@@ -56,9 +51,7 @@ import java.util.Map;
 /**
  * @author huangqiong
  * @author zhangyx
- * @version 0.1
  * @version 0.9
- * @date 2017年8月3日 下午5:19:22
  */
 public class HttpUtil {
 
@@ -97,8 +90,9 @@ public class HttpUtil {
     /**
      * Get auth info from IAM service
      *
-     * @param iamUrl      the URL of IAM service
-     * @param bodyMessage the body of message
+     * @param iamUrl              the URL of IAM service
+     * @param bodyMessage         the body of message
+     * @param clientConfiguration the client configuration
      * @return {@code AuthBean}
      * @throws Exception Failed to get IAM information, throw an exception
      */
@@ -132,7 +126,7 @@ public class HttpUtil {
                 } else {
                     LOGGER.error("Unexpected response status: {}.  ErrorMessage is {}.", status, responseMessage);
                     throw new RuntimeException(
-                            "Unexpected response status: " + status + "。 ErrorMessage is " + responseMessage);
+                            "Unexpected response status: " + status + ", ErrorMessage is " + responseMessage);
                 }
             } finally {
                 response.close();
@@ -145,10 +139,10 @@ public class HttpUtil {
     /**
      * to create http request instance
      *
-     * @param headerParams      the header parmas
-     * @param bodyParams        the body params
-     * @param url               the url
-     * @param httpMethod        the request http method
+     * @param headerParams        the header parmas
+     * @param bodyParams          the body params
+     * @param url                 the url
+     * @param httpMethod          the request http method
      * @param clientConfiguration the client configuration
      * @return the request instance
      */
@@ -192,6 +186,7 @@ public class HttpUtil {
      * @param httpMethod          the request http method
      * @param clientConfiguration the client configuration, contain http configuration
      * @return the response
+     * @throws Exception request error throw exception
      */
     public static HttpResponse sendRequest(Map<String, String> headerParams, Map<String, Object> bodyParams, String url,
                                            HttpMethod httpMethod, ClientConfiguration clientConfiguration)
@@ -259,7 +254,7 @@ public class HttpUtil {
                 new NoopHostnameVerifier());
         HttpClientBuilder builder = HttpClients.custom();
 
-        // 设置代理
+        // set proxy
         String proxyHost = clientConfiguration.getProxyHost();
         int proxyPort = clientConfiguration.getProxyPort();
 

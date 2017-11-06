@@ -17,13 +17,9 @@
  */
 package com.smn.model.request.template;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.common.utils.ValidationUtil;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -32,18 +28,21 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.common.utils.ValidationUtil;
-import com.smn.model.AbstractSmnRequest;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
+ * the request to list message templates
+ *
  * @author huangqiong
  * @author yangyanping
  * @author zhangyx
  * @version 0.2
  * @version 0.8
- * @date 2017年8月2日
- * @date 2017年8月25日
  */
 public class ListMessageTemplatesRequest extends AbstractSmnRequest {
 

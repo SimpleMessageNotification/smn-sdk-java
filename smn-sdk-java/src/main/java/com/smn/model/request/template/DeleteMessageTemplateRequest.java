@@ -17,24 +17,21 @@
  */
 package com.smn.model.request.template;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * the request to delete message template
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
+ * @author yangyanping
  * @version 0.1
- * @author  yangyanping
- * @date 2017年8月25日
  * @version 0.2
  */
 public class DeleteMessageTemplateRequest extends AbstractSmnRequest {
@@ -49,12 +46,12 @@ public class DeleteMessageTemplateRequest extends AbstractSmnRequest {
     /**
      * check params
      */
-    private void validation(){
+    private void validation() {
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Delete message template request projectId is null.");
             throw new NullPointerException("Delete message template request projectId is null.");
         }
-    
+
         if (StringUtils.isBlank(messageTemplateId)) {
             LOGGER.error("Message template id is null");
             throw new NullPointerException("Message template id is null");
@@ -93,8 +90,7 @@ public class DeleteMessageTemplateRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param messageTemplateId
-     *            the messageTemplateId to set
+     * @param messageTemplateId the messageTemplateId to set
      */
     public void setMessageTemplateId(String messageTemplateId) {
         this.messageTemplateId = messageTemplateId;

@@ -17,24 +17,20 @@
  */
 package com.smn.model.request.topic;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.common.utils.ValidationUtil;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.common.utils.ValidationUtil;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * create topic
- * 
- * @author huangqiong
+ * the request to create topic
  *
- * @date 2017年8月2日
- *
+ * @author huangqiong*
  * @version 0.1
  */
 public class CreateTopicRequest extends AbstractSmnRequest {
@@ -98,8 +94,7 @@ public class CreateTopicRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param name
-     *            the name to set
+     * @param name the name to set
      */
     public void setName(String name) {
 
@@ -121,9 +116,8 @@ public class CreateTopicRequest extends AbstractSmnRequest {
      * set displayName
      * <p>
      * validate display length before set the value
-     * 
-     * @param displayName
-     *            the displayName to set
+     *
+     * @param displayName the displayName to set
      */
     public void setDisplayName(String displayName) {
 

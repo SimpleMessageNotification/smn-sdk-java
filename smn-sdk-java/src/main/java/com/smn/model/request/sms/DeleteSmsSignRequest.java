@@ -23,28 +23,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * the request to update sms callback event
+ * delete sms sign request message
  *
  * @author zhangyx
- * @version 0.7
+ * @version 0.9
  */
-public class UpdateSmsCallbackEventRequest extends AbstractSmnRequest {
+public class DeleteSmsSignRequest extends AbstractSmnRequest {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(DeleteSmsSignRequest.class);
 
     /**
-     * LOGGER
+     * signature identitier
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(UpdateSmsCallbackEventRequest.class);
-
-    /**
-     * query result list
-     */
-    private List<SmsCallback> callbacks;
+    private String signId;
 
     /**
      * build and get request url
@@ -52,20 +47,20 @@ public class UpdateSmsCallbackEventRequest extends AbstractSmnRequest {
     @Override
     public String getRequestUri() {
         if (StringUtils.isBlank(projectId)) {
-            LOGGER.error("Update sms event request projectId is null.");
-            throw new RuntimeException("Update sms event request projectId is null.");
+            LOGGER.error("Delete sms sign request projectId is null.");
+            throw new RuntimeException("Delete sms sign request projectId is null.");
         }
 
-        if (!validate()) {
-            LOGGER.error("Update sms event request callbacks is invalid.");
-            throw new RuntimeException("Update sms event request callbacks is invalid.");
+        if (StringUtils.isBlank(signId)) {
+            LOGGER.error("SignId is null");
+            throw new RuntimeException("SignId is null");
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(SmnConstants.URL_DELIMITER).append(SmnConstants.V2_VERSION).append(SmnConstants.URL_DELIMITER)
                 .append(projectId).append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_NOTIFICATIONS)
-                .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUB_PROTOCOL_SMS)
-                .append(SmnConstants.URL_DELIMITER).append(SmnConstants.CALLBACK_REQUEST);
+                .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMS_SIGNATURE)
+                .append(SmnConstants.URL_DELIMITER).append(signId);
 
         LOGGER.info("Request url is {}. ", sb.toString());
         return sb.toString();
@@ -77,52 +72,27 @@ public class UpdateSmsCallbackEventRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        List<Map<String, String>> callBackList = new ArrayList<Map<String, String>>();
-        for (SmsCallback smsCallback : callbacks) {
-            Map<String, String> tempMap = new HashMap<String, String>();
-            tempMap.put(SmnConstants.TOPIC_URN, smsCallback.getTopicUrn());
-            tempMap.put(SmnConstants.EVENT_TYPE, smsCallback.getEventType());
-            callBackList.add(tempMap);
-        }
-        requestParameterMap.put(SmnConstants.CALLBACK_FIELD, callBackList);
         return requestParameterMap;
     }
 
     /**
-     * verify the callback param is valid
-     *
-     * @return parameter valid return true, else return false
+     * @return the signId
      */
-    private boolean validate() {
-        if (null == callbacks || callbacks.size() == 0) {
-            return false;
-        }
-        return true;
+    public String getSignId() {
+        return signId;
     }
 
     /**
-     * @return the callback list
+     * @param signId the signId to set
      */
-    public List<SmsCallback> getCallbacks() {
-        return callbacks;
+    public void setSignId(String signId) {
+        this.signId = signId;
     }
 
-    /**
-     * @param callbacks the callback list to set
-     */
-    public void setCallbacks(List<SmsCallback> callbacks) {
-        this.callbacks = callbacks;
-    }
-
-    /**
-     * toString method
-     *
-     * @return string
-     */
     @Override
     public String toString() {
-        return "UpdateSmsCallbackEventRequest{" +
-                "callbacks=" + callbacks +
+        return "DeleteSmsSignRequest{" +
+                "signId='" + signId + '\'' +
                 ", smnEndpoint='" + smnEndpoint + '\'' +
                 ", projectId='" + projectId + '\'' +
                 ", xAuthToken='" + xAuthToken + '\'' +
