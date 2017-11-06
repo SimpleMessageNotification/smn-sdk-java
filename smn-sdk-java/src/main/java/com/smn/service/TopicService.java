@@ -18,15 +18,7 @@
 package com.smn.service;
 
 import com.smn.common.HttpResponse;
-import com.smn.model.request.topic.CreateTopicRequest;
-import com.smn.model.request.topic.DeleteTopicAttributeByNameRequest;
-import com.smn.model.request.topic.DeleteTopicAttributesRequest;
-import com.smn.model.request.topic.DeleteTopicRequest;
-import com.smn.model.request.topic.ListTopicAttributesRequest;
-import com.smn.model.request.topic.ListTopicsRequest;
-import com.smn.model.request.topic.QueryTopicDetailRequest;
-import com.smn.model.request.topic.UpdateTopicAttributeRequest;
-import com.smn.model.request.topic.UpdateTopicRequest;
+import com.smn.model.request.topic.*;
 
 /**
  * topic service
@@ -41,141 +33,132 @@ public interface TopicService extends CommonService {
      * <p>
      * failed，return request_id and status
      *
-     * @param smnRequest
-     *            {@link CreateTopicRequest} request
+     * @param smnRequest {@link CreateTopicRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse createTopic(CreateTopicRequest smnRequest) throws RuntimeException;
+    HttpResponse createTopic(CreateTopicRequest smnRequest) throws RuntimeException;
 
     /**
      * delete topic
      * <p>
      * failed，return request_id and status
      *
-     * @param smnRequest
-     *            {@link DeleteTopicRequest} request
+     * @param smnRequest {@link DeleteTopicRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException;
+    HttpResponse deleteTopic(DeleteTopicRequest smnRequest) throws RuntimeException;
 
     /**
      * query topic list
      * <p>
      *
-     * @param smnRequest
-     *            {@link ListTopicsRequest} request
+     * @param smnRequest {@link ListTopicsRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse listTopics(ListTopicsRequest smnRequest) throws RuntimeException;
+    HttpResponse listTopics(ListTopicsRequest smnRequest) throws RuntimeException;
 
     /**
      * query topic detail
      *
-     * @param smnRequest
-     *            {@link QueryTopicDetailRequest} request
+     * @param smnRequest {@link QueryTopicDetailRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException;
+    HttpResponse queryTopicDetail(QueryTopicDetailRequest smnRequest) throws RuntimeException;
 
     /**
      * update topic display name
      *
-     * @param smnRequest
-     *            {@link UpdateTopicRequest} request
+     * @param smnRequest {@link UpdateTopicRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException;
+    HttpResponse updateTopic(UpdateTopicRequest smnRequest) throws RuntimeException;
 
     /**
      * query topic attributes
      *
-     * @param smnRequest
-     *            {@link ListTopicAttributesRequest} request
+     * @param smnRequest {@link ListTopicAttributesRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException;
+    HttpResponse listTopicAttributes(ListTopicAttributesRequest smnRequest) throws RuntimeException;
 
     /**
      * update topic attributes
      *
-     * @param smnRequest
-     *            {@link UpdateTopicAttributeRequest} request
+     * @param smnRequest {@link UpdateTopicAttributeRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException;
+    HttpResponse updateTopicAttribute(UpdateTopicAttributeRequest smnRequest) throws RuntimeException;
 
     /**
      * delete designated topic attribute by name
      *
-     * @param smnRequest
-     *            {@link DeleteTopicAttributeByNameRequest} request
+     * @param smnRequest {@link DeleteTopicAttributeByNameRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
+    HttpResponse deleteTopicAttributeByName(DeleteTopicAttributeByNameRequest smnRequest)
             throws RuntimeException;
 
     /**
      * delete all topic attributes
      * <p>
      *
-     * @param smnRequest
-     *            {@link DeleteTopicAttributesRequest} request
+     * @param smnRequest {@link DeleteTopicAttributesRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException;
+    HttpResponse deleteTopicAttributes(DeleteTopicAttributesRequest smnRequest) throws RuntimeException;
 
 }

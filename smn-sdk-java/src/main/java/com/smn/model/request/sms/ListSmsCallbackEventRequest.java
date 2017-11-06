@@ -31,7 +31,7 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
     private static Logger LOGGER = LoggerFactory.getLogger(ListSmsCallbackEventRequest.class);
 
     /**
-     * 短信回调事件类型，取值
+     * the sms callback event type
      * {@link SmsCallbackEventType#SMS_CALLBACK_SUCCESS}
      * {@link SmsCallbackEventType#SMS_CALLBACK_SUCCESS}
      * {@link SmsCallbackEventType#SMS_CALLBACK_REPLY}
@@ -59,7 +59,7 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.SMN_SUB_PROTOCOL_SMS)
                 .append(SmnConstants.URL_DELIMITER).append(SmnConstants.CALLBACK_REQUEST);
 
-        // 设置get参数
+        // set the request parameter
         String params = getRequestParamString();
         if (!StringUtils.isEmpty(params)) {
             sb.append("?").append(params);

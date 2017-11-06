@@ -15,11 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:36:41
- * @version 0.1
- */
 package com.smn.service.impl;
 
 import com.smn.common.utils.DateUtil;
@@ -71,7 +66,7 @@ public class IAMServiceImpl implements IAMService {
     private long expiredInterval = 5 * 60 * 1000;
 
     /**
-     * IAM获取token请求的请求体
+     * the request to get token
      */
     private String requestMessage = null;
 
@@ -162,7 +157,7 @@ public class IAMServiceImpl implements IAMService {
      * @return {@link AuthenticationBean} User token information
      */
     public AuthenticationBean getAuthenticationBean() {
-        // 获取authenticationBean线程安全
+        // get authenticationBean thread safe
         if (null == authenticationBean || authenticationBean.isExpired()) {
             synchronized (this) {
                 if (authenticationBean == null || authenticationBean.isExpired()) {

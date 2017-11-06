@@ -30,11 +30,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * the request to subscription
+ *
  * @author huangqiong
  * @author yangyanping
  * @version 0.2
- * @date 2017年8月14日 下午4:33:56
- * @date 2017年8月24日 下午4:33:56
  */
 public class SubcriptionRequest extends AbstractSmnRequest {
 

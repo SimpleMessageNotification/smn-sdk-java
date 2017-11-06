@@ -27,7 +27,6 @@ import com.smn.model.request.subscription.UnSubcriptionRequest;
  * subscription service
  *
  * @author huangqiong
- * @version 0.1
  * @author zhangyx
  * @version 0.7
  */
@@ -36,63 +35,58 @@ public interface SubscriptionService extends CommonService {
     /**
      * subscribe
      *
-     * @param subcriptionRequest
-     *            {@link SubcriptionRequest} request
+     * @param subcriptionRequest {@link SubcriptionRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException;
+    HttpResponse subscribe(SubcriptionRequest subcriptionRequest) throws RuntimeException;
 
     /**
      * unSubcription
      *
-     * @param unSubcriptionRequest
-     *            {@link UnSubcriptionRequest} request
+     * @param unSubcriptionRequest {@link UnSubcriptionRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException;
+    HttpResponse unsubscribe(UnSubcriptionRequest unSubcriptionRequest) throws RuntimeException;
 
     /**
      * list subscribers
      *
-     * @param listSubscriptionsRequest
-     *            {@link ListSubscriptionsRequest} request
+     * @param listSubscriptionsRequest {@link ListSubscriptionsRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest) throws RuntimeException;
+    HttpResponse listSubscriptions(ListSubscriptionsRequest listSubscriptionsRequest) throws RuntimeException;
 
     /**
      * list subscribers of designated topic
      *
-     * @param listSubscriptionsByTopicRequest
-     *            {@link ListSubscriptionsByTopicRequest} request
+     * @param listSubscriptionsByTopicRequest {@link ListSubscriptionsByTopicRequest} request
      * @return {@link HttpResponse}
-     *         <p>
-     *         {@code httpCode}
-     *         <p>
-     *         {@code body}Map&lt;String,String%gt;
-     * @throws RuntimeException
-     *             connect error,fail to get iam token ,throw exception
-     *
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
      */
-	HttpResponse listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest)
+    HttpResponse listSubscriptionsByTopic(ListSubscriptionsByTopicRequest listSubscriptionsByTopicRequest)
             throws RuntimeException;
 
 }

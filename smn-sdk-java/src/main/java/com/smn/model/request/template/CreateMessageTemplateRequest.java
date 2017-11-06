@@ -17,25 +17,22 @@
  */
 package com.smn.model.request.template;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.common.utils.ValidationUtil;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.common.utils.ValidationUtil;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * the request to create message template
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
+ * @author yangyanping
  * @version 0.1
- * @author  yangyanping
- * @date 2017年8月25日
  * @version 0.2
  */
 public class CreateMessageTemplateRequest extends AbstractSmnRequest {
@@ -58,26 +55,26 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
     /**
      * check params
      */
-    private void validation(){
+    private void validation() {
         if (StringUtils.isBlank(projectId)) {
             LOGGER.error("Create message template request projectId is null.");
             throw new NullPointerException("Create message template request projectId is null.");
         }
-        if (!ValidationUtil.validateProtocol(protocol)){
+        if (!ValidationUtil.validateProtocol(protocol)) {
             LOGGER.error("Create message template protocol is invalid.");
             throw new RuntimeException("Create message template protocol is invalid.");
         }
-        if (!ValidationUtil.validateTemplateMessageContent(content)){
+        if (!ValidationUtil.validateTemplateMessageContent(content)) {
             LOGGER.error("Create message template content is invalid.");
             throw new RuntimeException("Create message template content is invalid.");
         }
 
-        if (!ValidationUtil.validateTemplateName(messageTemplateName)){
+        if (!ValidationUtil.validateTemplateName(messageTemplateName)) {
             LOGGER.error("Create message template name is invalid.");
             throw new RuntimeException("Create message template name is invalid.");
         }
     }
-    
+
     /**
      * build and get request url
      */
@@ -100,8 +97,8 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
         Map<String, Object> requestParameterMap = new HashMap<String, Object>();
-        requestParameterMap.put("content",content);
-        requestParameterMap.put("message_template_name",messageTemplateName);
+        requestParameterMap.put("content", content);
+        requestParameterMap.put("message_template_name", messageTemplateName);
         requestParameterMap.put("protocol", protocol);
 
         return requestParameterMap;
@@ -115,8 +112,7 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param protocol
-     *            the protocol to set
+     * @param protocol the protocol to set
      */
     public void setProtocol(String protocol) {
         this.protocol = protocol;
@@ -130,8 +126,7 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param content
-     *            the content to set
+     * @param content the content to set
      */
     public void setContent(String content) {
         this.content = content;
@@ -145,8 +140,7 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param messageTemplateName
-     *            the messageTemplateName to set
+     * @param messageTemplateName the messageTemplateName to set
      */
     public void setMessageTemplateName(String messageTemplateName) {
         this.messageTemplateName = messageTemplateName;

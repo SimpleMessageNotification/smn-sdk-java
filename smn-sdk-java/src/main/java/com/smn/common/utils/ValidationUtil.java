@@ -16,22 +16,18 @@ package com.smn.common.utils;/*
  */
 
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.smn.common.SmnConfiguration;
 import com.smn.common.SmnConstants;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.util.regex.Pattern;
 
 
 /**
  * @author huangqiong
  * @author yangyanping
  * @version 0.2
- * @date 2017年8月22日 上午11:35:28
- * @date 2017年8月24日
  */
 public class ValidationUtil {
 
@@ -73,7 +69,7 @@ public class ValidationUtil {
     /**
      * validate locale if is conformed with specification
      *
-     * @param locale
+     * @param locale the locale string to validate
      * @return boolean <code>true</code> conform to rule will be true,or
      * false.if empty defalut true
      */
@@ -87,7 +83,7 @@ public class ValidationUtil {
     /**
      * validate topic name if is conformed with specification
      *
-     * @param topicName
+     * @param topicName the topicName to validate
      * @return boolean <code>true</code> conform to rule will be true,or false
      */
     public static final boolean validateTopicName(String topicName) {
@@ -135,11 +131,12 @@ public class ValidationUtil {
     /**
      * validate project_id
      *
-     * @param project_id
+     * @param projectId the project Id to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
-    public static boolean validateProjectId(String project_id) {
-        if (StringUtils.isBlank(project_id)) {
+    public static boolean validateProjectId(String projectId) {
+        if (StringUtils.isBlank(projectId)) {
             return false;
         }
         return true;
@@ -148,11 +145,12 @@ public class ValidationUtil {
     /**
      * validate TopicUrn
      *
-     * @param topic_urn
+     * @param topicUrn the topic_urn to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
-    public static boolean validateTopicUrn(String topic_urn) {
-        if (StringUtils.isBlank(topic_urn)) {
+    public static boolean validateTopicUrn(String topicUrn) {
+        if (StringUtils.isBlank(topicUrn)) {
             return false;
         }
         return true;
@@ -161,9 +159,10 @@ public class ValidationUtil {
     /**
      * validate EndPoint
      *
-     * @param endPoint
-     * @param protocol
+     * @param endPoint the endPoint to validate
+     * @param protocol the protocol tto validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
     public static boolean validateEndPoint(String endPoint, String protocol) {
         if (StringUtils.isBlank(endPoint)) {
@@ -187,8 +186,9 @@ public class ValidationUtil {
     /**
      * validate Email
      *
-     * @param email
+     * @param email the email to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
     public static boolean validateEmail(String email) {
         if (StringUtils.isEmpty(email)) {
@@ -200,8 +200,9 @@ public class ValidationUtil {
     /**
      * validate protocol
      *
-     * @param protocol
+     * @param protocol the protocol to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
     public static boolean validateProtocol(String protocol) {
         if (StringUtils.isEmpty(protocol)) {
@@ -218,10 +219,10 @@ public class ValidationUtil {
 
 
     /**
-     * Determine whether the topic meets the naming conventions, and the <code>true</> indicates compliance with the specification, otherwise it does not conform to specifications
-     * <p> need to meet the beginning must be self, numbers, punctuation ASCALL text service, cannot contain newline characters and control </>
+     * Determine whether the topic meets the naming conventions, and the <code>true</code> indicates compliance with the specification, otherwise it does not conform to specifications
+     * <p> need to meet the beginning must be self, numbers, punctuation ASCALL text service, cannot contain newline characters and control </p>
      *
-     * @param subject
+     * @param subject the subject to validate
      * @return boolean  <code>true</code> conform to rule will be true,or false
      */
     public static boolean validateSubject(String subject) {
@@ -231,10 +232,10 @@ public class ValidationUtil {
         return PATTERN_SUBJECT.matcher(subject).matches();
     }
 
-    /*
+    /**
      * validate displayname
-     * 
-     * @param displayName
+     *
+     * @param displayName the displayName to validate
      * @return boolean <code>true</code> displayName is valid
      */
     public static boolean validateDisplayName(String displayName) {
@@ -253,8 +254,9 @@ public class ValidationUtil {
     /**
      * validate template templateMessageContent
      *
-     * @param content
+     * @param content the content to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
     public static boolean validateTemplateMessageContent(String content) {
         if (StringUtils.isBlank(content)) {
@@ -276,8 +278,9 @@ public class ValidationUtil {
     /**
      * validate template name
      *
-     * @param templateName
+     * @param templateName the template name to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
     public static boolean validateTemplateName(String templateName) {
         if (StringUtils.isBlank(templateName)) {
@@ -289,8 +292,9 @@ public class ValidationUtil {
     /**
      * validate offset
      *
-     * @param offset
+     * @param offset the offset to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
     public static boolean validateOffset(int offset) {
         return offset >= 0 ? true : false;
@@ -299,8 +303,9 @@ public class ValidationUtil {
     /**
      * validate limit
      *
-     * @param limit
+     * @param limit the limit to validate
      * @return boolean
+     * if valid return <code>true</code>, else return <code>false</code>
      */
     public static boolean validateLimit(int limit) {
         return (limit > 0 && limit <= 100) ? true : false;

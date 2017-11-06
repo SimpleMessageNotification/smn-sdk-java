@@ -24,7 +24,6 @@ import org.apache.http.HttpStatus;
 
 /**
  * @author huangqiong
- * @date 2017年9月9日 下午3:27:23
  * @version 0.6
  */
 public class HttpResponse {

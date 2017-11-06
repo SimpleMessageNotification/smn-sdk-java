@@ -42,14 +42,14 @@ public class PublishServiceImpl extends AbstractCommonService implements Publish
     private static final Logger LOGGER = LoggerFactory.getLogger(PublishServiceImpl.class);
 
     /**
-     * 无参构造函数
+     * no arg constructor
      */
     public PublishServiceImpl() {
         super();
     }
 
     /**
-     * 给定iamService和smnConfiguration构造实例
+     * give iamService and smnConfiguration constructor
      *
      * @param iamService        the iamService to set
      * @param smnConfiguration  the smnConfiguration to set

@@ -15,11 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:41:10
- * @version 0.1
- */
 package com.smn.service.impl;
 
 import com.smn.common.HttpMethod;
@@ -47,14 +42,14 @@ public class SmsServiceImpl extends AbstractCommonService implements SmsService 
     private static final Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
 
     /**
-     * 无参构造函数
+     * no args constructor
      */
     public SmsServiceImpl() {
         super();
     }
 
     /**
-     * 给定iamService和smnConfiguration构造实例
+     * give iamService and smnConfiguration constructor
      *
      * @param iamService        the iamService to set
      * @param smnConfiguration  the smnConfiguration to set

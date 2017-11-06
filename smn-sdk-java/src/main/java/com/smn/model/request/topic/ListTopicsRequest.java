@@ -36,11 +36,10 @@ import com.smn.common.SmnConstants;
 import com.smn.model.AbstractSmnRequest;
 
 /**
- * list topic
+ * the request to list topic
  *
  * @author huangqiong
  * @version 0.1
- * @date 2017年8月2日
  * @author zhangyx
  * @version 0.8
  */

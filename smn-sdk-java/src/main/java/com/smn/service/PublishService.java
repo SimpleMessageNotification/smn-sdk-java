@@ -22,32 +22,28 @@ import com.smn.model.request.publish.PublishMsgRequest;
 
 /**
  * Message publish service
- * 
+ *
  * @author huangqiong
- *
- * @date 2017年9月9日
- *
  * @version 0.6
  */
 public interface PublishService extends CommonService {
 
     /**
-	 * publish message
-	 * <p>
-	 * success，return<CODE>HttpResponse</CODE>
-	 * <p>
-	 * failed，return request_id and status
-	 * 
-	 * @param publishMsgRequest
-	 *            {@link PublishMsgRequest} request
-	 * @return {@link HttpResponse}
-	 *         <p>
-	 *         {@code httpCode}
-	 *         <p>
-	 *         {@code body}Map&lt;String,String%gt;
-	 * @throws RuntimeException
-	 *             connect error,fail to get iam token ,throw exception
-	 */
-	HttpResponse publish(PublishMsgRequest publishMsgRequest) throws RuntimeException;
+     * publish message
+     * <p>
+     * success，return<CODE>HttpResponse</CODE>
+     * <p>
+     * failed，return request_id and status
+     *
+     * @param publishMsgRequest {@link PublishMsgRequest} request
+     * @return {@link HttpResponse}
+     * the response including:
+     * <p>
+     * {@code httpCode}
+     * <p>
+     * {@code body}Map&lt;String,Object&gt;
+     * @throws RuntimeException connect error,fail to get iam token ,throw exception
+     */
+    HttpResponse publish(PublishMsgRequest publishMsgRequest) throws RuntimeException;
 
 }

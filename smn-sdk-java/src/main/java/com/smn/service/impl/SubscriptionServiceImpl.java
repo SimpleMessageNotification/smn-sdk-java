@@ -46,14 +46,14 @@ public class SubscriptionServiceImpl extends AbstractCommonService implements Su
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
 
     /**
-     * 无参构造函数
+     * no args constructor
      */
     public SubscriptionServiceImpl() {
         super();
     }
 
     /**
-     * 给定iamService和smnConfiguration构造实例
+     * give iamService and smnConfiguration constructor
      *
      * @param iamService        the iamService to set
      * @param smnConfiguration  the smnConfiguration to set

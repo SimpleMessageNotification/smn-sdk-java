@@ -22,7 +22,6 @@ package com.smn.common;
  *
  * @author huangqiong
  * @version 0.1
- * @date 2017年8月2日
  */
 public final class AccessPolicyConstants {
 

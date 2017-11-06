@@ -28,12 +28,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * list topic attribute
+ * the request to list topic attribute
  *
  * @author huangqiong
  * @author zhangyx
  * @version 0.8
- * @date 2017年8月2日
  */
 public class ListTopicAttributesRequest extends AbstractSmnRequest {
 

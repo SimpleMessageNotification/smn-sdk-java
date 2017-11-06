@@ -32,10 +32,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * the request to publish message
+ *
  * @author huangqiong
  * @author yangyanping
  * @version 0.2
- * @date 2017年8月2日
  */
 public class PublishMsgRequest extends AbstractSmnRequest {
 
@@ -134,9 +135,9 @@ public class PublishMsgRequest extends AbstractSmnRequest {
      * <p>
      * You only need to set one of them, and if you set it at the same time, the priority is
      * <p>
-     * message_structure >
+     * message_structure
      * <p>
-     * message_template_name >
+     * message_template_name
      * <p>
      * The message URL address is the same, which determines which route of transmission will be determined based on the priority when constructing the body parameter
      */

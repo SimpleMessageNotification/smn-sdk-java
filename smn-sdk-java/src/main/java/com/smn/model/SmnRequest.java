@@ -20,52 +20,37 @@ package com.smn.model;
 import java.util.Map;
 
 /**
+ * the interface of smn request
+ *
  * @author huangqiong
- * @date 2017年8月3日 下午5:27:23
  * @version 0.1
  */
 public interface SmnRequest {
 
     /**
      * get smn request's url
-     * 
+     *
      * @return uri
-     *         example /v2/cffe4fc4c9a54219b****132/notifications/sms
+     * example /v2/cffe4fc4c9a54219b****132/notifications/sms
      */
     String getRequestUri();
 
     /**
      * get the request parameters of smn
-     * 
+     *
      * @return Map
      */
     Map<String, Object> getRequestParameterMap();
 
     /**
      * get the request header's parameters of smn
-     * 
+     *
      * @return Map
-     *         {@value} Content-Type
-     *         {@value} X-Auth-Token
-     *         {@value} region
-     *         {@value} X-Project-Id
+     * contains the following parameters:
+     * <code>Content-Type</code>
+     * <code>X-Auth-Token</code>
+     * <code>region</code>
+     * <code>X-Project-Id</code>
      */
     Map<String, String> getRequestHeaderMap();
-
-    /**
-     * set projectID
-     * RequestParameterMap and RequestUri depend
-     * 
-     * @param projectId
-     */
-    void setProjectId(String projectId);
-
-    /**
-     * set xAuthToken
-     * RequestUri depends
-     * 
-     * @param xAuthToken
-     */
-    void setxAuthToken(String xAuthToken);
-
 }

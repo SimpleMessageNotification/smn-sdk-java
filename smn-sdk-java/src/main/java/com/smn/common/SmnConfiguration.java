@@ -30,10 +30,8 @@ import java.util.Properties;
  * property loading configuration
  * 
  * @author yangyanping
- * @date 2017年8月24日 下午5:15:58
  * @version 0.1
  * @author yangyanping
- * @date 2017年8月24日
  * @version 0.2
  */
 public class SmnConfiguration {
@@ -159,8 +157,8 @@ public class SmnConfiguration {
 
     /**
      * configure property file path
-     * 
-     * @param filepath
+     *
+     * @param filepath the properties file path
      */
     public SmnConfiguration(String filepath) {
         LOGGER.info("New smnConfiguration.File path is {}.", filepath);
@@ -202,9 +200,9 @@ public class SmnConfiguration {
 
     /**
      * Load configured file
-     * 
+     *
      * @return {@code bool}
-     * @throws RuntimeException
+     * @throws RuntimeException failed to load properties throw exception
      */
     public boolean reload() throws RuntimeException {
         LOGGER.info("Smn configuration reloading.");

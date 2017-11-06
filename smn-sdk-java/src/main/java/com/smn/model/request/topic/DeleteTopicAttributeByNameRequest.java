@@ -17,24 +17,20 @@
  */
 package com.smn.model.request.topic;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.AccessPolicyType;
+import com.smn.common.SmnConstants;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.AccessPolicyType;
-import com.smn.common.SmnConstants;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * delete topic attribute
- * 
+ * the request to delete topic attribute
+ *
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
  */
 public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
@@ -113,8 +109,7 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param topicUrn
-     *            the topicUrn to set
+     * @param topicUrn the topicUrn to set
      */
     public void setTopicUrn(String topicUrn) {
         this.topicUrn = topicUrn;
@@ -128,8 +123,7 @@ public class DeleteTopicAttributeByNameRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @param attributesName
-     *            the attributesName to set
+     * @param attributesName the attributesName to set
      */
     public void setAttributesName(String attributesName) {
         this.attributesName = attributesName;

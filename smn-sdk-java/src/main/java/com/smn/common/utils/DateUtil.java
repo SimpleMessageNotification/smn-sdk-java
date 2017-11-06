@@ -15,12 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/**
- * @author huangqiong
- * @date 2017年8月3日 下午5:15:44
- * @version 0.1
- * 
- */
 package com.smn.common.utils;
 
 import java.text.ParseException;
@@ -31,7 +25,6 @@ import java.util.Date;
  * date utils
  * 
  * @author huangqiong
- * @date 2017年8月3日 下午5:15:44
  * @version 0.1
  */
 public class DateUtil {

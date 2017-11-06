@@ -29,12 +29,9 @@ import com.smn.common.utils.ValidationUtil;
 import com.smn.model.AbstractSmnRequest;
 
 /**
- * update topic request
+ * the request to update topic request
  * 
  * @author huangqiong
- *
- * @date 2017年8月2日
- *
  * @version 0.1
  */
 public class UpdateTopicRequest extends AbstractSmnRequest {

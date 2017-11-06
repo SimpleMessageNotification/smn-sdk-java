@@ -29,11 +29,11 @@ import com.smn.common.utils.ValidationUtil;
 import com.smn.model.AbstractSmnRequest;
 
 /**
+ * the request to unsubscription
+ *
  * @author huangqiong
- * @date 2017年8月14日 下午4:34:18
  * @version 0.1
  * author yangyanping
- * @date 2017年8月24日 下午4:34:18
  * @version 0.2
  */
 public class UnSubcriptionRequest extends AbstractSmnRequest {

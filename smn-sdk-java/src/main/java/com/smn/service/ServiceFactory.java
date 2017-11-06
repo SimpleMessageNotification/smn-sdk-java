@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 用于构造获取service
+ * the factory to get service
  *
  * @author zhangyx
  * @version 0.9
@@ -78,9 +78,9 @@ public class ServiceFactory {
     private ClientConfiguration clientConfiguration;
 
     /**
-     * 给定smn配置文件，构造factory实例
+     * given smn configuration，get factory instance
      *
-     * @param smnConfiguration smn配置
+     * @param smnConfiguration smn configuration
      */
     public ServiceFactory(SmnConfiguration smnConfiguration) {
         this.smnConfiguration = smnConfiguration;
@@ -88,9 +88,9 @@ public class ServiceFactory {
     }
 
     /**
-     * 给定smn和http配置文件，构造factory实例
+     * given smn and http configuration，get factory instance
      *
-     * @param smnConfiguration    smn配置
+     * @param smnConfiguration    smn configuration
      * @param clientConfiguration client configuration
      */
     public ServiceFactory(SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
@@ -101,9 +101,9 @@ public class ServiceFactory {
     /**
      * get iamService
      * <p>
-     * 如果已经实例化，直接返回
+     * if not null, return directly
      *
-     * @return iamService iam操作服务类
+     * @return iamService {@link IAMService} iam service
      */
     private IAMService getIAMService() {
 
@@ -129,7 +129,7 @@ public class ServiceFactory {
     /**
      * get smnService
      *
-     * @return SmsService sms 操作类
+     * @return SmsService {@link SmsService} sms service
      */
     public SmsService getSmsService() {
         IAMService iamService = getIAMService();
@@ -151,7 +151,7 @@ public class ServiceFactory {
     /**
      * get messageTemplateService
      *
-     * @return MessageTemplateService MessageTemplate 操作类
+     * @return MessageTemplateService {@link MessageTemplateService} MessageTemplate service
      */
     public MessageTemplateService getMessageTemplateService() {
         IAMService iamService = getIAMService();
@@ -173,7 +173,7 @@ public class ServiceFactory {
     /**
      * get subscriptionService
      *
-     * @return MessageTemplateService MessageTemplate 操作类
+     * @return SubscriptionService {@link SubscriptionService} subscription service
      */
     public SubscriptionService getSubscriptionService() {
         IAMService iamService = getIAMService();
@@ -195,7 +195,7 @@ public class ServiceFactory {
     /**
      * get publishService
      *
-     * @return MessageTemplateService MessageTemplate 操作类
+     * @return PublishService {@link PublishService} publish service
      */
     public PublishService getPublishService() {
         IAMService iamService = getIAMService();
@@ -217,7 +217,7 @@ public class ServiceFactory {
     /**
      * get topicService
      *
-     * @return MessageTemplateService MessageTemplate 操作类
+     * @return TopicService {@link TopicService} topic service
      */
     public TopicService getTopicService() {
         IAMService iamService = getIAMService();
