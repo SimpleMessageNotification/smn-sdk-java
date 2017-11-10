@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>smn</groupId>
-	<artifactId>smn-sdk-java</artifactId>
+	<artifactId>cloud-java-sdk-smn</artifactId>
 	<version>0.9</version>
 	<packaging>jar</packaging>
 
-	<name>smn-sdk-java</name>
+	<name>cloud-java-sdk-smn</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
