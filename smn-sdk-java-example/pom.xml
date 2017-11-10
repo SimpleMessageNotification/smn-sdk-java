@@ -21,7 +21,7 @@
 			<artifactId>cloud-java-sdk-smn</artifactId>
 			<version>0.9</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/scloud-java-sdk-smn-0.9.jar</systemPath>
+			<systemPath>${project.basedir}/lib/cloud-java-sdk-smn-0.9.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
