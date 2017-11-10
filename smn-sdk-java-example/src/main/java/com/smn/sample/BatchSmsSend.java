@@ -9,9 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 批量发送短信
@@ -75,6 +73,11 @@ public class BatchSmsSend {
      */
     private int socketTimeout = 30000;
 
+    /**
+     * 已发送列表
+     */
+    private Set<String> sentList;
+
     public BatchSmsSend() {
         load("config/configuration.properties");
         ClientConfiguration clientConfiguration = new ClientConfiguration();
@@ -82,6 +85,7 @@ public class BatchSmsSend {
         clientConfiguration.setConnectTimeOut(connectTimeout);
         CloudAccount cloudAccount = new CloudAccount(userName, password, domainName, regionId, clientConfiguration);
         smnClient = cloudAccount.getSmnClient();
+        sentList = new HashSet<String>();
     }
 
     /**
@@ -90,6 +94,12 @@ public class BatchSmsSend {
     public void send() {
         for (int i = 0; i < phoneList.size(); i++) {
             String phoneNum = phoneList.get(i);
+
+            if(sentList.contains(phoneNum)) {
+                System.out.println("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum + ", is already send. continue ");
+                logger.info("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum + ", is already send. continue ");
+                continue;
+            }
 
             System.out.println("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum);
             logger.info("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum);
@@ -107,6 +117,7 @@ public class BatchSmsSend {
             }
 
             // 发送成功
+            sentList.add(phoneNum);
             System.out.println("第" + (i + 1) + "个手机发送完成, phone=" + phoneNum + ", result= " + response);
             logger.info("第" + (i + 1) + "个手机发送完成, phone[" + phoneNum + "], result[" + response + "]");
 
