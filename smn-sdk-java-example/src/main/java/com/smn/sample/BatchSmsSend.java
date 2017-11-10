@@ -2,15 +2,14 @@ package com.smn.sample;
 
 import com.smn.account.CloudAccount;
 import com.smn.client.SmnClient;
+import com.smn.common.ClientConfiguration;
 import com.smn.common.HttpResponse;
 import com.smn.model.request.sms.SmsPublishRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 批量发送短信
@@ -64,10 +63,29 @@ public class BatchSmsSend {
      */
     private SmnClient smnClient;
 
+    /**
+     * 连接超时处理
+     */
+    private int connectTimeout = 30000;
+
+    /**
+     * 数据sockettimeout
+     */
+    private int socketTimeout = 30000;
+
+    /**
+     * 已发送列表
+     */
+    private Set<String> sentList;
+
     public BatchSmsSend() {
         load("config/configuration.properties");
-        CloudAccount cloudAccount = new CloudAccount(userName, password, domainName, regionId);
+        ClientConfiguration clientConfiguration = new ClientConfiguration();
+        clientConfiguration.setSocketTimeOut(socketTimeout);
+        clientConfiguration.setConnectTimeOut(connectTimeout);
+        CloudAccount cloudAccount = new CloudAccount(userName, password, domainName, regionId, clientConfiguration);
         smnClient = cloudAccount.getSmnClient();
+        sentList = new HashSet<String>();
     }
 
     /**
@@ -77,14 +95,31 @@ public class BatchSmsSend {
         for (int i = 0; i < phoneList.size(); i++) {
             String phoneNum = phoneList.get(i);
 
-            System.out.println("正在发送第" + (i+1) + "个手机, phone=" + phoneNum);
-            logger.info("正在发送第" + (i+1) + "个手机, phone=" + phoneNum);
+            if(sentList.contains(phoneNum)) {
+                System.out.println("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum + ", is already send. continue ");
+                logger.info("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum + ", is already send. continue ");
+                continue;
+            }
+
+            System.out.println("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum);
+            logger.info("正在发送第" + (i + 1) + "个手机, phone=" + phoneNum);
 
             SmsPublishRequest request = getRequest(phoneNum);
-            HttpResponse response = smnClient.smsPublish(request);
+            HttpResponse response = null;
 
-            System.out.println("第" + (i+1) + "个手机发送完成, phone=" + phoneNum + ", result= " + response);
-            logger.info("第" + (i+1) + "个手机发送完成, phone[" + phoneNum + "], result[" + response + "]");
+            try {
+                response = smnClient.smsPublish(request);
+            } catch (Exception e) {
+                System.out.println("第" + (i + 1) + "个手机发送失败, phone=" + phoneNum + ", result=failed");
+                //e.printStackTrace();
+                logger.error("第" + (i + 1) + "个手机发送失败, phone[" + phoneNum + "], result[failed]", e);
+                continue; // 发送失败继续下一个
+            }
+
+            // 发送成功
+            sentList.add(phoneNum);
+            System.out.println("第" + (i + 1) + "个手机发送完成, phone=" + phoneNum + ", result= " + response);
+            logger.info("第" + (i + 1) + "个手机发送完成, phone[" + phoneNum + "], result[" + response + "]");
 
             // 发送延时
             try {
@@ -157,6 +192,16 @@ public class BatchSmsSend {
         String sleepStr = properties.getProperty("sleep.time");
         if (!StringUtils.isEmpty(sleepStr)) {
             sleepTime = Integer.parseInt(sleepStr);
+        }
+
+        String connectTimeoutStr = properties.getProperty("connect.timeout");
+        if (!StringUtils.isEmpty(connectTimeoutStr)) {
+            this.connectTimeout = Integer.parseInt(connectTimeoutStr);
+        }
+
+        String socketTimeoutStr = properties.getProperty("socket.timeout");
+        if (!StringUtils.isEmpty(connectTimeoutStr)) {
+            this.socketTimeout = Integer.parseInt(socketTimeoutStr);
         }
 
         // 读取文件内容
