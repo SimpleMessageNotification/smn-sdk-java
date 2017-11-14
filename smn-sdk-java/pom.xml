@@ -4,7 +4,7 @@
 
 	<groupId>smn</groupId>
 	<artifactId>cloud-java-sdk-smn</artifactId>
-	<version>0.9</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>cloud-java-sdk-smn</name>
