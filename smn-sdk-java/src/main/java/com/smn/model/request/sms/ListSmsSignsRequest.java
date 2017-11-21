@@ -28,6 +28,9 @@ import java.util.Map;
  */
 public class ListSmsSignsRequest extends AbstractSmnRequest {
 
+    /**
+     * LOGGER
+     */
     private static Logger LOGGER = LoggerFactory.getLogger(ListSmsSignsRequest.class);
 
     /**
@@ -59,9 +62,16 @@ public class ListSmsSignsRequest extends AbstractSmnRequest {
         return requestParameterMap;
     }
 
+    /**
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return "ListSmsSignsRequest [smnEndpoint=" + smnEndpoint + ", projectId=" + projectId + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("ListSmsCallbackEventRequest [projectId=").append(projectId)
+                .append("]");
+        return builder.toString();
     }
 }
 

@@ -83,13 +83,16 @@ public class DeleteSmsSignRequest extends AbstractSmnRequest {
         this.signId = signId;
     }
 
+    /**
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return "DeleteSmsSignRequest{" +
-                "signId='" + signId + '\'' +
-                ", smnEndpoint='" + smnEndpoint + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", xAuthToken='" + xAuthToken + '\'' +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append("DeleteSmsSignRequest [signId=").append(signId)
+                .append(", projectId=").append(projectId)
+                .append("]");
+        return builder.toString();
     }
 }

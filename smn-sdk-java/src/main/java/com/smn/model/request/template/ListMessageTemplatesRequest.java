@@ -200,17 +200,19 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
         this.limit = limit;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ListMessageTemplatesRequest [protocol=").append(protocol).append(", messageTemplateName=")
-                .append(messageTemplateName).append(", offset=").append(offset).append(", limit=").append(limit)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+        builder.append("ListMessageTemplatesRequest [protocol=").append(protocol)
+                .append(", messageTemplateName=").append(messageTemplateName)
+                .append(", offset=").append(offset)
+                .append(", limit=").append(limit)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
 }

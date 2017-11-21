@@ -11,15 +11,14 @@
  */
 package com.smn.model.request.topic;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * the request to query topic detail
@@ -104,16 +103,17 @@ public class QueryTopicDetailRequest extends AbstractSmnRequest {
         this.endpoint = endpoint;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("QueryTopicDetailRequest [topicUrn=").append(topicUrn).append(", smnEndpoint=")
-                .append(smnEndpoint).append(", projectId=").append(projectId).append("]");
+        builder.append("QueryTopicDetailRequest [topicUrn=").append(topicUrn)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
-
 }

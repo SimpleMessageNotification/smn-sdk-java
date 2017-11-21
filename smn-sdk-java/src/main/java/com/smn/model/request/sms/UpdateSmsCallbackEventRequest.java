@@ -12,6 +12,7 @@
 package com.smn.model.request.sms;
 
 import com.smn.common.SmnConstants;
+import com.smn.common.utils.AesUtil;
 import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -109,17 +110,15 @@ public class UpdateSmsCallbackEventRequest extends AbstractSmnRequest {
     }
 
     /**
-     * toString method
+     * (non-Javadoc)
      *
-     * @return string
+     * @see java.lang.Object#toString()
      */
-    @Override
     public String toString() {
-        return "UpdateSmsCallbackEventRequest{" +
-                "callbacks=" + callbacks +
-                ", smnEndpoint='" + smnEndpoint + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", xAuthToken='" + xAuthToken + '\'' +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append("UpdateSmsCallbackEventRequest [callbacks=").append(callbacks)
+                .append(", projectId=").append(projectId)
+                .append("]");
+        return builder.toString();
     }
 }

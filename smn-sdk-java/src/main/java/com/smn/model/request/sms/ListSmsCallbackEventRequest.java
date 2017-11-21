@@ -135,13 +135,16 @@ public class ListSmsCallbackEventRequest extends AbstractSmnRequest {
         this.eventType = eventType;
     }
 
+    /**
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return "ListSmsCallbackEventRequest{" +
-                "eventType='" + eventType + '\'' +
-                ", smnEndpoint='" + smnEndpoint + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", xAuthToken='" + xAuthToken + '\'' +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append("ListSmsCallbackEventRequest [eventType=").append(eventType)
+                .append(", projectId=").append(projectId)
+                .append("]");
+        return builder.toString();
     }
 }

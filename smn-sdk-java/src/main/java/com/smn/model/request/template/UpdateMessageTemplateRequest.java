@@ -117,17 +117,18 @@ public class UpdateMessageTemplateRequest extends AbstractSmnRequest {
         this.content = content;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("UpdateMessageTemplateRequest [messageTemplateId=").append(messageTemplateId)
-                .append(", content=").append(content).append(", smnEndpoint=").append(smnEndpoint)
-                .append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken).append("]");
+                .append(", content=").append(content)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
-
 }
