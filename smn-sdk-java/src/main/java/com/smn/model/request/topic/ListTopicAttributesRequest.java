@@ -134,17 +134,18 @@ public class ListTopicAttributesRequest extends AbstractSmnRequest {
         this.attributesName = attributesName;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ListTopicAttributesRequest [topicUrn=").append(topicUrn).append(", attributesName=")
-                .append(attributesName).append(", smnEndpoint=").append(smnEndpoint).append(", projectId=")
-                .append(projectId).append("]");
+        builder.append("ListTopicAttributesRequest [topicUrn=").append(topicUrn)
+                .append(", attributesName=").append(attributesName)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
-
 }

@@ -11,13 +11,8 @@
  */
 package com.smn.model.request.subscription;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -26,8 +21,12 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.model.AbstractSmnRequest;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * the request to list all subscription
@@ -146,21 +145,6 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
-    /**
      * @return the projectId
      */
     public String getProjectId() {
@@ -176,26 +160,17 @@ public class ListSubscriptionsRequest extends AbstractSmnRequest {
     }
 
     /**
-     * @return the xAuthToken
-     */
-    public String getxAuthToken() {
-        return xAuthToken;
-    }
-
-    public void setxAuthToken(String xAuthToken) {
-        this.xAuthToken = xAuthToken;
-    }
-
-    /*
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ListSubscriptionsRequest [offset=").append(offset).append(", limit=").append(limit)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+        builder.append("ListSubscriptionsRequest [offset=").append(offset)
+                .append(", limit=").append(limit)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
 }

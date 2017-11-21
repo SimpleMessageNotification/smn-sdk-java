@@ -126,16 +126,17 @@ public class CreateTopicRequest extends AbstractSmnRequest {
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("CreateTopicRequest [name=").append(name).append(", displayName=").append(displayName)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId).append("]");
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
-
 }

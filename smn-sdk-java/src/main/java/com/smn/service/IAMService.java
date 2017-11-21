@@ -21,12 +21,40 @@ import com.smn.model.AuthenticationBean;
 public interface IAMService {
 
     /**
+     * get token from header
+     */
+    String X_SUBJECT_TOKEN = "X-Subject-Token";
+    /**
+     * token/expires_at from IAM response
+     */
+    String EXPIRES_AT = "expires_at";
+
+    /**
+     * token from IAM response
+     */
+    String TOKEN = "token";
+
+    /**
+     * token/project/id from IAM response
+     */
+    String ID = "id";
+
+    /**
+     * token/project from IAM response
+     */
+    String PROJECT = "project";
+
+    /**
+     * iam token uri
+     */
+    String IAM_TOKEN_URI = "/v3/auth/tokens";
+
+    /**
      * Obtain authorization information from the IAM service, which includes
      * projectId, user token, and token expiration time
      *
      * @return {@code AuthBean} User token information
-     * @throws RuntimeException
-     *             Failed to get token, then ran out of the exception
+     * @throws RuntimeException Failed to get token, then ran out of the exception
      */
     AuthenticationBean getAuthentication() throws RuntimeException;
 

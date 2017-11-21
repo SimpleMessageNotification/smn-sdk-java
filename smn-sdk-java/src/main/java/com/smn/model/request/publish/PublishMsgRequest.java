@@ -261,19 +261,21 @@ public class PublishMsgRequest extends AbstractSmnRequest {
         this.message = message;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-
         StringBuilder builder = new StringBuilder();
-        builder.append("PublishMsgRequest [topicUrn=").append(topicUrn).append(", subject=").append(subject)
-                .append(", tags=").append(tags).append(", messageTemplateName=").append(messageTemplateName)
-                .append(", messageStructure=").append(messageStructure).append(", message=").append(message)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+        builder.append("PublishMsgRequest [topicUrn=").append(topicUrn)
+                .append(", subject=").append(subject)
+                .append(", tags=").append(tags)
+                .append(", messageTemplateName=").append(messageTemplateName)
+                .append(", messageStructure=").append(messageStructure)
+                .append(", message=").append(message)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
 

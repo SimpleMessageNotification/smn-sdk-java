@@ -114,11 +114,6 @@ public final class SmnConstants {
     public final static String SMN_ENDPOINT = "smn.endpoint";
 
     /**
-     * iam uri
-     */
-    public final static String IAM_URI = "/v3/auth/tokens";
-
-    /**
      * smn topic uri
      */
     public final static String SMN_TOPIC_URI = "/notifications/topics";

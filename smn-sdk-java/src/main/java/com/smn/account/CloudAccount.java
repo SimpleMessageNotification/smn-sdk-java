@@ -24,6 +24,7 @@ import com.smn.service.ServiceFactory;
  * @version 0.9
  */
 public class CloudAccount {
+
     /**
      * smn configuration
      */

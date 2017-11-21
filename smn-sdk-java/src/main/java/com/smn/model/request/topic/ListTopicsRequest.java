@@ -11,13 +11,8 @@
  */
 package com.smn.model.request.topic;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -26,8 +21,12 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.model.AbstractSmnRequest;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * the request to list topic
@@ -138,16 +137,18 @@ public class ListTopicsRequest extends AbstractSmnRequest {
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ListTopicsRequest [offset=").append(offset).append(", limit=").append(limit)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId).append("]");
+        builder.append("ListTopicsRequest [offset=").append(offset)
+                .append(", limit=").append(limit)
+                .append(", projectId=").append(projectId).
+                append("]");
         return builder.toString();
     }
-
 }

@@ -86,13 +86,16 @@ public class GetSmsMessageRequest extends AbstractSmnRequest {
         this.messageId = messageId;
     }
 
+    /**
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return "GetSmsMessageRequest{" +
-                "messageId='" + messageId + '\'' +
-                ", smnEndpoint='" + smnEndpoint + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", xAuthToken='" + xAuthToken + '\'' +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append("GetSmsMessageRequest [messageId=").append(messageId)
+                .append(", projectId=").append(projectId)
+                .append("]");
+        return builder.toString();
     }
 }

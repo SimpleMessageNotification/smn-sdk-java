@@ -90,17 +90,17 @@ public class DeleteMessageTemplateRequest extends AbstractSmnRequest {
         this.messageTemplateId = messageTemplateId;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("DeleteMessageTemplateRequest [messageTemplateId=").append(messageTemplateId)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
-
 }
