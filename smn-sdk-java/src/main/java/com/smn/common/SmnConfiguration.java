@@ -102,12 +102,12 @@ public class SmnConfiguration {
     private String smnEndpoint;
 
     /**
-     * getSignHeader key id
+     * access key id
      */
     private String accessKeyId;
 
     /**
-     * secret getSignHeader key
+     * secret access key
      */
     private String secretAccessKey;
 

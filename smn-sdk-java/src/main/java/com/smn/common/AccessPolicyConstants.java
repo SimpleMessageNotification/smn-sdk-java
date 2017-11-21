@@ -12,7 +12,7 @@
 package com.smn.common;
 
 /**
- * Common configuration for getSignHeader policy
+ * Common configuration for access policy
  *
  * @author huangqiong
  * @version 0.1
