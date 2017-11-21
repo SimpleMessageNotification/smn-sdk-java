@@ -313,4 +313,14 @@ public final class SmnConstants {
      * message template tags
      */
     public final static String TAGS = "tags";
+
+    /**
+     * get iam projects url
+     */
+    public final static String IAM_PROJECT_URL = "/v3/projects";
+
+    /**
+     * name filed name
+     */
+    public final static String NAME = "name";
 }

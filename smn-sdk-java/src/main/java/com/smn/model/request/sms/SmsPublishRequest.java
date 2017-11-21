@@ -38,7 +38,7 @@ public class SmsPublishRequest extends AbstractSmnRequest {
     private static final Pattern PATTERN_TELTPHONE = Pattern.compile("^\\+?[0-9]{1,31}");
 
     /**
-     * message access point
+     * message getSignHeader point
      */
     private String endpoint;
 

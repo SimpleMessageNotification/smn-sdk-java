@@ -45,7 +45,7 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     private String protocol;
 
     /**
-     * message access point
+     * message getSignHeader point
      */
     private String endpoint;
 

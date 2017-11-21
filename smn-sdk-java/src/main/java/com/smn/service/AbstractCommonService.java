@@ -98,8 +98,7 @@ public abstract class AbstractCommonService implements CommonService {
                     .append(smnConfiguration.getIamEndpoint()).append(SmnConstants.URL_DELIMITER)
                     .append(SmnConstants.IAM_URI).toString();
             LOGGER.info("Iam url is{}.", iamUrl);
-            iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
-                    smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl, clientConfiguration);
+            iamService = new IAMServiceImpl(smnConfiguration, iamUrl, clientConfiguration);
         }
 
         return iamService;
@@ -157,6 +156,7 @@ public abstract class AbstractCommonService implements CommonService {
             clientConfiguration = new ClientConfiguration();
         }
 
+        iamService.getProjectId();
         Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
         Map<String, Object> requestParam = smnRequest.getRequestParameterMap();
         String projectId = getAuthenticationBean().getProjectId();

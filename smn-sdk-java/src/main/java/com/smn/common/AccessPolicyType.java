@@ -12,7 +12,7 @@
 package com.smn.common;
 
 /**
- * access policy
+ * getSignHeader policy
  *
  * @author huangqiong
  * @version 0.1
@@ -24,7 +24,7 @@ public final class AccessPolicyType {
     }
 
     /**
-     * set access policy to access topic resource
+     * set getSignHeader policy to getSignHeader topic resource
      */
     public final static String ACCESS_POLICY = "access_policy";
 

@@ -22,11 +22,14 @@ public class ClientDemo {
      * 构造函数
      */
     public ClientDemo() {
-        CloudAccount cloudAccount = new CloudAccount(
-                "*********",
-                "*********",
-                "*********",
-                "cn-north-1");
+//        CloudAccount cloudAccount = new CloudAccount(
+//                "*********",
+//                "*********",
+//                "*********",
+//                "cn-north-1");
+
+        CloudAccount cloudAccount = new CloudAccount("092YUTHRV9MQNMRUSELO",
+        "K5saP43yNRdqgHgtZN4w5xc2c30t9rlahXqqbZIE", "cn-north-1");
 
         // if you want custom HTTP parameters
         // or use http proxy, you can use like this
@@ -54,11 +57,11 @@ public class ClientDemo {
 
     public static void main(String[] args) {
         ClientDemo clientDemo = new ClientDemo();
-        clientDemo.publishMsgWithTemplate();
-        clientDemo.listTopics();
+//        clientDemo.publishMsgWithTemplate();
+//        clientDemo.listTopics();
         clientDemo.smsPublish();
-        clientDemo.listMessageTemplate();
-        clientDemo.listSubscriptions();
+//        clientDemo.listMessageTemplate();
+//        clientDemo.listSubscriptions();
     }
 
     /**

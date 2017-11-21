@@ -41,42 +41,12 @@ public interface IAMService {
     AuthenticationBean getAuthenticationBean();
 
     /**
-     * set the user of name.
-     *
-     * @param userName
-     *            the name of user
-     */
-    void setUserName(String userName);
-
-    /**
-     * set the password of user
-     *
-     * @param password
-     *            the password of user
-     */
-    void setPassword(String password);
-
-    /**
-     * set the name of domain
-     *
-     * @param domainName
-     *            the name of domain
-     */
-    void setDomainName(String domainName);
-
-    /**
-     * set the id of region
-     *
-     * @param regionId
-     *            the id of region
-     */
-    void setRegionId(String regionId);
-
-    /**
      * set the url of iam
      *
      * @param iamUrl
      *            the url of iam
      */
     void setIamUrl(String iamUrl);
+
+    String getProjectId() throws Exception;
 }

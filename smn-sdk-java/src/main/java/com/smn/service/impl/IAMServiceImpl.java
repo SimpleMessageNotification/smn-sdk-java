@@ -11,15 +11,24 @@
  */
 package com.smn.service.impl;
 
+import com.cloud.sdk.http.HttpMethodName;
+import com.smn.common.*;
 import com.smn.common.utils.DateUtil;
 import com.smn.common.utils.HttpUtil;
-import com.smn.common.ClientConfiguration;
 import com.smn.model.AuthenticationBean;
+import com.smn.model.request.iam.GetProjectIdsRequest;
 import com.smn.service.IAMService;
+import com.smn.signer.Signer;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author huangqiong
@@ -28,26 +37,6 @@ import java.util.Date;
  */
 public class IAMServiceImpl implements IAMService {
     private static Logger LOGGER = LoggerFactory.getLogger(IAMServiceImpl.class);
-
-    /**
-     * user's name
-     */
-    private String userName;
-
-    /**
-     * user's password
-     */
-    private String password;
-
-    /**
-     * user's domain name
-     */
-    private String domainName;
-
-    /**
-     * region Id
-     */
-    private String regionId;
 
     /**
      * the URL of IAM
@@ -67,31 +56,34 @@ public class IAMServiceImpl implements IAMService {
     /**
      * cache authentication bean
      */
-    protected AuthenticationBean authenticationBean;
+    private AuthenticationBean authenticationBean;
 
     /**
      * client config
      */
-    protected ClientConfiguration clientConfiguration;
+    private ClientConfiguration clientConfiguration;
+
+    /**
+     * cache projectId
+     */
+    private String projectId;
+
+    /**
+     * smn config
+     */
+    private SmnConfiguration smnConfiguration;
 
     /**
      * constructor
      *
-     * @param userName          userName
-     * @param password          password
-     * @param domainName        domainName
-     * @param regionId          regionId
-     * @param iamUrl            iamUrl
+     * @param smnConfiguration    smn configuration
+     * @param iamUrl              iamUrl
      * @param clientConfiguration the client configuration
      */
-    public IAMServiceImpl(String userName, String password, String domainName,
-                          String regionId, String iamUrl, ClientConfiguration clientConfiguration) {
-        setUserName(userName);
-        setPassword(password);
-        setDomainName(domainName);
-        setRegionId(regionId);
+    public IAMServiceImpl(SmnConfiguration smnConfiguration, String iamUrl, ClientConfiguration clientConfiguration) {
         setIamUrl(iamUrl);
-        setClientConfiguration(clientConfiguration);
+        this.clientConfiguration = clientConfiguration;
+        this.smnConfiguration = smnConfiguration;
 
         requestMessage = "{" +
                 "    \"auth\": {" +
@@ -101,17 +93,17 @@ public class IAMServiceImpl implements IAMService {
                 "            ]," +
                 "            \"password\": {" +
                 "                \"user\": {" +
-                "                    \"name\": \"" + userName + "\"," +
-                "                    \"password\": \"" + password + "\"," +
+                "                    \"name\": \"" + smnConfiguration.getUserName() + "\"," +
+                "                    \"password\": \"" + smnConfiguration.getPassword() + "\"," +
                 "                    \"domain\": {" +
-                "                        \"name\": \"" + domainName + "\"" +
+                "                        \"name\": \"" + smnConfiguration.getDomainName() + "\"" +
                 "                    }" +
                 "                }" +
                 "            }" +
                 "        }," +
                 "        \"scope\": {" +
                 "            \"project\": {" +
-                "                \"name\": \"" + regionId + "\"" +
+                "                \"name\": \"" + smnConfiguration.getRegionId() + "\"" +
                 "            }" +
                 "        }" +
                 "    }" +
@@ -140,6 +132,32 @@ public class IAMServiceImpl implements IAMService {
             LOGGER.error("Faied to get token from iam.e:{}", e);
             throw new RuntimeException("Failed to get token from iam.", e);
         }
+    }
+
+    public String getProjectId() throws Exception {
+        if(!StringUtils.isEmpty(projectId)) {
+            return projectId;
+        }
+
+        GetProjectIdsRequest request = new GetProjectIdsRequest();
+        request.setName(smnConfiguration.getRegionId());
+        Map<String, String> requestHeaderMap = request.getRequestHeaderMap();
+        String url = buildRequestUrl(request.getRequestUri());
+
+        if (SmnConfiguration.AKSK_AUTH_TYPE.equals(smnConfiguration.getAuthType())) {
+            Signer signer = new Signer(smnConfiguration, "IAM");
+            Map<String, String> headers = signer.get(new URL(url), HttpMethodName.GET);
+            for (String key : headers.keySet()) {
+                if (key.equalsIgnoreCase(HttpHeaders.CONTENT_LENGTH.toString())) {
+                    continue;
+                }
+                requestHeaderMap.put(key, headers.get(key));
+            }
+            HttpResponse httpResponse = HttpUtil.sendRequest(requestHeaderMap,
+                    request.getRequestParameterMap(), url, HttpMethod.GET, clientConfiguration);
+            projectId = (String)((HashMap)((ArrayList)httpResponse.getBody().get("projects")).get(0)).get("id");
+        }
+        return projectId;
     }
 
     /**
@@ -177,82 +195,10 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @return the userName
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @return the domainName
-     */
-    public String getDomainName() {
-        return domainName;
-    }
-
-    /**
-     * @return the regionId
-     */
-    public String getRegionId() {
-        return regionId;
-    }
-
-    /**
      * @return the iamUrl
      */
     public String getIamUrl() {
         return iamUrl;
-    }
-
-    /**
-     * @param userName the userName to set
-     */
-    public void setUserName(String userName) {
-        if (userName == null) {
-            LOGGER.error("Username is null.");
-            throw new NullPointerException("username is null.");
-        }
-        this.userName = userName;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        if (password == null) {
-            LOGGER.error("Password is null.");
-            throw new NullPointerException("password is null.");
-        }
-        this.password = password;
-    }
-
-    /**
-     * @param domainName the domainName to set
-     */
-    public void setDomainName(String domainName) {
-        if (domainName == null) {
-            LOGGER.error("Domainname is null.");
-            throw new NullPointerException("domainName is null.");
-        }
-        this.domainName = domainName;
-    }
-
-    /**
-     * @param regionId the regionId to set
-     */
-    public void setRegionId(String regionId) {
-        if (regionId == null) {
-            LOGGER.error("Regionid is null.");
-            throw new NullPointerException("regionId is null.");
-        }
-        this.regionId = regionId;
     }
 
     /**
@@ -277,5 +223,11 @@ public class IAMServiceImpl implements IAMService {
 
     public String getRequestMessage() {
         return requestMessage;
+    }
+
+    protected String buildRequestUrl(String uri) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(SmnConstants.HTTPS_PREFFIX).append(smnConfiguration.getIamEndpoint()).append(uri);
+        return sb.toString();
     }
 }
