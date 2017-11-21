@@ -17,9 +17,11 @@ import com.smn.common.utils.JsonUtil;
 import com.smn.model.AbstractSmnRequest;
 import com.smn.model.AuthenticationBean;
 import com.smn.service.impl.IAMServiceImpl;
+import com.smn.signer.AkskSigner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -48,6 +50,11 @@ public abstract class AbstractCommonService implements CommonService {
      * client config
      */
     protected ClientConfiguration clientConfiguration;
+
+    /**
+     * signer tool
+     */
+    private AkskSigner signer;
 
     /**
      * constructor
@@ -84,20 +91,33 @@ public abstract class AbstractCommonService implements CommonService {
      * @return iamService
      */
     private IAMService getIAMService() {
-
-        if (smnConfiguration == null) {
-            smnConfiguration = new SmnConfiguration();
-        }
-
         if (clientConfiguration == null) {
             clientConfiguration = new ClientConfiguration();
         }
 
         if (iamService == null) {
-            iamService = new IAMServiceImpl(smnConfiguration, clientConfiguration);
+            synchronized (this) {
+                if (iamService == null) {
+                    iamService = new IAMServiceImpl(smnConfiguration, clientConfiguration);
+                }
+            }
         }
-
         return iamService;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private AkskSigner getSigner() {
+        if (signer == null) {
+            synchronized (this) {
+                if (signer == null) {
+                    signer = new AkskSigner(smnConfiguration, SmnConstants.SMN_SERVICE_NAME);
+                }
+            }
+        }
+        return signer;
     }
 
     /**
@@ -111,20 +131,44 @@ public abstract class AbstractCommonService implements CommonService {
     }
 
     /**
-     * build request header
+     * build extend header for token authentication
      *
-     * @param requestHeader contains the following parameters:
-     *                      <code>region</code>
-     *                      <code>X-Project-Id</code>
-     *                      <code>X-Auth-Token</code>
+     * @param smnRequest
      */
-    private void buildRequestHeader(Map<String, String> requestHeader) {
+    private void buildHeaderForToken(AbstractSmnRequest smnRequest) {
         if (null == getAuthenticationBean()) {
             throw new RuntimeException("The authenticationBean is null.");
         }
-        requestHeader.put(SmnConstants.REGION_TAG, smnConfiguration.getRegionId());
-        requestHeader.put(SmnConstants.X_PROJECT_ID, getAuthenticationBean().getProjectId());
-        requestHeader.put(SmnConstants.X_AUTH_TOKEN, getAuthenticationBean().getAuthToken());
+        smnRequest.addExtendHeader(SmnConstants.REGION_TAG, smnConfiguration.getRegionId());
+        smnRequest.addExtendHeader(SmnConstants.X_PROJECT_ID, getAuthenticationBean().getProjectId());
+        smnRequest.addExtendHeader(SmnConstants.X_AUTH_TOKEN, getAuthenticationBean().getAuthToken());
+    }
+
+    /**
+     * add header for aksk
+     *
+     * @param smnRequest request message
+     * @param url        request url
+     * @param bodyString request content
+     * @param httpMethod request method
+     */
+    private void buildHeaderForAksk(AbstractSmnRequest smnRequest, String url, String bodyString, HttpMethod httpMethod) {
+        try {
+            if (httpMethod == HttpMethod.GET) {
+                getSigner().get(smnRequest, new URL(url));
+            } else if (httpMethod == HttpMethod.DELETE) {
+                getSigner().delete(smnRequest, new URL(url));
+            } else if (httpMethod == HttpMethod.POST) {
+                getSigner().post(smnRequest, new URL(url), bodyString);
+            } else if (httpMethod == HttpMethod.PUT) {
+                getSigner().put(smnRequest, new URL(url), bodyString);
+            } else {
+                throw new IllegalArgumentException(String.format(
+                        "Unsupported HTTP method:%s .", httpMethod.getName()));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to sign for aksk.");
+        }
     }
 
     /**
@@ -151,12 +195,15 @@ public abstract class AbstractCommonService implements CommonService {
         if (clientConfiguration == null) {
             clientConfiguration = new ClientConfiguration();
         }
-
-        Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
         String bodyString = JsonUtil.getJsonStringByMap(smnRequest.getRequestParameterMap());
-        smnRequest.setProjectId(getAuthenticationBean().getProjectId());
+        smnRequest.setProjectId(getIAMService().getProjectId());
         String url = buildSmnRequestUrl(smnRequest.getRequestUri());
-        buildRequestHeader(requestHeader);
+        if (SmnConfiguration.AKSK_AUTH_TYPE.equals(smnConfiguration.getAuthType())) {
+            buildHeaderForAksk(smnRequest, url, bodyString, httpMethod);
+        } else {
+            buildHeaderForToken(smnRequest);
+        }
+        Map<String, String> requestHeader = smnRequest.getRequestHeaderMap();
 
         HttpResponse httpResponse = HttpUtil.sendRequest(requestHeader, bodyString, url, httpMethod, clientConfiguration);
         return httpResponse;

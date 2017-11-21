@@ -22,14 +22,15 @@ public class ClientDemo {
      * 构造函数
      */
     public ClientDemo() {
-//        CloudAccount cloudAccount = new CloudAccount(
-//                "*********",
-//                "*********",
-//                "*********",
-//                "cn-north-1");
+        CloudAccount cloudAccount = new CloudAccount(
+                "*********",
+                "*********",
+                "*********",
+                "cn-north-1");
 
-        CloudAccount cloudAccount = new CloudAccount("092YUTHRV9MQNMRUSELO",
-        "K5saP43yNRdqgHgtZN4w5xc2c30t9rlahXqqbZIE", "cn-north-1");
+//        aksk authentication
+//        CloudAccount cloudAccount = new CloudAccount("access key id",
+//        "secret access key", "cn-north-1");
 
         // if you want custom HTTP parameters
         // or use http proxy, you can use like this

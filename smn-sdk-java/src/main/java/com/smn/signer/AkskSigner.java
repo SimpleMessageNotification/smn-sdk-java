@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 2017. Huawei Technologies Co., LTD. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of Apache License, Version 2.0.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * Apache License, Version 2.0 for more details.
+ */
 package com.smn.signer;
 
 import com.cloud.sdk.DefaultRequest;
@@ -6,29 +17,120 @@ import com.cloud.sdk.auth.credentials.BasicCredentials;
 import com.cloud.sdk.auth.signer.SignerFactory;
 import com.cloud.sdk.http.HttpMethodName;
 import com.smn.common.SmnConfiguration;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.http.HttpHeaders;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Signer {
+/**
+ * aksk signature tool
+ *
+ * @author zhangyx
+ * @version 1.0.0
+ */
+public class AkskSigner {
 
+    /**
+     * smn config
+     */
     private SmnConfiguration smnConfiguration;
+
+    /**
+     * service name
+     */
     private String serviceName;
 
-    public Signer(SmnConfiguration smnConfiguration, String serviceName) {
+    /**
+     * constructor
+     *
+     * @param smnConfiguration smn config
+     * @param serviceName      service name
+     */
+    public AkskSigner(SmnConfiguration smnConfiguration, String serviceName) {
         this.smnConfiguration = smnConfiguration;
         this.serviceName = serviceName;
     }
 
-    public Map<String, String> get(URL url, HttpMethodName httpMethod) throws Exception {
-        return this.getSignHeader(url, null, null, httpMethod);
+    /**
+     * add signature header for get request
+     *
+     * @param smnRequest smn request message
+     * @param url        request url
+     * @throws Exception signature error throw exception
+     */
+    public void get(AbstractSmnRequest smnRequest, URL url) throws Exception {
+        Map<String, String> headers = this.getSignHeader(url, null, null, HttpMethodName.GET);
+
+        for (String key : headers.keySet()) {
+            if (key.equalsIgnoreCase(HttpHeaders.CONTENT_LENGTH.toString())) {
+                continue;
+            }
+            smnRequest.addExtendHeader(key, headers.get(key));
+        }
     }
 
-    public Map<String, String> getSignHeader(URL url, Map<String, String> headers,
+    /**
+     * add signature header for delete request
+     *
+     * @param smnRequest smn request message
+     * @param url        request url
+     * @throws Exception signature error throw exception
+     */
+    public void delete(AbstractSmnRequest smnRequest, URL url) throws Exception {
+        Map<String, String> headers = this.getSignHeader(url, null, null, HttpMethodName.DELETE);
+
+        for (String key : headers.keySet()) {
+            if (key.equalsIgnoreCase(HttpHeaders.CONTENT_LENGTH.toString())) {
+                continue;
+            }
+            smnRequest.addExtendHeader(key, headers.get(key));
+        }
+    }
+
+    /**
+     * add signature header for post request
+     *
+     * @param smnRequest smn request message
+     * @param url        request url
+     * @param postbody   request content
+     * @throws Exception signature error throw exception
+     */
+    public void post(AbstractSmnRequest smnRequest, URL url, String postbody) throws Exception {
+        InputStream content = new ByteArrayInputStream(postbody.getBytes());
+        Map<String, String> headers = this.getSignHeader(url, null, content, HttpMethodName.POST);
+        for (String key : headers.keySet()) {
+            if (key.equalsIgnoreCase(HttpHeaders.CONTENT_LENGTH.toString())) {
+                continue;
+            }
+            smnRequest.addExtendHeader(key, headers.get(key));
+        }
+    }
+
+    /**
+     * add signature header for put request
+     *
+     * @param smnRequest smn request message
+     * @param url        request url
+     * @param postbody   request content
+     * @throws Exception signature error throw exception
+     */
+    public void put(AbstractSmnRequest smnRequest, URL url, String postbody) throws Exception {
+        InputStream content = new ByteArrayInputStream(postbody.getBytes());
+        Map<String, String> headers = this.getSignHeader(url, null, content, HttpMethodName.PUT);
+        for (String key : headers.keySet()) {
+            if (key.equalsIgnoreCase(HttpHeaders.CONTENT_LENGTH.toString())) {
+                continue;
+            }
+            smnRequest.addExtendHeader(key, headers.get(key));
+        }
+    }
+
+    private Map<String, String> getSignHeader(URL url, Map<String, String> headers,
                                              InputStream content, HttpMethodName httpMethod)
             throws Exception {
 
@@ -87,21 +189,5 @@ public class Signer {
             map.put(key, requestHeaders.get(key));
         }
         return map;
-    }
-
-    public SmnConfiguration getSmnConfiguration() {
-        return smnConfiguration;
-    }
-
-    public void setSmnConfiguration(SmnConfiguration smnConfiguration) {
-        this.smnConfiguration = smnConfiguration;
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
     }
 }
