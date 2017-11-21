@@ -179,17 +179,20 @@ public class SmsPublishRequest extends AbstractSmnRequest {
         this.signId = signId;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     public String toString() {
         StringBuilder builder = new StringBuilder();
         // endpoint encrypt
         String tmpEndpoint = AesUtil.encrypt(endpoint, SmnConstants.DEFAULT_SMN_CRYPT_KEY);
-        builder.append("SmsPublishRequest [endpoint=").append(tmpEndpoint).append(", message=").append(message)
-                .append(", signId=").append(signId).append("]");
+        builder.append("SmsPublishRequest [endpoint=").append(tmpEndpoint)
+                .append(", message=").append(message)
+                .append(", signId=").append(signId)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
-
 }

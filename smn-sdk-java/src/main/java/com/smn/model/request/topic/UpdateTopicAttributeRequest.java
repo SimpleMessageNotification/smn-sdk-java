@@ -11,18 +11,17 @@
  */
 package com.smn.model.request.topic;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smn.common.AccessPolicyType;
 import com.smn.common.SmnConstants;
 import com.smn.common.utils.JsonUtil;
 import com.smn.model.AbstractSmnRequest;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * the request to update topic attribute
@@ -173,17 +172,19 @@ public class UpdateTopicAttributeRequest extends AbstractSmnRequest {
         this.value = value;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("UpdateTopicAttributeRequest [attributesName=").append(attributesName).append(", topicUrn=")
-                .append(topicUrn).append(", attributeValue=").append(attributeValue).append(", smnEndpoint=")
-                .append(smnEndpoint).append(", projectId=").append(projectId).append("]");
+        builder.append("UpdateTopicAttributeRequest [attributesName=").append(attributesName)
+                .append(", topicUrn=").append(topicUrn)
+                .append(", attributeValue=").append(attributeValue)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
-
 }

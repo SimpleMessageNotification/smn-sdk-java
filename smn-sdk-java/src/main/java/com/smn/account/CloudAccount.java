@@ -26,26 +26,6 @@ import com.smn.service.ServiceFactory;
 public class CloudAccount {
 
     /**
-     * user name
-     */
-    private String userName;
-
-    /**
-     * user's password
-     */
-    private String password;
-
-    /**
-     * domain name ,is same with user name mostly,but sometimes may differ
-     */
-    private String domainName;
-
-    /**
-     * region id
-     */
-    private String regionId;
-
-    /**
      * smn configuration
      */
     private SmnConfiguration smnConfiguration;
@@ -82,11 +62,6 @@ public class CloudAccount {
      * @param clientConfiguration the client configuration
      */
     public CloudAccount(String userName, String password, String domainName, String regionId, ClientConfiguration clientConfiguration) {
-        this.userName = userName;
-        this.password = password;
-        this.domainName = domainName;
-        this.regionId = regionId;
-
         this.smnConfiguration = new SmnConfiguration(userName, password, domainName, regionId);
         this.clientConfiguration = clientConfiguration;
 

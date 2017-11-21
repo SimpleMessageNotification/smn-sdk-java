@@ -75,13 +75,15 @@ public class SmsCallback {
     }
 
     /**
-     * @return string
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "SmsCallback{" +
-                "eventType='" + eventType + '\'' +
-                ", topicUrn='" + topicUrn + '\'' +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append("SmsCallback [eventType=").append(eventType)
+                .append(", topicUrn=").append(topicUrn)
+                .append("]");
+        return builder.toString();
     }
 }
