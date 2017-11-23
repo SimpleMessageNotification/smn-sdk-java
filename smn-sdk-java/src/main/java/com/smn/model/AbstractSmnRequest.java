@@ -28,13 +28,24 @@ public abstract class AbstractSmnRequest implements SmnRequest {
      */
     protected String projectId;
 
+    private Map<String, String> requestHeaderMap = new HashMap<String, String>();
+
     /**
      * Build common http's request header
      */
     public Map<String, String> getRequestHeaderMap() {
-        Map<String, String> requestHeaderMap = new HashMap<String, String>();
         requestHeaderMap.put(SmnConstants.CONTENT_TYPE_TAG, SmnConstants.DEFAULT_CONTENT_TYPE);
         return requestHeaderMap;
+    }
+
+    /**
+     * add aksk sign header
+     *
+     * @param key   header key
+     * @param value header value
+     */
+    public void addExtendHeader(String key, String value) {
+        requestHeaderMap.put(key, value);
     }
 
     /**

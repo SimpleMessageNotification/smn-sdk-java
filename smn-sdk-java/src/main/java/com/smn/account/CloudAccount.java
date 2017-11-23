@@ -41,7 +41,7 @@ public class CloudAccount {
     private ClientConfiguration clientConfiguration;
 
     /**
-     * constructor
+     * constructor for token authentication
      *
      * @param userName   the userName to set
      * @param password   the password to set
@@ -53,7 +53,7 @@ public class CloudAccount {
     }
 
     /**
-     * constructor
+     * constructor for token authentication
      *
      * @param userName            the userName to set
      * @param password            the password to set
@@ -65,6 +65,35 @@ public class CloudAccount {
         this.smnConfiguration = new SmnConfiguration(userName, password, domainName, regionId);
         this.clientConfiguration = clientConfiguration;
 
+        if (clientConfiguration == null) {
+            this.clientConfiguration = new ClientConfiguration();
+        }
+    }
+
+    /**
+     * constructor for aksk authentication
+     *
+     * @param accessKeyId     the accessKeyId to set
+     * @param secretAccessKey the secretAccessKey to set
+     * @param regionId        the regionId to set
+     */
+    public CloudAccount(String accessKeyId, String secretAccessKey, String regionId) {
+        this.smnConfiguration = new SmnConfiguration(accessKeyId, secretAccessKey, regionId);
+        this.clientConfiguration = clientConfiguration;
+        this.clientConfiguration = new ClientConfiguration();
+    }
+
+    /**
+     * constructor for aksk authentication
+     *
+     * @param accessKeyId         the accessKeyId to set
+     * @param secretAccessKey     the secretAccessKey to set
+     * @param regionId            the regionId to set
+     * @param clientConfiguration the client configuration
+     */
+    public CloudAccount(String accessKeyId, String secretAccessKey, String regionId, ClientConfiguration clientConfiguration) {
+        this.smnConfiguration = new SmnConfiguration(accessKeyId, secretAccessKey, regionId);
+        this.clientConfiguration = clientConfiguration;
         if (clientConfiguration == null) {
             this.clientConfiguration = new ClientConfiguration();
         }

@@ -28,6 +28,10 @@ public class ClientDemo {
                 "*********",
                 "cn-north-1");
 
+//        aksk authentication
+//        CloudAccount cloudAccount = new CloudAccount("access key id",
+//        "secret access key", "cn-north-1");
+
         // if you want custom HTTP parameters
         // or use http proxy, you can use like this
         //ClientConfiguration clientConfiguration = new ClientConfiguration();
@@ -54,11 +58,11 @@ public class ClientDemo {
 
     public static void main(String[] args) {
         ClientDemo clientDemo = new ClientDemo();
-        clientDemo.publishMsgWithTemplate();
-        clientDemo.listTopics();
+//        clientDemo.publishMsgWithTemplate();
+//        clientDemo.listTopics();
         clientDemo.smsPublish();
-        clientDemo.listMessageTemplate();
-        clientDemo.listSubscriptions();
+//        clientDemo.listMessageTemplate();
+//        clientDemo.listSubscriptions();
     }
 
     /**

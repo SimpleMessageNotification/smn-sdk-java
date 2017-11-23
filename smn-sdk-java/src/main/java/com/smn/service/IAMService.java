@@ -50,15 +50,6 @@ public interface IAMService {
     String IAM_TOKEN_URI = "/v3/auth/tokens";
 
     /**
-     * Obtain authorization information from the IAM service, which includes
-     * projectId, user token, and token expiration time
-     *
-     * @return {@code AuthBean} User token information
-     * @throws RuntimeException Failed to get token, then ran out of the exception
-     */
-    AuthenticationBean getAuthentication() throws RuntimeException;
-
-    /**
      * Obtain authorization information
      * <p>
      * if exist, return
@@ -67,4 +58,11 @@ public interface IAMService {
      * @return {@link AuthenticationBean} User token information
      */
     AuthenticationBean getAuthenticationBean();
+
+    /**
+     * Obtain project id
+     *
+     * @return the project id
+     */
+    String getProjectId();
 }

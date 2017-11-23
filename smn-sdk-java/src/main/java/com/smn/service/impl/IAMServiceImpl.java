@@ -11,14 +11,16 @@
  */
 package com.smn.service.impl;
 
-import com.smn.common.ClientConfiguration;
-import com.smn.common.SmnConfiguration;
-import com.smn.common.SmnConstants;
+import com.cloud.sdk.http.HttpMethodName;
+import com.smn.common.*;
 import com.smn.common.utils.DateUtil;
 import com.smn.common.utils.HttpUtil;
 import com.smn.common.utils.JsonUtil;
 import com.smn.model.AuthenticationBean;
+import com.smn.model.request.iam.GetProjectIdsRequest;
 import com.smn.service.IAMService;
+import com.smn.signer.AkskSigner;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -29,8 +31,8 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-import java.util.Map;
+import java.net.URL;
+import java.util.*;
 
 /**
  * @author huangqiong
@@ -71,6 +73,16 @@ public class IAMServiceImpl implements IAMService {
     private String iamTokenUrl;
 
     /**
+     * cache projectId
+     */
+    private String projectId;
+
+    /**
+     * http signer auth
+     */
+    private AkskSigner signer;
+
+    /**
      * constructor
      *
      * @param smnConfiguration    the smn configuration
@@ -106,32 +118,10 @@ public class IAMServiceImpl implements IAMService {
 
         iamTokenUrl = new StringBuilder().append(SmnConstants.HTTPS_PREFFIX).append(smnConfiguration.getIamEndpoint())
                 .append(SmnConstants.URL_DELIMITER).append(IAM_TOKEN_URI).toString();
+
+        signer = new AkskSigner(smnConfiguration, SmnConstants.IAM_SERVICE_NAME);
         LOGGER.info("Iam token url is{}.", iamTokenUrl);
 
-    }
-
-    /**
-     * Obtain authorization information from the IAM service, which includes
-     * projectId, user token, and token expiration time
-     *
-     * @return {@link AuthenticationBean} User token information
-     * @throws RuntimeException Failed to get token, then ran out of the exception
-     */
-    public AuthenticationBean getAuthentication() throws RuntimeException {
-
-        AuthenticationBean authenticationBean = null;
-        try {
-            authenticationBean = postForIamToken(iamTokenUrl, requestMessage, clientConfiguration);
-            // parse time
-            Date tempDate = DateUtil.parseDate(authenticationBean.getExpiresAt());
-            authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
-            return authenticationBean;
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            LOGGER.error("Faied to get token from iam.e:{}", e);
-            throw new RuntimeException("Failed to get token from iam.", e);
-        }
     }
 
     /**
@@ -155,14 +145,55 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * Get auth info from IAM service
+     * Obtain project id
      *
-     * @param iamUrl              the URL of IAM service
-     * @param bodyMessage         the body of message
-     * @param clientConfiguration the client configuration
-     * @return {@code AuthBean}
-     * @throws Exception Failed to get IAM information, throw an exception
+     * @return the project id
      */
+    public String getProjectId() {
+        if (StringUtils.isEmpty(projectId)) {
+            synchronized (this) {
+                if (StringUtils.isEmpty(projectId)) {
+                    if (SmnConfiguration.AKSK_AUTH_TYPE.equals(smnConfiguration.getAuthType())) {
+                        projectId = postForProjectId();
+                    } else {
+                        projectId = getAuthenticationBean().getProjectId();
+                    }
+                }
+            }
+        }
+        return projectId;
+    }
+
+    /**
+     * Obtain authorization information from the IAM service, which includes
+     * projectId, user token, and token expiration time
+     *
+     * @return {@link AuthenticationBean} User token information
+     * @throws RuntimeException Failed to get token, then ran out of the exception
+     */
+    private AuthenticationBean getAuthentication() throws RuntimeException {
+
+        AuthenticationBean authenticationBean = null;
+        try {
+            authenticationBean = postForIamToken(iamTokenUrl, requestMessage, clientConfiguration);
+            // parse time
+            Date tempDate = DateUtil.parseDate(authenticationBean.getExpiresAt());
+            authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
+            return authenticationBean;
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Faied to get token from iam.e:{}", e);
+            throw new RuntimeException("Failed to get token from iam.", e);
+        }
+    }
+
+    private String buildRequestUrl(String uri) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(SmnConstants.HTTPS_PREFFIX).append(smnConfiguration.getIamEndpoint()).append(uri);
+        return sb.toString();
+    }
+
     private AuthenticationBean postForIamToken(String iamUrl, String bodyMessage, ClientConfiguration clientConfiguration) throws Exception {
         LOGGER.debug("Start to get iam token. IamUrl is {}.", iamUrl);
         CloseableHttpClient httpclient = HttpUtil.getHttpClient(clientConfiguration);
@@ -199,6 +230,46 @@ public class IAMServiceImpl implements IAMService {
             }
         } finally {
             httpclient.close();
+        }
+    }
+
+    private String postForProjectId() {
+        try {
+            String id;
+            // 构造请求参数
+            GetProjectIdsRequest request = new GetProjectIdsRequest();
+            request.setName(smnConfiguration.getRegionId());
+            String url = buildRequestUrl(request.getRequestUri());
+            // 签名处理
+            signer.get(request, new URL(url));
+            Map<String, String> requestHeaderMap = request.getRequestHeaderMap();
+
+            HttpResponse httpResponse = HttpUtil.sendRequest(requestHeaderMap,
+                    JsonUtil.getJsonStringByMap(request.getRequestParameterMap()), url, HttpMethod.GET, clientConfiguration);
+            if (httpResponse.isSuccessed()) {
+                List projectList = (ArrayList) httpResponse.getBody().get("projects");
+                if (projectList == null || projectList.size() == 0) {
+                    LOGGER.error("Fail to get project id by aksk auth. projects is empty.");
+                    throw new RuntimeException("Fail to get project id by aksk auth. projects is empty.");
+                }
+
+                id = (String) ((HashMap) (projectList).get(0)).get("id");
+            } else {
+                LOGGER.error("Fail to get project id by aksk auth. http response status: {}", httpResponse.getHttpCode());
+                throw new RuntimeException("Fail to get project id by aksk auth. http response status: " + httpResponse.getHttpCode());
+            }
+
+            if (StringUtils.isEmpty(id)) {
+                LOGGER.error("Fail to get project id by aksk auth. project id is null");
+                throw new RuntimeException("Fail to get project id by aksk auth. project id is null");
+
+            }
+            return id;
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Failed to get project id from iam by aksk auth.", e);
+            throw new RuntimeException("Failed to get project id from iam by aksk auth.", e);
         }
     }
 }
