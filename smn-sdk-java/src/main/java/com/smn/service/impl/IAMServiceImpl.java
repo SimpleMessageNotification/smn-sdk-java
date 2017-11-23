@@ -11,7 +11,6 @@
  */
 package com.smn.service.impl;
 
-import com.cloud.sdk.http.HttpMethodName;
 import com.smn.common.*;
 import com.smn.common.utils.DateUtil;
 import com.smn.common.utils.HttpUtil;
@@ -43,9 +42,9 @@ public class IAMServiceImpl implements IAMService {
     private static Logger LOGGER = LoggerFactory.getLogger(IAMServiceImpl.class);
 
     /**
-     * Token expired 5 minutes in advance
+     * Token expired 30 minutes in advance
      */
-    private long expiredInterval = 5 * 60 * 1000;
+    private long expiredInterval = 30 * 60 * 1000;
 
     /**
      * the request to get token
@@ -177,7 +176,7 @@ public class IAMServiceImpl implements IAMService {
         try {
             authenticationBean = postForIamToken(iamTokenUrl, requestMessage, clientConfiguration);
             // parse time
-            Date tempDate = DateUtil.parseDate(authenticationBean.getExpiresAt());
+            Date tempDate = DateUtil.parseUTCDate(authenticationBean.getExpiresAt());
             authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
             return authenticationBean;
         } catch (RuntimeException e) {
