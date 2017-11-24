@@ -172,7 +172,7 @@ public class HttpUtil {
             clientConfiguration = new ClientConfiguration();
         }
 
-        SSLConnectionSocketFactory sslSocketFactory = createSslConnectionSocketFactory();
+        SSLConnectionSocketFactory sslSocketFactory = createSslConnectionSocketFactory(clientConfiguration);
         HttpClientBuilder builder = HttpClients.custom();
 
         // set proxy
@@ -200,23 +200,27 @@ public class HttpUtil {
         return httpclient;
     }
 
-    private static SSLConnectionSocketFactory createSslConnectionSocketFactory() throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
+    private static SSLConnectionSocketFactory createSslConnectionSocketFactory(ClientConfiguration clientConfiguration) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
         SSLContext sslContext = SSLContexts.custom().useProtocol("TLSV1.1")
                 .loadTrustMaterial(null, new TrustSelfSignedStrategy()).build();
-        X509TrustManager tm = new X509TrustManager() {
-            public void checkClientTrusted(X509Certificate[] chain,
-                                           String authType) throws CertificateException {
-            }
 
-            public void checkServerTrusted(X509Certificate[] chain,
-                                           String authType) throws CertificateException {
-            }
+        // is ignore certificate verification
+        if (clientConfiguration.isIgnoreCertificate()) {
+            X509TrustManager tm = new X509TrustManager() {
+                public void checkClientTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
 
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-        };
-        sslContext.init(null, new TrustManager[]{tm}, null);
+                public void checkServerTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
+
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+            };
+            sslContext.init(null, new TrustManager[]{tm}, null);
+        }
         return new SSLConnectionSocketFactory(sslContext,
                 new NoopHostnameVerifier());
     }
