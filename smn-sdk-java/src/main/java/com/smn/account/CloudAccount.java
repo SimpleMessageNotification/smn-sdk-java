@@ -115,4 +115,18 @@ public class CloudAccount {
         }
         return smnClient;
     }
+
+    /**
+     * @return the smn configuration
+     */
+    public SmnConfiguration getSmnConfiguration() {
+        return smnConfiguration;
+    }
+
+    /**
+     * @return the client configuration
+     */
+    public ClientConfiguration getClientConfiguration() {
+        return clientConfiguration;
+    }
 }
