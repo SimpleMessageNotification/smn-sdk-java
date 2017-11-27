@@ -214,7 +214,7 @@ public class IAMServiceImpl implements IAMService {
                     authBean.setAuthToken(response.getFirstHeader(X_SUBJECT_TOKEN).getValue());
                     Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
                     // set projectId
-                    authBean.setProjectId(((Map) ((Map) messageMap.get(TOKEN)).get(PROJECT)).get(ID).toString());
+                    authBean.setProjectId(parseProjectId(messageMap));
                     // set expires at
                     authBean.setExpiresAt(((Map) messageMap.get(TOKEN)).get(EXPIRES_AT).toString());
                     LOGGER.debug("End to get iam token. Status is {}. AuthBean is {}.", status, authBean);
@@ -229,6 +229,14 @@ public class IAMServiceImpl implements IAMService {
             }
         } finally {
             httpclient.close();
+        }
+    }
+
+    private String parseProjectId(Map<String, Object> messageMap) {
+        try {
+            return ((Map) ((Map) messageMap.get(TOKEN)).get(PROJECT)).get(ID).toString();
+        } catch (Exception e) {
+            return null;
         }
     }
 
@@ -271,4 +279,5 @@ public class IAMServiceImpl implements IAMService {
             throw new RuntimeException("Failed to get project id from iam by aksk auth.", e);
         }
     }
+
 }
