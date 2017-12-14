@@ -276,19 +276,22 @@ public class ListSmsMsgReportRequest extends AbstractSmnRequest {
         this.limit = limit;
     }
 
+    /**
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return "ListSmsMsgReportRequest{" +
-                "startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", signId='" + signId + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", status='" + status + '\'' +
-                ", offset=" + offset +
-                ", limit='" + limit + '\'' +
-                ", smnEndpoint='" + smnEndpoint + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", xAuthToken='" + xAuthToken + '\'' +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append("ListSmsMsgReportRequest [startTime=").append(startTime)
+                .append(", endTime=").append(endTime)
+                .append(", signId=").append(signId)
+                .append(", mobile=").append(mobile)
+                .append(", status=").append(status)
+                .append(", offset=").append(offset)
+                .append(", limit=").append(limit)
+                .append(", projectId=").append(projectId)
+                .append("]");
+        return builder.toString();
     }
 }

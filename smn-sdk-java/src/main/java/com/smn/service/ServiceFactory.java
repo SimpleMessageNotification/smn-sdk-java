@@ -107,12 +107,8 @@ public class ServiceFactory {
         if (iamService == null) {
             synchronized (ServiceFactory.class) {
                 if (iamService == null) {
-                    String iamUrl = new StringBuilder().append(SmnConstants.HTTPS_PREFFIX)
-                            .append(smnConfiguration.getIamEndpoint()).append(SmnConstants.URL_DELIMITER)
-                            .append(SmnConstants.IAM_URI).toString();
-                    LOGGER.info("Iam url is{}.", iamUrl);
-                    iamService = new IAMServiceImpl(smnConfiguration.getUserName(), smnConfiguration.getPassword(),
-                            smnConfiguration.getDomainName(), smnConfiguration.getRegionId(), iamUrl, clientConfiguration);
+
+                    iamService = new IAMServiceImpl(smnConfiguration, clientConfiguration);
                 }
             }
         }

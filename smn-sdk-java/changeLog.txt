@@ -1,0 +1,4 @@
+2017-11-14 version 1.0.0:
+1、perfect all api interface
+2、add http parameter and http proxy config settings
+3、reconstruction optimization code

@@ -11,10 +11,10 @@
  */
 package com.smn.model;
 
+import com.smn.common.SmnConstants;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.smn.common.SmnConstants;
 
 /**
  * abstract request
@@ -24,27 +24,28 @@ import com.smn.common.SmnConstants;
  */
 public abstract class AbstractSmnRequest implements SmnRequest {
     /**
-     * smn endpoint
-     */
-    protected String smnEndpoint;
-
-    /**
      * project id
      */
     protected String projectId;
 
-    /**
-     * xAuthToken
-     */
-    protected String xAuthToken;
+    private Map<String, String> requestHeaderMap = new HashMap<String, String>();
 
     /**
      * Build common http's request header
      */
     public Map<String, String> getRequestHeaderMap() {
-        Map<String, String> requestHeaderMap = new HashMap<String, String>();
         requestHeaderMap.put(SmnConstants.CONTENT_TYPE_TAG, SmnConstants.DEFAULT_CONTENT_TYPE);
         return requestHeaderMap;
+    }
+
+    /**
+     * add aksk sign header
+     *
+     * @param key   header key
+     * @param value header value
+     */
+    public void addExtendHeader(String key, String value) {
+        requestHeaderMap.put(key, value);
     }
 
     /**
@@ -57,23 +58,6 @@ public abstract class AbstractSmnRequest implements SmnRequest {
      */
     public abstract Map<String, Object> getRequestParameterMap();
 
-
-    /**
-     * @return the smnEndpoint
-     */
-    public String getSmnEndpoint() {
-
-        return smnEndpoint;
-    }
-
-    /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
-     */
-    public void setSmnEndpoint(String smnEndpoint) {
-        this.smnEndpoint = smnEndpoint;
-    }
-
     /**
      * @return the projectId
      */
@@ -83,8 +67,7 @@ public abstract class AbstractSmnRequest implements SmnRequest {
     }
 
     /**
-     * @param projectId
-     *            the projectId to set
+     * @param projectId the projectId to set
      */
     public void setProjectId(String projectId) {
         this.projectId = projectId;

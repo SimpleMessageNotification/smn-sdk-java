@@ -22,9 +22,8 @@ import java.util.Properties;
 
 /**
  * property loading configuration
- * 
+ *
  * @author yangyanping
- * @version 0.1
  * @author yangyanping
  * @version 0.2
  */
@@ -33,14 +32,24 @@ public class SmnConfiguration {
     private static Logger LOGGER = LoggerFactory.getLogger(SmnConfiguration.class);
 
     /**
+     * token auth type
+     */
+    public final static String TOKEN_AUTH_TYPE = "token";
+
+    /**
+     * ak/sk auth type
+     */
+    public final static String AKSK_AUTH_TYPE = "aksk";
+
+    /**
      * smn String
      */
-    private static String SMN = "smn";
+    private final static String SMN = "smn";
 
     /**
      * iam String
      */
-    private static String IAM = "iam";
+    private final static String IAM = "iam";
 
     /**
      * region name
@@ -53,8 +62,12 @@ public class SmnConfiguration {
     private Properties properties = new Properties();
 
     /**
+     * 认证方式
+     */
+    private String authType;
+
+    /**
      * property file configured path
-     * 
      */
     private String filepath;
 
@@ -89,6 +102,16 @@ public class SmnConfiguration {
     private String smnEndpoint;
 
     /**
+     * access key id
+     */
+    private String accessKeyId;
+
+    /**
+     * secret access key
+     */
+    private String secretAccessKey;
+
+    /**
      * max tag length
      */
     private int maxTagLength = 1024;
@@ -100,7 +123,7 @@ public class SmnConfiguration {
 
     /**
      * Get max message length
-     * 
+     *
      * @return maxMessageLength
      */
     public int getMaxMessageLength() {
@@ -109,7 +132,7 @@ public class SmnConfiguration {
 
     /**
      * get max subject length
-     * 
+     *
      * @return maxSubjectLength
      */
     public int getMaxSubjectLength() {
@@ -133,7 +156,7 @@ public class SmnConfiguration {
 
     /**
      * get ax templateMessageContext length
-     * 
+     *
      * @return max templateMessageContext length
      */
     public int getMaxTemplateMessageContextLength() {
@@ -142,7 +165,7 @@ public class SmnConfiguration {
 
     /**
      * get max remark length
-     * 
+     *
      * @return maxLength
      */
     public int getMaxRemarkLength() {
@@ -162,7 +185,6 @@ public class SmnConfiguration {
 
     /**
      * default construction
-     * 
      */
     public SmnConfiguration() {
         LOGGER.info("New smnConfiguration.");
@@ -181,11 +203,26 @@ public class SmnConfiguration {
         this.password = password;
         this.domainName = domainName;
         this.regionId = regionId;
+        this.authType = TOKEN_AUTH_TYPE;
+    }
+
+    /**
+     * new smnConfiguration
+     *
+     * @param secretAccessKey the secretAccessKey id to set
+     * @param accessKeyId     the accessKeyId id to set
+     * @param regionId        the region id to set
+     */
+    public SmnConfiguration(String accessKeyId, String secretAccessKey, String regionId) {
+        this.regionId = regionId;
+        this.accessKeyId = accessKeyId;
+        this.secretAccessKey = secretAccessKey;
+        this.authType = AKSK_AUTH_TYPE;
     }
 
     /**
      * Get max tag length.
-     * 
+     *
      * @return maxTagLength
      */
     public int getMaxTagLength() {
@@ -250,8 +287,7 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param properties
-     *            the properties to set
+     * @param properties the properties to set
      */
     public void setProperties(Properties properties) {
         this.properties = properties;
@@ -265,8 +301,7 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param filepath
-     *            the filepath to set
+     * @param filepath the filepath to set
      */
     public void setFilepath(String filepath) {
         this.filepath = filepath;
@@ -280,8 +315,7 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param userName
-     *            the userName to set
+     * @param userName the userName to set
      */
     public void setUserName(String userName) {
         this.userName = userName;
@@ -295,8 +329,7 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param password
-     *            the password to set
+     * @param password the password to set
      */
     public void setPassword(String password) {
         this.password = password;
@@ -310,8 +343,7 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param domainName
-     *            the domainName to set
+     * @param domainName the domainName to set
      */
     public void setDomainName(String domainName) {
         this.domainName = domainName;
@@ -325,8 +357,7 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param regionId
-     *            the regionId to set
+     * @param regionId the regionId to set
      */
     public void setRegionId(String regionId) {
         this.regionId = regionId;
@@ -345,8 +376,7 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param smnEndpoint
-     *            the smnEndpoint to set
+     * @param smnEndpoint the smnEndpoint to set
      */
     public void setSmnEndpoint(String smnEndpoint) {
         this.smnEndpoint = smnEndpoint;
@@ -365,16 +395,57 @@ public class SmnConfiguration {
     }
 
     /**
-     * @param iamEndpoint
-     *            the iamEndpoint to set
+     * @param iamEndpoint the iamEndpoint to set
      */
     public void setIamEndpoint(String iamEndpoint) {
         this.iamEndpoint = iamEndpoint;
     }
 
-    /*
+    /**
+     * @return the accessKeyId
+     */
+    public String getAccessKeyId() {
+        return accessKeyId;
+    }
+
+    /**
+     * @param accessKeyId the accessKeyId to set
+     */
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
+    }
+
+    /**
+     * @return the secretAccessKey
+     */
+    public String getSecretAccessKey() {
+        return secretAccessKey;
+    }
+
+    /**
+     * @param secretAccessKey the secretAccessKey to set
+     */
+    public void setSecretAccessKey(String secretAccessKey) {
+        this.secretAccessKey = secretAccessKey;
+    }
+
+    /**
+     * @return the authType
+     */
+    public String getAuthType() {
+        return authType;
+    }
+
+    /**
+     * @param authType the authType to set
+     */
+    public void setAuthType(String authType) {
+        this.authType = authType;
+    }
+
+    /**
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

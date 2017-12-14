@@ -178,7 +178,7 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
         this.topicUrn = topicUrn;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
@@ -186,9 +186,11 @@ public class ListSubscriptionsByTopicRequest extends AbstractSmnRequest {
     public String toString() {
    
         StringBuilder builder = new StringBuilder();
-        builder.append("ListSubscriptionsByTopicRequest [offset=").append(offset).append(", limit=").append(limit)
-                .append(", topicUrn=").append(topicUrn).append(", smnEndpoint=").append(smnEndpoint)
-                .append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken).append("]");
+        builder.append("ListSubscriptionsByTopicRequest [offset=").append(offset)
+                .append(", limit=").append(limit)
+                .append(", topicUrn=").append(topicUrn)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
 

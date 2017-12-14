@@ -140,18 +140,19 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
         this.messageTemplateName = messageTemplateName;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("CreateMessageTemplateRequest [protocol=").append(protocol).append(", content=").append(content)
-                .append(", messageTemplateName=").append(messageTemplateName).append(", smnEndpoint=")
-                .append(smnEndpoint).append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken)
+        builder.append("CreateMessageTemplateRequest [protocol=").append(protocol)
+                .append(", content=").append(content)
+                .append(", messageTemplateName=").append(messageTemplateName)
+                .append(", projectId=").append(projectId)
                 .append("]");
         return builder.toString();
     }
-
 }

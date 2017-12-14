@@ -11,16 +11,15 @@
  */
 package com.smn.model.request.subscription;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.smn.common.SmnConstants;
+import com.smn.common.utils.ValidationUtil;
+import com.smn.model.AbstractSmnRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smn.common.SmnConstants;
-import com.smn.common.utils.ValidationUtil;
-import com.smn.model.AbstractSmnRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * the request to unsubscription
@@ -103,17 +102,17 @@ public class UnSubcriptionRequest extends AbstractSmnRequest {
         this.subscriptionUrn = subscriptionUrn;
     }
 
-    /*
+    /**
      * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("UnSubcriptionRequest [subscriptionUrn=").append(subscriptionUrn).append(", smnEndpoint=")
-                .append(smnEndpoint).append(", projectId=").append(projectId).append(", xAuthToken=").append(xAuthToken)
+        builder.append("UnSubcriptionRequest [subscriptionUrn=").append(subscriptionUrn)
+                .append(", projectId=").append(projectId)
                 .append("]");
         return builder.toString();
     }
-
 }

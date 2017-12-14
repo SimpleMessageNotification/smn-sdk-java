@@ -2,6 +2,7 @@ package com.smn.sample;
 
 import com.smn.account.CloudAccount;
 import com.smn.client.SmnClient;
+import com.smn.common.ClientConfiguration;
 import com.smn.common.HttpResponse;
 import com.smn.common.utils.JsonUtil;
 import com.smn.model.request.publish.PublishMsgRequest;
@@ -23,30 +24,35 @@ public class ClientDemo {
      */
     public ClientDemo() {
         CloudAccount cloudAccount = new CloudAccount(
-                "*********",
-                "*********",
-                "*********",
+                "**********",
+                "**********",
+                "**********",
                 "cn-north-1");
+
+//        aksk authentication
+//        CloudAccount cloudAccount = new CloudAccount("access key id",
+//        "secret access key", "cn-north-1");
 
         // if you want custom HTTP parameters
         // or use http proxy, you can use like this
-        //ClientConfiguration clientConfiguration = new ClientConfiguration();
+//        ClientConfiguration clientConfiguration = new ClientConfiguration();
         // if you want not use http proxy ,the proxyHost, proxyPort, proxyUserName
         // and proxyPassword not need to set
-        //clientConfiguration.setProxyHost("proxycn2.huawei.com");
-        //clientConfiguration.setProxyPort(8080);
+//        clientConfiguration.setProxyHost("127.0.0.1");
+//        clientConfiguration.setProxyPort(8080);
+//        clientConfiguration.setIgnoreCertificate(true);
         // password or username is optional
         //clientConfiguration.setProxyUserName("******");
         //clientConfiguration.setProxyPassword("******");
         // timeout params
-        //clientConfiguration.setConnectTimeOut(300000);
-        //clientConfiguration.setSocketTimeOut(300000);
-        //CloudAccount cloudAccount = new CloudAccount(
-        //        "******",
-        //        "******",
-        //       "******",
-        //       "cn-north-1",
-        //       clientConfiguration);
+//        clientConfiguration.setConnectTimeOut(300000);
+//        clientConfiguration.setSocketTimeOut(300000);
+//        CloudAccount cloudAccount = new CloudAccount(
+//                "**********",
+//                "**********",
+//                "**********",
+//                "cn-north-1",
+//                clientConfiguration);
 
         // the CloudAccount and SmnClient just only need initialize once, you can use singleton
         smnClient = cloudAccount.getSmnClient();

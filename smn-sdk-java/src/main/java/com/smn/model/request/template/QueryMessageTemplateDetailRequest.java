@@ -98,8 +98,8 @@ public class QueryMessageTemplateDetailRequest extends AbstractSmnRequest {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("QueryMessageTemplateDetailRequest [messageTemplateId=").append(messageTemplateId)
-                .append(", smnEndpoint=").append(smnEndpoint).append(", projectId=").append(projectId)
-                .append(", xAuthToken=").append(xAuthToken).append("]");
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
 

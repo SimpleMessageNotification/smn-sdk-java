@@ -14,7 +14,6 @@ package com.smn.common.utils;
 import com.smn.common.ClientConfiguration;
 import com.smn.common.HttpMethod;
 import com.smn.common.HttpResponse;
-import com.smn.model.AuthenticationBean;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -39,7 +38,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.net.ConnectException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Map;
 
 /**
@@ -52,83 +58,9 @@ public class HttpUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(HttpUtil.class);
 
     /**
-     * get token from header
-     */
-    private static final String X_SUBJECT_TOKEN = "X-Subject-Token";
-
-    /**
-     * token/project/id from IAM response
-     */
-    private static final String ID = "id";
-
-    /**
-     * token/project from IAM response
-     */
-    private static final String PROJECT = "project";
-
-    /**
-     * token/expires_at from IAM response
-     */
-    private static final String EXPIRES_AT = "expires_at";
-
-    /**
-     * token from IAM response
-     */
-    private static final String TOKEN = "token";
-
-    /**
      * config timeout milliseconds
      */
     private static RequestConfig requestConfig = null;
-
-    /**
-     * Get auth info from IAM service
-     *
-     * @param iamUrl              the URL of IAM service
-     * @param bodyMessage         the body of message
-     * @param clientConfiguration the client configuration
-     * @return {@code AuthBean}
-     * @throws Exception Failed to get IAM information, throw an exception
-     */
-    @SuppressWarnings("rawtypes")
-    public static AuthenticationBean postForIamToken(String iamUrl, String bodyMessage, ClientConfiguration clientConfiguration) throws Exception {
-        LOGGER.debug("Start to get iam token. IamUrl is {}.", iamUrl);
-        CloseableHttpClient httpclient = getHttpClient(clientConfiguration);
-        try {
-            HttpPost httpPost = new HttpPost(iamUrl);
-            httpPost.setConfig(getRequestConfig(clientConfiguration));
-            httpPost.addHeader("Content-Type", "application/json");
-            httpPost.setEntity(new StringEntity(bodyMessage, ContentType.APPLICATION_JSON));
-            // execute HTTPS post
-            CloseableHttpResponse response = httpclient.execute(httpPost);
-            try {
-                int status = response.getStatusLine().getStatusCode();
-                // The length of the response will not be too long
-                HttpEntity entity = response.getEntity();
-                String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
-                if (status >= 200 && status < 300) {
-                    AuthenticationBean authBean = new AuthenticationBean();
-                    // get IAM token
-                    authBean.setAuthToken(response.getFirstHeader(X_SUBJECT_TOKEN).getValue());
-                    Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
-                    // set projectId
-                    authBean.setProjectId(((Map) ((Map) messageMap.get(TOKEN)).get(PROJECT)).get(ID).toString());
-                    // set expires at
-                    authBean.setExpiresAt(((Map) messageMap.get(TOKEN)).get(EXPIRES_AT).toString());
-                    LOGGER.debug("End to get iam token. Status is {}. AuthBean is {}.", status, authBean);
-                    return authBean;
-                } else {
-                    LOGGER.error("Unexpected response status: {}.  ErrorMessage is {}.", status, responseMessage);
-                    throw new RuntimeException(
-                            "Unexpected response status: " + status + ", ErrorMessage is " + responseMessage);
-                }
-            } finally {
-                response.close();
-            }
-        } finally {
-            httpclient.close();
-        }
-    }
 
     /**
      * to create http request instance
@@ -140,7 +72,7 @@ public class HttpUtil {
      * @param clientConfiguration the client configuration
      * @return the request instance
      */
-    private static HttpRequestBase createHttpRequest(Map<String, String> headerParams, Map<String, Object> bodyParams,
+    private static HttpRequestBase createHttpRequest(Map<String, String> headerParams, String bodyParams,
                                                      String url, HttpMethod httpMethod, ClientConfiguration clientConfiguration) {
         HttpRequestBase httpRequestBase = null;
         if (httpMethod == HttpMethod.GET) {
@@ -151,13 +83,11 @@ public class HttpUtil {
             httpRequestBase = httpDelete;
         } else if (httpMethod == HttpMethod.POST) {
             HttpPost httpPost = new HttpPost(url);
-            String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
-            httpPost.setEntity(new StringEntity(bodyString, ContentType.APPLICATION_JSON));
+            httpPost.setEntity(new StringEntity(bodyParams, ContentType.APPLICATION_JSON));
             httpRequestBase = httpPost;
         } else if (httpMethod == HttpMethod.PUT) {
             HttpPut httpPut = new HttpPut(url);
-            String bodyString = JsonUtil.getJsonStringByMap(bodyParams);
-            httpPut.setEntity(new StringEntity(bodyString, ContentType.APPLICATION_JSON));
+            httpPut.setEntity(new StringEntity(bodyParams, ContentType.APPLICATION_JSON));
             httpRequestBase = httpPut;
         } else if (httpMethod == HttpMethod.HEAD) {
             HttpHead httpHead = new HttpHead(url);
@@ -182,7 +112,7 @@ public class HttpUtil {
      * @return the response
      * @throws Exception request error throw exception
      */
-    public static HttpResponse sendRequest(Map<String, String> headerParams, Map<String, Object> bodyParams, String url,
+    public static HttpResponse sendRequest(Map<String, String> headerParams, String bodyParams, String url,
                                            HttpMethod httpMethod, ClientConfiguration clientConfiguration)
             throws Exception {
         LOGGER.debug("Start to post request,requestUrl is {}.", url);
@@ -237,15 +167,12 @@ public class HttpUtil {
      * @return {@code CloseableHttpClient}
      * @throws Exception
      */
-    private static CloseableHttpClient getHttpClient(ClientConfiguration clientConfiguration) throws Exception {
+    public static CloseableHttpClient getHttpClient(ClientConfiguration clientConfiguration) throws Exception {
         if (clientConfiguration == null) {
             clientConfiguration = new ClientConfiguration();
         }
 
-        SSLContext sslContext = SSLContexts.custom().useProtocol("TLSV1.1")
-                .loadTrustMaterial(null, new TrustSelfSignedStrategy()).build();
-        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
-                new NoopHostnameVerifier());
+        SSLConnectionSocketFactory sslSocketFactory = createSslConnectionSocketFactory(clientConfiguration);
         HttpClientBuilder builder = HttpClients.custom();
 
         // set proxy
@@ -268,8 +195,34 @@ public class HttpUtil {
                 builder.setDefaultCredentialsProvider(credentialsProvider);
             }
         }
+        builder.setUserAgent(VersionUtil.getDefaultUserAgent());
         CloseableHttpClient httpclient = builder.setSSLSocketFactory(sslSocketFactory).build();
         return httpclient;
+    }
+
+    private static SSLConnectionSocketFactory createSslConnectionSocketFactory(ClientConfiguration clientConfiguration) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
+        SSLContext sslContext = SSLContexts.custom().useProtocol("TLSV1.1")
+                .loadTrustMaterial(null, new TrustSelfSignedStrategy()).build();
+
+        // is ignore certificate verification
+        if (clientConfiguration.isIgnoreCertificate()) {
+            X509TrustManager tm = new X509TrustManager() {
+                public void checkClientTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
+
+                public void checkServerTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
+
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+            };
+            sslContext.init(null, new TrustManager[]{tm}, null);
+        }
+        return new SSLConnectionSocketFactory(sslContext,
+                new NoopHostnameVerifier());
     }
 
     /**
@@ -278,7 +231,7 @@ public class HttpUtil {
      * @param clientConfiguration the client configuration
      * @return {@code RequestConfig}
      */
-    private static RequestConfig getRequestConfig(ClientConfiguration clientConfiguration) {
+    public static RequestConfig getRequestConfig(ClientConfiguration clientConfiguration) {
         if (clientConfiguration == null) {
             clientConfiguration = new ClientConfiguration();
         }

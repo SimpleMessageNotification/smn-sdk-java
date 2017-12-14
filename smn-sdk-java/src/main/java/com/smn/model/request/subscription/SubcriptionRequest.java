@@ -54,17 +54,15 @@ public class SubcriptionRequest extends AbstractSmnRequest {
      */
     private String remark;
 
-    /*
+    /**
      * (non-Javadoc)
-     * @see com.huawei.smn.model.AbstractSmnRequest#getRequestUri()
+     *
+     * @see AbstractSmnRequest#getRequestUri()
      */
     @Override
     public String getRequestUri() {
         validate();
-        if (StringUtils.isBlank(projectId) || StringUtils.isBlank(smnEndpoint)) {
-            LOGGER.error("Subcription request projectId is null.");
-            throw new NullPointerException("Subcription request projectId is null.");
-        }
+
         if (StringUtils.isBlank(topicUrn)) {
             LOGGER.error("Subcription request topicUrn is null.");
             throw new NullPointerException("Subcription request topicUrn is null.");
@@ -200,16 +198,18 @@ public class SubcriptionRequest extends AbstractSmnRequest {
         this.remark = remark;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("SubcriptionRequest [topicUrn=").append(topicUrn).append(", protocol=").append(protocol)
-                .append(", remark=").append(remark).append(", smnEndpoint=").append(smnEndpoint).append(", projectId=")
-                .append(projectId).append(", xAuthToken=").append(xAuthToken).append("]");
+        builder.append("SubcriptionRequest [topicUrn=").append(topicUrn)
+                .append(", protocol=").append(protocol)
+                .append(", remark=").append(remark)
+                .append(", projectId=").append(projectId)
+                .append("]");
         return builder.toString();
     }
 }

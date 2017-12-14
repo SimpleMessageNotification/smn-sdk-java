@@ -14,32 +14,36 @@ package com.smn.common.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * date utils
- * 
+ *
  * @author huangqiong
+ * @author zhangyx
  * @version 0.1
+ * @version 1.0.0
  */
 public class DateUtil {
     /**
      * Date format for IAM service
      */
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
+    private static final String dateFormatString = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     /**
      * Parse the date format string to date
      * <p>
      * Non thread safe, but not affected
-     * 
-     * @param strDate
-     *            Date format string
+     *
+     * @param strDate Date format string
      * @return {@code Date}
-     * @throws ParseException
-     *             When the date is parsed, an exception is thrown
+     * @throws ParseException When the date is parsed, an exception is thrown
      */
-    public static Date parseDate(String strDate) throws ParseException {
-        return SIMPLE_DATE_FORMAT.parse(strDate);
+    public static Date parseUTCDate(String strDate) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormatString);
+        TimeZone utcZone = TimeZone.getTimeZone("UTC");
+        simpleDateFormat.setTimeZone(utcZone);
+        return simpleDateFormat.parse(strDate);
     }
 
 }

@@ -50,6 +50,11 @@ public class ClientConfiguration {
     private int socketTimeOut = 10000;
 
     /**
+     * ignore certificate verification
+     */
+    private boolean ignoreCertificate = false;
+
+    /**
      * @return the proxy host
      */
     public String getProxyHost() {
@@ -131,5 +136,19 @@ public class ClientConfiguration {
      */
     public void setSocketTimeOut(int socketTimeOut) {
         this.socketTimeOut = socketTimeOut;
+    }
+
+    /**
+     * @return is ignore certificate verification
+     */
+    public boolean isIgnoreCertificate() {
+        return ignoreCertificate;
+    }
+
+    /**
+     * @param ignoreCertificate the ignoreCertificate value to set
+     */
+    public void setIgnoreCertificate(boolean ignoreCertificate) {
+        this.ignoreCertificate = ignoreCertificate;
     }
 }

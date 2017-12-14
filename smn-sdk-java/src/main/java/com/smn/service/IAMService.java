@@ -21,14 +21,33 @@ import com.smn.model.AuthenticationBean;
 public interface IAMService {
 
     /**
-     * Obtain authorization information from the IAM service, which includes
-     * projectId, user token, and token expiration time
-     *
-     * @return {@code AuthBean} User token information
-     * @throws RuntimeException
-     *             Failed to get token, then ran out of the exception
+     * get token from header
      */
-    AuthenticationBean getAuthentication() throws RuntimeException;
+    String X_SUBJECT_TOKEN = "X-Subject-Token";
+    /**
+     * token/expires_at from IAM response
+     */
+    String EXPIRES_AT = "expires_at";
+
+    /**
+     * token from IAM response
+     */
+    String TOKEN = "token";
+
+    /**
+     * token/project/id from IAM response
+     */
+    String ID = "id";
+
+    /**
+     * token/project from IAM response
+     */
+    String PROJECT = "project";
+
+    /**
+     * iam token uri
+     */
+    String IAM_TOKEN_URI = "/v3/auth/tokens";
 
     /**
      * Obtain authorization information
@@ -41,42 +60,9 @@ public interface IAMService {
     AuthenticationBean getAuthenticationBean();
 
     /**
-     * set the user of name.
+     * Obtain project id
      *
-     * @param userName
-     *            the name of user
+     * @return the project id
      */
-    void setUserName(String userName);
-
-    /**
-     * set the password of user
-     *
-     * @param password
-     *            the password of user
-     */
-    void setPassword(String password);
-
-    /**
-     * set the name of domain
-     *
-     * @param domainName
-     *            the name of domain
-     */
-    void setDomainName(String domainName);
-
-    /**
-     * set the id of region
-     *
-     * @param regionId
-     *            the id of region
-     */
-    void setRegionId(String regionId);
-
-    /**
-     * set the url of iam
-     *
-     * @param iamUrl
-     *            the url of iam
-     */
-    void setIamUrl(String iamUrl);
+    String getProjectId();
 }

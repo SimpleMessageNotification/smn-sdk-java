@@ -26,26 +26,6 @@ import com.smn.service.ServiceFactory;
 public class CloudAccount {
 
     /**
-     * user name
-     */
-    private String userName;
-
-    /**
-     * user's password
-     */
-    private String password;
-
-    /**
-     * domain name ,is same with user name mostly,but sometimes may differ
-     */
-    private String domainName;
-
-    /**
-     * region id
-     */
-    private String regionId;
-
-    /**
      * smn configuration
      */
     private SmnConfiguration smnConfiguration;
@@ -61,7 +41,7 @@ public class CloudAccount {
     private ClientConfiguration clientConfiguration;
 
     /**
-     * constructor
+     * constructor for token authentication
      *
      * @param userName   the userName to set
      * @param password   the password to set
@@ -73,7 +53,7 @@ public class CloudAccount {
     }
 
     /**
-     * constructor
+     * constructor for token authentication
      *
      * @param userName            the userName to set
      * @param password            the password to set
@@ -82,14 +62,37 @@ public class CloudAccount {
      * @param clientConfiguration the client configuration
      */
     public CloudAccount(String userName, String password, String domainName, String regionId, ClientConfiguration clientConfiguration) {
-        this.userName = userName;
-        this.password = password;
-        this.domainName = domainName;
-        this.regionId = regionId;
-
         this.smnConfiguration = new SmnConfiguration(userName, password, domainName, regionId);
         this.clientConfiguration = clientConfiguration;
 
+        if (clientConfiguration == null) {
+            this.clientConfiguration = new ClientConfiguration();
+        }
+    }
+
+    /**
+     * constructor for aksk authentication
+     *
+     * @param accessKeyId     the accessKeyId to set
+     * @param secretAccessKey the secretAccessKey to set
+     * @param regionId        the regionId to set
+     */
+    public CloudAccount(String accessKeyId, String secretAccessKey, String regionId) {
+        this.smnConfiguration = new SmnConfiguration(accessKeyId, secretAccessKey, regionId);
+        this.clientConfiguration = new ClientConfiguration();
+    }
+
+    /**
+     * constructor for aksk authentication
+     *
+     * @param accessKeyId         the accessKeyId to set
+     * @param secretAccessKey     the secretAccessKey to set
+     * @param regionId            the regionId to set
+     * @param clientConfiguration the client configuration
+     */
+    public CloudAccount(String accessKeyId, String secretAccessKey, String regionId, ClientConfiguration clientConfiguration) {
+        this.smnConfiguration = new SmnConfiguration(accessKeyId, secretAccessKey, regionId);
+        this.clientConfiguration = clientConfiguration;
         if (clientConfiguration == null) {
             this.clientConfiguration = new ClientConfiguration();
         }
@@ -110,5 +113,19 @@ public class CloudAccount {
             }
         }
         return smnClient;
+    }
+
+    /**
+     * @return the smn configuration
+     */
+    public SmnConfiguration getSmnConfiguration() {
+        return smnConfiguration;
+    }
+
+    /**
+     * @return the client configuration
+     */
+    public ClientConfiguration getClientConfiguration() {
+        return clientConfiguration;
     }
 }

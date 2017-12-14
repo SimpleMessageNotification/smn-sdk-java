@@ -11,15 +11,27 @@
  */
 package com.smn.service.impl;
 
+import com.smn.common.*;
 import com.smn.common.utils.DateUtil;
 import com.smn.common.utils.HttpUtil;
-import com.smn.common.ClientConfiguration;
+import com.smn.common.utils.JsonUtil;
 import com.smn.model.AuthenticationBean;
+import com.smn.model.request.iam.GetProjectIdsRequest;
 import com.smn.service.IAMService;
+import com.smn.signer.AkskSigner;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
+import java.net.URL;
+import java.util.*;
 
 /**
  * @author huangqiong
@@ -30,34 +42,9 @@ public class IAMServiceImpl implements IAMService {
     private static Logger LOGGER = LoggerFactory.getLogger(IAMServiceImpl.class);
 
     /**
-     * user's name
+     * Token expired 30 minutes in advance
      */
-    private String userName;
-
-    /**
-     * user's password
-     */
-    private String password;
-
-    /**
-     * user's domain name
-     */
-    private String domainName;
-
-    /**
-     * region Id
-     */
-    private String regionId;
-
-    /**
-     * the URL of IAM
-     */
-    private String iamUrl;
-
-    /**
-     * Token expired 5 minutes in advance
-     */
-    private long expiredInterval = 5 * 60 * 1000;
+    private long expiredInterval = 30 * 60 * 1000;
 
     /**
      * the request to get token
@@ -67,31 +54,42 @@ public class IAMServiceImpl implements IAMService {
     /**
      * cache authentication bean
      */
-    protected AuthenticationBean authenticationBean;
+    private AuthenticationBean authenticationBean;
 
     /**
      * client config
      */
-    protected ClientConfiguration clientConfiguration;
+    private ClientConfiguration clientConfiguration;
+
+    /**
+     * smn configuration
+     */
+    private SmnConfiguration smnConfiguration;
+
+    /**
+     * iam token url
+     */
+    private String iamTokenUrl;
+
+    /**
+     * cache projectId
+     */
+    private String projectId;
+
+    /**
+     * http signer auth
+     */
+    private AkskSigner signer;
 
     /**
      * constructor
      *
-     * @param userName          userName
-     * @param password          password
-     * @param domainName        domainName
-     * @param regionId          regionId
-     * @param iamUrl            iamUrl
+     * @param smnConfiguration    the smn configuration
      * @param clientConfiguration the client configuration
      */
-    public IAMServiceImpl(String userName, String password, String domainName,
-                          String regionId, String iamUrl, ClientConfiguration clientConfiguration) {
-        setUserName(userName);
-        setPassword(password);
-        setDomainName(domainName);
-        setRegionId(regionId);
-        setIamUrl(iamUrl);
-        setClientConfiguration(clientConfiguration);
+    public IAMServiceImpl(SmnConfiguration smnConfiguration, ClientConfiguration clientConfiguration) {
+        this.smnConfiguration = smnConfiguration;
+        this.clientConfiguration = clientConfiguration;
 
         requestMessage = "{" +
                 "    \"auth\": {" +
@@ -101,45 +99,28 @@ public class IAMServiceImpl implements IAMService {
                 "            ]," +
                 "            \"password\": {" +
                 "                \"user\": {" +
-                "                    \"name\": \"" + userName + "\"," +
-                "                    \"password\": \"" + password + "\"," +
+                "                    \"name\": \"" + smnConfiguration.getUserName() + "\"," +
+                "                    \"password\": \"" + smnConfiguration.getPassword() + "\"," +
                 "                    \"domain\": {" +
-                "                        \"name\": \"" + domainName + "\"" +
+                "                        \"name\": \"" + smnConfiguration.getDomainName() + "\"" +
                 "                    }" +
                 "                }" +
                 "            }" +
                 "        }," +
                 "        \"scope\": {" +
                 "            \"project\": {" +
-                "                \"name\": \"" + regionId + "\"" +
+                "                \"name\": \"" + smnConfiguration.getRegionId() + "\"" +
                 "            }" +
                 "        }" +
                 "    }" +
                 "}";
-    }
 
-    /**
-     * Obtain authorization information from the IAM service, which includes
-     * projectId, user token, and token expiration time
-     *
-     * @return {@link AuthenticationBean} User token information
-     * @throws RuntimeException Failed to get token, then ran out of the exception
-     */
-    public AuthenticationBean getAuthentication() throws RuntimeException {
+        iamTokenUrl = new StringBuilder().append(SmnConstants.HTTPS_PREFFIX).append(smnConfiguration.getIamEndpoint())
+                .append(SmnConstants.URL_DELIMITER).append(IAM_TOKEN_URI).toString();
 
-        AuthenticationBean authenticationBean = null;
-        try {
-            authenticationBean = HttpUtil.postForIamToken(iamUrl, requestMessage, clientConfiguration);
-            // parse time
-            Date tempDate = DateUtil.parseDate(authenticationBean.getExpiresAt());
-            authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
-            return authenticationBean;
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            LOGGER.error("Faied to get token from iam.e:{}", e);
-            throw new RuntimeException("Failed to get token from iam.", e);
-        }
+        signer = new AkskSigner(smnConfiguration, SmnConstants.IAM_SERVICE_NAME);
+        LOGGER.info("Iam token url is{}.", iamTokenUrl);
+
     }
 
     /**
@@ -163,119 +144,140 @@ public class IAMServiceImpl implements IAMService {
     }
 
     /**
-     * @return the expiredInterval
-     */
-    public long getExpiredInterval() {
-        return expiredInterval;
-    }
-
-    /**
-     * @param expiredInterval the expiredInterval to set
-     */
-    public void setExpiredInterval(long expiredInterval) {
-        this.expiredInterval = expiredInterval;
-    }
-
-    /**
-     * @return the userName
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @return the domainName
-     */
-    public String getDomainName() {
-        return domainName;
-    }
-
-    /**
-     * @return the regionId
-     */
-    public String getRegionId() {
-        return regionId;
-    }
-
-    /**
-     * @return the iamUrl
-     */
-    public String getIamUrl() {
-        return iamUrl;
-    }
-
-    /**
-     * @param userName the userName to set
-     */
-    public void setUserName(String userName) {
-        if (userName == null) {
-            LOGGER.error("Username is null.");
-            throw new NullPointerException("username is null.");
-        }
-        this.userName = userName;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        if (password == null) {
-            LOGGER.error("Password is null.");
-            throw new NullPointerException("password is null.");
-        }
-        this.password = password;
-    }
-
-    /**
-     * @param domainName the domainName to set
-     */
-    public void setDomainName(String domainName) {
-        if (domainName == null) {
-            LOGGER.error("Domainname is null.");
-            throw new NullPointerException("domainName is null.");
-        }
-        this.domainName = domainName;
-    }
-
-    /**
-     * @param regionId the regionId to set
-     */
-    public void setRegionId(String regionId) {
-        if (regionId == null) {
-            LOGGER.error("Regionid is null.");
-            throw new NullPointerException("regionId is null.");
-        }
-        this.regionId = regionId;
-    }
-
-    /**
-     * @param iamUrl the iamUrl to set
-     */
-    public void setIamUrl(String iamUrl) {
-        if (iamUrl == null) {
-            LOGGER.error("IAMurl is null.");
-            throw new NullPointerException("iamUrl is null.");
-        }
-        this.iamUrl = iamUrl;
-    }
-
-    /**
-     * the http configuration to set
+     * Obtain project id
      *
-     * @param clientConfiguration http configuration
+     * @return the project id
      */
-    public void setClientConfiguration(ClientConfiguration clientConfiguration) {
-        this.clientConfiguration = clientConfiguration;
+    public String getProjectId() {
+        if (StringUtils.isEmpty(projectId)) {
+            synchronized (this) {
+                if (StringUtils.isEmpty(projectId)) {
+                    if (SmnConfiguration.AKSK_AUTH_TYPE.equals(smnConfiguration.getAuthType())) {
+                        projectId = postForProjectId();
+                    } else {
+                        projectId = getAuthenticationBean().getProjectId();
+                    }
+                }
+            }
+        }
+        return projectId;
     }
 
-    public String getRequestMessage() {
-        return requestMessage;
+    /**
+     * Obtain authorization information from the IAM service, which includes
+     * projectId, user token, and token expiration time
+     *
+     * @return {@link AuthenticationBean} User token information
+     * @throws RuntimeException Failed to get token, then ran out of the exception
+     */
+    private AuthenticationBean getAuthentication() throws RuntimeException {
+
+        AuthenticationBean authenticationBean = null;
+        try {
+            authenticationBean = postForIamToken(iamTokenUrl, requestMessage, clientConfiguration);
+            // parse time
+            Date tempDate = DateUtil.parseUTCDate(authenticationBean.getExpiresAt());
+            authenticationBean.setExpiresTime(tempDate.getTime() - expiredInterval);
+            return authenticationBean;
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Faied to get token from iam.e:{}", e);
+            throw new RuntimeException("Failed to get token from iam.", e);
+        }
     }
+
+    private String buildRequestUrl(String uri) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(SmnConstants.HTTPS_PREFFIX).append(smnConfiguration.getIamEndpoint()).append(uri);
+        return sb.toString();
+    }
+
+    private AuthenticationBean postForIamToken(String iamUrl, String bodyMessage, ClientConfiguration clientConfiguration) throws Exception {
+        LOGGER.debug("Start to get iam token. IamUrl is {}.", iamUrl);
+        CloseableHttpClient httpclient = HttpUtil.getHttpClient(clientConfiguration);
+        try {
+            HttpPost httpPost = new HttpPost(iamUrl);
+            httpPost.setConfig(HttpUtil.getRequestConfig(clientConfiguration));
+            httpPost.addHeader("Content-Type", "application/json");
+            httpPost.setEntity(new StringEntity(bodyMessage, ContentType.APPLICATION_JSON));
+            // execute HTTPS post
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+            try {
+                int status = response.getStatusLine().getStatusCode();
+                // The length of the response will not be too long
+                HttpEntity entity = response.getEntity();
+                String responseMessage = entity != null ? EntityUtils.toString(entity) : null;
+                if (status >= 200 && status < 300) {
+                    AuthenticationBean authBean = new AuthenticationBean();
+                    // get IAM token
+                    authBean.setAuthToken(response.getFirstHeader(X_SUBJECT_TOKEN).getValue());
+                    Map<String, Object> messageMap = JsonUtil.parseJsonMessage(responseMessage);
+                    // set projectId
+                    authBean.setProjectId(parseProjectId(messageMap));
+                    // set expires at
+                    authBean.setExpiresAt(((Map) messageMap.get(TOKEN)).get(EXPIRES_AT).toString());
+                    LOGGER.debug("End to get iam token. Status is {}. AuthBean is {}.", status, authBean);
+                    return authBean;
+                } else {
+                    LOGGER.error("Unexpected response status: {}.  ErrorMessage is {}.", status, responseMessage);
+                    throw new RuntimeException(
+                            "Unexpected response status: " + status + ", ErrorMessage is " + responseMessage);
+                }
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpclient.close();
+        }
+    }
+
+    private String parseProjectId(Map<String, Object> messageMap) {
+        try {
+            return ((Map) ((Map) messageMap.get(TOKEN)).get(PROJECT)).get(ID).toString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private String postForProjectId() {
+        try {
+            String id;
+            // 构造请求参数
+            GetProjectIdsRequest request = new GetProjectIdsRequest();
+            request.setName(smnConfiguration.getRegionId());
+            String url = buildRequestUrl(request.getRequestUri());
+            // 签名处理
+            signer.get(request, new URL(url));
+            Map<String, String> requestHeaderMap = request.getRequestHeaderMap();
+
+            HttpResponse httpResponse = HttpUtil.sendRequest(requestHeaderMap,
+                    JsonUtil.getJsonStringByMap(request.getRequestParameterMap()), url, HttpMethod.GET, clientConfiguration);
+            if (httpResponse.isSuccessed()) {
+                List projectList = (ArrayList) httpResponse.getBody().get("projects");
+                if (projectList == null || projectList.size() == 0) {
+                    LOGGER.error("Fail to get project id by aksk auth. projects is empty.");
+                    throw new RuntimeException("Fail to get project id by aksk auth. projects is empty.");
+                }
+
+                id = (String) ((HashMap) (projectList).get(0)).get("id");
+            } else {
+                LOGGER.error("Fail to get project id by aksk auth. http response status: {}", httpResponse.getHttpCode());
+                throw new RuntimeException("Fail to get project id by aksk auth. http response status: " + httpResponse.getHttpCode());
+            }
+
+            if (StringUtils.isEmpty(id)) {
+                LOGGER.error("Fail to get project id by aksk auth. project id is null");
+                throw new RuntimeException("Fail to get project id by aksk auth. project id is null");
+
+            }
+            return id;
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Failed to get project id from iam by aksk auth.", e);
+            throw new RuntimeException("Failed to get project id from iam by aksk auth.", e);
+        }
+    }
+
 }
