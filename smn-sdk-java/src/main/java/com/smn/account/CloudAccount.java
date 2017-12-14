@@ -79,7 +79,6 @@ public class CloudAccount {
      */
     public CloudAccount(String accessKeyId, String secretAccessKey, String regionId) {
         this.smnConfiguration = new SmnConfiguration(accessKeyId, secretAccessKey, regionId);
-        this.clientConfiguration = clientConfiguration;
         this.clientConfiguration = new ClientConfiguration();
     }
 
