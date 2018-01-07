@@ -67,10 +67,6 @@ public class ListMessageTemplatesRequest extends AbstractSmnRequest {
             LOGGER.error("List message template request projectId is null.");
             throw new NullPointerException("List message template request projectId is null.");
         }
-        if (!ValidationUtil.validateProtocol(protocol)) {
-            LOGGER.error("List message template request protocol is invalid.");
-            throw new NullPointerException("List message template request protoclo is invalid.");
-        }
         if (!ValidationUtil.validateTemplateName(messageTemplateName)) {
             LOGGER.error("List message template request messageTemplateName is invalid.");
             throw new NullPointerException("List message template request messageTemplateName is invalid.");
