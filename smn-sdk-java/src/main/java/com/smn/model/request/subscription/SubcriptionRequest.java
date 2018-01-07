@@ -85,11 +85,6 @@ public class SubcriptionRequest extends AbstractSmnRequest {
     @Override
     public Map<String, Object> getRequestParameterMap() {
 
-        if (!ValidationUtil.validateProtocol(protocol)) {
-            LOGGER.error("Protocol is not valid.");
-            throw new RuntimeException("Protocol is not valid.");
-        }
-
         if (StringUtils.isBlank(endpoint)) {
             LOGGER.error("Endpoint is null.");
             throw new RuntimeException("Endpoint is null.");

@@ -30,12 +30,6 @@ import java.util.Map;
  * @version 0.7
  */
 public abstract class AbstractCommonService implements CommonService {
-
-    /**
-     * LOGGER
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCommonService.class);
-
     /**
      * smn config
      */

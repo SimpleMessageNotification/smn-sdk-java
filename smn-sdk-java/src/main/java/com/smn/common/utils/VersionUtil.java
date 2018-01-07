@@ -28,7 +28,7 @@ public class VersionUtil {
     /**
      * LOGGER
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(GetProjectIdsRequest.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(VersionUtil.class);
 
     /**
      * version file

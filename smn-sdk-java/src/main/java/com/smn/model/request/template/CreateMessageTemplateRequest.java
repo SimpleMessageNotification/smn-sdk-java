@@ -54,10 +54,6 @@ public class CreateMessageTemplateRequest extends AbstractSmnRequest {
             LOGGER.error("Create message template request projectId is null.");
             throw new NullPointerException("Create message template request projectId is null.");
         }
-        if (!ValidationUtil.validateProtocol(protocol)) {
-            LOGGER.error("Create message template protocol is invalid.");
-            throw new RuntimeException("Create message template protocol is invalid.");
-        }
         if (!ValidationUtil.validateTemplateMessageContent(content)) {
             LOGGER.error("Create message template content is invalid.");
             throw new RuntimeException("Create message template content is invalid.");
