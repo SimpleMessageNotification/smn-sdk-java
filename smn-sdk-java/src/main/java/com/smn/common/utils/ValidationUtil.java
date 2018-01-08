@@ -171,7 +171,7 @@ public class ValidationUtil {
         if ("email".equals(protocol) && validateEmail(endPoint)) {
             return true;
         }
-        if ("sms".equals(protocol) && validateTelephone(endPoint)) {
+        if ("sms".equals(protocol) && !StringUtils.isBlank(endPoint)) {
             return true;
         }
         return false;
