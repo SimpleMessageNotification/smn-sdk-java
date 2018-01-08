@@ -98,15 +98,9 @@ public class SmsPublishRequest extends AbstractSmnRequest {
      * @param endpoint
      */
     private void validatePhoneNumber(String endpoint) {
-        if (endpoint == null) {
+        if (StringUtils.isBlank(endpoint)) {
             LOGGER.error("PhoneNumber is null.");
             throw new NullPointerException("PhoneNumber is null.");
-        }
-
-        if (!PATTERN_TELTPHONE.matcher(endpoint).matches()) {
-            LOGGER.error("Wrong phone number format");
-            throw new RuntimeException(
-                    "The wrong phone number format, the correct number format is +8600000000000 or 00000000000");
         }
     }
 
