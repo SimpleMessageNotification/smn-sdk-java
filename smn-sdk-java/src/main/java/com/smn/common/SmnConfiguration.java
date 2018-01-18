@@ -54,7 +54,7 @@ public class SmnConfiguration {
     /**
      * region name
      */
-    private static String ENDPOINT = "myhwclouds.com";
+    private static String ENDPOINT = "myhuaweicloud.com";
 
     private final String CONFIG = "config";
     private final String CONFIG_PROPERTIES = "configuration.properties";
