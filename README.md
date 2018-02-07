@@ -5,4 +5,4 @@ smn的使用说明请查阅[SMN的SDK使用说明](https://github.com/SimpleMess
 Welcome to use the SMN Services Java SDK. SMN Services The Java SDK simplifies the complexity of your use of SMN services. Here's how to use the Java SDK and start calling. smn instructions for use, please refer to [SMN's SDK instructions](https://github.com/SimpleMessageNotification/smn-sdk-java/wiki)
 
 # :o:重要提醒 
-smn-sdk-java已全面升级到更灵活体验更好的2.0，欢迎使用[smn-sdk-java2.0](https://github.com/SimpleMessageNotification/smn-sdk-java2.0)
+smn-sdk-java暂停新特性的开发，smn-sdk-java已全面升级到更灵活体验更好的2.0，欢迎使用[smn-sdk-java2.0](https://github.com/SimpleMessageNotification/smn-sdk-java2.0)
